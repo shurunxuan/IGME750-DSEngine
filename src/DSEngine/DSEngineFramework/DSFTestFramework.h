@@ -30,19 +30,19 @@ class DSENGINEFRAMEWORK_API DSFTestFramework
 {
 public:
 	/**
-	 * Constructor. 
+	 * @brief Constructor. 
 	 * 
 	 * @param a Set the aVal member of the class.
 	 * @param b Set the bVal member of the class.
 	 */
 	DSFTestFramework(int a, int b);
 	/**
-	 * Default destructor. Does nothing.
+	 * @brief Default destructor. Does nothing.
 	 */
 	~DSFTestFramework();
 
 	/**
-	 * A simple function that just add the two member
+	 * @brief A simple function that just add the two member
 	 * variables.
 	 * 
 	 * @return aVal + bVal
@@ -51,11 +51,11 @@ public:
 
 private:
 	/**
-	 * A member variable.
+	 * @brief A member variable.
 	 */
 	int aVal;
 	/**
-	 * Another member variable.
+	 * @brief Another member variable.
 	 */
 	int bVal;
 };

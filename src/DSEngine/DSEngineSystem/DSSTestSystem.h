@@ -29,16 +29,16 @@ class DSENGINESYSTEM_API DSSTestSystem
 {
 public:
 	/**
-	 * Default constructor. Does nothing.
+	 * @brief Default constructor. Does nothing.
 	 */
 	DSSTestSystem();
 	/**
-	 * Default destructor. Does nothing.
+	 * @brief Default destructor. Does nothing.
 	 */
 	~DSSTestSystem();
 
 	/**
-	 * A simple function that just add the two parameters. 
+	 * @ brief A simple function that just add the two parameters. 
 	 * It calls the DSFTestFramework::OutputAddResult().
 	 * 
 	 * @param a An operand.
@@ -48,5 +48,13 @@ public:
 	static int Add(int a, int b);
 };
 
+/**
+ * @brief A very simple subtract function that 
+ * is exported for the game to use.
+ * 
+ * @param a An operand.
+ * @param b Another operand.
+ * @return int a - b 
+ */
 int DSENGINESYSTEM_API Subtract(int a, int b);
 
