@@ -6,6 +6,8 @@ Build Status: [![Current status](https://ci.appveyor.com/api/projects/status/l48
 
 Document Status: [![Document Status](https://travis-ci.org/shurunxuan/IGME750-DSEngine.svg?branch=master)](https://travis-ci.org/shurunxuan/IGME750-DSEngine)
 
+Check the automatically generated documentation [here](https://shurunxuan.github.io/IGME750-DSEngine/html/index.html).
+
 ## Design
 
 The DS Engine is made up of a framework and several systems. The overall architecture is shown in the figure below.
