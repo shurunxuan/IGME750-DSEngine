@@ -6,7 +6,7 @@ The DS Engine is a game engine for racing games or driving simulators.
 
 The DS Engine is made up of a framework and several systems. The overall architecture is shown in the figure below.
 
-![DS Engine Architecture](docs\assets\DSEngineArchitecture.png)
+![DS Engine Architecture](docs/assets/DSEngineArchitecture.png)
 
 ### Framework
 
