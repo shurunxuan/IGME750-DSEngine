@@ -1,4 +1,12 @@
-// dllmain.cpp : Defines the entry point for the DLL application.
+/**
+* @file dllmain.cpp
+* @brief This file defines the
+* entry point for the DS Engine System.
+*
+* @author Victor Shu
+*
+* @date 2019/02/06
+*/
 
 #include <windows.h>
 

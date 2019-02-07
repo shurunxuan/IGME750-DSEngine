@@ -1,3 +1,14 @@
+/**
+* @file DSSTestSystem.cpp
+* @brief This file contains the
+* definitions of class DSSTestSystem
+*
+* @author Victor Shu
+*
+* @date 2019/02/06
+*/
+
+
 #include "DSSTestSystem.h"
 #include "DSFTestFramework.h"
 

@@ -1,6 +1,14 @@
-// dllmain.cpp : Defines the entry point for the DLL application.
+/**
+* @file dllmain.cpp
+* @brief This file defines the
+* entry point for the DS Engine Framework.
+*
+* @author Victor Shu
+*
+* @date 2019/02/06
+*/
 
-#include <windows.h>
+#include <Windows.h>
 
 BOOL APIENTRY DllMain( HMODULE hModule,
                        DWORD  ul_reason_for_call,
