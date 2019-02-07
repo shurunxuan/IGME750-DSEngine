@@ -2,7 +2,9 @@
 
 The DS Engine is a game engine for racing games or driving simulators.
 
-[![Current status](https://ci.appveyor.com/api/projects/status/l48hm8jdisb83t6r?svg=true)](https://ci.appveyor.com/project/shurunxuan/igme750-dsengine)
+Build Status: [![Current status](https://ci.appveyor.com/api/projects/status/l48hm8jdisb83t6r?svg=true)](https://ci.appveyor.com/project/shurunxuan/igme750-dsengine)
+
+Document Status: [![Document Status](https://travis-ci.org/shurunxuan/IGME750-DSEngine.svg?branch=master)](https://travis-ci.org/shurunxuan/IGME750-DSEngine)
 
 ## Design
 

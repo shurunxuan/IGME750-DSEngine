@@ -5,8 +5,8 @@ sudo: false
 
 # Blacklist
 branches:
-  except:
-    - gh-pages
+  only:
+    - master
 
 # Environment variables
 env:
