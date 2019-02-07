@@ -1,0 +1,2 @@
+#define DSENGINESYSTEM_API __declspec(dllexport)
+#define DSENGINESYSTEM_API __declspec(dllimport)
