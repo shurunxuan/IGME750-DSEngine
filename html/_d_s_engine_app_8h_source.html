@@ -39,6 +39,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -70,7 +71,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -106,11 +107,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <a class="code" href="class_d_s_engine_app.html">DSEngineApp</a>();</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    ~<a class="code" href="class_d_s_engine_app.html">DSEngineApp</a>();</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keywordtype">bool</span> Init(HINSTANCE hInstance, LPWSTR lpCmdLine, HWND hWnd, <span class="keywordtype">int</span> screenWidth, <span class="keywordtype">int</span> screenHeight);</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;};</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="keyword">extern</span> DSENGINESYSTEM_API <a class="code" href="class_d_s_engine_app.html">DSEngineApp</a>* <a class="code" href="_d_s_engine_app_8h.html#af3e554f7b3f2b1bd73fc688b0f98cbf2">App</a>;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> Init(HINSTANCE hInstance, LPWSTR lpCmdLine, HWND hWnd, <span class="keywordtype">int</span> screenWidth, <span class="keywordtype">int</span> screenHeight);</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keywordtype">void</span> Loop();</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;};</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="keyword">extern</span> DSENGINESYSTEM_API <a class="code" href="class_d_s_engine_app.html">DSEngineApp</a>* <a class="code" href="_d_s_engine_app_8h.html#af3e554f7b3f2b1bd73fc688b0f98cbf2">App</a>;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
 <div class="ttc" id="_d_s_engine_app_8h_html_af3e554f7b3f2b1bd73fc688b0f98cbf2"><div class="ttname"><a href="_d_s_engine_app_8h.html#af3e554f7b3f2b1bd73fc688b0f98cbf2">App</a></div><div class="ttdeci">DSENGINESYSTEM_API DSEngineApp * App</div><div class="ttdoc">The pointer that points to the singleton of the current game app. </div></div>
 <div class="ttc" id="class_d_s_engine_app_html"><div class="ttname"><a href="class_d_s_engine_app.html">DSEngineApp</a></div><div class="ttdoc">The app class. Game should derive from this. </div><div class="ttdef"><b>Definition:</b> DSEngineApp.h:25</div></div>
 </div><!-- fragment --></div><!-- contents -->
