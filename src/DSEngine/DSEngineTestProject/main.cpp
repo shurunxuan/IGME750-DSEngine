@@ -1,10 +1,15 @@
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
 #include <iostream>
+#include <Windows.h>
+#include "DSEngine.h"
 #include "DSSTestSystem.h"
 
-int main()
+int WINAPI WinMain(HINSTANCE hInstance,
+	HINSTANCE hPrevInstance,
+	LPTSTR lpCmdLine,
+	int nCmdShow)
 {
-	// This is a test of calling a class defined in DSEngineSystem.
-	std::cout << DSSTestSystem::Add(5, 10) << std::endl;
-	// This is a test of calling a function defined in DSEngineSystem.
-	std::cout << Subtract(20, 4) << std::endl;
+	return DSEngine(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
 }
