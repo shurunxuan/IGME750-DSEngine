@@ -1,6 +1,7 @@
 #include <sstream>
 #include <iostream>
 #include "DSEngine.h"
+#include "DSEngineApp.h"
 
 // the WindowProc function prototype
 LRESULT CALLBACK WindowProc(HWND hWnd,
@@ -12,6 +13,9 @@ void CreateConsoleWindow(int bufferLines, int bufferColumns, int windowLines, in
 
 INT DSEngine(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
 {
+	// Create console
+	CreateConsoleWindow(500, 120, 32, 120);
+
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
 	// this struct holds information for the window class
@@ -53,11 +57,10 @@ INT DSEngine(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int
 	// display the window on the screen
 	ShowWindow(hWnd, nCmdShow);
 
-	// Create console
-	CreateConsoleWindow(500, 120, 32, 120);
-
 	// TODO: Initialize DSEngineApp Here.
-	std::cout << "Initialize DSEngine App" << std::endl;
+	App->Init(hInstance, lpCmdLine, hWnd, wr.right - wr.left, wr.bottom - wr.top);
+	getchar();
+
 
 	// enter the main loop:
 
@@ -85,7 +88,7 @@ INT DSEngine(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int
 			// TODO: Run game code here
 			// ...
 			// ...
-			std::cout << "Game Loop" << std::endl;
+			App->Loop();
 		}
 	}
 

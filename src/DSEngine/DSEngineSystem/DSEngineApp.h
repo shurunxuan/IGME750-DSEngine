@@ -49,7 +49,14 @@ public:
 	 * @return true Initialization succeeded.
 	 * @return false Initialization failed.
 	 */
-	bool Init(HINSTANCE hInstance, LPWSTR lpCmdLine, HWND hWnd, int screenWidth, int screenHeight);
+	virtual bool Init(HINSTANCE hInstance, LPWSTR lpCmdLine, HWND hWnd, int screenWidth, int screenHeight);
+
+	/**
+	 * @brief The game loop. Called in function DSEngine.
+	 * 
+	 * @todo Add/change return type or parameters as needed.
+	 */
+	void Loop();
 };
 
 /**

@@ -1,3 +1,4 @@
+#include <iostream>
 #include "DSEngineApp.h"
 
 DSEngineApp* App = nullptr;
@@ -19,5 +20,11 @@ DSEngineApp::~DSEngineApp()
 
 bool DSEngineApp::Init(HINSTANCE hInstance, LPWSTR lpCmdLine, HWND hWnd, int screenWidth, int screenHeight)
 {
+	std::cout << "DSEngineApp Init" << std::endl;
 	return true;
+}
+
+void DSEngineApp::Loop()
+{
+	std::cout << "DSEngineApp::Loop()" << std::endl;
 }

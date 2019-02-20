@@ -4,12 +4,15 @@
 #include <iostream>
 #include <Windows.h>
 #include "DSEngine.h"
-#include "DSSTestSystem.h"
+#include "TestGameApp.h"
+
+TestGameApp GameApp;
 
 int WINAPI WinMain(HINSTANCE hInstance,
 	HINSTANCE hPrevInstance,
 	LPTSTR lpCmdLine,
 	int nCmdShow)
 {
+	// Forward the entry point to the engine.
 	return DSEngine(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
 }
