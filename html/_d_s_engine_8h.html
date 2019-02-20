@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>DS Engine: /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineSystem/DSSTestSystem.h File Reference</title>
+<title>DS Engine: /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineSystem/DSEngine.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -86,57 +86,68 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
 <a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">DSSTestSystem.h File Reference</div>  </div>
+<div class="title">DSEngine.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This header file contains the declarations of class <a class="el" href="class_d_s_s_test_system.html" title="This is a test system class for DS Engine systems. ">DSSTestSystem</a>.  
+<p>This file contains the forwarded entry point from the game app.  
 <a href="#details">More...</a></p>
-
-<p><a href="_d_s_s_test_system_8h_source.html">Go to the source code of this file.</a></p>
+<div class="textblock"><code>#include &lt;Windows.h&gt;</code><br/>
+</div>
+<p><a href="_d_s_engine_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_s_test_system.html">DSSTestSystem</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is a test system class for DS Engine systems.  <a href="class_d_s_s_test_system.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
+<tr class="memitem:ac7bef5d85e3dcd73eef56ad39ffc84a9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac7bef5d85e3dcd73eef56ad39ffc84a9"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>WIN32_LEAN_AND_MEAN</b></td></tr>
+<tr class="separator:ac7bef5d85e3dcd73eef56ad39ffc84a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a962bc50c744b9621808565c8d4f940a9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a962bc50c744b9621808565c8d4f940a9"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>DSENGINESYSTEM_API</b>&#160;&#160;&#160;__declspec(dllimport)</td></tr>
 <tr class="separator:a962bc50c744b9621808565c8d4f940a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a742ba0632d5281c43cdfc8f6428cf576"><td class="memItemLeft" align="right" valign="top">int DSENGINESYSTEM_API&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_d_s_s_test_system_8h.html#a742ba0632d5281c43cdfc8f6428cf576">Subtract</a> (int a, int b)</td></tr>
-<tr class="memdesc:a742ba0632d5281c43cdfc8f6428cf576"><td class="mdescLeft">&#160;</td><td class="mdescRight">A very simple subtract function that is exported for the game to use.  <a href="#a742ba0632d5281c43cdfc8f6428cf576">More...</a><br/></td></tr>
-<tr class="separator:a742ba0632d5281c43cdfc8f6428cf576"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af88647598240bb5be393baafecf09ec9"><td class="memItemLeft" align="right" valign="top">INT DSENGINESYSTEM_API WINAPI&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_d_s_engine_8h.html#af88647598240bb5be393baafecf09ec9">DSEngine</a> (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)</td></tr>
+<tr class="memdesc:af88647598240bb5be393baafecf09ec9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forwarded entry point from the game app. Initialize the Win32 stuff. Actual game loop happens here.  <a href="#af88647598240bb5be393baafecf09ec9">More...</a><br/></td></tr>
+<tr class="separator:af88647598240bb5be393baafecf09ec9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>This header file contains the declarations of class <a class="el" href="class_d_s_s_test_system.html" title="This is a test system class for DS Engine systems. ">DSSTestSystem</a>. </p>
-<dl class="section author"><dt>Author</dt><dd>Victor Shu</dd></dl>
-<dl class="section date"><dt>Date</dt><dd>2019/02/06 </dd></dl>
+<div class="textblock"><p>This file contains the forwarded entry point from the game app. </p>
+<dl class="section author"><dt>Author</dt><dd>Victor Shu </dd></dl>
+<dl class="section version"><dt>Version</dt><dd>0.1 </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>2019/02/20</dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2019 </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="a742ba0632d5281c43cdfc8f6428cf576"></a>
+<a class="anchor" id="af88647598240bb5be393baafecf09ec9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int DSENGINESYSTEM_API Subtract </td>
+          <td class="memname">INT DSENGINESYSTEM_API WINAPI DSEngine </td>
           <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>a</em>, </td>
+          <td class="paramtype">HINSTANCE&#160;</td>
+          <td class="paramname"><em>hInstance</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">HINSTANCE&#160;</td>
+          <td class="paramname"><em>hPrevInstance</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPTSTR&#160;</td>
+          <td class="paramname"><em>lpCmdLine</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>b</em>&#160;</td>
+          <td class="paramname"><em>nCmdShow</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -146,15 +157,17 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>A very simple subtract function that is exported for the game to use. </p>
+<p>Forwarded entry point from the game app. Initialize the Win32 stuff. Actual game loop happens here. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">a</td><td>An operand. </td></tr>
-    <tr><td class="paramname">b</td><td>Another operand. </td></tr>
+    <tr><td class="paramname">hInstance</td><td>Handle to the current instance of the application. </td></tr>
+    <tr><td class="paramname">hPrevInstance</td><td>Handle to the previous instance of the application. For a Win32-based application, this parameter is always NULL. </td></tr>
+    <tr><td class="paramname">lpCmdLine</td><td>Pointer to a null-terminated string specifying the command line for the application, excluding the program name. To retrieve the entire command line, use the GetCommandLine() function. </td></tr>
+    <tr><td class="paramname">nCmdShow</td><td>Specifies how the window is to be shown. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>int a - b </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>If the function succeeds, terminating when it receives a WM_QUIT message, it should return the exit value contained in that message's wParam parameter. If the function terminates before entering the message loop, it should return zero. </dd></dl>
 
 </div>
 </div>
