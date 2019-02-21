@@ -13,6 +13,10 @@ void CreateConsoleWindow(int bufferLines, int bufferColumns, int windowLines, in
 
 INT DSEngine(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
 {
+	// Enable memory leak detection as a quick and dirty
+	// way of determining if we forgot to clean something up
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+
 	// Create console
 	CreateConsoleWindow(500, 120, 32, 120);
 
@@ -59,7 +63,6 @@ INT DSEngine(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int
 
 	// TODO: Initialize DSEngineApp Here.
 	App->Init(hInstance, lpCmdLine, hWnd, wr.right - wr.left, wr.bottom - wr.top);
-	getchar();
 
 
 	// enter the main loop:
@@ -93,7 +96,7 @@ INT DSEngine(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int
 	}
 
 	// return this part of the WM_QUIT message to Windows
-	return msg.wParam;
+	return INT(msg.wParam);
 }
 
 // this is the main message handler for the program
@@ -102,7 +105,7 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 	// sort through and find what code to run for the message given
 	switch (message)
 	{
-		// this message is read when the window is closed
+	// this message is read when the window is closed
 	case WM_DESTROY:
 	{
 		// close the application entirely

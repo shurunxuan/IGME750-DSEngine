@@ -36,7 +36,40 @@ public:
 	 * 
 	 * Should delete or release or free all pointers. 
 	 */
-	~DSEngineApp();
+	virtual ~DSEngineApp();
+
+	/**
+	 * @brief Copy constructor of DSEngineApp is deleted
+	 * since the class is meant to be a singleton.
+	 * 
+	 * @param v Another instance.
+	 */
+	DSEngineApp(const DSEngineApp& v) = delete;
+
+	/**
+	 * @brief Move constructor of DSEngineApp is deleted
+	 * since the class is meant to be a singleton.
+	 * 
+	 * @param v Another instance.
+	 */
+	DSEngineApp(DSEngineApp&& v) = delete;
+
+	/**
+	 * @brief Copy assignment operator of DSEngineApp is deleted
+	 * since the class is meant to be a singleton.
+	 * 
+	 * @param v Another instance.
+	 */
+	DSEngineApp& operator=(const DSEngineApp& v) = delete;
+
+	/**
+	 * @brief Move assignment operator of DSEngineApp is deleted
+	 * since the class is meant to be a singleton.
+	 * 
+	 * @param v Another instance.
+	 */
+	DSEngineApp& operator=(DSEngineApp&& v) = delete;
+
 
 	/**
 	 * @brief Actual initialization of the app.
