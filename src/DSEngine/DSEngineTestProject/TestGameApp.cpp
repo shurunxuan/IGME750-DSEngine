@@ -5,6 +5,6 @@ bool TestGameApp::Init(HINSTANCE hInstance, LPWSTR lpCmdLine, HWND hWnd, int scr
 {
 	DSEngineApp::Init(hInstance, lpCmdLine, hWnd, screenWidth, screenHeight);
 	// Stub logic
-	std::cout << "TestGameApp Init" << std::endl;
+	OutputDebugString(TEXT("TestGameApp Init\n"));
 	return true;
 }

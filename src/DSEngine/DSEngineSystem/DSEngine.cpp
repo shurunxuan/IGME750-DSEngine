@@ -1,5 +1,10 @@
 #include <sstream>
 #include <iostream>
+#include <cstdio>
+#include <fcntl.h>
+#include <io.h>
+#include <iostream>
+#include <fstream>
 #include "DSEngine.h"
 #include "DSEngineApp.h"
 
@@ -33,7 +38,7 @@ INT DSEngine(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int
 	wc.style = CS_HREDRAW | CS_VREDRAW;
 	wc.lpfnWndProc = WindowProc;
 	wc.hInstance = hInstance;
-	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
+	wc.hCursor = LoadCursor(nullptr, IDC_ARROW);
 	wc.hbrBackground = (HBRUSH)COLOR_WINDOW;
 	wc.lpszClassName = TEXT("DSEngine");
 
@@ -53,10 +58,10 @@ INT DSEngine(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int
 		300, // y-position of the window
 		wr.right - wr.left,    // width of the window
 		wr.bottom - wr.top,    // height of the window
-		NULL, // we have no parent window, NULL
-		NULL, // we aren't using menus, NULL
+		nullptr, // we have no parent window, NULL
+		nullptr, // we aren't using menus, NULL
 		hInstance, // application handle
-		NULL);    // used with multiple windows, NULL
+		nullptr);    // used with multiple windows, NULL
 
 	// display the window on the screen
 	ShowWindow(hWnd, nCmdShow);
@@ -74,7 +79,7 @@ INT DSEngine(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int
 	while (TRUE)
 	{
 		// Check to see if any messages are waiting in the queue
-		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
 		{
 			// translate keystroke messages into the right format
 			TranslateMessage(&msg);
@@ -140,13 +145,33 @@ void CreateConsoleWindow(int bufferLines, int bufferColumns, int windowLines, in
 	rect.Bottom = windowLines;
 	SetConsoleWindowInfo(GetStdHandle(STD_OUTPUT_HANDLE), TRUE, &rect);
 
-	FILE* stream;
-	freopen_s(&stream, "CONIN$", "r", stdin);
-	freopen_s(&stream, "CONOUT$", "w", stdout);
-	freopen_s(&stream, "CONOUT$", "w", stderr);
+	// redirect unbuffered STDOUT to the console
+	long lStdHandle = long(GetStdHandle(STD_OUTPUT_HANDLE));
+	int hConHandle = _open_osfhandle(lStdHandle, _O_TEXT);
+	FILE* fp = _fdopen(hConHandle, "w");
+	*stdout = *fp;
+	setvbuf(stdout, nullptr, _IONBF, 0);
+
+	// redirect unbuffered STDIN to the console
+	lStdHandle = long(GetStdHandle(STD_INPUT_HANDLE));
+	hConHandle = _open_osfhandle(lStdHandle, _O_TEXT);
+	fp = _fdopen(hConHandle, "r");
+	*stdin = *fp;
+	setvbuf(stdin, nullptr, _IONBF, 0);
+
+	// redirect unbuffered STDERR to the console
+	lStdHandle = long(GetStdHandle(STD_ERROR_HANDLE));
+	hConHandle = _open_osfhandle(lStdHandle, _O_TEXT);
+	fp = _fdopen(hConHandle, "w");
+	*stderr = *fp;
+	setvbuf(stderr, nullptr, _IONBF, 0);
+
+	// make cout, wcout, cin, wcin, wcerr, cerr, wclog and clog
+	// point to console as well
+	std::ios::sync_with_stdio();
 
 	// Prevent accidental console window close
-	HWND consoleHandle = GetConsoleWindow();
-	HMENU hmenu = GetSystemMenu(consoleHandle, FALSE);
+	const HWND consoleHandle = GetConsoleWindow();
+	const HMENU hmenu = GetSystemMenu(consoleHandle, FALSE);
 	EnableMenuItem(hmenu, SC_CLOSE, MF_GRAYED);
 }

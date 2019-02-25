@@ -27,6 +27,9 @@
     <ClInclude Include="DSEngine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DSSRendering.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -39,6 +42,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DSEngine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DSSRendering.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

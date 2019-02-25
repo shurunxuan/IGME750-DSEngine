@@ -16,9 +16,9 @@
 /**
  * @class TestGameApp
  * 
- * @brief Derived from DSEngineApp. 
+ * @brief Derived from DSEngineApp
  * 
- * @todo This class should contain actual game logic.
+ * @todo This class should contain actual game logic
  * 
  */
 class TestGameApp :
@@ -26,16 +26,15 @@ class TestGameApp :
 {
 public:
 	/**
-	 * @brief Override the base class Init function.
-	 * Should initialize game-specific things.
-	 * 
-	 * @param hInstance The instance of the app.
-	 * @param lpCmdLine The command line parameters of the app.
-	 * @param hWnd The window handle.
-	 * @param screenWidth Screen width.
-	 * @param screenHeight Screen height.
-	 * @return true Initialization succeeded.
-	 * @return false Initialization failed.
+	 * @brief Override the base class Init function
+	 * Should initialize game-specific things
+	 *
+	 * @param hInstance The instance of the app
+	 * @param lpCmdLine The command line parameters of the app
+	 * @param hWnd The window handle
+	 * @param screenWidth Screen width
+	 * @param screenHeight Screen height
+	 * @return true if initialization succeeded, or false
 	 */
 	bool Init(HINSTANCE hInstance, LPWSTR lpCmdLine, HWND hWnd, int screenWidth, int screenHeight) override;
 };
