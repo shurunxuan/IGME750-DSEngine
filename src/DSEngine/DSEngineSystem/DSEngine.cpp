@@ -1,5 +1,3 @@
-#include <sstream>
-#include <iostream>
 #include "DSEngine.h"
 #include "DSEngineApp.h"
 
@@ -9,16 +7,12 @@ LRESULT CALLBACK WindowProc(HWND hWnd,
 	WPARAM wParam,
 	LPARAM lParam);
 
-void CreateConsoleWindow(int bufferLines, int bufferColumns, int windowLines, int windowColumns);
-
-INT DSEngine(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
+INT WINAPI DSEngine(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
 {
+	InitLogger();
 	// Enable memory leak detection as a quick and dirty
 	// way of determining if we forgot to clean something up
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-
-	// Create console
-	CreateConsoleWindow(500, 120, 32, 120);
 
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
@@ -33,7 +27,7 @@ INT DSEngine(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int
 	wc.style = CS_HREDRAW | CS_VREDRAW;
 	wc.lpfnWndProc = WindowProc;
 	wc.hInstance = hInstance;
-	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
+	wc.hCursor = LoadCursor(nullptr, IDC_ARROW);
 	wc.hbrBackground = (HBRUSH)COLOR_WINDOW;
 	wc.lpszClassName = TEXT("DSEngine");
 
@@ -53,10 +47,10 @@ INT DSEngine(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int
 		300, // y-position of the window
 		wr.right - wr.left,    // width of the window
 		wr.bottom - wr.top,    // height of the window
-		NULL, // we have no parent window, NULL
-		NULL, // we aren't using menus, NULL
+		nullptr, // we have no parent window, NULL
+		nullptr, // we aren't using menus, NULL
 		hInstance, // application handle
-		NULL);    // used with multiple windows, NULL
+		nullptr);    // used with multiple windows, NULL
 
 	// display the window on the screen
 	ShowWindow(hWnd, nCmdShow);
@@ -74,7 +68,7 @@ INT DSEngine(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int
 	while (TRUE)
 	{
 		// Check to see if any messages are waiting in the queue
-		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
 		{
 			// translate keystroke messages into the right format
 			TranslateMessage(&msg);
@@ -119,34 +113,4 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 
 	// Handle any messages the switch statement didn't
 	return DefWindowProc(hWnd, message, wParam, lParam);
-}
-
-void CreateConsoleWindow(int bufferLines, int bufferColumns, int windowLines, int windowColumns)
-{
-	// Our temp console info struct
-	CONSOLE_SCREEN_BUFFER_INFO coninfo;
-
-	// Get the console info and set the number of lines
-	AllocConsole();
-	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &coninfo);
-	coninfo.dwSize.Y = bufferLines;
-	coninfo.dwSize.X = bufferColumns;
-	SetConsoleScreenBufferSize(GetStdHandle(STD_OUTPUT_HANDLE), coninfo.dwSize);
-
-	SMALL_RECT rect;
-	rect.Left = 0;
-	rect.Top = 0;
-	rect.Right = windowColumns;
-	rect.Bottom = windowLines;
-	SetConsoleWindowInfo(GetStdHandle(STD_OUTPUT_HANDLE), TRUE, &rect);
-
-	FILE* stream;
-	freopen_s(&stream, "CONIN$", "r", stdin);
-	freopen_s(&stream, "CONOUT$", "w", stdout);
-	freopen_s(&stream, "CONOUT$", "w", stderr);
-
-	// Prevent accidental console window close
-	HWND consoleHandle = GetConsoleWindow();
-	HMENU hmenu = GetSystemMenu(consoleHandle, FALSE);
-	EnableMenuItem(hmenu, SC_CLOSE, MF_GRAYED);
 }

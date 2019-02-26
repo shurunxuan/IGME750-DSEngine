@@ -20,7 +20,8 @@ DSEngineApp::~DSEngineApp()
 
 bool DSEngineApp::Init(HINSTANCE hInstance, LPWSTR lpCmdLine, HWND hWnd, int screenWidth, int screenHeight)
 {
-	std::cout << "DSEngineApp Init" << std::endl;
+	renderingSystem.Init(hWnd, screenWidth, screenHeight);
+	LOG_TRACE << "DSEngineApp Init";
 	return true;
 }
 

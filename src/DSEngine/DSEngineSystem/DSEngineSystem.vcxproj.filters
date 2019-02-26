@@ -16,15 +16,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DSSTestSystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="DSEngineApp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DSEngine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DSSRendering.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -32,13 +33,13 @@
     <ClCompile Include="dllmain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DSSTestSystem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="DSEngineApp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DSEngine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DSSRendering.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
