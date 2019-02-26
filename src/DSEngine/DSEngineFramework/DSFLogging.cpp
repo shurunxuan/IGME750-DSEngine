@@ -60,7 +60,7 @@ void InitLogger()
 
 	// Add a stream to write log to
 	text_sink->locked_backend()->add_stream(
-		boost::make_shared< std::ofstream >("sample.log"));
+		boost::make_shared< std::ofstream >("engine.log"));
 
 	// Set the special filter to the frontend
 	// in order to skip the sink when no debugger is available
