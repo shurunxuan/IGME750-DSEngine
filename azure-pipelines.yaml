@@ -1,43 +1,43 @@
-#Multi-configuration and multi-agent job options are not exported to YAML. Configure these options using documentation guidance: https://docs.microsoft.com/vsts/pipelines/process/phases
-parameters:
-  solution: 'src/DSEngine/DSEngine.sln'
+jobs:
+- job: Build with MSBuild
+  timeoutInMinutes: 0
+  cancelTimeoutInMinutes: 0
+  strategy:
+    maxParallel: 99
+    # note: `parallel` and `matrix` are mutually exclusive
+    # you may specify one or the other; including both is an error
+    parallel: 4
+  pool:
+    vmImage: Hosted VS2017
+    demands:
+    - msbuild
+    - visualstudio
 
-pool:
-  vmImage: Hosted VS2017
-  demands:
-  - msbuild
-  - visualstudio
+  steps:
+  - task: NuGetToolInstaller@0
+    displayName: 'Use NuGet 4.4.1'
+    inputs:
+      versionSpec: 4.4.1
 
-#Your build pipeline references an undefined variable named ‘Parameters.solution’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
-#Your build pipeline references an undefined variable named ‘Parameters.solution’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
-#Your build pipeline references the ‘BuildPlatform’ variable, which you’ve selected to be settable at queue time. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab, and then select the option to make it settable at queue time. See https://go.microsoft.com/fwlink/?linkid=865971
-#Your build pipeline references the ‘BuildConfiguration’ variable, which you’ve selected to be settable at queue time. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab, and then select the option to make it settable at queue time. See https://go.microsoft.com/fwlink/?linkid=865971
+  - task: NuGetCommand@2
+    displayName: 'NuGet restore'
+    inputs:
+      restoreSolution: '$(Parameters.solution)'
 
-steps:
-- task: NuGetToolInstaller@0
-  displayName: 'Use NuGet 4.4.1'
-  inputs:
-    versionSpec: 4.4.1
+  - task: VSBuild@1
+    displayName: 'Build solution src/DSEngine/DSEngine.sln ($(BuildConfiguration)-$(BuildPlatform))'
+    inputs:
+      solution: '$(Parameters.solution)'
+      vsVersion: 15.0
+      platform: '$(BuildPlatform)'
+      configuration: '$(BuildConfiguration)'
+      
+  trigger:
+    batch: false # batch changes if true, start a new build for every push if false
+    branches:
+      exclude: [ gh-pages ] # branch names which will not
 
-- task: NuGetCommand@2
-  displayName: 'NuGet restore'
-  inputs:
-    restoreSolution: '$(Parameters.solution)'
-
-- task: VSBuild@1
-  displayName: 'Build solution src/DSEngine/DSEngine.sln'
-  inputs:
-    solution: '$(Parameters.solution)'
-    vsVersion: 15.0
-    platform: '$(BuildPlatform)'
-    configuration: '$(BuildConfiguration)'
-
-trigger:
-  batch: false # batch changes if true, start a new build for every push if false
-  branches:
-    exclude: [ gh-pages ] # branch names which will not
-
-pr:
-  autoCancel: false # indicates whether additional pushes to a PR should cancel in-progress runs for the same PR. Defaults to true
-  branches:
-    exclude: [ gh-pages ] # branch names which will not
+  pr:
+    autoCancel: false # indicates whether additional pushes to a PR should cancel in-progress runs for the same PR. Defaults to true
+    branches:
+      exclude: [ gh-pages ] # branch names which will not
