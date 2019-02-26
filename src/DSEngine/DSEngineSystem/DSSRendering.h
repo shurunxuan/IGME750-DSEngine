@@ -79,6 +79,22 @@ public:
 	 */
 	HRESULT Init(HWND hWnd, unsigned int screenWidth, unsigned int screenHeight);
 
+	/**
+	 * @brief Resize the rendering system
+	 *
+	 * @param screenWidth Screen width
+	 * @param screenHeight Screen height
+	 * @return S_OK if resize succeeded, or other
+	 */
+	HRESULT OnResize(unsigned int screenWidth, unsigned int screenHeight);
+
+	/**
+	 * @brief Update the rendering system every frame
+	 * 
+	 * @todo This is currently a place holder that reroute the call to DSFDirect3D::Draw
+	 */
+	void Update();
+
 private:
 	/**
 	 * @brief The Direct3D Framework reference 

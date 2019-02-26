@@ -98,6 +98,9 @@
       <AdditionalDependencies>DSENGINESYSTEM.lib;DSENGINEFRAMEWORK.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
     </Link>
+    <Manifest>
+      <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
+    </Manifest>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -112,6 +115,9 @@
       <AdditionalDependencies>DSENGINESYSTEM.lib;DSENGINEFRAMEWORK.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
     </Link>
+    <Manifest>
+      <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
+    </Manifest>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -130,6 +136,9 @@
       <AdditionalDependencies>DSENGINESYSTEM.lib;DSENGINEFRAMEWORK.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
     </Link>
+    <Manifest>
+      <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
+    </Manifest>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -148,6 +157,9 @@
       <AdditionalDependencies>DSENGINESYSTEM.lib;DSENGINEFRAMEWORK.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
     </Link>
+    <Manifest>
+      <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
+    </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -255,19 +267,17 @@
     <BoostRT>-gd</BoostRT>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
-    <BoostRT></BoostRT>
+    <BoostRT>
+    </BoostRT>
   </PropertyGroup>
-    <PropertyGroup Condition="'$(Platform)'=='Win32'">
+  <PropertyGroup Condition="'$(Platform)'=='Win32'">
     <BoostPT>x32</BoostPT>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Platform)'=='x64'">
     <BoostPT>x64</BoostPT>
   </PropertyGroup>
   <ItemGroup>
-    <BoostDlls Include="..\packages\boost_log-vc141.1.69.0.0\lib\native\boost_log-vc141-mt$(BoostRT)-$(BoostPT)-1_69.dll;
-    ..\packages\boost_date_time-vc141.1.69.0.0\lib\native\boost_date_time-vc141-mt$(BoostRT)-$(BoostPT)-1_69.dll;
-    ..\packages\boost_thread-vc141.1.69.0.0\lib\native\boost_thread-vc141-mt$(BoostRT)-$(BoostPT)-1_69.dll;
-    ..\packages\boost_filesystem-vc141.1.69.0.0\lib\native\boost_filesystem-vc141-mt$(BoostRT)-$(BoostPT)-1_69.dll;" />
+    <BoostDlls Include="..\packages\boost_log-vc141.1.69.0.0\lib\native\boost_log-vc141-mt$(BoostRT)-$(BoostPT)-1_69.dll;&#xD;&#xA;    ..\packages\boost_date_time-vc141.1.69.0.0\lib\native\boost_date_time-vc141-mt$(BoostRT)-$(BoostPT)-1_69.dll;&#xD;&#xA;    ..\packages\boost_thread-vc141.1.69.0.0\lib\native\boost_thread-vc141-mt$(BoostRT)-$(BoostPT)-1_69.dll;&#xD;&#xA;    ..\packages\boost_filesystem-vc141.1.69.0.0\lib\native\boost_filesystem-vc141-mt$(BoostRT)-$(BoostPT)-1_69.dll;" />
   </ItemGroup>
   <Target Name="CopyFiles" AfterTargets="Build">
     <Copy SourceFiles="@(BoostDlls)" DestinationFolder="$(OutDir)" />

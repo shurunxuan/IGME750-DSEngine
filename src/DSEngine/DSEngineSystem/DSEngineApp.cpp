@@ -27,5 +27,11 @@ bool DSEngineApp::Init(HINSTANCE hInstance, LPWSTR lpCmdLine, HWND hWnd, int scr
 
 void DSEngineApp::Loop()
 {
+	renderingSystem.Update();
 	std::cout << "DSEngineApp::Loop()" << std::endl;
+}
+
+DSSRendering* DSEngineApp::GetRenderingSystem()
+{
+	return &renderingSystem;
 }

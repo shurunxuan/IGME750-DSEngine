@@ -91,6 +91,20 @@ public:
      */
     HRESULT Init(HWND hWnd, unsigned int screenWidth, unsigned int screenHeight);
 
+	/**
+	 * @brief Resize the Direct3D stuff
+	 *
+	 * @param screenWidth Screen width
+	 * @param screenHeight Screen height
+	 * @return HRESULT S_OK if initialization succeed, or other
+	 */
+	HRESULT OnResize(unsigned int screenWidth, unsigned int screenHeight);
+
+	/**
+	 * @brief Draw on screen
+	 */
+	void Draw();
+
 protected:
     /**
      * @brief The handle to the window itself
@@ -151,4 +165,10 @@ private:
      * @return HRESULT S_OK if succeed, or other
      */
 	HRESULT CreateDepthStencilView();
+	/**
+	 * @brief Resize the Swap Buffer object
+	 *
+	 * @return HRESULT S_OK if succeed, or other
+	 */
+	HRESULT ResizeSwapBuffers() const;
 };

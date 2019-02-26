@@ -99,6 +99,24 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 	// sort through and find what code to run for the message given
 	switch (message)
 	{
+	case WM_SIZE:
+	{
+		// Don't adjust anything when minimizing,
+		// since we end up with a width/height of zero
+		// and that doesn't play well with DirectX
+		if (wParam == SIZE_MINIMIZED)
+			return 0;
+
+		// Save the new client area dimensions.
+		unsigned width = LOWORD(lParam);
+		unsigned height = HIWORD(lParam);
+
+		// If DX is initialized, resize 
+		// our required buffers
+		App->GetRenderingSystem()->OnResize(width, height);
+
+		return 0;
+	}
 	// this message is read when the window is closed
 	case WM_DESTROY:
 	{
@@ -106,7 +124,6 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 		PostQuitMessage(0);
 		return 0;
 	}
-	break;
 	default:
 		break;
 	}
