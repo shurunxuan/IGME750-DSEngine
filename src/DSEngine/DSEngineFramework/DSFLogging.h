@@ -14,7 +14,6 @@
 #include <fstream>
 #include <iomanip>
 
-#define BOOST_LOG_DYN_LINK
 #include <boost/smart_ptr/shared_ptr.hpp>
 #include <boost/smart_ptr/make_shared_object.hpp>
 #include <boost/log/core.hpp>
