@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['init',['Init',['../class_d_s_engine_app.html#ab1638326ba6d4cc402e672a5691e6f05',1,'DSEngineApp::Init()'],['../class_test_game_app.html#a1a56f6b8f4915d4117b1e3a425247302',1,'TestGameApp::Init()']]]
+  ['loop',['Loop',['../class_d_s_engine_app.html#a4e9d6e41f33e37371aac38f69d10f8de',1,'DSEngineApp']]]
 ];
