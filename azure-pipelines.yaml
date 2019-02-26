@@ -9,7 +9,7 @@ pr:
     exclude: [ gh-pages ] # branch names which will not
 
 jobs:
-- job: 'Build with MSBuild'
+- job: 'Build'
   timeoutInMinutes: 0
   cancelTimeoutInMinutes: 0
   strategy:
