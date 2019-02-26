@@ -1,4 +1,6 @@
 #Multi-configuration and multi-agent job options are not exported to YAML. Configure these options using documentation guidance: https://docs.microsoft.com/vsts/pipelines/process/phases
+parameters:
+  solution: 'src/DSEngine/DSEngine.sln'
 
 pool:
   vmImage: Hosted VS2017
@@ -29,3 +31,13 @@ steps:
     vsVersion: 15.0
     platform: '$(BuildPlatform)'
     configuration: '$(BuildConfiguration)'
+
+trigger:
+  batch: false # batch changes if true, start a new build for every push if false
+  branches:
+    exclude: [ gh-pages ] # branch names which will not
+
+pr:
+  autoCancel: false # indicates whether additional pushes to a PR should cancel in-progress runs for the same PR. Defaults to true
+  branches:
+    exclude: [ gh-pages ] # branch names which will not
