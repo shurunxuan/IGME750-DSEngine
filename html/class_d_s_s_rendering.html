@@ -120,6 +120,26 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ad87416d404590c79daff3606efc1a44b"><td class="memItemLeft" align="right" valign="top">HRESULT&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_s_rendering.html#ad87416d404590c79daff3606efc1a44b">Init</a> (HWND hWnd, unsigned int screenWidth, unsigned int screenHeight)</td></tr>
 <tr class="memdesc:ad87416d404590c79daff3606efc1a44b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Actual initialization of the rendering system.  <a href="#ad87416d404590c79daff3606efc1a44b">More...</a><br/></td></tr>
 <tr class="separator:ad87416d404590c79daff3606efc1a44b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b810534fc6d587cde5fb0445c92b025"><td class="memItemLeft" align="right" valign="top">HRESULT&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_s_rendering.html#a3b810534fc6d587cde5fb0445c92b025">OnResize</a> (unsigned int screenWidth, unsigned int screenHeight)</td></tr>
+<tr class="memdesc:a3b810534fc6d587cde5fb0445c92b025"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resize the rendering system.  <a href="#a3b810534fc6d587cde5fb0445c92b025">More...</a><br/></td></tr>
+<tr class="separator:a3b810534fc6d587cde5fb0445c92b025"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a89256c04e6b0cb5e47e6fe44a2fdd195"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a89256c04e6b0cb5e47e6fe44a2fdd195"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_s_rendering.html#a89256c04e6b0cb5e47e6fe44a2fdd195">UpdateTimer</a> ()</td></tr>
+<tr class="memdesc:a89256c04e6b0cb5e47e6fe44a2fdd195"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update performance timer. <br/></td></tr>
+<tr class="separator:a89256c04e6b0cb5e47e6fe44a2fdd195"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada0d31f707ad62d5444a17992ea0d2be"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ada0d31f707ad62d5444a17992ea0d2be"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_s_rendering.html#ada0d31f707ad62d5444a17992ea0d2be">UpdateTitleBarStats</a> ()</td></tr>
+<tr class="memdesc:ada0d31f707ad62d5444a17992ea0d2be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Puts debug info in the title bar. <br/></td></tr>
+<tr class="separator:ada0d31f707ad62d5444a17992ea0d2be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03b9a4be8276214504d88eb0c3832a05"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_s_rendering.html#a03b9a4be8276214504d88eb0c3832a05">GetDeltaTime</a> () const </td></tr>
+<tr class="memdesc:a03b9a4be8276214504d88eb0c3832a05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the time cost by one frame.  <a href="#a03b9a4be8276214504d88eb0c3832a05">More...</a><br/></td></tr>
+<tr class="separator:a03b9a4be8276214504d88eb0c3832a05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4055ae1315e0eecd0ad4577735912929"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_s_rendering.html#a4055ae1315e0eecd0ad4577735912929">GetTotalTime</a> () const </td></tr>
+<tr class="memdesc:a4055ae1315e0eecd0ad4577735912929"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the time since the start of the game.  <a href="#a4055ae1315e0eecd0ad4577735912929">More...</a><br/></td></tr>
+<tr class="separator:a4055ae1315e0eecd0ad4577735912929"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f5e28740d6c8134793508fa53594942"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_s_rendering.html#a5f5e28740d6c8134793508fa53594942">Update</a> (float deltaTime, float totalTime)</td></tr>
+<tr class="memdesc:a5f5e28740d6c8134793508fa53594942"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the rendering system every frame.  <a href="#a5f5e28740d6c8134793508fa53594942">More...</a><br/></td></tr>
+<tr class="separator:a5f5e28740d6c8134793508fa53594942"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The Rendering System of the DS Engine. </p>
@@ -225,6 +245,42 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a03b9a4be8276214504d88eb0c3832a05"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float DSSRendering::GetDeltaTime </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the time cost by one frame. </p>
+<dl class="section return"><dt>Returns</dt><dd>Time cost by one frame </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a4055ae1315e0eecd0ad4577735912929"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float DSSRendering::GetTotalTime </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the time since the start of the game. </p>
+<dl class="section return"><dt>Returns</dt><dd>Time since the start of the game </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="ad87416d404590c79daff3606efc1a44b"></a>
 <div class="memitem">
 <div class="memproto">
@@ -265,6 +321,42 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>S_OK if initialization succeeded, or other </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a3b810534fc6d587cde5fb0445c92b025"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">HRESULT DSSRendering::OnResize </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>screenWidth</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>screenHeight</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Resize the rendering system. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">screenWidth</td><td>Screen width </td></tr>
+    <tr><td class="paramname">screenHeight</td><td>Screen height </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>S_OK if resize succeeded, or other </dd></dl>
 
 </div>
 </div>
@@ -329,6 +421,42 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a class="anchor" id="a5f5e28740d6c8134793508fa53594942"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DSSRendering::Update </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>deltaTime</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>totalTime</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Update the rendering system every frame. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">deltaTime</td><td>The time cost by one frame </td></tr>
+    <tr><td class="paramname">totalTime</td><td>The time since the game started</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000002">Todo:</a></b></dt><dd>This is currently a place holder that reroute the call to <a class="el" href="class_d_s_f_direct3_d.html#ace5ea74275bc679500d4da39576bf3b3" title="Draw on screen. ">DSFDirect3D::Draw</a> </dd></dl>
 
 </div>
 </div>

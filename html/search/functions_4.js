@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['_7edsengineapp',['~DSEngineApp',['../class_d_s_engine_app.html#a2da212050ec21c36c5147e5d0a617c2f',1,'DSEngineApp']]],
-  ['_7edsfdirect3d',['~DSFDirect3D',['../class_d_s_f_direct3_d.html#a6801113c72bb53252d80a1463bcf7dbe',1,'DSFDirect3D']]],
-  ['_7edssrendering',['~DSSRendering',['../class_d_s_s_rendering.html#aa310bb66db18dac66da680b5af3bdb39',1,'DSSRendering']]]
+  ['onresize',['OnResize',['../class_d_s_f_direct3_d.html#a5e56c4b26fb0530ba5b79ac850b1c226',1,'DSFDirect3D::OnResize()'],['../class_d_s_s_rendering.html#a3b810534fc6d587cde5fb0445c92b025',1,'DSSRendering::OnResize()']]],
+  ['operator_3d',['operator=',['../class_d_s_f_direct3_d.html#aa6e2154f3f5206c61521d38b9fe6e88c',1,'DSFDirect3D::operator=(const DSFDirect3D &amp;v)=delete'],['../class_d_s_f_direct3_d.html#ad91ec50a22aa422e6538906b36556c80',1,'DSFDirect3D::operator=(DSFDirect3D &amp;&amp;v)=delete'],['../class_d_s_engine_app.html#a219ea5ca09e872da930e3799da380bbf',1,'DSEngineApp::operator=(const DSEngineApp &amp;v)=delete'],['../class_d_s_engine_app.html#a9170c623c423c3dcd13fa156e88ef285',1,'DSEngineApp::operator=(DSEngineApp &amp;&amp;v)=delete'],['../class_d_s_s_rendering.html#abfd9e3918894e2ef5efd7072461bd08e',1,'DSSRendering::operator=(const DSSRendering &amp;v)=delete'],['../class_d_s_s_rendering.html#a2021dceb37257cfc355dbbd049d7ce6e',1,'DSSRendering::operator=(DSSRendering &amp;&amp;v)=delete']]]
 ];
