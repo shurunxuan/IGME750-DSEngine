@@ -100,39 +100,31 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &lt;Windows.h&gt;</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_d_s_s_rendering_8h.html">DSSRendering.h</a>&quot;</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_d_s_f_logging_8h.html">DSFLogging.h</a>&quot;</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
-<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="class_d_s_engine_app.html">   27</a></span>&#160;<span class="keyword">class </span>DSENGINESYSTEM_API <a class="code" href="class_d_s_engine_app.html">DSEngineApp</a></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;{</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <a class="code" href="class_d_s_engine_app.html">DSEngineApp</a>();</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="class_d_s_engine_app.html">DSEngineApp</a>();</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <a class="code" href="class_d_s_engine_app.html">DSEngineApp</a>(<span class="keyword">const</span> <a class="code" href="class_d_s_engine_app.html">DSEngineApp</a>&amp; v) = <span class="keyword">delete</span>;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <a class="code" href="class_d_s_engine_app.html">DSEngineApp</a>(<a class="code" href="class_d_s_engine_app.html">DSEngineApp</a>&amp;&amp; v) = <span class="keyword">delete</span>;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <a class="code" href="class_d_s_engine_app.html">DSEngineApp</a>&amp; operator=(<span class="keyword">const</span> <a class="code" href="class_d_s_engine_app.html">DSEngineApp</a>&amp; v) = <span class="keyword">delete</span>;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <a class="code" href="class_d_s_engine_app.html">DSEngineApp</a>&amp; operator=(<a class="code" href="class_d_s_engine_app.html">DSEngineApp</a>&amp;&amp; v) = <span class="keyword">delete</span>;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> Init(HINSTANCE hInstance, LPWSTR lpCmdLine, HWND hWnd, <span class="keywordtype">int</span> screenWidth, <span class="keywordtype">int</span> screenHeight);</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <span class="keywordtype">void</span> Loop();</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
+<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="class_d_s_engine_app.html">   25</a></span>&#160;<span class="keyword">class </span>DSENGINESYSTEM_API <a class="code" href="class_d_s_engine_app.html">DSEngineApp</a></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;{</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <a class="code" href="class_d_s_engine_app.html">DSEngineApp</a>();</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="class_d_s_engine_app.html">DSEngineApp</a>();</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <a class="code" href="class_d_s_engine_app.html">DSEngineApp</a>(<span class="keyword">const</span> <a class="code" href="class_d_s_engine_app.html">DSEngineApp</a>&amp; v) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <a class="code" href="class_d_s_engine_app.html">DSEngineApp</a>(<a class="code" href="class_d_s_engine_app.html">DSEngineApp</a>&amp;&amp; v) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <a class="code" href="class_d_s_engine_app.html">DSEngineApp</a>&amp; operator=(<span class="keyword">const</span> <a class="code" href="class_d_s_engine_app.html">DSEngineApp</a>&amp; v) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <a class="code" href="class_d_s_engine_app.html">DSEngineApp</a>&amp; operator=(<a class="code" href="class_d_s_engine_app.html">DSEngineApp</a>&amp;&amp; v) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> Init(HINSTANCE hInstance, LPWSTR lpCmdLine, HWND hWnd, <span class="keywordtype">int</span> screenWidth, <span class="keywordtype">int</span> screenHeight);</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <span class="keywordtype">void</span> Loop();</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;};</div>
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <a class="code" href="class_d_s_s_rendering.html">DSSRendering</a> renderingSystem;</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;};</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="keyword">extern</span> DSENGINESYSTEM_API <a class="code" href="class_d_s_engine_app.html">DSEngineApp</a>* <a class="code" href="_d_s_engine_app_8h.html#af3e554f7b3f2b1bd73fc688b0f98cbf2">App</a>;</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;</div>
-<div class="ttc" id="class_d_s_s_rendering_html"><div class="ttname"><a href="class_d_s_s_rendering.html">DSSRendering</a></div><div class="ttdoc">The Rendering System of the DS Engine. </div><div class="ttdef"><b>Definition:</b> DSSRendering.h:24</div></div>
-<div class="ttc" id="_d_s_f_logging_8h_html"><div class="ttname"><a href="_d_s_f_logging_8h.html">DSFLogging.h</a></div><div class="ttdoc">Defines the logging system with boost::log. </div></div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="keyword">extern</span> DSENGINESYSTEM_API <a class="code" href="class_d_s_engine_app.html">DSEngineApp</a>* <a class="code" href="_d_s_engine_app_8h.html#af3e554f7b3f2b1bd73fc688b0f98cbf2">App</a>;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;</div>
 <div class="ttc" id="_d_s_engine_app_8h_html_af3e554f7b3f2b1bd73fc688b0f98cbf2"><div class="ttname"><a href="_d_s_engine_app_8h.html#af3e554f7b3f2b1bd73fc688b0f98cbf2">App</a></div><div class="ttdeci">DSENGINESYSTEM_API DSEngineApp * App</div><div class="ttdoc">The pointer that points to the singleton of the current game app. </div></div>
-<div class="ttc" id="class_d_s_engine_app_html"><div class="ttname"><a href="class_d_s_engine_app.html">DSEngineApp</a></div><div class="ttdoc">The app class. Game should derive from this. </div><div class="ttdef"><b>Definition:</b> DSEngineApp.h:27</div></div>
-<div class="ttc" id="_d_s_s_rendering_8h_html"><div class="ttname"><a href="_d_s_s_rendering_8h.html">DSSRendering.h</a></div><div class="ttdoc">This file declares the class for DSEngine Rendering System. </div></div>
+<div class="ttc" id="class_d_s_engine_app_html"><div class="ttname"><a href="class_d_s_engine_app.html">DSEngineApp</a></div><div class="ttdoc">The app class. Game should derive from this. </div><div class="ttdef"><b>Definition:</b> DSEngineApp.h:25</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

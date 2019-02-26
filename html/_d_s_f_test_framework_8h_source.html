@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>DS Engine: /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineSystem/DSSRendering.h File Reference</title>
+<title>DS Engine: /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFTestFramework.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -82,43 +82,38 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_c78a9f9d373ff97f507c8e2975adeceb.html">DSEngine</a></li><li class="navelem"><a class="el" href="dir_c4df4e509467d3b34db26e4a49d876b6.html">DSEngineSystem</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_c78a9f9d373ff97f507c8e2975adeceb.html">DSEngine</a></li><li class="navelem"><a class="el" href="dir_05866c34796a5a18a36475d6d5e9fc93.html">DSEngineFramework</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
-  <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
-<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">DSSRendering.h File Reference</div>  </div>
+<div class="title">DSFTestFramework.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>This file declares the class for DSEngine Rendering System.  
-<a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="_d_s_f_direct3_d_8h_source.html">DSFDirect3D.h</a>&quot;</code><br/>
-</div>
-<p><a href="_d_s_s_rendering_8h_source.html">Go to the source code of this file.</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_s_rendering.html">DSSRendering</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The Rendering System of the DS Engine.  <a href="class_d_s_s_rendering.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:a962bc50c744b9621808565c8d4f940a9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a962bc50c744b9621808565c8d4f940a9"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>DSENGINESYSTEM_API</b>&#160;&#160;&#160;__declspec(dllimport)</td></tr>
-<tr class="separator:a962bc50c744b9621808565c8d4f940a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>This file declares the class for DSEngine Rendering System. </p>
-<dl class="section author"><dt>Author</dt><dd>Victor Shu </dd></dl>
-<dl class="section version"><dt>Version</dt><dd>0.1 </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>2019/02/25</dd></dl>
-<dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2019 </dd></dl>
-</div></div><!-- contents -->
+<a href="_d_s_f_test_framework_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#pragma once</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#ifdef DSENGINEFRAMEWORK_EXPORTS</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define DSENGINEFRAMEWORK_API __declspec(dllexport)</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define DSENGINEFRAMEWORK_API __declspec(dllimport)</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="class_d_s_f_test_framework.html">   29</a></span>&#160;<span class="keyword">class </span>DSENGINEFRAMEWORK_API <a class="code" href="class_d_s_f_test_framework.html">DSFTestFramework</a></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;{</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <a class="code" href="class_d_s_f_test_framework.html">DSFTestFramework</a>(<span class="keywordtype">int</span> a, <span class="keywordtype">int</span> b);</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    ~<a class="code" href="class_d_s_f_test_framework.html">DSFTestFramework</a>();</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordtype">int</span> OutputAddResult() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keywordtype">int</span> aVal;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keywordtype">int</span> bVal;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;};</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
+<div class="ttc" id="class_d_s_f_test_framework_html"><div class="ttname"><a href="class_d_s_f_test_framework.html">DSFTestFramework</a></div><div class="ttdoc">This is a test framework class for DS Engine systems. </div><div class="ttdef"><b>Definition:</b> DSFTestFramework.h:29</div></div>
+</div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">
