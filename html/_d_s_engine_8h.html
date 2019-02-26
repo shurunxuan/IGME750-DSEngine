@@ -112,7 +112,7 @@ Macros</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:af88647598240bb5be393baafecf09ec9"><td class="memItemLeft" align="right" valign="top">INT DSENGINESYSTEM_API WINAPI&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_d_s_engine_8h.html#af88647598240bb5be393baafecf09ec9">DSEngine</a> (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)</td></tr>
-<tr class="memdesc:af88647598240bb5be393baafecf09ec9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forwarded entry point from the game app. Initialize the Win32 stuff. Actual game loop happens here.  <a href="#af88647598240bb5be393baafecf09ec9">More...</a><br/></td></tr>
+<tr class="memdesc:af88647598240bb5be393baafecf09ec9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forwarded entry point from the game app Initialize the Win32 stuff. Actual game loop happens here.  <a href="#af88647598240bb5be393baafecf09ec9">More...</a><br/></td></tr>
 <tr class="separator:af88647598240bb5be393baafecf09ec9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -158,17 +158,17 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Forwarded entry point from the game app. Initialize the Win32 stuff. Actual game loop happens here. </p>
+<p>Forwarded entry point from the game app Initialize the Win32 stuff. Actual game loop happens here. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">hInstance</td><td>Handle to the current instance of the application. </td></tr>
-    <tr><td class="paramname">hPrevInstance</td><td>Handle to the previous instance of the application. For a Win32-based application, this parameter is always NULL. </td></tr>
-    <tr><td class="paramname">lpCmdLine</td><td>Pointer to a null-terminated string specifying the command line for the application, excluding the program name. To retrieve the entire command line, use the GetCommandLine() function. </td></tr>
-    <tr><td class="paramname">nCmdShow</td><td>Specifies how the window is to be shown. </td></tr>
+    <tr><td class="paramname">hInstance</td><td>Handle to the current instance of the application </td></tr>
+    <tr><td class="paramname">hPrevInstance</td><td>Handle to the previous instance of the application. For a Win32-based application, this parameter is always NULL </td></tr>
+    <tr><td class="paramname">lpCmdLine</td><td>Pointer to a null-terminated string specifying the command line for the application, excluding the program name. To retrieve the entire command line, use the GetCommandLine() function </td></tr>
+    <tr><td class="paramname">nCmdShow</td><td>Specifies how the window is to be shown </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>If the function succeeds, terminating when it receives a WM_QUIT message, it should return the exit value contained in that message's wParam parameter. If the function terminates before entering the message loop, it should return zero. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>If the function succeeds, terminating when it receives a WM_QUIT message, it should return the exit value contained in that message's wParam parameter. If the function terminates before entering the message loop, it should return zero </dd></dl>
 
 </div>
 </div>
