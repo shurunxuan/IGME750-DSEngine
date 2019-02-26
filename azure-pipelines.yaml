@@ -1,12 +1,19 @@
+trigger:
+  batch: false # batch changes if true, start a new build for every push if false
+  branches:
+    exclude: [ gh-pages ] # branch names which will not
+
+pr:
+  autoCancel: false # indicates whether additional pushes to a PR should cancel in-progress runs for the same PR. Defaults to true
+  branches:
+    exclude: [ gh-pages ] # branch names which will not
+
 jobs:
 - job: Build with MSBuild
   timeoutInMinutes: 0
   cancelTimeoutInMinutes: 0
   strategy:
     maxParallel: 99
-    # note: `parallel` and `matrix` are mutually exclusive
-    # you may specify one or the other; including both is an error
-    parallel: 4
   pool:
     vmImage: Hosted VS2017
     demands:
@@ -31,13 +38,3 @@ jobs:
       vsVersion: 15.0
       platform: '$(BuildPlatform)'
       configuration: '$(BuildConfiguration)'
-      
-  trigger:
-    batch: false # batch changes if true, start a new build for every push if false
-    branches:
-      exclude: [ gh-pages ] # branch names which will not
-
-  pr:
-    autoCancel: false # indicates whether additional pushes to a PR should cancel in-progress runs for the same PR. Defaults to true
-    branches:
-      exclude: [ gh-pages ] # branch names which will not
