@@ -128,6 +128,9 @@ void DSFDirect3D::Draw(const float deltaTime, const float totalTime)
 	//  - Puts the final frame we're drawing into the window so the user can see it
 	//  - Do this exactly ONCE PER FRAME (always at the very end of the frame)
 	swapChain->Present(0, 0);
+
+	// Bind the views to the pipeline
+	context->OMSetRenderTargets(1, &backBufferRTV, depthStencilView);
 }
 
 HWND DSFDirect3D::GetWindowHandle() const
