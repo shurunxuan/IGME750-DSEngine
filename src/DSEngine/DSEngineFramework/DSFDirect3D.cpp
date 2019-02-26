@@ -1,4 +1,5 @@
 #include "DSFDirect3D.h"
+#include "DSFLogging.h"
 #include <iostream>
 
 DSFDirect3D::DSFDirect3D()
@@ -9,7 +10,6 @@ DSFDirect3D::DSFDirect3D()
 	backBufferRTV = nullptr;
 	depthStencilView = nullptr;
 	dxFeatureLevel = {};
-	OutputDebugString(TEXT("DS Engine Framework for Direct3D Constructor\n"));
 }
 
 
@@ -20,8 +20,6 @@ DSFDirect3D::~DSFDirect3D()
 	SAFE_RELEASE(swapChain);
 	SAFE_RELEASE(backBufferRTV);
 	SAFE_RELEASE(depthStencilView);
-
-	OutputDebugString(TEXT("DS Engine Framework for Direct3D Destructor\n"));
 }
 
 HRESULT DSFDirect3D::Init(HWND hWnd, unsigned int screenWidth, unsigned int screenHeight)
@@ -53,7 +51,7 @@ HRESULT DSFDirect3D::Init(HWND hWnd, unsigned int screenWidth, unsigned int scre
 	viewport.MaxDepth = 1.0f;
 	context->RSSetViewports(1, &viewport);
 
-	OutputDebugString(TEXT("DS Engine Framework for Direct3D Initialized!\n"));
+	LOG_TRACE << "DS Engine Framework for Direct3D Initialized!";
 	// Return the "everything is ok" HRESULT value
 	return S_OK;
 }

@@ -81,7 +81,7 @@ public:
 
 private:
 	/**
-	 * @brief Direct3D Framework instance 
+	 * @brief The Direct3D Framework reference 
 	 */
 	DSFDirect3D direct3D;
 };

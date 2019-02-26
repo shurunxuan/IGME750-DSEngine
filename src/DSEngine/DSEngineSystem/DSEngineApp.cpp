@@ -21,7 +21,7 @@ DSEngineApp::~DSEngineApp()
 bool DSEngineApp::Init(HINSTANCE hInstance, LPWSTR lpCmdLine, HWND hWnd, int screenWidth, int screenHeight)
 {
 	renderingSystem.Init(hWnd, screenWidth, screenHeight);
-	OutputDebugString(TEXT("DSEngineApp Init\n"));
+	LOG_TRACE << "DSEngineApp Init";
 	return true;
 }
 

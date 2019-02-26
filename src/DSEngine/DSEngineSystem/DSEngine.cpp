@@ -1,10 +1,3 @@
-#include <sstream>
-#include <iostream>
-#include <cstdio>
-#include <fcntl.h>
-#include <io.h>
-#include <iostream>
-#include <fstream>
 #include "DSEngine.h"
 #include "DSEngineApp.h"
 
@@ -14,16 +7,12 @@ LRESULT CALLBACK WindowProc(HWND hWnd,
 	WPARAM wParam,
 	LPARAM lParam);
 
-void CreateConsoleWindow(int bufferLines, int bufferColumns, int windowLines, int windowColumns);
-
 INT DSEngine(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
 {
+	InitLogger();
 	// Enable memory leak detection as a quick and dirty
 	// way of determining if we forgot to clean something up
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-
-	// Create console
-	CreateConsoleWindow(500, 120, 32, 120);
 
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
@@ -124,54 +113,4 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 
 	// Handle any messages the switch statement didn't
 	return DefWindowProc(hWnd, message, wParam, lParam);
-}
-
-void CreateConsoleWindow(int bufferLines, int bufferColumns, int windowLines, int windowColumns)
-{
-	// Our temp console info struct
-	CONSOLE_SCREEN_BUFFER_INFO coninfo;
-
-	// Get the console info and set the number of lines
-	AllocConsole();
-	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &coninfo);
-	coninfo.dwSize.Y = bufferLines;
-	coninfo.dwSize.X = bufferColumns;
-	SetConsoleScreenBufferSize(GetStdHandle(STD_OUTPUT_HANDLE), coninfo.dwSize);
-
-	SMALL_RECT rect;
-	rect.Left = 0;
-	rect.Top = 0;
-	rect.Right = windowColumns;
-	rect.Bottom = windowLines;
-	SetConsoleWindowInfo(GetStdHandle(STD_OUTPUT_HANDLE), TRUE, &rect);
-
-	// redirect unbuffered STDOUT to the console
-	long lStdHandle = long(GetStdHandle(STD_OUTPUT_HANDLE));
-	int hConHandle = _open_osfhandle(lStdHandle, _O_TEXT);
-	FILE* fp = _fdopen(hConHandle, "w");
-	*stdout = *fp;
-	setvbuf(stdout, nullptr, _IONBF, 0);
-
-	// redirect unbuffered STDIN to the console
-	lStdHandle = long(GetStdHandle(STD_INPUT_HANDLE));
-	hConHandle = _open_osfhandle(lStdHandle, _O_TEXT);
-	fp = _fdopen(hConHandle, "r");
-	*stdin = *fp;
-	setvbuf(stdin, nullptr, _IONBF, 0);
-
-	// redirect unbuffered STDERR to the console
-	lStdHandle = long(GetStdHandle(STD_ERROR_HANDLE));
-	hConHandle = _open_osfhandle(lStdHandle, _O_TEXT);
-	fp = _fdopen(hConHandle, "w");
-	*stderr = *fp;
-	setvbuf(stderr, nullptr, _IONBF, 0);
-
-	// make cout, wcout, cin, wcin, wcerr, cerr, wclog and clog
-	// point to console as well
-	std::ios::sync_with_stdio();
-
-	// Prevent accidental console window close
-	const HWND consoleHandle = GetConsoleWindow();
-	const HMENU hmenu = GetSystemMenu(consoleHandle, FALSE);
-	EnableMenuItem(hmenu, SC_CLOSE, MF_GRAYED);
 }

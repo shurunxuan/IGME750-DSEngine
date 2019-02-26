@@ -16,12 +16,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DSFTestFramework.h">
+    <ClInclude Include="DSFDirect3D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DSFDirect3D.h">
+    <ClInclude Include="DSFLogging.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -29,10 +30,10 @@
     <ClCompile Include="dllmain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DSFTestFramework.cpp">
+    <ClCompile Include="DSFDirect3D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DSFDirect3D.cpp">
+    <ClCompile Include="DSFLogging.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

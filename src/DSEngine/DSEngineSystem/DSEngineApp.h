@@ -19,6 +19,7 @@
 
 #include <Windows.h>
 #include "DSSRendering.h"
+#include "DSFLogging.h"
 
 /**
  * @brief The app class. Game should derive from this
@@ -92,6 +93,9 @@ public:
 	void Loop();
 
 private:
+	/**
+	 * @brief The Rendering System reference
+	 */
 	DSSRendering renderingSystem;
 };
 

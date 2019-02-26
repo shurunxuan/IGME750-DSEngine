@@ -8,7 +8,7 @@
 * @date 2019/02/06
 */
 
-#include <windows.h>
+#include <Windows.h>
 
 BOOL APIENTRY DllMain( HMODULE hModule,
                        DWORD  ul_reason_for_call,
@@ -19,7 +19,7 @@ BOOL APIENTRY DllMain( HMODULE hModule,
     {
     case DLL_PROCESS_ATTACH:
     case DLL_THREAD_ATTACH:
-    case DLL_THREAD_DETACH:
+	case DLL_THREAD_DETACH:
     case DLL_PROCESS_DETACH:
         break;
     }
