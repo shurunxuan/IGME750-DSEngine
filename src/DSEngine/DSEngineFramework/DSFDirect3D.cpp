@@ -72,7 +72,7 @@ HRESULT DSFDirect3D::CreateDeviceAndSwapBuffer()
 	// Create a description of how our swap
 	// chain should work
 	DXGI_SWAP_CHAIN_DESC swapDesc = {};
-	swapDesc.BufferCount = 1;
+	swapDesc.BufferCount = 2;
 	swapDesc.BufferDesc.Width = width;
 	swapDesc.BufferDesc.Height = height;
 	swapDesc.BufferDesc.RefreshRate.Numerator = 60;
@@ -85,7 +85,7 @@ HRESULT DSFDirect3D::CreateDeviceAndSwapBuffer()
 	swapDesc.OutputWindow = hWnd;
 	swapDesc.SampleDesc.Count = 1;
 	swapDesc.SampleDesc.Quality = 0;
-	swapDesc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
+	swapDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
 	swapDesc.Windowed = true;
 
 	// Attempt to initialize DirectX
