@@ -102,10 +102,38 @@ public:
 
 	/**
 	 * @brief Draw on screen
+	 * 
+	 * @param deltaTime The time cost by one frame
+	 * @param totalTime The time since the game started
 	 */
-	void Draw();
+	void Draw(float deltaTime, float totalTime);
 
-protected:
+    /**
+     * @brief Get the Window Handle
+     * 
+     * @return HWND Handle to window
+     */
+	HWND GetWindowHandle() const;
+    /**
+     * @brief Get the width of the window
+     * 
+     * @return unsigned int Width of the window
+     */
+	unsigned int GetWindowWidth() const;
+    /**
+     * @brief Get the height of the window
+     * 
+     * @return unsigned int Height of the window
+     */
+	unsigned int GetWindowHeight() const;
+    /**
+     * @brief Get Direct3D feature level
+     * 
+     * @return D3D_FEATURE_LEVEL Direct3D feature level
+     */
+	D3D_FEATURE_LEVEL GetD3DFeatureLevel() const;
+
+private:
     /**
      * @brief The handle to the window itself
      */
@@ -146,7 +174,6 @@ protected:
      */
     ID3D11DepthStencilView* depthStencilView;
 
-private:
     /**
      * @brief Create a Device And Swap Buffer object
      * 

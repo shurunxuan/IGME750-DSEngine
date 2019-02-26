@@ -9,19 +9,23 @@
 #include "DSFLogging.h"
 
 namespace logging = boost::log;
-namespace src = boost::log::sources;
 namespace expr = boost::log::expressions;
 namespace sinks = boost::log::sinks;
 
 void MessageFormatter(logging::record_view const& rec, logging::formatting_ostream& stream)
 {
-	stream << std::setw(0) << std::right << "<" << rec[logging::trivial::severity] << "> ";
+	std::stringstream ss0;
+	std::string severity;
+	ss0 << "<" << rec[logging::trivial::severity] << ">";
+	ss0 >> severity;
+	stream << std::setw(11) << std::right << severity;
+	stream << std::setw(0) << std::left << "   ";
 
-	std::stringstream ss;
+	std::stringstream ss1;
 	std::string file;
-	ss << '[' << logging::extract<std::string>("File", rec) << ':'
+	ss1 << "[" << logging::extract<std::string>("File", rec) << ':'
 		<< logging::extract<int>("Line", rec) << ']';
-	ss >> file;
+	ss1 >> file;
 
 	stream << std::setw(42) << std::left << file;
 
@@ -37,7 +41,7 @@ void TextFormatter(logging::record_view const& rec, logging::formatting_ostream&
 
 void DebugFormatter(logging::record_view const& rec, logging::formatting_ostream& stream)
 {
-	stream << "APPLICATION LOGGING:\t\t";
+	stream << "APPLICATION LOGGING: ";
 	MessageFormatter(rec, stream);
 	stream << std::endl;
 }

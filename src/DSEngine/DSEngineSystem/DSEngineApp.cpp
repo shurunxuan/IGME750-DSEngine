@@ -27,7 +27,15 @@ bool DSEngineApp::Init(HINSTANCE hInstance, LPWSTR lpCmdLine, HWND hWnd, int scr
 
 void DSEngineApp::Loop()
 {
-	renderingSystem.Update();
+	// Update frame time first
+	// This is managed by the rendering system
+	renderingSystem.UpdateTimer();
+	renderingSystem.UpdateTitleBarStats();
+
+	const float deltaTime = renderingSystem.GetDeltaTime();
+	const float totalTime = renderingSystem.GetTotalTime();
+
+	renderingSystem.Update(deltaTime, totalTime);
 	std::cout << "DSEngineApp::Loop()" << std::endl;
 }
 

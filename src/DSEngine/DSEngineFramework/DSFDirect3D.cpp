@@ -1,6 +1,7 @@
 #include "DSFDirect3D.h"
 #include "DSFLogging.h"
 #include <iostream>
+#include <sstream>
 
 DSFDirect3D::DSFDirect3D()
 {
@@ -100,7 +101,7 @@ HRESULT DSFDirect3D::OnResize(unsigned int screenWidth, unsigned int screenHeigh
 	return S_OK;
 }
 
-void DSFDirect3D::Draw()
+void DSFDirect3D::Draw(const float deltaTime, const float totalTime)
 {
 	// Tell the input assembler stage of the pipeline what kind of
 	// geometric primitives (points, lines or triangles) we want to draw.  
@@ -127,6 +128,26 @@ void DSFDirect3D::Draw()
 	//  - Puts the final frame we're drawing into the window so the user can see it
 	//  - Do this exactly ONCE PER FRAME (always at the very end of the frame)
 	swapChain->Present(0, 0);
+}
+
+HWND DSFDirect3D::GetWindowHandle() const
+{
+	return hWnd;
+}
+
+unsigned int DSFDirect3D::GetWindowWidth() const
+{
+	return width;
+}
+
+unsigned int DSFDirect3D::GetWindowHeight() const
+{
+	return height;
+}
+
+D3D_FEATURE_LEVEL DSFDirect3D::GetD3DFeatureLevel() const
+{
+	return dxFeatureLevel;
 }
 
 HRESULT DSFDirect3D::CreateDeviceAndSwapBuffer()

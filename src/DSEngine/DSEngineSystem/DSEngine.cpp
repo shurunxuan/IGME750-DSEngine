@@ -7,6 +7,9 @@ LRESULT CALLBACK WindowProc(HWND hWnd,
 	WPARAM wParam,
 	LPARAM lParam);
 
+const unsigned int initialWidth = 1366;
+const unsigned int initialHeight = 768;
+
 INT WINAPI DSEngine(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
 {
 	InitLogger();
@@ -34,17 +37,23 @@ INT WINAPI DSEngine(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLi
 	// register the window class
 	RegisterClassEx(&wc);
 
-	RECT wr = { 0, 0, 500, 400 };    // set the size, but not the position
+	RECT wr;
+	SetRect(&wr, 0, 0, initialWidth, initialHeight);
 	AdjustWindowRect(&wr, WS_OVERLAPPEDWINDOW, FALSE);    // adjust the size
 
+	// Center the window to the screen
+	RECT desktopRect;
+	GetClientRect(GetDesktopWindow(), &desktopRect);
+	const int centeredX = (desktopRect.right / 2) - (wr.right / 2);
+	const int centeredY = (desktopRect.bottom / 2) - (wr.bottom / 2);
 
 	// create the window and use the result as the handle
 	HWND hWnd = CreateWindowEx(NULL,
 		TEXT("DSEngine"), // name of the window class
 		TEXT("DSEngine App"), // title of the window
 		WS_OVERLAPPEDWINDOW, // window style
-		300, // x-position of the window
-		300, // y-position of the window
+		centeredX, // x-position of the window
+		centeredY, // y-position of the window
 		wr.right - wr.left,    // width of the window
 		wr.bottom - wr.top,    // height of the window
 		nullptr, // we have no parent window, NULL
@@ -56,7 +65,7 @@ INT WINAPI DSEngine(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLi
 	ShowWindow(hWnd, nCmdShow);
 
 	// TODO: Initialize DSEngineApp Here.
-	App->Init(hInstance, lpCmdLine, hWnd, wr.right - wr.left, wr.bottom - wr.top);
+	App->Init(hInstance, lpCmdLine, hWnd, initialWidth, initialHeight);
 
 
 	// enter the main loop:
