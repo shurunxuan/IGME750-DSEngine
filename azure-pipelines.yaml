@@ -15,7 +15,7 @@ jobs:
   strategy:
     maxParallel: 99
   pool:
-    vmImage: 'windows-2017'
+    vmImage: 'vs2017-win2016'
     demands:
     - msbuild
     - visualstudio
