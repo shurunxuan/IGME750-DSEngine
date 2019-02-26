@@ -7,7 +7,7 @@ LRESULT CALLBACK WindowProc(HWND hWnd,
 	WPARAM wParam,
 	LPARAM lParam);
 
-INT DSEngine(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
+INT WINAPI DSEngine(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
 {
 	InitLogger();
 	// Enable memory leak detection as a quick and dirty
