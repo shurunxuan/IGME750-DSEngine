@@ -193,12 +193,14 @@
   <ItemGroup>
     <ClInclude Include="DSEngine.h" />
     <ClInclude Include="DSEngineApp.h" />
+    <ClInclude Include="DSSAudio.h" />
     <ClInclude Include="DSSRendering.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="DSEngine.cpp" />
     <ClCompile Include="DSEngineApp.cpp" />
+    <ClCompile Include="DSSAudio.cpp" />
     <ClCompile Include="DSSRendering.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

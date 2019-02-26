@@ -19,7 +19,7 @@ DSSRendering::~DSSRendering()
 HRESULT DSSRendering::Init(HWND hWnd, unsigned int screenWidth, unsigned int screenHeight)
 {
 	HRESULT hr = direct3D.Init(hWnd, screenWidth, screenHeight);
-	LOG_TRACE << "DSEngine Rendering System Initialized!";
+	LOG_TRACE << "DS Engine Rendering System Initialized!";
 
 	// Grab the start time now that
 	// the game loop is going to run
