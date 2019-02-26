@@ -9,37 +9,41 @@
 #include "DSFLogging.h"
 
 namespace logging = boost::log;
-namespace src = boost::log::sources;
 namespace expr = boost::log::expressions;
 namespace sinks = boost::log::sinks;
 
-void MessageFormatter(logging::record_view const& rec, logging::formatting_ostream& strm)
+void MessageFormatter(logging::record_view const& rec, logging::formatting_ostream& stream)
 {
-	strm << std::setw(0) << std::right << "<" << rec[logging::trivial::severity] << "> ";
+	std::stringstream ss0;
+	std::string severity;
+	ss0 << "<" << rec[logging::trivial::severity] << ">";
+	ss0 >> severity;
+	stream << std::setw(11) << std::right << severity;
+	stream << std::setw(0) << std::left << "   ";
 
-	std::stringstream ss;
+	std::stringstream ss1;
 	std::string file;
-	ss << '[' << logging::extract<std::string>("File", rec) << ':'
+	ss1 << "[" << logging::extract<std::string>("File", rec) << ':'
 		<< logging::extract<int>("Line", rec) << ']';
-	ss >> file;
+	ss1 >> file;
 
-	strm << std::setw(42) << std::left << file;
+	stream << std::setw(42) << std::left << file;
 
-	strm << rec[expr::smessage];
+	stream << rec[expr::smessage];
 }
 
-void TextFormatter(logging::record_view const& rec, logging::formatting_ostream& strm)
+void TextFormatter(logging::record_view const& rec, logging::formatting_ostream& stream)
 {
 	auto date_time_formatter = expr::stream << expr::format_date_time<boost::posix_time::ptime>("TimeStamp", "%Y-%m-%d %H:%M:%S.%f: ");
-	date_time_formatter(rec, strm);
-	MessageFormatter(rec, strm);
+	date_time_formatter(rec, stream);
+	MessageFormatter(rec, stream);
 }
 
-void DebugFormatter(logging::record_view const& rec, logging::formatting_ostream& strm)
+void DebugFormatter(logging::record_view const& rec, logging::formatting_ostream& stream)
 {
-	strm << "APPLICATION LOGGING:\t\t";
-	MessageFormatter(rec, strm);
-	strm << std::endl;
+	stream << "APPLICATION LOGGING: ";
+	MessageFormatter(rec, stream);
+	stream << std::endl;
 }
 
 void InitLogger()

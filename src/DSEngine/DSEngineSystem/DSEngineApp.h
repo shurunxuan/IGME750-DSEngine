@@ -92,6 +92,11 @@ public:
 	 */
 	void Loop();
 
+	/**
+	 * @brief Get the Rendering System instance pointer
+	 */
+	DSSRendering* GetRenderingSystem();
+
 private:
 	/**
 	 * @brief The Rendering System reference

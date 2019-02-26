@@ -79,10 +79,87 @@ public:
 	 */
 	HRESULT Init(HWND hWnd, unsigned int screenWidth, unsigned int screenHeight);
 
+	/**
+	 * @brief Resize the rendering system
+	 *
+	 * @param screenWidth Screen width
+	 * @param screenHeight Screen height
+	 * @return S_OK if resize succeeded, or other
+	 */
+	HRESULT OnResize(unsigned int screenWidth, unsigned int screenHeight);
+
+	/**
+	 * @brief Update performance timer
+	 */
+	void UpdateTimer();
+
+	/**
+	 * @brief Puts debug info in the title bar
+	 */
+	void UpdateTitleBarStats();
+
+	/**
+	 * @brief Get the time cost by one frame
+	 *
+	 * @return Time cost by one frame
+	 */
+	float GetDeltaTime() const;
+
+	/**
+	 * @brief Get the time since the start of the game
+	 *
+	 * @return Time since the start of the game
+	 */
+	float GetTotalTime() const;
+
+	/**
+	 * @brief Update the rendering system every frame
+	 * 
+	 * @param deltaTime The time cost by one frame
+	 * @param totalTime The time since the game started
+	 * 
+	 * @todo This is currently a place holder that reroute the call to DSFDirect3D::Draw
+	 */
+	void Update(float deltaTime, float totalTime);
+
 private:
 	/**
 	 * @brief The Direct3D Framework reference 
 	 */
 	DSFDirect3D direct3D;
+
+	/**
+	 * @brief Performance counter
+	 */
+	double perfCounterSeconds;
+	/**
+	 * @brief Total time from the start of the game
+	 */
+	float totalTime;
+	/**
+	 * @brief The time of one frame
+	 */
+	float deltaTime;
+	/**
+	 * @brief Timestamp of the start of the game
+	 */
+	__int64 startTime;
+	/**
+	 * @brief Current timestamp
+	 */
+	__int64 currentTime;
+	/**
+	 * @brief Previous timestamp
+	 */
+	__int64 previousTime;
+
+	/**
+	 * @brief FPS frame counter
+	 */
+	int fpsFrameCount;
+	/**
+	 * @brief Time elapsed since last frame
+	 */
+	float fpsTimeElapsed;
 };
 

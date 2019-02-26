@@ -1,6 +1,7 @@
 #include "DSFDirect3D.h"
 #include "DSFLogging.h"
 #include <iostream>
+#include <sstream>
 
 DSFDirect3D::DSFDirect3D()
 {
@@ -56,6 +57,99 @@ HRESULT DSFDirect3D::Init(HWND hWnd, unsigned int screenWidth, unsigned int scre
 	return S_OK;
 }
 
+HRESULT DSFDirect3D::OnResize(unsigned int screenWidth, unsigned int screenHeight)
+{
+	width = screenWidth;
+	height = screenHeight;
+
+	if (!device)
+	{
+		LOG_WARNING << "Direct3D Device & Context not initialized. Skipping resize.";
+		return S_FALSE;
+	}
+
+	// Release existing DirectX views and buffers
+	if (depthStencilView) { depthStencilView->Release(); }
+	if (backBufferRTV) { backBufferRTV->Release(); }
+
+	HRESULT hr = ResizeSwapBuffers();
+	if (FAILED(hr)) return hr;
+
+	hr = CreateRenderTargetView();
+	if (FAILED(hr)) return hr;
+
+	hr = CreateDepthStencilView();
+	if (FAILED(hr)) return hr;
+
+	// Bind the views to the pipeline, so rendering properly 
+	// uses their underlying textures
+	context->OMSetRenderTargets(1, &backBufferRTV, depthStencilView);
+
+	// Lastly, set up a viewport so we render into
+	// to correct portion of the window
+	D3D11_VIEWPORT viewport = {};
+	viewport.TopLeftX = 0;
+	viewport.TopLeftY = 0;
+	viewport.Width = float(width);
+	viewport.Height = float(height);
+	viewport.MinDepth = 0.0f;
+	viewport.MaxDepth = 1.0f;
+	context->RSSetViewports(1, &viewport);
+
+	LOG_TRACE << "DS Engine Framework for Direct3D Resize, width = " << width << ", height = " << height;
+	// Return the "everything is ok" HRESULT value
+	return S_OK;
+}
+
+void DSFDirect3D::Draw(const float deltaTime, const float totalTime)
+{
+	// Tell the input assembler stage of the pipeline what kind of
+	// geometric primitives (points, lines or triangles) we want to draw.  
+	// Essentially: "What kind of shape should the GPU draw with our data?"
+	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	// Background color (Cornflower Blue in this case) for clearing
+	const float color[4] = { 0.4f, 0.6f, 0.75f, 0.0f };
+
+	// Clear the render target and depth buffer (erases what's on the screen)
+	//  - Do this ONCE PER FRAME
+	//  - At the beginning of Draw (before drawing *anything*)
+	context->ClearRenderTargetView(backBufferRTV, color);
+	context->ClearDepthStencilView(
+		depthStencilView,
+		D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL,
+		1.0f,
+		0);
+
+
+
+
+	// Present the back buffer to the user
+	//  - Puts the final frame we're drawing into the window so the user can see it
+	//  - Do this exactly ONCE PER FRAME (always at the very end of the frame)
+	swapChain->Present(0, 0);
+}
+
+HWND DSFDirect3D::GetWindowHandle() const
+{
+	return hWnd;
+}
+
+unsigned int DSFDirect3D::GetWindowWidth() const
+{
+	return width;
+}
+
+unsigned int DSFDirect3D::GetWindowHeight() const
+{
+	return height;
+}
+
+D3D_FEATURE_LEVEL DSFDirect3D::GetD3DFeatureLevel() const
+{
+	return dxFeatureLevel;
+}
+
 HRESULT DSFDirect3D::CreateDeviceAndSwapBuffer()
 {
 	// This will hold options for DirectX initialization
@@ -107,7 +201,7 @@ HRESULT DSFDirect3D::CreateDeviceAndSwapBuffer()
 HRESULT DSFDirect3D::CreateRenderTargetView()
 {
 	// The above function created the back buffer render target
-// for us, but we need a reference to it
+	// for us, but we need a reference to it
 	ID3D11Texture2D* backBufferTexture;
 	HRESULT hr = swapChain->GetBuffer(
 		0,
@@ -150,4 +244,15 @@ HRESULT DSFDirect3D::CreateDepthStencilView()
 	hr = device->CreateDepthStencilView(depthBufferTexture, nullptr, &depthStencilView);
 	depthBufferTexture->Release();
 	return hr;
+}
+
+HRESULT DSFDirect3D::ResizeSwapBuffers() const
+{
+	// Resize the underlying swap chain buffers
+	return swapChain->ResizeBuffers(
+		2,
+		width,
+		height,
+		DXGI_FORMAT_R8G8B8A8_UNORM,
+		0);
 }
