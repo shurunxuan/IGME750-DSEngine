@@ -9,13 +9,13 @@ pr:
     exclude: [ gh-pages ] # branch names which will not
 
 jobs:
-- job: Build with MSBuild
+- job: 'Build with MSBuild'
   timeoutInMinutes: 0
   cancelTimeoutInMinutes: 0
   strategy:
     maxParallel: 99
   pool:
-    vmImage: Hosted VS2017
+    vmImage: 'windows-2017'
     demands:
     - msbuild
     - visualstudio
