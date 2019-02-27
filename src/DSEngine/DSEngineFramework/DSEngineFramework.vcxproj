@@ -250,7 +250,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalDependencies>d3d11.lib;Xaudio2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;Xaudio2.lib;avcodec.lib;avdevice.lib;avfilter.lib;avformat.lib;avutil.lib;swresample.lib;swscale.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Manifest>
       <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
@@ -284,12 +284,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DSFDirect3D.h" />
+    <ClInclude Include="DSFFFmpeg.h" />
     <ClInclude Include="DSFLogging.h" />
     <ClInclude Include="DSFXAudio2.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="DSFDirect3D.cpp" />
+    <ClCompile Include="DSFFFmpeg.cpp" />
     <ClCompile Include="DSFLogging.cpp" />
     <ClCompile Include="DSFXAudio2.cpp" />
   </ItemGroup>

@@ -101,6 +101,33 @@ public:
 	 */
 	HRESULT CreateMasteringVoice();
 
+	/**
+	 * @brief Get the Mastering Voice Sample Rate
+	 * 
+	 * @return unsigned int Mastering voice sample rate
+	 */
+	unsigned int GetMasteringVoiceSampleRate() const;
+
+	/**
+	 * @brief Get the Mastering Voice Channel
+	 * 
+	 * @return unsigned int Mastering voice channel
+	 */
+	unsigned int GetMasteringVoiceChannel() const;
+
+	/**
+	 * @brief Create the source voice
+	 * 
+	 * @param ppSourceVoice The pointer to an output source voice pointer
+	 * @param pCallback The pointer to the client defined callback class
+	 *
+	 * @return HRESULT S_OK if creation succeed, or other
+	 */
+	HRESULT CreateSourceVoice(IXAudio2SourceVoice** ppSourceVoice, IXAudio2VoiceCallback* pCallback) const;
+
+	void StartSourceVoice(IXAudio2SourceVoice* pSourceVoice);
+	void StopSourceVoice(IXAudio2SourceVoice* pSourceVoice);
+
 private:
 	/**
 	 * @brief XAudio2 Engine
@@ -112,6 +139,4 @@ private:
 	 * 
 	 */
 	IXAudio2MasteringVoice* masterVoice;
-
 };
-

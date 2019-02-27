@@ -23,6 +23,10 @@ bool DSEngineApp::Init(HINSTANCE hInstance, LPWSTR lpCmdLine, HWND hWnd, int scr
 	audioSystem.Init();
 	renderingSystem.Init(hWnd, screenWidth, screenHeight);
 	LOG_TRACE << "DSEngineApp Init";
+
+	// Test play audio file
+	audioSystem.PlayAudioFile("test.flac");
+
 	return true;
 }
 

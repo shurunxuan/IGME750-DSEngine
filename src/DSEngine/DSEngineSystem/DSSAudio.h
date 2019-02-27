@@ -10,13 +10,14 @@
  */
 
 #pragma once
+#include "DSFXAudio2.h"
+#include "DSFFFmpeg.h"
 
 #ifdef DSENGINESYSTEM_EXPORTS
 #define DSENGINESYSTEM_API __declspec(dllexport)
 #else
 #define DSENGINESYSTEM_API __declspec(dllimport)
 #endif
-#include "DSFXAudio2.h"
 
 /**
  * @brief The Audio System of the DS Engine
@@ -76,11 +77,17 @@ public:
 	 */
 	void Init();
 
+	void OpenAudioFile(const char* filename);
+
+	// TODO: Test function, please delete!
+	void PlayAudioFile(const char* filename);
+
 private:
 	/**
 	 * @brief The XAudio2 Framework reference
 	 * 
 	 */
 	DSFXAudio2 xAudio2;
-};
 
+	DSFFFmpeg ffmpeg;
+};
