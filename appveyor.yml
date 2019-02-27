@@ -10,8 +10,11 @@ before_build:
   - nuget restore src/DSEngine/DSEngine.sln
 install:
   - vcpkg integrate install
-  - vcpkg install boost:{platform}-windows
-  - vcpkg install ffmpeg:{platform}-windows
+  - cmd: if "%platform%"=="Win32" set VCPKG_ARCH=x86-windows
+  - cmd: if "%platform%"=="x86"   set VCPKG_ARCH=x86-windows
+  - cmd: if "%platform%"=="x64"   set VCPKG_ARCH=x64-windows
+  - vcpkg install boost:%VCPKG_ARCH%
+  - vcpkg install ffmpeg:%VCPKG_ARCH%
 build:
   project: src/DSEngine/DSEngine.sln
   verbosity: minimal
