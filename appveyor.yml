@@ -10,8 +10,8 @@ before_build:
   - nuget restore src/DSEngine/DSEngine.sln
 install:
   - vcpkg integrate install
-  - vcpkg install boost:$(platform)-windows
-  - vcpkg install ffmpeg:$(platform)-windows
+  - vcpkg install boost:{platform}-windows
+  - vcpkg install ffmpeg:{platform}-windows
 build:
   project: src/DSEngine/DSEngine.sln
   verbosity: minimal
