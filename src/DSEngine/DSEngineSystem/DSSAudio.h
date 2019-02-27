@@ -10,6 +10,8 @@
  */
 
 #pragma once
+
+#include <boost/thread.hpp>
 #include "DSFXAudio2.h"
 #include "DSFFFmpeg.h"
 
@@ -81,6 +83,7 @@ public:
 
 	// TODO: Test function, please delete!
 	void PlayAudioFile(const char* filename);
+	void PlayAudioFileThread(const char* filename);
 
 private:
 	/**
@@ -90,4 +93,6 @@ private:
 	DSFXAudio2 xAudio2;
 
 	DSFFFmpeg ffmpeg;
+
+	boost::thread playThread;
 };

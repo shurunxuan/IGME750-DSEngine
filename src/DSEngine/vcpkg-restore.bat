@@ -27,3 +27,5 @@ ECHO Restoring package
 %_vcpkg% integrate install
 %_vcpkg% install boost:%_platform%-windows
 %_vcpkg% install ffmpeg:%_platform%-windows
+
+exit /b 0

@@ -25,17 +25,28 @@ void DSSAudio::OpenAudioFile(const char* filename)
 
 void DSSAudio::PlayAudioFile(const char* filename)
 {
+	LOG_TRACE << "Creating new thread for playing audio";
+	playThread = boost::thread(&DSSAudio::PlayAudioFileThread, this, filename);
+}
+
+void DSSAudio::PlayAudioFileThread(const char* filename)
+{
 	ffmpeg.OpenFile(filename);
 	IXAudio2SourceVoice* sourceVoice = nullptr;
 	DSFVoiceCallback callback;
 	xAudio2.CreateSourceVoice(&sourceVoice, &callback);
 	ffmpeg.SetXAudio2SourceVoice(sourceVoice);
 	ffmpeg.InitSoftwareResampler(xAudio2.GetMasteringVoiceChannel(), xAudio2.GetMasteringVoiceSampleRate());
-	xAudio2.StartSourceVoice(sourceVoice);
+	sourceVoice->Start();
+	LOG_TRACE << "Starting audio playback";
 	while (true)
 	{
 		int i = ffmpeg.BufferEnd();
-		WaitForSingleObject(callback.event, INFINITE);
-		if (i != 0) break;
+		if (i == 0) 
+			WaitForSingleObject(callback.event, INFINITE);
+		else 
+			break;
 	}
+	LOG_TRACE << "Stopping audio playback";
+	sourceVoice->Stop();
 }

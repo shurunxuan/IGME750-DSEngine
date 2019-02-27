@@ -97,16 +97,22 @@ int DSFFFmpeg::OpenFile(const char* filename)
 int DSFFFmpeg::ReadFrame()
 {
 	int ret = 0;
-	
+
 	do
 	{
 		av_packet_unref(&packet);
 		if ((ret = av_read_frame(formatCtx, &packet)) < 0) {
-			LOG_ERROR << "av_read_frame eof or error: " << AVERROR(ret);
-			LOG_INFO << "AVERROR_EOF = " << AVERROR(AVERROR_EOF);
+			if (AVERROR(ret) == AVERROR(AVERROR_EOF))
+			{
+				eof = true;
+			}
+			if (!eof)
+			{
+				LOG_ERROR << "av_read_frame eof or error: " << AVERROR(ret);
+			}
 			return ret;
 		}
-	} while (packet.stream_index != audioStream->index);
+	} while (packet.stream_index != audioStream->index && !eof);
 
 	// decode ES
 	if ((ret = avcodec_send_packet(codecCtx, &packet)) < 0) {
@@ -120,7 +126,7 @@ int DSFFFmpeg::ReadFrame()
 			return ret;
 		}
 	}
-	
+
 	//ret = swr_init(swr);
 	swr_buf_len = frame->nb_samples * frame->channels * 2; /* the 2 means S16 */
 
@@ -177,21 +183,20 @@ int DSFFFmpeg::BufferEnd()
 		{
 			return ret;
 		}
-		eof = AVERROR(ret) == AVERROR(AVERROR_EOF);
 
-		int flag;
+		unsigned flag;
 		if (!eof)
 		{
 			ret = ResampleFrame();
 			if (ret < 0) return ret;
-			memcpy(buf[buf_cnt], swr_buf, swr_buf_len);
 			flag = 0;
-		}		
+		}
 		else
 		{
-			memset(buf[buf_cnt], 0, MAX_AUDIO_FRAME_SIZE);
-			flag = XAUDIO2_END_OF_STREAM;
+			/*memset(buf[buf_cnt], 0, MAX_AUDIO_FRAME_SIZE);*/
+			return ret;
 		}
+		memcpy(buf[buf_cnt], swr_buf, swr_buf_len);
 		XAUDIO2_BUFFER buffer = { flag };
 		buffer.AudioBytes = swr_buf_len;
 		buffer.pAudioData = buf[buf_cnt];
@@ -202,6 +207,7 @@ int DSFFFmpeg::BufferEnd()
 		if (MAX_BUFFER_COUNT <= ++buf_cnt)
 			buf_cnt = 0;
 	}
+	if (eof) return AVERROR(AVERROR_EOF);
 	return 0;
 }
 
