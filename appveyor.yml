@@ -9,6 +9,10 @@ platform:
 before_build:
   - nuget restore src/DSEngine/DSEngine.sln
 install:
+  - cd C:\Tools\vcpkg
+  - git pull
+  - .\bootstrap-vcpkg.bat
+  - cd %APPVEYOR_BUILD_FOLDER%
   - vcpkg integrate install
   - cmd: if "%platform%"=="Win32" set VCPKG_ARCH=x86-windows
   - cmd: if "%platform%"=="x86"   set VCPKG_ARCH=x86-windows
