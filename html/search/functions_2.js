@@ -1,5 +1,12 @@
 var searchData=
 [
-  ['init',['Init',['../class_d_s_f_direct3_d.html#abf333267ea83872b3f5b1520bf659120',1,'DSFDirect3D::Init()'],['../class_d_s_engine_app.html#ab1638326ba6d4cc402e672a5691e6f05',1,'DSEngineApp::Init()'],['../class_d_s_s_rendering.html#ad87416d404590c79daff3606efc1a44b',1,'DSSRendering::Init()'],['../class_test_game_app.html#a1a56f6b8f4915d4117b1e3a425247302',1,'TestGameApp::Init()']]],
-  ['initlogger',['InitLogger',['../_d_s_f_logging_8h.html#abc90e19d5cba23fbf498bf2245266193',1,'DSFLogging.h']]]
+  ['getd3dfeaturelevel',['GetD3DFeatureLevel',['../class_d_s_f_direct3_d.html#a9df24a47e33191d979bbd262a527c049',1,'DSFDirect3D']]],
+  ['getdeltatime',['GetDeltaTime',['../class_d_s_s_rendering.html#a03b9a4be8276214504d88eb0c3832a05',1,'DSSRendering']]],
+  ['getmasteringvoicechannel',['GetMasteringVoiceChannel',['../class_d_s_f_x_audio2.html#a4f05c00124d1707ad0aaa740301299ce',1,'DSFXAudio2']]],
+  ['getmasteringvoicesamplerate',['GetMasteringVoiceSampleRate',['../class_d_s_f_x_audio2.html#ad76c643d5965215b47763834e78b7830',1,'DSFXAudio2']]],
+  ['getrenderingsystem',['GetRenderingSystem',['../class_d_s_engine_app.html#ac4ad90a0fc95f11161fdf7cd511efd79',1,'DSEngineApp']]],
+  ['gettotaltime',['GetTotalTime',['../class_d_s_s_rendering.html#a4055ae1315e0eecd0ad4577735912929',1,'DSSRendering']]],
+  ['getwindowhandle',['GetWindowHandle',['../class_d_s_f_direct3_d.html#a5a29dd50ca07c9ba0a353f1d7979b4da',1,'DSFDirect3D']]],
+  ['getwindowheight',['GetWindowHeight',['../class_d_s_f_direct3_d.html#a0502fbe367fb16a4ab81096b10dffcfe',1,'DSFDirect3D']]],
+  ['getwindowwidth',['GetWindowWidth',['../class_d_s_f_direct3_d.html#a5ccc2888c7c04c38d157aed67311e67d',1,'DSFDirect3D']]]
 ];
