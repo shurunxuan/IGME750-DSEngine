@@ -26,6 +26,11 @@ void DSSAudio::OpenAudioFile(const char* filename)
 void DSSAudio::PlayAudioFile(const char* filename)
 {
 	LOG_TRACE << "Creating new thread for playing audio";
+	/**
+	 * @todo Potential memory leaking when exit the program before the thread
+	 *		 that contains the logging system is terminated. Will fix this
+	 *	     when implementing thread pool.
+	 */
 	playThread = boost::thread(&DSSAudio::PlayAudioFileThread, this, filename);
 }
 
@@ -38,21 +43,21 @@ void DSSAudio::PlayAudioFileThread(const char* filename)
 	int sampleRate;
 	int bytesPerSample;
 	ffmpeg.InitSoftwareResampler(&channels, &sampleRate, &bytesPerSample);
-	//xAudio2.CreateSourceVoice(&sourceVoice, nullptr);
 	xAudio2.CreateSourceVoice(&sourceVoice, channels, sampleRate, bytesPerSample, &callback);
-	//ffmpeg.PlayFile(xAudio2.GetMasteringVoice(), sourceVoice, &callback);
-	ffmpeg.SetXAudio2SourceVoice(sourceVoice);
 	sourceVoice->Start();
 	LOG_TRACE << "Starting audio playback";
 	while (true)
 	{
-		int i = ffmpeg.BufferEnd();
+		int i = ffmpeg.SendBuffer(sourceVoice);
 		WaitForSingleObject(callback.bufferEvent, INFINITE);
 		if (i != 0)
 			break;
 	}
 	LOG_TRACE << "Waiting for the stream to end";
-	WaitForSingleObject(callback.streamEvent, INFINITE);
+	if (WaitForSingleObject(callback.streamEvent, 10000) == WAIT_TIMEOUT)
+	{
+		LOG_WARNING << "Timeout. Forcing the stream to end. Please check if the XAUDIO2_END_OF_STREAM flag is properly set.";
+	}
 	sourceVoice->Stop();
 	LOG_TRACE << "Stopping audio playback";
 	sourceVoice->FlushSourceBuffers();

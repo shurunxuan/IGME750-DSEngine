@@ -96,3 +96,4 @@ private:
 
 	boost::thread playThread;
 };
+

@@ -10,7 +10,6 @@
  */
 
 #pragma once
-#include "DSFXAudio2.h"
 
 extern "C"
 {
@@ -44,39 +43,20 @@ public:
 	void InitSoftwareResampler(int* channels, int* sampleRate, int* bytesPerSample);
 	int ResampleFrame();
 
-	void SetXAudio2SourceVoice(IXAudio2SourceVoice* sourceVoice);
-
-	int BufferEnd();
+	int SendBuffer(IXAudio2SourceVoice* sourceVoice);
 
 private:
-	AVFormatContext* formatCtx;
+	AVFormatContext* formatContext;
 	AVStream* audioStream;
 	AVCodec* codec;
-	AVCodecContext* codecCtx;
+	AVCodecContext* codecContext;
 	AVFrame* frame;
-	AVFrame* last_frame;
+	AVFrame* lastFrame;
 	AVPacket packet;
 	SwrContext* swr;
-	BYTE* swr_buf;
-	int swr_buf_len;
-	IXAudio2SourceVoice* sourceVoice;
-	BYTE** buf;
-	int buf_cnt;
-
-};
-
-class DSENGINEFRAMEWORK_API DSFVoiceCallback final : public IXAudio2VoiceCallback
-{
-public:
-	HANDLE bufferEvent;
-	HANDLE streamEvent;
-	DSFVoiceCallback();
-	~DSFVoiceCallback();
-	void STDMETHODCALLTYPE OnStreamEnd() override;
-	void STDMETHODCALLTYPE OnVoiceProcessingPassEnd() override;
-	void STDMETHODCALLTYPE OnVoiceProcessingPassStart(UINT32 samples) override;
-	void STDMETHODCALLTYPE OnBufferEnd(void* context) override;
-	void STDMETHODCALLTYPE OnBufferStart(void* context) override;
-	void STDMETHODCALLTYPE OnLoopEnd(void* context) override;
-	void STDMETHODCALLTYPE OnVoiceError(void* context, HRESULT Error) override;
+	BYTE* swrBuffer;
+	int swrBufferLength;
+	BYTE** buffer;
+	int bufferCount;
+	bool eof;
 };

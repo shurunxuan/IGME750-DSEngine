@@ -7,7 +7,7 @@ DSFXAudio2::DSFXAudio2()
 	xAudio2 = nullptr;
 	masterVoice = nullptr;
 
-	CoInitializeEx(NULL, COINIT_MULTITHREADED);
+	CoInitializeEx(nullptr, COINIT_MULTITHREADED);
 }
 
 
@@ -80,7 +80,45 @@ HRESULT DSFXAudio2::CreateSourceVoice(IXAudio2SourceVoice** ppSourceVoice, int c
 	return hr;
 }
 
-IXAudio2MasteringVoice* DSFXAudio2::GetMasteringVoice() const
+DSFVoiceCallback::DSFVoiceCallback() :
+	bufferEvent(CreateEvent(nullptr, FALSE, FALSE, nullptr)),
+	streamEvent(CreateEvent(nullptr, FALSE, FALSE, nullptr))
 {
-	return masterVoice;
+
+}
+
+DSFVoiceCallback::~DSFVoiceCallback()
+{
+	CloseHandle(bufferEvent);
+	CloseHandle(streamEvent);
+}
+
+void DSFVoiceCallback::OnStreamEnd()
+{
+	SetEvent(streamEvent);
+}
+
+void DSFVoiceCallback::OnVoiceProcessingPassEnd()
+{
+}
+
+void DSFVoiceCallback::OnVoiceProcessingPassStart(UINT32 samples)
+{
+}
+
+void DSFVoiceCallback::OnBufferEnd(void* context)
+{
+	SetEvent(bufferEvent);
+}
+
+void DSFVoiceCallback::OnBufferStart(void* context)
+{
+}
+
+void DSFVoiceCallback::OnLoopEnd(void* context)
+{
+}
+
+void DSFVoiceCallback::OnVoiceError(void* context, HRESULT Error)
+{
 }

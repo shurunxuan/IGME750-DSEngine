@@ -122,13 +122,11 @@ public:
 	 * @param channels The target channels of the source voice
 	 * @param sampleRate The target sample rate of the source voice
 	 * @param bytesPerSample The target bytes per sample of the source voice
-	 * @param pCallback The pointer to the client defined callback class
+	 * @param pCallback The pointer to the client defined callback class, default to nullptr
 	 *
 	 * @return HRESULT S_OK if creation succeed, or other
 	 */
 	HRESULT CreateSourceVoice(IXAudio2SourceVoice** ppSourceVoice, int channels, int sampleRate, int bytesPerSample, IXAudio2VoiceCallback* pCallback = nullptr) const;
-
-	IXAudio2MasteringVoice* GetMasteringVoice() const;
 
 private:
 	/**
@@ -141,4 +139,22 @@ private:
 	 * 
 	 */
 	IXAudio2MasteringVoice* masterVoice;
+};
+
+
+
+class DSENGINEFRAMEWORK_API DSFVoiceCallback final : public IXAudio2VoiceCallback
+{
+public:
+	HANDLE bufferEvent;
+	HANDLE streamEvent;
+	DSFVoiceCallback();
+	~DSFVoiceCallback();
+	void STDMETHODCALLTYPE OnStreamEnd() override;
+	void STDMETHODCALLTYPE OnVoiceProcessingPassEnd() override;
+	void STDMETHODCALLTYPE OnVoiceProcessingPassStart(UINT32 samples) override;
+	void STDMETHODCALLTYPE OnBufferEnd(void* context) override;
+	void STDMETHODCALLTYPE OnBufferStart(void* context) override;
+	void STDMETHODCALLTYPE OnLoopEnd(void* context) override;
+	void STDMETHODCALLTYPE OnVoiceError(void* context, HRESULT Error) override;
 };
