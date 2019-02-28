@@ -119,14 +119,16 @@ public:
 	 * @brief Create the source voice
 	 * 
 	 * @param ppSourceVoice The pointer to an output source voice pointer
+	 * @param channels The target channels of the source voice
+	 * @param sampleRate The target sample rate of the source voice
+	 * @param bytesPerSample The target bytes per sample of the source voice
 	 * @param pCallback The pointer to the client defined callback class
 	 *
 	 * @return HRESULT S_OK if creation succeed, or other
 	 */
-	HRESULT CreateSourceVoice(IXAudio2SourceVoice** ppSourceVoice, IXAudio2VoiceCallback* pCallback) const;
+	HRESULT CreateSourceVoice(IXAudio2SourceVoice** ppSourceVoice, int channels, int sampleRate, int bytesPerSample, IXAudio2VoiceCallback* pCallback = nullptr) const;
 
-	void StartSourceVoice(IXAudio2SourceVoice* pSourceVoice);
-	void StopSourceVoice(IXAudio2SourceVoice* pSourceVoice);
+	IXAudio2MasteringVoice* GetMasteringVoice() const;
 
 private:
 	/**

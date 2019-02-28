@@ -6,6 +6,8 @@ DSFXAudio2::DSFXAudio2()
 {
 	xAudio2 = nullptr;
 	masterVoice = nullptr;
+
+	CoInitializeEx(NULL, COINIT_MULTITHREADED);
 }
 
 
@@ -56,16 +58,16 @@ unsigned int DSFXAudio2::GetMasteringVoiceChannel() const
 	return voiceDetails.InputChannels;
 }
 
-HRESULT DSFXAudio2::CreateSourceVoice(IXAudio2SourceVoice** ppSourceVoice, IXAudio2VoiceCallback* pCallback) const
+HRESULT DSFXAudio2::CreateSourceVoice(IXAudio2SourceVoice** ppSourceVoice, int channels, int sampleRate, int bytesPerSample, IXAudio2VoiceCallback* pCallback) const
 {
 	WAVEFORMATEXTENSIBLE wfx;
 	memset(&wfx, 0, sizeof(WAVEFORMATEXTENSIBLE));
 
 	wfx.Format.wFormatTag = WAVE_FORMAT_PCM;
-	wfx.Format.nSamplesPerSec = GetMasteringVoiceSampleRate();
-	wfx.Format.nChannels = GetMasteringVoiceChannel();
-	wfx.Format.wBitsPerSample = 16;
-	wfx.Format.nBlockAlign = wfx.Format.nChannels * 16 / 8;
+	wfx.Format.nSamplesPerSec = sampleRate;
+	wfx.Format.nChannels = channels;
+	wfx.Format.wBitsPerSample = bytesPerSample * 8;
+	wfx.Format.nBlockAlign = wfx.Format.nChannels * bytesPerSample;
 	wfx.Format.nAvgBytesPerSec = wfx.Format.nSamplesPerSec * wfx.Format.nBlockAlign;
 	wfx.Format.cbSize = sizeof(WAVEFORMATEXTENSIBLE) - sizeof(WAVEFORMATEX);
 	wfx.Samples.wValidBitsPerSample = wfx.Format.wBitsPerSample;
@@ -78,12 +80,7 @@ HRESULT DSFXAudio2::CreateSourceVoice(IXAudio2SourceVoice** ppSourceVoice, IXAud
 	return hr;
 }
 
-void DSFXAudio2::StartSourceVoice(IXAudio2SourceVoice* pSourceVoice)
+IXAudio2MasteringVoice* DSFXAudio2::GetMasteringVoice() const
 {
-	pSourceVoice->Start();
-}
-
-void DSFXAudio2::StopSourceVoice(IXAudio2SourceVoice* pSourceVoice)
-{
-	pSourceVoice->Stop();
+	return masterVoice;
 }

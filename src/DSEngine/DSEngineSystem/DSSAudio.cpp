@@ -34,19 +34,26 @@ void DSSAudio::PlayAudioFileThread(const char* filename)
 	ffmpeg.OpenFile(filename);
 	IXAudio2SourceVoice* sourceVoice = nullptr;
 	DSFVoiceCallback callback;
-	xAudio2.CreateSourceVoice(&sourceVoice, &callback);
+	int channels;
+	int sampleRate;
+	int bytesPerSample;
+	ffmpeg.InitSoftwareResampler(&channels, &sampleRate, &bytesPerSample);
+	//xAudio2.CreateSourceVoice(&sourceVoice, nullptr);
+	xAudio2.CreateSourceVoice(&sourceVoice, channels, sampleRate, bytesPerSample, &callback);
+	//ffmpeg.PlayFile(xAudio2.GetMasteringVoice(), sourceVoice, &callback);
 	ffmpeg.SetXAudio2SourceVoice(sourceVoice);
-	ffmpeg.InitSoftwareResampler(xAudio2.GetMasteringVoiceChannel(), xAudio2.GetMasteringVoiceSampleRate());
 	sourceVoice->Start();
 	LOG_TRACE << "Starting audio playback";
 	while (true)
 	{
 		int i = ffmpeg.BufferEnd();
-		if (i == 0) 
-			WaitForSingleObject(callback.event, INFINITE);
-		else 
+		WaitForSingleObject(callback.bufferEvent, INFINITE);
+		if (i != 0)
 			break;
 	}
-	LOG_TRACE << "Stopping audio playback";
+	LOG_TRACE << "Waiting for the stream to end";
+	WaitForSingleObject(callback.streamEvent, INFINITE);
 	sourceVoice->Stop();
+	LOG_TRACE << "Stopping audio playback";
+	sourceVoice->FlushSourceBuffers();
 }

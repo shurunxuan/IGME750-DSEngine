@@ -2,7 +2,8 @@
 #include "DSFLogging.h"
 
 #define MAX_BUFFER_COUNT XAUDIO2_MAX_QUEUED_BUFFERS 
-#define MAX_AUDIO_FRAME_SIZE 192000
+//#define MAX_BUFFER_COUNT 2
+#define MAX_AUDIO_FRAME_SIZE 96000
 DSFFFmpeg::DSFFFmpeg()
 {
 	formatCtx = nullptr;
@@ -10,12 +11,12 @@ DSFFFmpeg::DSFFFmpeg()
 	codec = nullptr;
 	codecCtx = nullptr;
 	frame = nullptr;
+	last_frame = nullptr;
 	swr = nullptr;
 	packet = {};
 	swr_buf_len = MAX_AUDIO_FRAME_SIZE;
 	swr_buf = new BYTE[MAX_AUDIO_FRAME_SIZE];
 	sourceVoice = nullptr;
-	eof = false;
 	buf = new BYTE * [MAX_BUFFER_COUNT];
 	for (int i = 0; i < MAX_BUFFER_COUNT; ++i)
 		buf[i] = new BYTE[MAX_AUDIO_FRAME_SIZE];
@@ -29,7 +30,8 @@ DSFFFmpeg::~DSFFFmpeg()
 	avcodec_free_context(&codecCtx);
 	swr_free(&swr);
 	av_packet_unref(&packet);
-	av_frame_free(&frame);
+	//av_frame_free(&frame);
+	av_frame_free(&last_frame);
 	delete[] swr_buf;
 
 	for (int i = 0; i < MAX_BUFFER_COUNT; ++i)
@@ -104,21 +106,25 @@ int DSFFFmpeg::ReadFrame()
 		if ((ret = av_read_frame(formatCtx, &packet)) < 0) {
 			if (AVERROR(ret) == AVERROR(AVERROR_EOF))
 			{
-				eof = true;
+				av_packet_unref(&packet);
+				last_frame = frame;
+				swr_buf_len = last_frame->nb_samples * last_frame->channels * 2; /* the 2 means S16 */
+				LOG_TRACE << "End of audio file";
 			}
-			if (!eof)
+			else
 			{
-				LOG_ERROR << "av_read_frame eof or error: " << AVERROR(ret);
+				LOG_ERROR << "av_read_frame error: " << AVERROR(ret);
 			}
 			return ret;
 		}
-	} while (packet.stream_index != audioStream->index && !eof);
+	} while (packet.stream_index != audioStream->index);
 
 	// decode ES
 	if ((ret = avcodec_send_packet(codecCtx, &packet)) < 0) {
 		LOG_ERROR << "avcodec_send_packet error: " << AVERROR(ret);
 	}
 	av_packet_unref(&packet);
+	last_frame = frame;
 	frame = av_frame_alloc();
 	if ((ret = avcodec_receive_frame(codecCtx, frame)) < 0) {
 		if (ret != AVERROR(EAGAIN)) {
@@ -128,12 +134,14 @@ int DSFFFmpeg::ReadFrame()
 	}
 
 	//ret = swr_init(swr);
-	swr_buf_len = frame->nb_samples * frame->channels * 2; /* the 2 means S16 */
-
+	if (last_frame == nullptr)
+		swr_buf_len = 0;
+	else
+		swr_buf_len = last_frame->nb_samples * last_frame->channels * av_get_bytes_per_sample(AVSampleFormat(frame->format)); /* the 2 means S16 */
 	return ret;
 }
 
-void DSFFFmpeg::InitSoftwareResampler(int channel, int sampleRate)
+void DSFFFmpeg::InitSoftwareResampler(int* channels, int* sampleRate, int* bytesPerSample)
 {
 	ReadFrame();
 	int ret = 0;
@@ -146,21 +154,24 @@ void DSFFFmpeg::InitSoftwareResampler(int channel, int sampleRate)
 	av_opt_set_int(swr, "out_channel_layout", frame->channel_layout, 0);
 	av_opt_set_int(swr, "in_sample_rate", frame->sample_rate, 0);
 	av_opt_set_sample_fmt(swr, "in_sample_fmt", AVSampleFormat(frame->format), 0);
-	av_opt_set_int(swr, "out_sample_rate", sampleRate, 0);
-	av_opt_set_sample_fmt(swr, "out_sample_fmt", AV_SAMPLE_FMT_S16, 0);
+	av_opt_set_int(swr, "out_sample_rate", frame->sample_rate, 0);
+	av_opt_set_sample_fmt(swr, "out_sample_fmt", AVSampleFormat(frame->format), 0);
 	ret = swr_init(swr);
-
 	if (ret < 0) {
 		LOG_ERROR << "swr_init error: " << AVERROR(ret);
 		return;
 	}
+	*channels = frame->channels;
+	*sampleRate = frame->sample_rate;
+	*bytesPerSample = av_get_bytes_per_sample(AVSampleFormat(frame->format));
 }
 
 int DSFFFmpeg::ResampleFrame()
 {
-	int ret = swr_convert(swr, &swr_buf, frame->nb_samples, const_cast<const uint8_t * *>(frame->data), frame->nb_samples);
-	av_frame_unref(frame);
-	av_frame_free(&frame);
+	if (last_frame == nullptr) return AVERROR_EOF;
+	int ret = swr_convert(swr, &swr_buf, last_frame->nb_samples, const_cast<const uint8_t * *>(last_frame->data), last_frame->nb_samples);
+	av_frame_unref(last_frame);
+	av_frame_free(&last_frame);
 	if (ret < 0) {
 		LOG_ERROR << "swr_convert error: " << AVERROR(ret);
 	}
@@ -174,55 +185,53 @@ void DSFFFmpeg::SetXAudio2SourceVoice(IXAudio2SourceVoice * sourceVoice)
 
 int DSFFFmpeg::BufferEnd()
 {
+
 	XAUDIO2_VOICE_STATE voiceState = {};
 	sourceVoice->GetState(&voiceState);
-	while (voiceState.BuffersQueued < MAX_BUFFER_COUNT && !eof)
+	while (voiceState.BuffersQueued < MAX_BUFFER_COUNT)
 	{
+		UINT flag = 0;
 		int ret = ReadFrame();
-		if (ret < 0 && AVERROR(ret) != AVERROR(AVERROR_EOF))
+		bool eof = AVERROR(ret) == AVERROR(AVERROR_EOF);
+		if (ret < 0 && !eof)
 		{
 			return ret;
 		}
-
-		unsigned flag;
-		if (!eof)
+		ret = ResampleFrame();
+		if (ret < 0 && !eof) return ret;
+		if (eof)
 		{
-			ret = ResampleFrame();
-			if (ret < 0) return ret;
-			flag = 0;
-		}
-		else
-		{
-			/*memset(buf[buf_cnt], 0, MAX_AUDIO_FRAME_SIZE);*/
-			return ret;
+			flag = XAUDIO2_END_OF_STREAM;
 		}
 		memcpy(buf[buf_cnt], swr_buf, swr_buf_len);
 		XAUDIO2_BUFFER buffer = { flag };
 		buffer.AudioBytes = swr_buf_len;
 		buffer.pAudioData = buf[buf_cnt];
-
 		sourceVoice->SubmitSourceBuffer(&buffer);
 		sourceVoice->GetState(&voiceState);
-		//LOG_INFO << "OnBufferEnd";
 		if (MAX_BUFFER_COUNT <= ++buf_cnt)
 			buf_cnt = 0;
+		if (eof) return AVERROR_EOF;
 	}
-	if (eof) return AVERROR(AVERROR_EOF);
 	return 0;
 }
 
-DSFVoiceCallback::DSFVoiceCallback() : event(CreateEvent(nullptr, FALSE, FALSE, nullptr))
+DSFVoiceCallback::DSFVoiceCallback() :
+	bufferEvent(CreateEvent(nullptr, FALSE, FALSE, nullptr)),
+	streamEvent(CreateEvent(nullptr, FALSE, FALSE, nullptr))
 {
 
 }
 
 DSFVoiceCallback::~DSFVoiceCallback()
 {
-	CloseHandle(event);
+	CloseHandle(bufferEvent);
+	CloseHandle(streamEvent);
 }
 
 void DSFVoiceCallback::OnStreamEnd()
 {
+	SetEvent(streamEvent);
 }
 
 void DSFVoiceCallback::OnVoiceProcessingPassEnd()
@@ -235,7 +244,7 @@ void DSFVoiceCallback::OnVoiceProcessingPassStart(UINT32 samples)
 
 void DSFVoiceCallback::OnBufferEnd(void* context)
 {
-	SetEvent(event);
+	SetEvent(bufferEvent);
 }
 
 void DSFVoiceCallback::OnBufferStart(void* context)

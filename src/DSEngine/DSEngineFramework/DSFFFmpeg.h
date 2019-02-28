@@ -27,9 +27,7 @@ extern "C"
 #define DSENGINEFRAMEWORK_API __declspec(dllimport)
 #endif
 
-
-
-typedef void (*FFmpegCallback)(void*, unsigned char*, int);
+class DSFVoiceCallback;
 
 class DSENGINEFRAMEWORK_API DSFFFmpeg
 {
@@ -43,7 +41,7 @@ public:
 
 	int ReadFrame();
 
-	void InitSoftwareResampler(int channel, int sampleRate);
+	void InitSoftwareResampler(int* channels, int* sampleRate, int* bytesPerSample);
 	int ResampleFrame();
 
 	void SetXAudio2SourceVoice(IXAudio2SourceVoice* sourceVoice);
@@ -56,6 +54,7 @@ private:
 	AVCodec* codec;
 	AVCodecContext* codecCtx;
 	AVFrame* frame;
+	AVFrame* last_frame;
 	AVPacket packet;
 	SwrContext* swr;
 	BYTE* swr_buf;
@@ -63,13 +62,14 @@ private:
 	IXAudio2SourceVoice* sourceVoice;
 	BYTE** buf;
 	int buf_cnt;
-	bool eof;
+
 };
 
 class DSENGINEFRAMEWORK_API DSFVoiceCallback final : public IXAudio2VoiceCallback
 {
 public:
-	HANDLE event;
+	HANDLE bufferEvent;
+	HANDLE streamEvent;
 	DSFVoiceCallback();
 	~DSFVoiceCallback();
 	void STDMETHODCALLTYPE OnStreamEnd() override;
