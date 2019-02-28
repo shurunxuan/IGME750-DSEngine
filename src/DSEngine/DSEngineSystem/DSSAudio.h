@@ -79,11 +79,25 @@ public:
 	 */
 	void Init();
 
-	void OpenAudioFile(const char* filename);
+	/**
+	 * @brief Non-block version of playing an audio file
+     * 
+     * Creates a thread of PlayAudioFile function
+	 * 
+	 * @param filename Audio file name
+	 */
+	void PlayAudioFileNonBlock(const char* filename);
 
-	// TODO: Test function, please delete!
+    /**
+     * @brief Play an audio file
+     * 
+     * This function will block the thread. 
+     * If you want a non-block version,
+     * consider calling PlayAudioFileNonBlock.
+     * 
+     * @param filename Audio file name
+     */
 	void PlayAudioFile(const char* filename);
-	void PlayAudioFileThread(const char* filename);
 
 private:
 	/**
@@ -91,9 +105,18 @@ private:
 	 * 
 	 */
 	DSFXAudio2 xAudio2;
-
+    /**
+     * @brief The FFmpeg Framework reference
+     * 
+     * Can only play/decode one file at a time
+     * 
+     */
 	DSFFFmpeg ffmpeg;
 
+    /**
+     * @brief Thread for playing audio file.
+     * 
+     */
 	boost::thread playThread;
 };
 

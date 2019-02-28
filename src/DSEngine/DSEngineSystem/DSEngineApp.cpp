@@ -25,7 +25,7 @@ bool DSEngineApp::Init(HINSTANCE hInstance, LPWSTR lpCmdLine, HWND hWnd, int scr
 	LOG_TRACE << "DSEngineApp Init";
 
 	// Test play audio file
-	audioSystem.PlayAudioFile("test3.flac");
+	audioSystem.PlayAudioFileNonBlock("test3.flac");
 
 	return true;
 }

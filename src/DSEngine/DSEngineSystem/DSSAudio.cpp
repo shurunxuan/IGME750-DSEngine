@@ -18,12 +18,7 @@ void DSSAudio::Init()
 	LOG_TRACE << "DS Engine Audio System Initialized!";
 }
 
-void DSSAudio::OpenAudioFile(const char* filename)
-{
-	ffmpeg.OpenFile(filename);
-}
-
-void DSSAudio::PlayAudioFile(const char* filename)
+void DSSAudio::PlayAudioFileNonBlock(const char* filename)
 {
 	LOG_TRACE << "Creating new thread for playing audio";
 	/**
@@ -31,10 +26,10 @@ void DSSAudio::PlayAudioFile(const char* filename)
 	 *		 that contains the logging system is terminated. Will fix this
 	 *	     when implementing thread pool.
 	 */
-	playThread = boost::thread(&DSSAudio::PlayAudioFileThread, this, filename);
+	playThread = boost::thread(&DSSAudio::PlayAudioFile, this, filename);
 }
 
-void DSSAudio::PlayAudioFileThread(const char* filename)
+void DSSAudio::PlayAudioFile(const char* filename)
 {
 	ffmpeg.OpenFile(filename);
 	IXAudio2SourceVoice* sourceVoice = nullptr;
