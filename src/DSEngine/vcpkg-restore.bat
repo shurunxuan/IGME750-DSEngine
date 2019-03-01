@@ -1,6 +1,7 @@
 @REM Store args...
 set _platform=%1%
 set _solutionDir=%2%
+set _vcpkg=vcpkg
 
 if %_platform%==Win32 ( set _platform=x86 )
 
@@ -18,12 +19,13 @@ IF %ERRORLEVEL% NEQ 0 (
         git clone https://github.com/Microsoft/vcpkg.git %_solutionDir%vcpkg
         %_solutionDir%vcpkg\bootstrap-vcpkg.bat
     )
-    ECHO Restoring package
-    %_solutionDir%vcpkg\vcpkg.exe integrate install
-    %_solutionDir%vcpkg\vcpkg.exe install boost:%_platform%-windows
+    set _vcpkg=%_solutionDir%vcpkg\vcpkg.exe
 ) else (
     ECHO Using pre-installed vcpkg.
-    ECHO Restoring package
-    vcpkg integrate install
-    vcpkg install boost:%_platform%-windows
 )
+ECHO Restoring package
+%_vcpkg% integrate install
+%_vcpkg% install boost:%_platform%-windows
+%_vcpkg% install ffmpeg:%_platform%-windows
+
+exit /b 0

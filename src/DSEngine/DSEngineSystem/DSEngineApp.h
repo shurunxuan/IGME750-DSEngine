@@ -20,6 +20,7 @@
 #include <Windows.h>
 #include "DSSRendering.h"
 #include "DSFLogging.h"
+#include "DSSAudio.h"
 
 /**
  * @brief The app class. Game should derive from this
@@ -102,6 +103,11 @@ private:
 	 * @brief The Rendering System reference
 	 */
 	DSSRendering renderingSystem;
+
+	/**
+	 * @brief The Audio System reference
+	 */
+	DSSAudio audioSystem;
 };
 
 /**

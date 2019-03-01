@@ -20,8 +20,13 @@ DSEngineApp::~DSEngineApp()
 
 bool DSEngineApp::Init(HINSTANCE hInstance, LPWSTR lpCmdLine, HWND hWnd, int screenWidth, int screenHeight)
 {
+	audioSystem.Init();
 	renderingSystem.Init(hWnd, screenWidth, screenHeight);
 	LOG_TRACE << "DSEngineApp Init";
+
+	// Test play audio file
+	audioSystem.PlayAudioFileNonBlock("test3.flac");
+
 	return true;
 }
 

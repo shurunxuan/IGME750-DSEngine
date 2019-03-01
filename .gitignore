@@ -330,3 +330,9 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+/src/DSEngine/DSEngineTestProject/test.flac
+/src/DSEngine/DSEngineTestProject/test3.flac
+/src/DSEngine/DSEngineTestProject/test2.flac
+/src/DSEngine/DSEngineTestProject/test.wav
+/src/DSEngine/DSEngineTestProject/test.mp3
+/src/DSEngine/DSEngineTestProject/test.m4a
