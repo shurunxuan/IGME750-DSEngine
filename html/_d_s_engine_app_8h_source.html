@@ -102,43 +102,38 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &lt;Windows.h&gt;</span></div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_d_s_s_rendering_8h.html">DSSRendering.h</a>&quot;</span></div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_d_s_f_logging_8h.html">DSFLogging.h</a>&quot;</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_d_s_s_audio_8h.html">DSSAudio.h</a>&quot;</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
-<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="class_d_s_engine_app.html">   28</a></span>&#160;<span class="keyword">class </span>DSENGINESYSTEM_API <a class="code" href="class_d_s_engine_app.html">DSEngineApp</a></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;{</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <a class="code" href="class_d_s_engine_app.html">DSEngineApp</a>();</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="class_d_s_engine_app.html">DSEngineApp</a>();</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <a class="code" href="class_d_s_engine_app.html">DSEngineApp</a>(<span class="keyword">const</span> <a class="code" href="class_d_s_engine_app.html">DSEngineApp</a>&amp; v) = <span class="keyword">delete</span>;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <a class="code" href="class_d_s_engine_app.html">DSEngineApp</a>(<a class="code" href="class_d_s_engine_app.html">DSEngineApp</a>&amp;&amp; v) = <span class="keyword">delete</span>;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <a class="code" href="class_d_s_engine_app.html">DSEngineApp</a>&amp; operator=(<span class="keyword">const</span> <a class="code" href="class_d_s_engine_app.html">DSEngineApp</a>&amp; v) = <span class="keyword">delete</span>;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <a class="code" href="class_d_s_engine_app.html">DSEngineApp</a>&amp; operator=(<a class="code" href="class_d_s_engine_app.html">DSEngineApp</a>&amp;&amp; v) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
+<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="class_d_s_engine_app.html">   27</a></span>&#160;<span class="keyword">class </span>DSENGINESYSTEM_API <a class="code" href="class_d_s_engine_app.html">DSEngineApp</a></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;{</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <a class="code" href="class_d_s_engine_app.html">DSEngineApp</a>();</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="class_d_s_engine_app.html">DSEngineApp</a>();</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <a class="code" href="class_d_s_engine_app.html">DSEngineApp</a>(<span class="keyword">const</span> <a class="code" href="class_d_s_engine_app.html">DSEngineApp</a>&amp; v) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <a class="code" href="class_d_s_engine_app.html">DSEngineApp</a>(<a class="code" href="class_d_s_engine_app.html">DSEngineApp</a>&amp;&amp; v) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <a class="code" href="class_d_s_engine_app.html">DSEngineApp</a>&amp; operator=(<span class="keyword">const</span> <a class="code" href="class_d_s_engine_app.html">DSEngineApp</a>&amp; v) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <a class="code" href="class_d_s_engine_app.html">DSEngineApp</a>&amp; operator=(<a class="code" href="class_d_s_engine_app.html">DSEngineApp</a>&amp;&amp; v) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> Init(HINSTANCE hInstance, LPWSTR lpCmdLine, HWND hWnd, <span class="keywordtype">int</span> screenWidth, <span class="keywordtype">int</span> screenHeight);</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keywordtype">void</span> Loop();</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <a class="code" href="class_d_s_s_rendering.html">DSSRendering</a>* GetRenderingSystem();</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    <a class="code" href="class_d_s_s_rendering.html">DSSRendering</a> renderingSystem;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> Init(HINSTANCE hInstance, LPWSTR lpCmdLine, HWND hWnd, <span class="keywordtype">int</span> screenWidth, <span class="keywordtype">int</span> screenHeight);</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <span class="keywordtype">void</span> Loop();</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    <a class="code" href="class_d_s_s_rendering.html">DSSRendering</a>* GetRenderingSystem();</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <a class="code" href="class_d_s_s_rendering.html">DSSRendering</a> renderingSystem;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;};</div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    <a class="code" href="class_d_s_s_audio.html">DSSAudio</a> audioSystem;</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;};</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="keyword">extern</span> DSENGINESYSTEM_API <a class="code" href="class_d_s_engine_app.html">DSEngineApp</a>* <a class="code" href="_d_s_engine_app_8h.html#af3e554f7b3f2b1bd73fc688b0f98cbf2">App</a>;</div>
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="keyword">extern</span> DSENGINESYSTEM_API <a class="code" href="class_d_s_engine_app.html">DSEngineApp</a>* <a class="code" href="_d_s_engine_app_8h.html#af3e554f7b3f2b1bd73fc688b0f98cbf2">App</a>;</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;</div>
 <div class="ttc" id="class_d_s_s_rendering_html"><div class="ttname"><a href="class_d_s_s_rendering.html">DSSRendering</a></div><div class="ttdoc">The Rendering System of the DS Engine. </div><div class="ttdef"><b>Definition:</b> DSSRendering.h:24</div></div>
 <div class="ttc" id="_d_s_f_logging_8h_html"><div class="ttname"><a href="_d_s_f_logging_8h.html">DSFLogging.h</a></div><div class="ttdoc">Defines the logging system with boost::log. </div></div>
 <div class="ttc" id="_d_s_engine_app_8h_html_af3e554f7b3f2b1bd73fc688b0f98cbf2"><div class="ttname"><a href="_d_s_engine_app_8h.html#af3e554f7b3f2b1bd73fc688b0f98cbf2">App</a></div><div class="ttdeci">DSENGINESYSTEM_API DSEngineApp * App</div><div class="ttdoc">The pointer that points to the singleton of the current game app. </div></div>
-<div class="ttc" id="class_d_s_engine_app_html"><div class="ttname"><a href="class_d_s_engine_app.html">DSEngineApp</a></div><div class="ttdoc">The app class. Game should derive from this. </div><div class="ttdef"><b>Definition:</b> DSEngineApp.h:28</div></div>
-<div class="ttc" id="class_d_s_s_audio_html"><div class="ttname"><a href="class_d_s_s_audio.html">DSSAudio</a></div><div class="ttdoc">The Audio System of the DS Engine. </div><div class="ttdef"><b>Definition:</b> DSSAudio.h:28</div></div>
-<div class="ttc" id="_d_s_s_audio_8h_html"><div class="ttname"><a href="_d_s_s_audio_8h.html">DSSAudio.h</a></div><div class="ttdoc">This file declares the class for DSEngine Audio System. </div></div>
+<div class="ttc" id="class_d_s_engine_app_html"><div class="ttname"><a href="class_d_s_engine_app.html">DSEngineApp</a></div><div class="ttdoc">The app class. Game should derive from this. </div><div class="ttdef"><b>Definition:</b> DSEngineApp.h:27</div></div>
 <div class="ttc" id="_d_s_s_rendering_8h_html"><div class="ttname"><a href="_d_s_s_rendering_8h.html">DSSRendering.h</a></div><div class="ttdoc">This file declares the class for DSEngine Rendering System. </div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
