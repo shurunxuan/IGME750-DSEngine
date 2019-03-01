@@ -131,7 +131,7 @@
       </TreatOutputAsContent>
     </CustomBuildStep>
     <PreBuildEvent>
-      <Command>call $(SolutionDir)vcpkg-restore.bat $(PlatformShortName) $(SolutionDir)</Command>
+      <Command>call "$(SolutionDir)vcpkg-restore.bat" $(PlatformShortName) "$(SolutionDir)"</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Restore vcpkg packages</Message>
@@ -175,7 +175,7 @@
       </TreatOutputAsContent>
     </CustomBuildStep>
     <PreBuildEvent>
-      <Command>call $(SolutionDir)vcpkg-restore.bat $(PlatformShortName) $(SolutionDir)</Command>
+      <Command>call "$(SolutionDir)vcpkg-restore.bat" $(PlatformShortName) "$(SolutionDir)"</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Restore vcpkg packages</Message>
@@ -223,7 +223,7 @@
       </TreatOutputAsContent>
     </CustomBuildStep>
     <PreBuildEvent>
-      <Command>call $(SolutionDir)vcpkg-restore.bat $(PlatformShortName) $(SolutionDir)</Command>
+      <Command>call "$(SolutionDir)vcpkg-restore.bat" $(PlatformShortName) "$(SolutionDir)"</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Restore vcpkg packages</Message>
@@ -271,7 +271,7 @@
       </TreatOutputAsContent>
     </CustomBuildStep>
     <PreBuildEvent>
-      <Command>call $(SolutionDir)vcpkg-restore.bat $(PlatformShortName) $(SolutionDir)</Command>
+      <Command>call "$(SolutionDir)vcpkg-restore.bat" $(PlatformShortName) "$(SolutionDir)"</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Restore vcpkg packages</Message>
