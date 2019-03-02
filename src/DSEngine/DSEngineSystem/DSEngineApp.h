@@ -108,6 +108,11 @@ private:
 	 * @brief The Audio System reference
 	 */
 	DSSAudio audioSystem;
+
+	/**
+	 * @brief Temporary audio playback thread for testing
+	 */
+	boost::thread playbackThread;
 };
 
 /**

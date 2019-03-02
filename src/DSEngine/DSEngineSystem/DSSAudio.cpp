@@ -18,7 +18,7 @@ void DSSAudio::Init()
 	LOG_TRACE << "DS Engine Audio System Initialized!";
 }
 
-void DSSAudio::PlayAudioFileNonBlock(const char* filename)
+void DSSAudio::PlayAudioFileNonBlock(const char* filename, boost::thread& playbackThread)
 {
 	LOG_TRACE << "Creating new thread for playing audio";
 	/**
@@ -26,7 +26,7 @@ void DSSAudio::PlayAudioFileNonBlock(const char* filename)
 	 *		 that contains the logging system is terminated. Will fix this
 	 *	     when implementing thread pool.
 	 */
-	playThread = boost::thread(&DSSAudio::PlayAudioFile, this, filename);
+	playbackThread = boost::thread(&DSSAudio::PlayAudioFile, this, filename);
 }
 
 void DSSAudio::PlayAudioFile(const char* filename)
@@ -56,19 +56,33 @@ void DSSAudio::PlayAudioFile(const char* filename)
 
 	LOG_TRACE << "Starting audio playback";
 
-	while (true)
+	try
 	{
-		// If the source voice is going to be starved, decode & send buffer with FFmpeg
-		int i = ffmpeg.SendBuffer(sourceVoice);
+		while (true)
+		{
+			// If the source voice is going to be starved, decode & send buffer with FFmpeg
+			int i = ffmpeg.SendBuffer(sourceVoice);
 
-		// Waiting for the source voice buffer to end
-		WaitForSingleObject(callback.bufferEvent, INFINITE);
+			boost::this_thread::interruption_point();
+			
+			// Waiting for the source voice buffer to end
+			WaitForSingleObject(callback.bufferEvent, INFINITE);
 
-		// If FFmpeg hit the end of file, break the loop
-		if (i != 0)
-			break;
+			// If FFmpeg hit the end of file, break the loop
+			if (i != 0)
+				break;
+		}
 	}
+	catch (boost::thread_interrupted const& tie)
+	{
+		LOG_WARNING << "Audio playback thread interrupted! Stopping source voice";
+		// Stop the source voice
+		sourceVoice->Stop();
 
+		LOG_TRACE << "Stopping audio playback";
+
+		return;
+	}
 	LOG_TRACE << "Waiting for the stream to end";
 
 	// Waiting the source voice stream to end

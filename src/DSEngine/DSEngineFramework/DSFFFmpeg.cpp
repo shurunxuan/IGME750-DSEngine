@@ -33,11 +33,9 @@ DSFFFmpeg::~DSFFFmpeg()
 	av_packet_unref(&packet);
 	if (lastFrame != nullptr)
 		av_frame_free(&lastFrame);
-	av_frame_unref(frame);
-	if (!eof)
-	{
+	if (frame != nullptr && !eof)
 		av_frame_free(&frame);
-	}
+
 	delete[] swrBuffer;
 
 	for (int i = 0; i < MAX_BUFFER_COUNT; ++i)
@@ -237,9 +235,8 @@ int DSFFFmpeg::ResampleFrame()
 	// First resample, lastFrame is null, do nothing
 	if (lastFrame == nullptr) return -1;
 	// Resample the frame
-	int ret = swr_convert(swr, &swrBuffer, lastFrame->nb_samples, const_cast<const uint8_t**>(lastFrame->data), lastFrame->nb_samples);
+	int ret = swr_convert(swr, &swrBuffer, lastFrame->nb_samples, const_cast<const uint8_t * *>(lastFrame->data), lastFrame->nb_samples);
 	// We got the resampled frame buffer thus we don't need the frame anymore.
-	av_frame_unref(lastFrame);
 	av_frame_free(&lastFrame);
 
 	if (ret < 0) {

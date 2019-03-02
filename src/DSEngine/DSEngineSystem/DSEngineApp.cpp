@@ -16,6 +16,11 @@ DSEngineApp::DSEngineApp()
 
 DSEngineApp::~DSEngineApp()
 {
+	if (playbackThread.joinable())
+	{
+		playbackThread.interrupt();
+		playbackThread.join();
+	}
 }
 
 bool DSEngineApp::Init(HINSTANCE hInstance, LPWSTR lpCmdLine, HWND hWnd, int screenWidth, int screenHeight)
@@ -25,7 +30,7 @@ bool DSEngineApp::Init(HINSTANCE hInstance, LPWSTR lpCmdLine, HWND hWnd, int scr
 	LOG_TRACE << "DSEngineApp Init";
 
 	// Test play audio file
-	audioSystem.PlayAudioFileNonBlock("test3.flac");
+	audioSystem.PlayAudioFileNonBlock("test3.flac", playbackThread);
 
 	return true;
 }
