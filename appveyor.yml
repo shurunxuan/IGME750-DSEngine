@@ -15,7 +15,7 @@ install:
   - cd %APPVEYOR_BUILD_FOLDER%
   - vcpkg integrate install
   - vcpkg update
-  - vcpkg upgrade
+  - vcpkg upgrade --no-dry-run
   - cmd: if "%platform%"=="Win32" set VCPKG_ARCH=x86-windows
   - cmd: if "%platform%"=="x86"   set VCPKG_ARCH=x86-windows
   - cmd: if "%platform%"=="x64"   set VCPKG_ARCH=x64-windows
