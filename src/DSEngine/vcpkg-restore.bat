@@ -26,6 +26,7 @@ IF %ERRORLEVEL% NEQ 0 (
 
 ECHO Restoring package
 %_vcpkg% integrate install
+%_vcpkg% update
 %_vcpkg% install boost:%_platform%-windows
 %_vcpkg% install ffmpeg:%_platform%-windows
 
