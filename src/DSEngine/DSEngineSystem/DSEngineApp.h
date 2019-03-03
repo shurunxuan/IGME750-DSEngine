@@ -24,6 +24,7 @@
 #include "DSSRendering.h"
 #include "DSFLogging.h"
 #include "DSSAudio.h"
+#include "DSSInput.h"
 
 /**
  * @brief The app class. Game should derive from this
@@ -111,6 +112,11 @@ private:
 	 * @brief The Audio System reference
 	 */
 	DSSAudio audioSystem;
+
+	/**
+	 * @brief The Input System reference
+	 */
+	DSSInput inputSystem;
 
 	/**
 	 * @brief Temporary audio playback thread for testing

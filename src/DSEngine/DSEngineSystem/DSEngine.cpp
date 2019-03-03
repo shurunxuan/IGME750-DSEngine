@@ -12,7 +12,6 @@ const unsigned int initialHeight = 768;
 
 INT WINAPI DSEngine(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
 {
-	InitLogger();
 	// Enable memory leak detection as a quick and dirty
 	// way of determining if we forgot to clean something up
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF | _CRTDBG_CHECK_ALWAYS_DF);
