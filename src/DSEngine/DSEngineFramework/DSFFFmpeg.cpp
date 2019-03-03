@@ -3,7 +3,7 @@
 
 #define MAX_BUFFER_COUNT XAUDIO2_MAX_QUEUED_BUFFERS 
 //#define MAX_BUFFER_COUNT 2
-#define MAX_AUDIO_FRAME_SIZE 384000
+#define MAX_AUDIO_FRAME_SIZE 48000
 DSFFFmpeg::DSFFFmpeg()
 {
 	formatContext = nullptr;
@@ -26,7 +26,7 @@ DSFFFmpeg::DSFFFmpeg()
 
 DSFFFmpeg::~DSFFFmpeg()
 {
-	avformat_free_context(formatContext);
+	avformat_close_input(&formatContext);
 	avcodec_free_context(&codecContext);
 	if (swr != nullptr)
 		swr_free(&swr);
@@ -76,7 +76,7 @@ int DSFFFmpeg::OpenFile(const char* filename)
 		}
 
 	if (audioStream == nullptr) {
-		LOG_ERROR << "Didn't find a audio stream.";
+		LOG_ERROR << "Didn't find an audio stream.";
 		return -1;
 	}
 
