@@ -2,9 +2,12 @@
 #include "DSFLogging.h"
 #include <iostream>
 
+DSSRendering* SRendering = nullptr;
 
 DSSRendering::DSSRendering()
 {
+	SRendering = this;
+
 	// Query performance counter for accurate timing information
 	__int64 perfFreq;
 	QueryPerformanceFrequency(reinterpret_cast<LARGE_INTEGER*>(&perfFreq));

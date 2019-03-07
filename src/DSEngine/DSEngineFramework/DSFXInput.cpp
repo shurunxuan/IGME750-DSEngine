@@ -2,8 +2,12 @@
 #include "DSFLogging.h"
 
 
+DSFXInput* FXInput = nullptr;
+
 DSFXInput::DSFXInput()
 {
+	FXInput = this;
+
 	for (DWORD i = 0; i < XUSER_MAX_COUNT; i++)
 	{
 		ZeroMemory(&buttonState[i], sizeof(XINPUT_STATE));

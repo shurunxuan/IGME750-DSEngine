@@ -218,3 +218,9 @@ public:
 	 */
 	void STDMETHODCALLTYPE OnVoiceError(void* context, HRESULT Error) override;
 };
+
+/**
+ * @brief The pointer that points to the singleton
+ * of the XAudio2 Framework
+ */
+extern DSENGINEFRAMEWORK_API DSFXAudio2* FXAudio2;

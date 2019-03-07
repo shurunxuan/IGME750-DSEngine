@@ -1,9 +1,11 @@
 #include "DSSAudio.h"
 #include "DSFLogging.h"
 
+DSSAudio* SAudio = nullptr;
 
 DSSAudio::DSSAudio()
 {
+	SAudio = this;
 }
 
 

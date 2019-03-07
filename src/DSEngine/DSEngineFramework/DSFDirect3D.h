@@ -202,3 +202,9 @@ private:
 	 */
 	HRESULT ResizeSwapBuffers() const;
 };
+
+/**
+ * @brief The pointer that points to the singleton
+ * of the Direct3D Framework
+ */
+extern DSENGINEFRAMEWORK_API DSFDirect3D* FDirect3D;

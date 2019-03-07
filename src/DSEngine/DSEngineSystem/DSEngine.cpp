@@ -116,13 +116,44 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 			return 0;
 
 		// Save the new client area dimensions.
-		unsigned width = LOWORD(lParam);
-		unsigned height = HIWORD(lParam);
+		const unsigned width = LOWORD(lParam);
+		const unsigned height = HIWORD(lParam);
 
 		// If DX is initialized, resize 
 		// our required buffers
-		App->GetRenderingSystem()->OnResize(width, height);
+		SRendering->OnResize(width, height);
 
+		return 0;
+	}
+	// Raw Input Message
+	case WM_INPUT:
+	{
+		UINT dwSize;
+
+		GetRawInputData(HRAWINPUT(lParam), RID_INPUT, nullptr, &dwSize,
+			sizeof(RAWINPUTHEADER));
+		const LPBYTE lpb = new BYTE[dwSize];
+		if (lpb == nullptr)
+		{
+			return 0;
+		}
+
+		if (GetRawInputData(HRAWINPUT(lParam), RID_INPUT, lpb, &dwSize,
+			sizeof(RAWINPUTHEADER)) != dwSize)
+			OutputDebugString(TEXT("GetRawInputData does not return correct size !\n"));
+
+		RAWINPUT* raw = reinterpret_cast<RAWINPUT*>(lpb);
+
+		if (raw->header.dwType == RIM_TYPEKEYBOARD)
+		{
+			FRawInput->OnKeyboardInput(raw->data.keyboard);
+		}
+		else if (raw->header.dwType == RIM_TYPEMOUSE)
+		{
+			FRawInput->OnMouseInput(raw->data.mouse);
+		}
+
+		delete[] lpb;
 		return 0;
 	}
 	// this message is read when the window is closed

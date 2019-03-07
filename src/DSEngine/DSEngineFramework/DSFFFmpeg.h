@@ -47,7 +47,7 @@ public:
 
 	/**
 	* @brief Copy constructor of DSFFFmpeg is deleted
-	* since the class is meant to be a singleton
+	* since the class is not meant to be copied/moved
 	*
 	* @param v Another instance
 	*/
@@ -55,7 +55,7 @@ public:
 
 	/**
 	 * @brief Move constructor of DSFFFmpeg is deleted
-	 * since the class is meant to be a singleton
+	 * since the class is not meant to be copied/moved
 	 *
 	 * @param v Another instance
 	 */
@@ -63,7 +63,7 @@ public:
 
 	/**
 	 * @brief Copy assignment operator of DSFFFmpeg is deleted
-	 * since the class is meant to be a singleton
+	 * since the class is not meant to be copied/moved
 	 *
 	 * @param v Another instance
 	 */
@@ -71,7 +71,7 @@ public:
 
 	/**
 	 * @brief Move assignment operator of DSFFFmpeg is deleted
-	 * since the class is meant to be a singleton
+	 * since the class is not meant to be copied/moved
 	 *
 	 * @param v Another instance
 	 */

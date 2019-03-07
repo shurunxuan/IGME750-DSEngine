@@ -115,3 +115,8 @@ private:
 	DSFFFmpeg ffmpeg;
 };
 
+/**
+ * @brief The pointer that points to the singleton
+ * of the Audio System
+ */
+extern DSENGINESYSTEM_API DSSAudio* SAudio;
