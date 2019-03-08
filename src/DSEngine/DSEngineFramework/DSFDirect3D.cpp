@@ -3,8 +3,12 @@
 #include <iostream>
 #include <sstream>
 
+DSFDirect3D* FDirect3D = nullptr;
+
 DSFDirect3D::DSFDirect3D()
 {
+	FDirect3D = this;
+
 	device = nullptr;
 	context = nullptr;
 	swapChain = nullptr;

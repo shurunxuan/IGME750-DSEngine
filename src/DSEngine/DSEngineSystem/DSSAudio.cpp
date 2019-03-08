@@ -1,9 +1,11 @@
 #include "DSSAudio.h"
 #include "DSFLogging.h"
 
+DSSAudio* SAudio = nullptr;
 
 DSSAudio::DSSAudio()
 {
+	SAudio = this;
 }
 
 
@@ -18,15 +20,11 @@ void DSSAudio::Init()
 	LOG_TRACE << "DS Engine Audio System Initialized!";
 }
 
-void DSSAudio::PlayAudioFileNonBlock(const char* filename)
+void DSSAudio::PlayAudioFileNonBlock(const char* filename, boost::thread& playbackThread)
 {
 	LOG_TRACE << "Creating new thread for playing audio";
-	/**
-	 * @todo Potential memory leaking when exit the program before the thread
-	 *		 that contains the logging system is terminated. Will fix this
-	 *	     when implementing thread pool.
-	 */
-	playThread = boost::thread(&DSSAudio::PlayAudioFile, this, filename);
+
+	playbackThread = boost::thread(&DSSAudio::PlayAudioFile, this, filename);
 }
 
 void DSSAudio::PlayAudioFile(const char* filename)
@@ -56,26 +54,43 @@ void DSSAudio::PlayAudioFile(const char* filename)
 
 	LOG_TRACE << "Starting audio playback";
 
-	while (true)
+	try
 	{
-		// If the source voice is going to be starved, decode & send buffer with FFmpeg
-		int i = ffmpeg.SendBuffer(sourceVoice);
+		while (true)
+		{
+			// If the source voice is going to be starved, decode & send buffer with FFmpeg
+			int i = ffmpeg.SendBuffer(sourceVoice);
 
-		// Waiting for the source voice buffer to end
-		WaitForSingleObject(callback.bufferEvent, INFINITE);
+			boost::this_thread::interruption_point();
+			
+			// Waiting for the source voice buffer to end
+			WaitForSingleObject(callback.bufferEvent, INFINITE);
 
-		// If FFmpeg hit the end of file, break the loop
-		if (i != 0)
-			break;
+			// If FFmpeg hit the end of file, break the loop
+			if (i != 0)
+				break;
+		}
+
+		LOG_TRACE << "Waiting for the stream to end";
+
+		// Waiting the source voice stream to end
+		if (WaitForSingleObject(callback.streamEvent, 10000) == WAIT_TIMEOUT)
+		{
+			// If timeout, force the stream to end
+			LOG_WARNING << "Timeout. Forcing the stream to end. Please check if the XAUDIO2_END_OF_STREAM flag is properly set.";
+		}
+
 	}
-
-	LOG_TRACE << "Waiting for the stream to end";
-
-	// Waiting the source voice stream to end
-	if (WaitForSingleObject(callback.streamEvent, 10000) == WAIT_TIMEOUT)
+	catch (boost::thread_interrupted const& tie)
 	{
-		// If timeout, force the stream to end
-		LOG_WARNING << "Timeout. Forcing the stream to end. Please check if the XAUDIO2_END_OF_STREAM flag is properly set.";
+		UNREFERENCED_PARAMETER(tie);
+
+		LOG_WARNING << "Audio playback thread interrupted! Stopping & destroying source voice";
+
+		// Destroy source voice
+		sourceVoice->DestroyVoice();
+
+		return;
 	}
 
 	// Stop the source voice
@@ -85,4 +100,7 @@ void DSSAudio::PlayAudioFile(const char* filename)
 
 	// Clear all queued buffers
 	sourceVoice->FlushSourceBuffers();
+
+	// Destroy source voice
+	sourceVoice->DestroyVoice();
 }

@@ -3,7 +3,7 @@
 
 #define MAX_BUFFER_COUNT XAUDIO2_MAX_QUEUED_BUFFERS 
 //#define MAX_BUFFER_COUNT 2
-#define MAX_AUDIO_FRAME_SIZE 384000
+#define MAX_AUDIO_FRAME_SIZE 48000
 DSFFFmpeg::DSFFFmpeg()
 {
 	formatContext = nullptr;
@@ -26,18 +26,16 @@ DSFFFmpeg::DSFFFmpeg()
 
 DSFFFmpeg::~DSFFFmpeg()
 {
-	avformat_free_context(formatContext);
+	avformat_close_input(&formatContext);
 	avcodec_free_context(&codecContext);
 	if (swr != nullptr)
 		swr_free(&swr);
 	av_packet_unref(&packet);
 	if (lastFrame != nullptr)
 		av_frame_free(&lastFrame);
-	av_frame_unref(frame);
-	if (!eof)
-	{
+	if (frame != nullptr && !eof)
 		av_frame_free(&frame);
-	}
+
 	delete[] swrBuffer;
 
 	for (int i = 0; i < MAX_BUFFER_COUNT; ++i)
@@ -78,7 +76,7 @@ int DSFFFmpeg::OpenFile(const char* filename)
 		}
 
 	if (audioStream == nullptr) {
-		LOG_ERROR << "Didn't find a audio stream.";
+		LOG_ERROR << "Didn't find an audio stream.";
 		return -1;
 	}
 
@@ -237,9 +235,8 @@ int DSFFFmpeg::ResampleFrame()
 	// First resample, lastFrame is null, do nothing
 	if (lastFrame == nullptr) return -1;
 	// Resample the frame
-	int ret = swr_convert(swr, &swrBuffer, lastFrame->nb_samples, const_cast<const uint8_t**>(lastFrame->data), lastFrame->nb_samples);
+	int ret = swr_convert(swr, &swrBuffer, lastFrame->nb_samples, const_cast<const uint8_t * *>(lastFrame->data), lastFrame->nb_samples);
 	// We got the resampled frame buffer thus we don't need the frame anymore.
-	av_frame_unref(lastFrame);
 	av_frame_free(&lastFrame);
 
 	if (ret < 0) {

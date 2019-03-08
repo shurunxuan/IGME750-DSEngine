@@ -11,6 +11,9 @@
 
 #pragma once
 
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
 #include <Windows.h>
 #include <d3d11.h>
 #include <string>
@@ -199,3 +202,9 @@ private:
 	 */
 	HRESULT ResizeSwapBuffers() const;
 };
+
+/**
+ * @brief The pointer that points to the singleton
+ * of the Direct3D Framework
+ */
+extern DSENGINEFRAMEWORK_API DSFDirect3D* FDirect3D;

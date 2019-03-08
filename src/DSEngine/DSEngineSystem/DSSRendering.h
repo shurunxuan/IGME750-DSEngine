@@ -163,3 +163,8 @@ private:
 	float fpsTimeElapsed;
 };
 
+/**
+ * @brief The pointer that points to the singleton
+ * of the Rendering System
+ */
+extern DSENGINESYSTEM_API DSSRendering* SRendering;

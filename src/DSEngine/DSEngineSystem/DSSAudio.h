@@ -85,8 +85,9 @@ public:
      * Creates a thread of PlayAudioFile function
 	 * 
 	 * @param filename Audio file name
+	 * @param playbackThread The audio playback thread
 	 */
-	void PlayAudioFileNonBlock(const char* filename);
+	void PlayAudioFileNonBlock(const char* filename, boost::thread& playbackThread);
 
     /**
      * @brief Play an audio file
@@ -112,11 +113,10 @@ private:
      * 
      */
 	DSFFFmpeg ffmpeg;
-
-    /**
-     * @brief Thread for playing audio file.
-     * 
-     */
-	boost::thread playThread;
 };
 
+/**
+ * @brief The pointer that points to the singleton
+ * of the Audio System
+ */
+extern DSENGINESYSTEM_API DSSAudio* SAudio;

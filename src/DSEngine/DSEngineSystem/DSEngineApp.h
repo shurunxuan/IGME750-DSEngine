@@ -17,10 +17,14 @@
 #define DSENGINESYSTEM_API __declspec(dllimport)
 #endif
 
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
 #include <Windows.h>
 #include "DSSRendering.h"
 #include "DSFLogging.h"
 #include "DSSAudio.h"
+#include "DSSInput.h"
 
 /**
  * @brief The app class. Game should derive from this
@@ -108,6 +112,16 @@ private:
 	 * @brief The Audio System reference
 	 */
 	DSSAudio audioSystem;
+
+	/**
+	 * @brief The Input System reference
+	 */
+	DSSInput inputSystem;
+
+	/**
+	 * @brief Temporary audio playback thread for testing
+	 */
+	boost::thread playbackThread;
 };
 
 /**
