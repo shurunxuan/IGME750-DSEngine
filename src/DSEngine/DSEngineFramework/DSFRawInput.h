@@ -15,6 +15,7 @@
 #define WIN32_LEAN_AND_MEAN
 #endif
 #include <Windows.h>
+#include <string>
 
 #ifdef DSENGINEFRAMEWORK_EXPORTS
 #define DSENGINEFRAMEWORK_API __declspec(dllexport)
@@ -77,8 +78,9 @@ public:
 	/**
 	 * @brief The actual initialization of Raw Input Framework 
 	 * 
+	 * @param hWnd The handle to the window
 	 */
-	void Init();
+	void Init(HWND hWnd);
 	/**
 	 * @brief Update the state of the keyboard and mouse
 	 * 
@@ -98,17 +100,159 @@ public:
 	 */
 	void OnMouseInput(RAWMOUSE raw);
 
+	/**
+	 * @brief Get the state of the key being held
+	 * 
+	 * @param VKey Virtual Key Code
+	 * @return true If the key is being held
+	 */
+	bool GetKey(int VKey);
+	/**
+	 * @brief Get the state of the key being pressed
+	 * 
+	 * @param VKey Virtual Key Code
+	 * @return true If the key is being pressed
+	 */
+	bool GetKeyDown(int VKey);
+	/**
+	 * @brief Get the state of the key being released
+	 * 
+	 * @param VKey Virtual Key Code
+	 * @return true If the key is being released
+	 */
+	bool GetKeyUp(int VKey);
+
+	/**
+	 * @brief Get the state of the Mouse Button being held
+	 * 
+	 * @param button The mouse button number (0 for left, 1 for right, 2 for middle)
+	 * @return true If the button is being held
+	 */
+	bool GetMouseButton(int button);
+	/**
+	 * @brief Get the state of the Mouse Button being pressed
+	 * 
+	 * @param button The mouse button number (0 for left, 1 for right, 2 for middle)
+	 * @return true If the button is being pressed
+	 */
+	bool GetMouseButtonDown(int button);
+	/**
+	 * @brief Get the state of the Mouse Button being released
+	 * 
+	 * @param button The mouse button number (0 for left, 1 for right, 2 for middle)
+	 * @return true If the button is being released
+	 */
+	bool GetMouseButtonUp(int button);
+
+	/**
+	 * @brief Get the x position of the mouse pointer
+	 * 
+	 * Don't use this if the mouse pointer is hidden. Use GetMouseDeltaX instead.
+	 * 
+	 * @return LONG The x position of the mouse pointer
+	 */
+	LONG GetMousePosX() const;
+	/**
+	 * @brief Get the y position of the mouse pointer
+	 * 
+	 * Don't use this if the mouse pointer is hidden. Use GetMouseDeltaY instead.
+	 * 
+	 * @return LONG The y position of the mouse pointer
+	 */
+	LONG GetMousePosY() const;
+	/**
+	 * @brief Get the x delta of the mouse pointer
+	 * 
+	 * @return LONG The x delta of the mouse pointer
+	 */
+	LONG GetMouseDeltaX() const;
+	/**
+	 * @brief Get the y delta of the mouse pointer
+	 * 
+	 * @return LONG The y delta of the mouse pointer
+	 */
+	LONG GetMouseDeltaY() const;
+	/**
+	 * @brief Get the wheel delta of the mouse
+	 * 
+	 * @return USHORT The wheel delta of the mouse
+	 */
+	USHORT GetMouseWheelDelta() const;
+
+	/**
+	 * @brief Get the name of a Virtual Key Code
+	 * 
+	 * @param VKey Virtual Key Code
+	 * @return std::string Name of the Virtual Key Code
+	 */
+	static std::string GetKeyName(int VKey);
+
 private:
 	/**
-	 * @brief Stored keyboard input data
+	 * @brief Handle to the window
 	 * 
 	 */
-	RAWKEYBOARD keyboardInput;
+	HWND hWnd;
+
 	/**
-	 * @brief Stored mouse input data
+	 * @brief Current state of the key being held
 	 * 
 	 */
-	RAWMOUSE mouseInput;
+	bool keyStates[256]{};
+	/**
+	 * @brief Current state of the key being pressed
+	 * 
+	 */
+	bool keyDownStates[256]{};
+	/**
+	 * @brief Current state of the key being released
+	 * 
+	 */
+	bool keyUpStates[256]{};
+
+	/**
+	 * @brief Last state of the key being held
+	 * 
+	 */
+	bool lastKeyStates[256]{};
+
+	/**
+	 * @brief X delta of the mouse pointer
+	 * 
+	 */
+	LONG mouseDeltaX;
+	/**
+	 * @brief Y delta of the mouse pointer
+	 * 
+	 */
+	LONG mouseDeltaY;
+	/**
+	 * @brief Wheel delta of the mouse
+	 * 
+	 */
+	USHORT mouseDeltaWheel;
+
+	/**
+	 * @brief Current state of the mouse button being held
+	 * 
+	 */
+	bool mouseButtonStates[5]{};
+	/**
+	 * @brief Current state of the mouse button being pressed
+	 * 
+	 */
+	bool mouseButtonDownStates[5]{};
+	/**
+	 * @brief Current state of the mouse button being released
+	 * 
+	 */
+	bool mouseButtonUpStates[5]{};
+
+	/**
+	 * @brief Last state of the mouse button being held
+	 * 
+	 */
+	bool lastMouseButtonStates[5]{};
 };
 
 /**

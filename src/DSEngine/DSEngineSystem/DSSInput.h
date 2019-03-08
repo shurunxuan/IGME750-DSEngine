@@ -74,8 +74,9 @@ public:
 	/**
 	 * @brief Actual initialization of the input system
 	 * 
+	 * @param hWnd The handle to the window
 	 */
-	void Init();
+	void Init(HWND hWnd);
 	/**
 	 * @brief Update the input status
 	 * 
