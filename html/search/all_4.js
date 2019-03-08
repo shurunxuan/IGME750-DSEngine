@@ -1,12 +1,7 @@
 var searchData=
 [
-  ['getd3dfeaturelevel',['GetD3DFeatureLevel',['../class_d_s_f_direct3_d.html#a9df24a47e33191d979bbd262a527c049',1,'DSFDirect3D']]],
-  ['getdeltatime',['GetDeltaTime',['../class_d_s_s_rendering.html#a03b9a4be8276214504d88eb0c3832a05',1,'DSSRendering']]],
-  ['getmasteringvoicechannel',['GetMasteringVoiceChannel',['../class_d_s_f_x_audio2.html#a4f05c00124d1707ad0aaa740301299ce',1,'DSFXAudio2']]],
-  ['getmasteringvoicesamplerate',['GetMasteringVoiceSampleRate',['../class_d_s_f_x_audio2.html#ad76c643d5965215b47763834e78b7830',1,'DSFXAudio2']]],
-  ['getrenderingsystem',['GetRenderingSystem',['../class_d_s_engine_app.html#ac4ad90a0fc95f11161fdf7cd511efd79',1,'DSEngineApp']]],
-  ['gettotaltime',['GetTotalTime',['../class_d_s_s_rendering.html#a4055ae1315e0eecd0ad4577735912929',1,'DSSRendering']]],
-  ['getwindowhandle',['GetWindowHandle',['../class_d_s_f_direct3_d.html#a5a29dd50ca07c9ba0a353f1d7979b4da',1,'DSFDirect3D']]],
-  ['getwindowheight',['GetWindowHeight',['../class_d_s_f_direct3_d.html#a0502fbe367fb16a4ab81096b10dffcfe',1,'DSFDirect3D']]],
-  ['getwindowwidth',['GetWindowWidth',['../class_d_s_f_direct3_d.html#a5ccc2888c7c04c38d157aed67311e67d',1,'DSFDirect3D']]]
+  ['fdirect3d',['FDirect3D',['../_d_s_f_direct3_d_8h.html#a853669131f7149896ff16d679ea2445f',1,'DSFDirect3D.h']]],
+  ['frawinput',['FRawInput',['../_d_s_f_raw_input_8h.html#ad97b11d6fabd6cc3e9f98e725ec4564b',1,'DSFRawInput.h']]],
+  ['fxaudio2',['FXAudio2',['../_d_s_f_x_audio2_8h.html#a3091879389024e89bf1f8a0c4aca8731',1,'DSFXAudio2.h']]],
+  ['fxinput',['FXInput',['../_d_s_f_x_input_8h.html#a0ad2cbcfc9d5bf90419a2d416173b93c',1,'DSFXInput.h']]]
 ];

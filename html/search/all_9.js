@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['readframe',['ReadFrame',['../class_d_s_f_f_fmpeg.html#aa4f067a948b598fa09ac42ff6e522558',1,'DSFFFmpeg']]],
-  ['resampleframe',['ResampleFrame',['../class_d_s_f_f_fmpeg.html#a367eef74dca8061b6ffcedd0b36c1c64',1,'DSFFFmpeg']]]
+  ['playaudiofile',['PlayAudioFile',['../class_d_s_s_audio.html#a714f653fcf91152dc49b6c1f6f82df7b',1,'DSSAudio']]],
+  ['playaudiofilenonblock',['PlayAudioFileNonBlock',['../class_d_s_s_audio.html#ac8778541978b901a2bf52972b42dc9d5',1,'DSSAudio']]]
 ];

@@ -73,7 +73,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -121,9 +121,9 @@ Public Member Functions</h2></td></tr>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_s_audio.html#aa30c6b15c40f2e8f3fa43af636a730fe">Init</a> ()</td></tr>
 <tr class="memdesc:aa30c6b15c40f2e8f3fa43af636a730fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Actual initialization of the audio system. <br/></td></tr>
 <tr class="separator:aa30c6b15c40f2e8f3fa43af636a730fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab789df5fd69e66c5d738f16709f605c3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_s_audio.html#ab789df5fd69e66c5d738f16709f605c3">PlayAudioFileNonBlock</a> (const char *filename)</td></tr>
-<tr class="memdesc:ab789df5fd69e66c5d738f16709f605c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Non-block version of playing an audio file.  <a href="#ab789df5fd69e66c5d738f16709f605c3">More...</a><br/></td></tr>
-<tr class="separator:ab789df5fd69e66c5d738f16709f605c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac8778541978b901a2bf52972b42dc9d5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_s_audio.html#ac8778541978b901a2bf52972b42dc9d5">PlayAudioFileNonBlock</a> (const char *filename, boost::thread &amp;playbackThread)</td></tr>
+<tr class="memdesc:ac8778541978b901a2bf52972b42dc9d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Non-block version of playing an audio file.  <a href="#ac8778541978b901a2bf52972b42dc9d5">More...</a><br/></td></tr>
+<tr class="separator:ac8778541978b901a2bf52972b42dc9d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a714f653fcf91152dc49b6c1f6f82df7b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_s_audio.html#a714f653fcf91152dc49b6c1f6f82df7b">PlayAudioFile</a> (const char *filename)</td></tr>
 <tr class="memdesc:a714f653fcf91152dc49b6c1f6f82df7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Play an audio file.  <a href="#a714f653fcf91152dc49b6c1f6f82df7b">More...</a><br/></td></tr>
 <tr class="separator:a714f653fcf91152dc49b6c1f6f82df7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -321,7 +321,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 </div>
 </div>
-<a class="anchor" id="ab789df5fd69e66c5d738f16709f605c3"></a>
+<a class="anchor" id="ac8778541978b901a2bf52972b42dc9d5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -329,8 +329,18 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
           <td class="memname">void DSSAudio::PlayAudioFileNonBlock </td>
           <td>(</td>
           <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>filename</em></td><td>)</td>
+          <td class="paramname"><em>filename</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">boost::thread &amp;&#160;</td>
+          <td class="paramname"><em>playbackThread</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -340,6 +350,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">filename</td><td>Audio file name </td></tr>
+    <tr><td class="paramname">playbackThread</td><td>The audio playback thread </td></tr>
   </table>
   </dd>
 </dl>

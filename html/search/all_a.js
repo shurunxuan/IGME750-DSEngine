@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['sendbuffer',['SendBuffer',['../class_d_s_f_f_fmpeg.html#a85e9de5ba7152adb520d84d83dd727d8',1,'DSFFFmpeg']]],
-  ['streamevent',['streamEvent',['../class_d_s_f_voice_callback.html#a90f6077a8cffef0e28ec580435bc9696',1,'DSFVoiceCallback']]]
+  ['readframe',['ReadFrame',['../class_d_s_f_f_fmpeg.html#aa4f067a948b598fa09ac42ff6e522558',1,'DSFFFmpeg']]],
+  ['resampleframe',['ResampleFrame',['../class_d_s_f_f_fmpeg.html#a367eef74dca8061b6ffcedd0b36c1c64',1,'DSFFFmpeg']]]
 ];

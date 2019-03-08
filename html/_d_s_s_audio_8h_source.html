@@ -71,7 +71,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -119,19 +119,19 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="keywordtype">void</span> Init();</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="keywordtype">void</span> PlayAudioFileNonBlock(<span class="keyword">const</span> <span class="keywordtype">char</span>* filename);</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    <span class="keywordtype">void</span> PlayAudioFile(<span class="keyword">const</span> <span class="keywordtype">char</span>* filename);</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    <a class="code" href="class_d_s_f_x_audio2.html">DSFXAudio2</a> xAudio2;</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    <a class="code" href="class_d_s_f_f_fmpeg.html">DSFFFmpeg</a> ffmpeg;</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    boost::thread playThread;</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;};</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;</div>
-<div class="ttc" id="class_d_s_f_x_audio2_html"><div class="ttname"><a href="class_d_s_f_x_audio2.html">DSFXAudio2</a></div><div class="ttdoc">The XAudio2 Framework of the DS Engine. </div><div class="ttdef"><b>Definition:</b> DSFXAudio2.h:36</div></div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="keywordtype">void</span> PlayAudioFileNonBlock(<span class="keyword">const</span> <span class="keywordtype">char</span>* filename, boost::thread&amp; playbackThread);</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    <span class="keywordtype">void</span> PlayAudioFile(<span class="keyword">const</span> <span class="keywordtype">char</span>* filename);</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    <a class="code" href="class_d_s_f_x_audio2.html">DSFXAudio2</a> xAudio2;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    <a class="code" href="class_d_s_f_f_fmpeg.html">DSFFFmpeg</a> ffmpeg;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;};</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="keyword">extern</span> DSENGINESYSTEM_API <a class="code" href="class_d_s_s_audio.html">DSSAudio</a>* <a class="code" href="_d_s_s_audio_8h.html#a69f1b1b6fd24030f3149a99220978b48">SAudio</a>;</div>
+<div class="ttc" id="class_d_s_f_x_audio2_html"><div class="ttname"><a href="class_d_s_f_x_audio2.html">DSFXAudio2</a></div><div class="ttdoc">The XAudio2 Framework of the DS Engine. </div><div class="ttdef"><b>Definition:</b> DSFXAudio2.h:39</div></div>
 <div class="ttc" id="class_d_s_f_f_fmpeg_html"><div class="ttname"><a href="class_d_s_f_f_fmpeg.html">DSFFFmpeg</a></div><div class="ttdoc">The FFMpeg Framework of the DS Engine. </div><div class="ttdef"><b>Definition:</b> DSFFFmpeg.h:32</div></div>
+<div class="ttc" id="_d_s_s_audio_8h_html_a69f1b1b6fd24030f3149a99220978b48"><div class="ttname"><a href="_d_s_s_audio_8h.html#a69f1b1b6fd24030f3149a99220978b48">SAudio</a></div><div class="ttdeci">DSENGINESYSTEM_API DSSAudio * SAudio</div><div class="ttdoc">The pointer that points to the singleton of the Audio System. </div></div>
 <div class="ttc" id="_d_s_f_f_fmpeg_8h_html"><div class="ttname"><a href="_d_s_f_f_fmpeg_8h.html">DSFFFmpeg.h</a></div><div class="ttdoc">This file declares the framework class for FFmpeg. </div></div>
 <div class="ttc" id="_d_s_f_x_audio2_8h_html"><div class="ttname"><a href="_d_s_f_x_audio2_8h.html">DSFXAudio2.h</a></div><div class="ttdoc">This file declares the framework class for XAudio2. </div></div>
 <div class="ttc" id="class_d_s_s_audio_html"><div class="ttname"><a href="class_d_s_s_audio.html">DSSAudio</a></div><div class="ttdoc">The Audio System of the DS Engine. </div><div class="ttdef"><b>Definition:</b> DSSAudio.h:28</div></div>
