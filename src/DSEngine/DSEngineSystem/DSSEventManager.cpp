@@ -1,4 +1,5 @@
 #include "DSSEventManager.h"
+#include "MemberFunctionHandler.h"
 template<typename EventType>
 void DSSEventManager::publish(EventType * evnt) {
 	HandlerList * handlers = subscribers[typeid(EventType)];
