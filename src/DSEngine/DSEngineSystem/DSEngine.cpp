@@ -64,7 +64,7 @@ INT WINAPI DSEngine(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLi
 	ShowWindow(hWnd, nCmdShow);
 
 	// TODO: Initialize DSEngineApp Here.
-	App->Init(hInstance, lpCmdLine, hWnd, initialWidth, initialHeight);
+	App->Initialize(hInstance, lpCmdLine, hWnd, initialWidth, initialHeight);
 
 
 	// enter the main loop:

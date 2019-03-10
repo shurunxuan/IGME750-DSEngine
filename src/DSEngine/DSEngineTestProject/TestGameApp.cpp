@@ -1,10 +1,32 @@
 #include <iostream>
 #include "TestGameApp.h"
 
-bool TestGameApp::Init(HINSTANCE hInstance, LPWSTR lpCmdLine, HWND hWnd, int screenWidth, int screenHeight)
+TestGameApp::~TestGameApp()
 {
-	DSEngineApp::Init(hInstance, lpCmdLine, hWnd, screenWidth, screenHeight);
+	playbackThread.interrupt();
+	playbackThread.join();
+}
+
+void TestGameApp::Init()
+{
 	// Stub logic
 	LOG_TRACE << "TestGameApp Init";
-	return true;
+
+	isPlaying = false;
+
+	Object* newObj = CurrentActiveScene()->AddObject("NewObject");
+	Transform* transformByGet = newObj->GetComponent<Transform>();
+	Transform* transformDirect = newObj->transform;
+
+}
+
+void TestGameApp::Update(float deltaTime, float totalTime)
+{
+	// Only for test. Don't do this after the input system is completed.
+	if (FRawInput->GetKeyDown(VK_SPACE) && !isPlaying)
+	{
+		// Test play audio file
+		SAudio->PlayAudioFileNonBlock("test3.flac", playbackThread);
+		isPlaying = true;
+	}
 }

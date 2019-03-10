@@ -90,7 +90,11 @@ public:
 	 * @param screenHeight Screen height
 	 * @return true if initialization succeeded, or false
 	 */
-	virtual bool Init(HINSTANCE hInstance, LPWSTR lpCmdLine, HWND hWnd, int screenWidth, int screenHeight);
+	virtual bool Initialize(HINSTANCE hInstance, LPWSTR lpCmdLine, HWND hWnd, int screenWidth, int screenHeight);
+
+	virtual void Init() = 0;
+	virtual void Update(float deltaTime, float totalTime) = 0;
+
 
 	/**
 	 * @brief The game loop. Called in function DSEngine
@@ -100,9 +104,11 @@ public:
 	void Loop();
 
 	/**
-	 * @brief Get the Rendering System instance pointer
+	 * @brief Get the current active scene
+	 * 
+	 * @todo This only returns App::currentScene currently. If we are going to have multiple scenes, there should be a scene manager.
 	 */
-	DSSRendering* GetRenderingSystem();
+	Scene* CurrentActiveScene();
 
 private:
 	/**
@@ -121,10 +127,8 @@ private:
 	DSSInput inputSystem;
 
 	/**
-	 * @brief Temporary audio playback thread for testing
+	 * @brief Current active scene
 	 */
-	boost::thread playbackThread;
-
 	Scene currentScene;
 };
 

@@ -18,21 +18,17 @@ DSEngineApp::DSEngineApp()
 
 DSEngineApp::~DSEngineApp()
 {
-	playbackThread.interrupt();
-	playbackThread.join();
-
 	StopLogger();
 }
 
-bool DSEngineApp::Init(HINSTANCE hInstance, LPWSTR lpCmdLine, HWND hWnd, int screenWidth, int screenHeight)
+bool DSEngineApp::Initialize(HINSTANCE hInstance, LPWSTR lpCmdLine, HWND hWnd, int screenWidth, int screenHeight)
 {
 	audioSystem.Init();
 	renderingSystem.Init(hWnd, screenWidth, screenHeight);
 	inputSystem.Init(hWnd);
 	LOG_TRACE << "DSEngineApp Init";
 
-	// Test play audio file
-	audioSystem.PlayAudioFileNonBlock("test3.flac", playbackThread);
+	Init();
 
 	return true;
 }
@@ -48,11 +44,14 @@ void DSEngineApp::Loop()
 	const float totalTime = renderingSystem.GetTotalTime();
 
 	inputSystem.Update();
+
+	Update(deltaTime, totalTime);
+
 	renderingSystem.Update(deltaTime, totalTime);
 	std::cout << "DSEngineApp::Loop()" << std::endl;
 }
 
-DSSRendering* DSEngineApp::GetRenderingSystem()
+Scene* DSEngineApp::CurrentActiveScene()
 {
-	return &renderingSystem;
+	return &currentScene;
 }

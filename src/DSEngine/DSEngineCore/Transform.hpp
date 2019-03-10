@@ -52,6 +52,13 @@ private:
 inline Transform::Transform(Object* owner)
 	: Component(owner)
 {
+	translation = DirectX::XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f);
+	scale = DirectX::XMVectorSet(1.0f, 1.0f, 1.0f, 0.0f);
+	rotation = DirectX::XMQuaternionIdentity();
+
+	shouldUpdate = true;
+
+	UpdateWorldMat();
 }
 
 inline Transform::~Transform()
