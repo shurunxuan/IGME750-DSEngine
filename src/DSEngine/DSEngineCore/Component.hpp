@@ -10,7 +10,7 @@ public:
 	virtual ~Component();
 
 	virtual void Start() = 0;
-	virtual void Update(float deltaTime) = 0;
+	virtual void Update(float deltaTime, float totalTime) = 0;
 
 	boost::uuids::uuid GetInstanceId() const;
 

@@ -93,8 +93,6 @@ public:
 	virtual bool Initialize(HINSTANCE hInstance, LPWSTR lpCmdLine, HWND hWnd, int screenWidth, int screenHeight);
 
 	virtual void Init() = 0;
-	virtual void Update(float deltaTime, float totalTime) = 0;
-
 
 	/**
 	 * @brief The game loop. Called in function DSEngine

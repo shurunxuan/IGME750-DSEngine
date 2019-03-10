@@ -33,18 +33,18 @@ public:
 	template <class T>
 	void RemoveComponent(T* component);
 
-	void Update(float deltaTime);
+	void Update(float deltaTime, float totalTime);
 
 	friend bool operator==(const Object& v1, const Object& v2);
 	friend bool operator!=(const Object& v1, const Object& v2);
 
 private:
 	boost::uuids::uuid id;
-	std::string name;
 	Scene* owner;
 
 	std::list<Component*> components;
 public:
+	std::string name;
 	bool isHidden;
 
 	Transform* transform;
@@ -92,12 +92,12 @@ void Object::RemoveComponent(T * component)
 	delete component;
 }
 
-inline void Object::Update(float deltaTime)
+inline void Object::Update(float deltaTime, float totalTime)
 {
 	for (Component* component : components)
 	{
 		if (component->isActive)
-			component->Update(deltaTime);
+			component->Update(deltaTime, totalTime);
 	}
 }
 

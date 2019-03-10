@@ -20,10 +20,10 @@ void PressSpaceToPlayAudio::Start()
 {
 	isPlaying = false;
 
-	LOG_TRACE << "Component PressSpaceToPlayAudio added.";
+	LOG_TRACE << "Component PressSpaceToPlayAudio added to object " << object->name << ".";
 }
 
-void PressSpaceToPlayAudio::Update(float deltaTime)
+void PressSpaceToPlayAudio::Update(float deltaTime, float totalTime)
 {
 	// Only for test. Don't do this after the input system is completed.
 	if (FRawInput->GetKeyDown(VK_SPACE) && !isPlaying)

@@ -14,8 +14,3 @@ void TestGameApp::Init()
 	Object* newObj = CurrentActiveScene()->AddObject("NewObject");
 	PressSpaceToPlayAudio* newComponent = newObj->AddComponent<PressSpaceToPlayAudio>();
 }
-
-void TestGameApp::Update(float deltaTime, float totalTime)
-{
-
-}

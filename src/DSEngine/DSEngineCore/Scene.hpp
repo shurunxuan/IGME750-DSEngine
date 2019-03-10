@@ -14,7 +14,7 @@ public:
 	Object* Instantiate(Object* obj);
 	void DestroyObject(Object* obj);
 
-	void Update(float deltaTime);
+	void Update(float deltaTime, float totalTime);
 private:
 	std::list<Object*> allObjects;
 };
@@ -47,11 +47,11 @@ inline void Scene::DestroyObject(Object* obj)
 	allObjects.erase(result);
 }
 
-inline void Scene::Update(float deltaTime)
+inline void Scene::Update(float deltaTime, float totalTime)
 {
 	for (Object* object : allObjects)
 	{
-		object->Update(deltaTime);
+		object->Update(deltaTime, totalTime);
 	}
 }
 

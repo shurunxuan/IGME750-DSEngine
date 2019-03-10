@@ -11,7 +11,7 @@ public:
 	~Transform() final;
 
 	void Start() override;
-	void Update(float deltaTime) override final;
+	void Update(float deltaTime, float totalTime) override final;
 
 	DirectX::XMVECTOR GetTranslation() const;
 	DirectX::XMVECTOR GetScale() const;
@@ -64,7 +64,7 @@ inline void Transform::Start()
 {
 }
 
-inline void Transform::Update(float deltaTime)
+inline void Transform::Update(float deltaTime, float totalTime)
 {
 	if (shouldUpdate)
 		UpdateWorldMat();
