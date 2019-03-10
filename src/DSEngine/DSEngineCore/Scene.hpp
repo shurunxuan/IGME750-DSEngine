@@ -26,6 +26,11 @@ inline Scene::Scene()
 
 inline Scene::~Scene()
 {
+	for (Object* object : allObjects)
+	{
+		delete object;
+	}
+	allObjects.clear();
 }
 
 inline Object* Scene::AddObject(std::string name)
@@ -45,6 +50,7 @@ inline void Scene::DestroyObject(Object* obj)
 	const auto result = std::find(allObjects.begin(), allObjects.end(), obj);
 	if (result == allObjects.end()) return;
 	allObjects.erase(result);
+	delete obj;
 }
 
 inline void Scene::Update(float deltaTime, float totalTime)
