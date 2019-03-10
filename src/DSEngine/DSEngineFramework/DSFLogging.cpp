@@ -43,7 +43,7 @@ void MessageFormatter(logging::record_view const& rec, logging::formatting_ostre
 		<< logging::extract<int>("Line", rec) << ']';
 	ss1 >> file;
 
-	stream << std::setw(42) << std::left << file;
+	stream << std::setw(45) << std::left << file;
 
 	stream << rec[expr::smessage];
 }

@@ -26,6 +26,8 @@
 #include "DSSAudio.h"
 #include "DSSInput.h"
 
+#include "Scene.hpp"
+
 /**
  * @brief The app class. Game should derive from this
  */
@@ -122,6 +124,8 @@ private:
 	 * @brief Temporary audio playback thread for testing
 	 */
 	boost::thread playbackThread;
+
+	Scene currentScene;
 };
 
 /**

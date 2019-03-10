@@ -72,25 +72,25 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <TargetName>DSENGINESYSTEM</TargetName>
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)DSEngineFramework;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)DSEngineCore;$(SolutionDir)DSEngineFramework;$(IncludePath)</IncludePath>
     <LibraryPath>$(OutDir);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <TargetName>DSENGINESYSTEM</TargetName>
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)DSEngineFramework;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)DSEngineCore;$(SolutionDir)DSEngineFramework;$(IncludePath)</IncludePath>
     <LibraryPath>$(OutDir);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <TargetName>DSENGINESYSTEM</TargetName>
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)DSEngineFramework;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)DSEngineCore;$(SolutionDir)DSEngineFramework;$(IncludePath)</IncludePath>
     <LibraryPath>$(OutDir);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <TargetName>DSENGINESYSTEM</TargetName>
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)DSEngineFramework;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)DSEngineCore;$(SolutionDir)DSEngineFramework;$(IncludePath)</IncludePath>
     <LibraryPath>$(OutDir);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -108,7 +108,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalDependencies>DSENGINEFRAMEWORK.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>DSENGINEFRAMEWORK.lib;bcrypt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Manifest>
       <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
@@ -129,7 +129,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalDependencies>DSENGINEFRAMEWORK.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>DSENGINEFRAMEWORK.lib;bcrypt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Manifest>
       <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
@@ -154,7 +154,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalDependencies>DSENGINEFRAMEWORK.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>DSENGINEFRAMEWORK.lib;bcrypt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Manifest>
       <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
@@ -179,7 +179,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalDependencies>DSENGINEFRAMEWORK.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>DSENGINEFRAMEWORK.lib;bcrypt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Manifest>
       <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
