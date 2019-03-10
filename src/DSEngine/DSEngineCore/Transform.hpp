@@ -2,12 +2,7 @@
 #pragma warning(disable:4251)
 
 #include <DirectXMath.h>
-
 #include "Component.hpp"
-
-
-class Object;
-class Component;
 
 class Transform : public Component
 {
@@ -15,6 +10,7 @@ public:
 	explicit Transform(Object* owner);
 	~Transform() final;
 
+	void Start() override;
 	void Update(float deltaTime) override final;
 
 	DirectX::XMVECTOR GetTranslation() const;
@@ -48,7 +44,6 @@ private:
 	void UpdateWorldMat();
 };
 
-
 inline Transform::Transform(Object* owner)
 	: Component(owner)
 {
@@ -62,6 +57,10 @@ inline Transform::Transform(Object* owner)
 }
 
 inline Transform::~Transform()
+{
+}
+
+inline void Transform::Start()
 {
 }
 
@@ -169,3 +168,4 @@ inline void Transform::UpdateWorldMat()
 
 	shouldUpdate = false;
 }
+

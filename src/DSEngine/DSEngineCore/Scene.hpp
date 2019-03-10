@@ -4,8 +4,6 @@
 #include <list>
 #include "Object.hpp"
 
-class Object;
-
 class Scene
 {
 public:
@@ -20,6 +18,7 @@ public:
 private:
 	std::list<Object*> allObjects;
 };
+
 
 inline Scene::Scene()
 {
@@ -55,3 +54,4 @@ inline void Scene::Update(float deltaTime)
 		object->Update(deltaTime);
 	}
 }
+

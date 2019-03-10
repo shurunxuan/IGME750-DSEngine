@@ -10,11 +10,6 @@
 
 #include "Component.hpp"
 #include "Transform.hpp"
-
-#include "Scene.hpp"
-
-class Component;
-class Transform;
 class Scene;
 
 class Object
@@ -84,12 +79,13 @@ T* Object::AddComponent()
 	T* newComponent = new T(this);
 
 	components.push_back(newComponent);
+	newComponent->Start();
 
 	return newComponent;
 }
 
 template <class T>
-void Object::RemoveComponent(T* component)
+void Object::RemoveComponent(T * component)
 {
 	if (component == transform) return;
 	components.remove(component);
@@ -100,28 +96,27 @@ inline void Object::Update(float deltaTime)
 {
 	for (Component* component : components)
 	{
-		component->Update(deltaTime);
+		if (component->isActive)
+			component->Update(deltaTime);
 	}
 }
 
-inline Object::Object(Scene* scene)
+inline Object::Object(Scene * scene)
 	: id(boost::uuids::random_generator()())
 	, name("Object")
 	, owner(scene)
 	, isHidden(false)
 {
-	transform = new Transform(this);
-	components.push_back(transform);
+	transform = AddComponent<Transform>();
 }
 
-inline Object::Object(Scene* scene, std::string name)
+inline Object::Object(Scene * scene, std::string name)
 	: id(boost::uuids::random_generator()())
 	, name(std::move(name))
 	, owner(scene)
 	, isHidden(false)
 {
-	transform = new Transform(this);
-	components.push_back(transform);
+	transform = AddComponent<Transform>();
 }
 
 inline Object::~Object()
@@ -147,3 +142,4 @@ inline bool operator!=(const Object & v1, const Object & v2)
 {
 	return v1.id != v2.id;
 }
+

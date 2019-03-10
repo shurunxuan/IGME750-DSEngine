@@ -45,10 +45,12 @@ void DSEngineApp::Loop()
 
 	inputSystem.Update();
 
+	// This is not game logic, but only a test.
 	Update(deltaTime, totalTime);
+	// This contains the actual game logic
+	currentScene.Update(deltaTime);
 
 	renderingSystem.Update(deltaTime, totalTime);
-	std::cout << "DSEngineApp::Loop()" << std::endl;
 }
 
 Scene* DSEngineApp::CurrentActiveScene()

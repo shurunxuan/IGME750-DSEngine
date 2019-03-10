@@ -1,8 +1,6 @@
 #pragma once
 #pragma warning(disable:4251)
 
-#include "Object.hpp"
-
 class Object;
 
 class Component
@@ -11,6 +9,7 @@ public:
 	explicit Component(Object* owner);
 	virtual ~Component();
 
+	virtual void Start() = 0;
 	virtual void Update(float deltaTime) = 0;
 
 	boost::uuids::uuid GetInstanceId() const;
@@ -24,7 +23,7 @@ private:
 };
 
 inline Component::Component(Object* owner)
-	: isActive(false)
+	: isActive(true)
 	, object(owner)
 	, id(boost::uuids::random_generator()())
 {

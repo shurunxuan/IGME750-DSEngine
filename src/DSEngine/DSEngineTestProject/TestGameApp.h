@@ -37,12 +37,5 @@ public:
 	void Update(float deltaTime, float totalTime) override;
 
 private:
-
-	/**
-	 * @brief Temporary audio playback thread for testing
-	 */
-	boost::thread playbackThread;
-
-	bool isPlaying;
 };
 

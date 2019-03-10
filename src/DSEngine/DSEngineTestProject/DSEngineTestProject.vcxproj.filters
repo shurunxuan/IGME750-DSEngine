@@ -21,9 +21,15 @@
     <ClCompile Include="TestGameApp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="PressSpaceToPlayAudio.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TestGameApp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PressSpaceToPlayAudio.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
