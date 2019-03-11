@@ -105,7 +105,7 @@ HRESULT DSFDirect3D::OnResize(unsigned int screenWidth, unsigned int screenHeigh
 	return S_OK;
 }
 
-void DSFDirect3D::Draw(const float deltaTime, const float totalTime)
+void DSFDirect3D::ClearRenderTarget(float r, float g, float b, float a)
 {
 	// Tell the input assembler stage of the pipeline what kind of
 	// geometric primitives (points, lines or triangles) we want to draw.  
@@ -124,10 +124,79 @@ void DSFDirect3D::Draw(const float deltaTime, const float totalTime)
 		D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL,
 		1.0f,
 		0);
+}
+
+void DSFDirect3D::Render(Camera* camera, MeshRenderer* meshRenderer)
+{
+	Material* material = meshRenderer->GetMaterial();
+	Mesh* mesh = meshRenderer->GetMesh();
+
+	DirectX::XMFLOAT4X4 worldMatrix;
+	DirectX::XMFLOAT4X4 itWorldMatrix;
+	DirectX::XMFLOAT4X4 viewMatrix;
+	DirectX::XMFLOAT4X4 projectionMatrix;
+
+	DirectX::XMStoreFloat4x4(&worldMatrix, meshRenderer->object->transform->GetWorldMatrix());
+	DirectX::XMStoreFloat4x4(&itWorldMatrix, meshRenderer->object->transform->GetInverseTransposeWorldMatrix());
+	DirectX::XMStoreFloat4x4(&viewMatrix, camera->GetViewMatrix());
+	DirectX::XMStoreFloat4x4(&projectionMatrix, camera->GetProjectionMatrix());
 
 
+	// Send data to shader variables
+	//  - Do this ONCE PER OBJECT you're drawing
+	//  - This is actually a complex process of copying data to a local buffer
+	//    and then copying that entire buffer to the GPU.  
+	//  - The "SimpleShader" class handles all of that for you.
+	material->GetVertexShaderPtr()->SetMatrix4x4("world", worldMatrix);
+	material->GetVertexShaderPtr()->SetMatrix4x4("itworld", itWorldMatrix);
+	material->GetVertexShaderPtr()->SetMatrix4x4("view", viewMatrix);
+	material->GetVertexShaderPtr()->SetMatrix4x4("projection", projectionMatrix);
 
+	void* materialData;
+	const size_t materialSize = material->GetMaterialStruct(&materialData);
+	// Material Data
+	material->GetPixelShaderPtr()->SetData(
+		"material",
+		materialData,
+		int(materialSize)
+	);
 
+	// Once you've set all of the data you care to change for
+	// the next draw call, you need to actually send it to the GPU
+	//  - If you skip this, the "SetMatrix" calls above won't make it to the GPU!
+	material->GetVertexShaderPtr()->CopyAllBufferData();
+	material->GetPixelShaderPtr()->CopyAllBufferData();
+
+	// Set the vertex and pixel shaders to use for the next Draw() command
+	//  - These don't technically need to be set every frame...YET
+	//  - Once you start applying different shaders to different objects,
+	//    you'll need to swap the current shaders before each draw
+	material->GetVertexShaderPtr()->SetShader();
+	material->GetPixelShaderPtr()->SetShader();
+
+	// Set buffers in the input assembler
+	//  - Do this ONCE PER OBJECT you're drawing, since each object might
+	//    have different geometry.
+	ID3D11Buffer* vertexBuffer = mesh->GetVertexBuffer();
+	ID3D11Buffer* indexBuffer = mesh->GetIndexBuffer();
+	UINT stride = sizeof(Vertex);
+	UINT offset = 0;
+	context->IASetVertexBuffers(0, 1, &vertexBuffer, &stride, &offset);
+	context->IASetIndexBuffer(indexBuffer, DXGI_FORMAT_R32_UINT, 0);
+
+	// Finally do the actual drawing
+	//  - Do this ONCE PER OBJECT you intend to draw
+	//  - This will use all of the currently set DirectX "stuff" (shaders, buffers, etc)
+	//  - DrawIndexed() uses the currently set INDEX BUFFER to look up corresponding
+	//     vertices in the currently set VERTEX BUFFER
+	context->DrawIndexed(
+		mesh->GetIndexCount(),     // The number of indices to use (we could draw a subset if we wanted)
+		0,     // Offset to the first index we want to use
+		0);    // Offset to add to each index when looking up vertices
+}
+
+void DSFDirect3D::Present()
+{
 	// Present the back buffer to the user
 	//  - Puts the final frame we're drawing into the window so the user can see it
 	//  - Do this exactly ONCE PER FRAME (always at the very end of the frame)
@@ -155,6 +224,16 @@ unsigned int DSFDirect3D::GetWindowHeight() const
 D3D_FEATURE_LEVEL DSFDirect3D::GetD3DFeatureLevel() const
 {
 	return dxFeatureLevel;
+}
+
+ID3D11Device* DSFDirect3D::GetDevice() const
+{
+	return device;
+}
+
+ID3D11DeviceContext* DSFDirect3D::GetDeviceContext() const
+{
+	return context;
 }
 
 HRESULT DSFDirect3D::CreateDeviceAndSwapBuffer()

@@ -3,10 +3,13 @@
 
 #include <list>
 #include "Object.hpp"
+#include "Camera.hpp"
 
 class Scene
 {
 public:
+	friend class DSSRendering;
+
 	Scene();
 	~Scene();
 
@@ -15,6 +18,8 @@ public:
 	void DestroyObject(Object* obj);
 
 	void Update(float deltaTime, float totalTime);
+
+	Camera* mainCamera;
 private:
 	std::list<Object*> allObjects;
 };
@@ -22,10 +27,12 @@ private:
 
 inline Scene::Scene()
 {
+	mainCamera = new Camera(this);
 }
 
 inline Scene::~Scene()
 {
+	delete mainCamera;
 	for (Object* object : allObjects)
 	{
 		delete object;

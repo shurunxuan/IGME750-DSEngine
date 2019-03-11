@@ -17,7 +17,7 @@ class Object
 public:
 	Object(Scene* scene);
 	Object(Scene* scene, std::string name);
-	~Object();
+	virtual ~Object();
 
 	boost::uuids::uuid GetInstanceID() const;
 

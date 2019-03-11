@@ -1,5 +1,6 @@
 #include "DSSRendering.h"
 #include "DSFLogging.h"
+#include "DSEngineApp.h"
 #include <iostream>
 
 DSSRendering* SRendering = nullptr;
@@ -42,7 +43,20 @@ HRESULT DSSRendering::OnResize(unsigned int screenWidth, unsigned int screenHeig
 
 void DSSRendering::Update(const float deltaTime, const float totalTime)
 {
-	direct3D.Draw(deltaTime, totalTime);
+	direct3D.ClearRenderTarget(1.0f, 0.0f, 0.0f, 1.0f);
+
+	Camera* camera = App->CurrentActiveScene()->mainCamera;
+	for (Object* object : App->CurrentActiveScene()->allObjects)
+	{
+		std::list<MeshRenderer*> meshRenderers = object->GetComponents<MeshRenderer>();
+
+		for (MeshRenderer* meshRenderer : meshRenderers)
+		{
+			direct3D.Render(camera, meshRenderer);
+		}
+	}
+
+	direct3D.Present();
 }
 
 

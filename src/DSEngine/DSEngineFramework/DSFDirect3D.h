@@ -13,10 +13,14 @@
 
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
+
 #endif
 #include <Windows.h>
 #include <d3d11.h>
 #include <string>
+
+#include "MeshRenderer.hpp"
+#include "Camera.hpp"
 
 #ifndef SAFE_RELEASE
 #define SAFE_RELEASE(x) \
@@ -103,13 +107,11 @@ public:
 	 */
 	HRESULT OnResize(unsigned int screenWidth, unsigned int screenHeight);
 
-	/**
-	 * @brief Draw on screen
-	 * 
-	 * @param deltaTime The time cost by one frame
-	 * @param totalTime The time since the game started
-	 */
-	void Draw(float deltaTime, float totalTime);
+	void ClearRenderTarget(float r, float g, float b, float a);
+
+	void Render(Camera* camera, MeshRenderer* meshRenderer);
+
+	void Present();
 
     /**
      * @brief Get the Window Handle
@@ -135,6 +137,10 @@ public:
      * @return D3D_FEATURE_LEVEL Direct3D feature level
      */
 	D3D_FEATURE_LEVEL GetD3DFeatureLevel() const;
+
+	ID3D11Device* GetDevice() const;
+
+	ID3D11DeviceContext* GetDeviceContext() const;
 
 private:
     /**

@@ -23,6 +23,9 @@ DSEngineApp::~DSEngineApp()
 
 bool DSEngineApp::Initialize(HINSTANCE hInstance, LPWSTR lpCmdLine, HWND hWnd, int screenWidth, int screenHeight)
 {
+	width = screenWidth;
+	height = screenHeight;
+
 	audioSystem.Init();
 	renderingSystem.Init(hWnd, screenWidth, screenHeight);
 	inputSystem.Init(hWnd);

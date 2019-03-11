@@ -1,5 +1,8 @@
 #pragma once
 #pragma warning(disable:4251)
+#define BOOST_ALLOW_DEPRECATED_HEADERS
+#include <boost/uuid/uuid.hpp>
+#include <boost/uuid/random_generator.hpp>
 
 class Object;
 

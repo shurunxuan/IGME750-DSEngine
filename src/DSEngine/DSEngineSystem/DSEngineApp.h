@@ -128,6 +128,10 @@ private:
 	 * @brief Current active scene
 	 */
 	Scene currentScene;
+
+protected:
+	int width;
+	int height;
 };
 
 /**
