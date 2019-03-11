@@ -33,7 +33,9 @@ public:
 	template <class T>
 	void RemoveComponent(T* component);
 
-	void Update(float deltaTime, float totalTime);
+	virtual void Update(float deltaTime, float totalTime);
+
+	Scene* GetScene();
 
 	friend bool operator==(const Object& v1, const Object& v2);
 	friend bool operator!=(const Object& v1, const Object& v2);
@@ -99,6 +101,11 @@ inline void Object::Update(float deltaTime, float totalTime)
 		if (component->isActive)
 			component->Update(deltaTime, totalTime);
 	}
+}
+
+inline Scene* Object::GetScene()
+{
+	return owner;
 }
 
 inline Object::Object(Scene * scene)

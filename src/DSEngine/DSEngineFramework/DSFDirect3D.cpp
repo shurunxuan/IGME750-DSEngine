@@ -113,7 +113,7 @@ void DSFDirect3D::ClearRenderTarget(float r, float g, float b, float a)
 	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	// Background color (Cornflower Blue in this case) for clearing
-	const float color[4] = { 0.4f, 0.6f, 0.75f, 0.0f };
+	const float color[4] = { r, g, b, a };
 
 	// Clear the render target and depth buffer (erases what's on the screen)
 	//  - Do this ONCE PER FRAME
@@ -138,7 +138,7 @@ void DSFDirect3D::Render(Camera* camera, MeshRenderer* meshRenderer)
 
 	DirectX::XMStoreFloat4x4(&worldMatrix, meshRenderer->object->transform->GetWorldMatrix());
 	DirectX::XMStoreFloat4x4(&itWorldMatrix, meshRenderer->object->transform->GetInverseTransposeWorldMatrix());
-	DirectX::XMStoreFloat4x4(&viewMatrix, camera->GetViewMatrix());
+	DirectX::XMStoreFloat4x4(&viewMatrix, XMMatrixInverse(nullptr, camera->transform->GetWorldMatrix()));
 	DirectX::XMStoreFloat4x4(&projectionMatrix, camera->GetProjectionMatrix());
 
 

@@ -39,13 +39,13 @@ HRESULT DSSRendering::Init(HWND hWnd, unsigned int screenWidth, unsigned int scr
 HRESULT DSSRendering::OnResize(unsigned int screenWidth, unsigned int screenHeight)
 {
 	HRESULT hr = direct3D.OnResize(screenWidth, screenHeight);
-	App->CurrentActiveScene()->mainCamera->UpdateProjectionMatrix(screenWidth, screenHeight, 3.1415926f / 4.0f);
+	App->CurrentActiveScene()->mainCamera->UpdateProjectionMatrix(float(screenWidth), float(screenHeight), 3.1415926f / 4.0f);
 	return hr;
 }
 
 void DSSRendering::Update(const float deltaTime, const float totalTime)
 {
-	direct3D.ClearRenderTarget(1.0f, 0.0f, 0.0f, 1.0f);
+	direct3D.ClearRenderTarget(0.4f, 0.8f, 1.0f, 1.0f);
 
 	Camera* camera = App->CurrentActiveScene()->mainCamera;
 	for (Object* object : App->CurrentActiveScene()->allObjects)

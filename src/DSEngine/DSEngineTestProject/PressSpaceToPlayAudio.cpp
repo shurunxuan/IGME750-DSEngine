@@ -5,8 +5,10 @@
 #include "PressSpaceToPlayAudio.h"
 #include "DSFXInput.h"
 
+#include "Scene.hpp"
 
-PressSpaceToPlayAudio::PressSpaceToPlayAudio(Object* owner): Component(owner)
+
+PressSpaceToPlayAudio::PressSpaceToPlayAudio(Object* owner) : Component(owner)
 {
 }
 
@@ -26,7 +28,7 @@ void PressSpaceToPlayAudio::Start()
 
 void PressSpaceToPlayAudio::Update(float deltaTime, float totalTime)
 {
-	// Only for test. Don't do this after the input system is completed.
+	// Only for test. Don't use FRawInput or FXInput directly after the input system is completed.
 	if (FRawInput->GetKeyDown(VK_SPACE) && !isPlaying)
 	{
 		// Test play audio file
@@ -34,6 +36,7 @@ void PressSpaceToPlayAudio::Update(float deltaTime, float totalTime)
 		isPlaying = true;
 	}
 
+	// Use arrow keys to move object
 	if (FRawInput->GetKey(VK_UP))
 	{
 		DirectX::XMVECTOR position = object->transform->GetTranslation();
@@ -62,12 +65,24 @@ void PressSpaceToPlayAudio::Update(float deltaTime, float totalTime)
 		object->transform->SetTranslation(position);
 	}
 
+	// Use left stick of joystick 0 to move camera
 	const float horizontal = FXInput->GetAxis(LX, 0);
 	const float vertical = FXInput->GetAxis(LY, 0);
-	if (horizontal != 0 || vertical != 0)
-	{
-		DirectX::XMVECTOR position = object->transform->GetTranslation();
-		position = DirectX::XMVectorAdd(position, DirectX::XMVectorSet(deltaTime * horizontal, deltaTime * vertical, 0.0f, 0.0f));
-		object->transform->SetTranslation(position);
-	}
+
+	DirectX::XMVECTOR position = object->GetScene()->mainCamera->transform->GetTranslation();
+	position = DirectX::XMVectorAdd(position, DirectX::XMVectorScale(object->GetScene()->mainCamera->transform->Right(), deltaTime * horizontal * 2));
+	position = DirectX::XMVectorAdd(position, DirectX::XMVectorScale(object->GetScene()->mainCamera->transform->Forward(), deltaTime * vertical * 2));
+	object->GetScene()->mainCamera->transform->SetTranslation(position);
+
+	// Use left stick of joystick 0 to rotate camera
+	const float rightHorizontal = FXInput->GetAxis(RX, 0);
+	const float rightVertical = FXInput->GetAxis(RY, 0);
+
+	DirectX::XMVECTOR rotation = object->GetScene()->mainCamera->transform->GetRotation();
+	DirectX::XMVECTOR rotationRightAxis = DirectX::XMQuaternionRotationAxis(object->GetScene()->mainCamera->transform->Right(), -deltaTime * rightVertical);
+	DirectX::XMVECTOR rotationUpAxis = DirectX::XMQuaternionRotationAxis(DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f), deltaTime * rightHorizontal);
+	rotation = DirectX::XMQuaternionMultiply(rotation, rotationRightAxis);
+	rotation = DirectX::XMQuaternionMultiply(rotation, rotationUpAxis);
+	object->GetScene()->mainCamera->transform->SetRotation(rotation);
+
 }

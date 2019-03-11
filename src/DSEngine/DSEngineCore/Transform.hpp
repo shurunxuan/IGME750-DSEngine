@@ -7,6 +7,7 @@
 class Transform : public Component
 {
 public:
+	friend class Camera;
 	explicit Transform(Object* owner);
 	~Transform() final;
 

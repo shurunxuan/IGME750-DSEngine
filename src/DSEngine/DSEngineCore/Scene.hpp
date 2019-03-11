@@ -62,6 +62,7 @@ inline void Scene::DestroyObject(Object* obj)
 
 inline void Scene::Update(float deltaTime, float totalTime)
 {
+	mainCamera->Update(deltaTime, totalTime);
 	for (Object* object : allObjects)
 	{
 		object->Update(deltaTime, totalTime);

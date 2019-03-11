@@ -23,8 +23,7 @@ void TestGameApp::Init()
 	unlitPixelShader->LoadShaderFile(L"UnlitPixelShader.cso");
 
 	// Set Camera
-	CurrentActiveScene()->mainCamera->UpdateViewMatrix();
-	CurrentActiveScene()->mainCamera->UpdateProjectionMatrix(width, height, 3.1415926f / 4.0f);
+	CurrentActiveScene()->mainCamera->UpdateProjectionMatrix(float(width), float(height), 3.1415926f / 4.0f);
 
 	// Add Objects
 	Object* newObj = CurrentActiveScene()->AddObject("NewObject");
@@ -41,9 +40,9 @@ void TestGameApp::Init()
 	// Mesh
 	Vertex vertices[] =
 	{
-		{DirectX::XMFLOAT3(+0.0f, +1.0f, -1.0f), DirectX::XMFLOAT3(+0.0f, +0.0f, +1.0f), DirectX::XMFLOAT2(0.0f, 0.0f)},
-		{DirectX::XMFLOAT3(+1.5f, -1.0f, -1.0f), DirectX::XMFLOAT3(+0.0f, +0.0f, +1.0f), DirectX::XMFLOAT2(0.0f, 0.0f)},
-		{DirectX::XMFLOAT3(-1.5f, -1.0f, -1.0f), DirectX::XMFLOAT3(+0.0f, +0.0f, +1.0f), DirectX::XMFLOAT2(0.0f, 0.0f)},
+		{DirectX::XMFLOAT3(+0.0f, +1.0f, +5.0f), DirectX::XMFLOAT3(+0.0f, +0.0f, -1.0f), DirectX::XMFLOAT2(0.0f, 0.0f)},
+		{DirectX::XMFLOAT3(+1.5f, -1.0f, +5.0f), DirectX::XMFLOAT3(+0.0f, +0.0f, -1.0f), DirectX::XMFLOAT2(0.0f, 0.0f)},
+		{DirectX::XMFLOAT3(-1.5f, -1.0f, +5.0f), DirectX::XMFLOAT3(+0.0f, +0.0f, -1.0f), DirectX::XMFLOAT2(0.0f, 0.0f)},
 	};
 
 	int indices[] = { 0, 1, 2 };
