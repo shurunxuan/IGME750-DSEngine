@@ -222,13 +222,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MoveParentObject.cpp" />
     <ClCompile Include="PressSpaceToPlayAudio.cpp" />
     <ClCompile Include="TestGameApp.cpp" />
+    <ClCompile Include="TestTransform.cpp" />
     <ClCompile Include="UnlitMaterial.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="MoveParentObject.h" />
     <ClInclude Include="PressSpaceToPlayAudio.h" />
     <ClInclude Include="TestGameApp.h" />
+    <ClInclude Include="TestTransform.h" />
     <ClInclude Include="UnlitMaterial.h" />
   </ItemGroup>
   <ItemGroup>

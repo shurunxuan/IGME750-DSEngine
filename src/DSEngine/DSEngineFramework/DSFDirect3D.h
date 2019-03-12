@@ -17,7 +17,6 @@
 #endif
 #include <Windows.h>
 #include <d3d11.h>
-#include <string>
 
 #include "MeshRenderer.hpp"
 #include "Camera.hpp"

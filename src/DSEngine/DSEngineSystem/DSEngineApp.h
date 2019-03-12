@@ -22,7 +22,6 @@
 #endif
 #include <Windows.h>
 #include "DSSRendering.h"
-#include "DSFLogging.h"
 #include "DSSAudio.h"
 #include "DSSInput.h"
 

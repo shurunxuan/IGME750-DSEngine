@@ -1,5 +1,6 @@
 #include <iostream>
 #include "DSEngineApp.h"
+#include "DSFLogging.h"
 
 DSEngineApp* App = nullptr;
 

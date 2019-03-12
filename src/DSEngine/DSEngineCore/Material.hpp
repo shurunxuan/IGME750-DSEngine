@@ -8,7 +8,7 @@ class Material
 public:
 	Material(ID3D11Device* d);
 	Material(SimpleVertexShader* vtxShader, SimplePixelShader* pxlShader, ID3D11Device* d);
-	~Material();
+	virtual ~Material();
 
 	// Getters
 	SimpleVertexShader* GetVertexShaderPtr() const;

@@ -1,7 +1,5 @@
 #include "DSFDirect3D.h"
 #include "DSFLogging.h"
-#include <iostream>
-#include <sstream>
 
 DSFDirect3D* FDirect3D = nullptr;
 
@@ -136,9 +134,9 @@ void DSFDirect3D::Render(Camera* camera, MeshRenderer* meshRenderer)
 	DirectX::XMFLOAT4X4 viewMatrix;
 	DirectX::XMFLOAT4X4 projectionMatrix;
 
-	DirectX::XMStoreFloat4x4(&worldMatrix, meshRenderer->object->transform->GetWorldMatrix());
-	DirectX::XMStoreFloat4x4(&itWorldMatrix, meshRenderer->object->transform->GetInverseTransposeWorldMatrix());
-	DirectX::XMStoreFloat4x4(&viewMatrix, XMMatrixInverse(nullptr, camera->transform->GetWorldMatrix()));
+	DirectX::XMStoreFloat4x4(&worldMatrix, meshRenderer->object->transform->GetGlobalWorldMatrix());
+	DirectX::XMStoreFloat4x4(&itWorldMatrix, meshRenderer->object->transform->GetGlobalInverseTransposeWorldMatrix());
+	DirectX::XMStoreFloat4x4(&viewMatrix, XMMatrixInverse(nullptr, camera->transform->GetGlobalWorldMatrix()));
 	DirectX::XMStoreFloat4x4(&projectionMatrix, camera->GetProjectionMatrix());
 
 
