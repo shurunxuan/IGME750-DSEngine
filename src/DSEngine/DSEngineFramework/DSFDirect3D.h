@@ -110,6 +110,8 @@ public:
 
 	void Render(Camera* camera, MeshRenderer* meshRenderer);
 
+	void RenderSkybox(Camera* camera);
+
 	void Present();
 
     /**
@@ -181,6 +183,10 @@ private:
      * @brief The depth stencil view
      */
     ID3D11DepthStencilView* depthStencilView;
+	/**
+	 * @brief The depth stencil state
+	 */
+	ID3D11DepthStencilState* depthStencilState;
 
     /**
      * @brief Create a Device And Swap Buffer object
@@ -200,6 +206,9 @@ private:
      * @return HRESULT S_OK if succeed, or other
      */
 	HRESULT CreateDepthStencilView();
+
+
+	HRESULT CreateDepthStencilState();
 	/**
 	 * @brief Resize the Swap Buffer object
 	 *

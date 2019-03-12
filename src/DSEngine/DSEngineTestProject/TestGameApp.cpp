@@ -1,9 +1,15 @@
 #include <iostream>
+
+#include <assimp/Importer.hpp> 
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+
+
 #include "TestGameApp.h"
 #include "PressSpaceToPlayAudio.h"
 #include "UnlitMaterial.h"
 #include "MoveParentObject.h"
-#include "TestTransform.h"
+#include "CameraController.h"
 
 TestGameApp::~TestGameApp()
 {
@@ -18,63 +24,92 @@ void TestGameApp::Init()
 
 	// Load Shaders
 	// TODO: Could this be done by a resource manager?
-	vertexShader = new SimpleVertexShader(FDirect3D->GetDevice(), FDirect3D->GetDeviceContext());
-	unlitPixelShader = new SimplePixelShader(FDirect3D->GetDevice(), FDirect3D->GetDeviceContext());
+	vertexShader = new SimpleVertexShader(device, context);
+	unlitPixelShader = new SimplePixelShader(device, context);
 
 	vertexShader->LoadShaderFile(L"VertexShader.cso");
 	unlitPixelShader->LoadShaderFile(L"UnlitPixelShader.cso");
 
 	// Set Camera
 	CurrentActiveScene()->mainCamera->UpdateProjectionMatrix(float(width), float(height), 3.1415926f / 4.0f);
+	//CurrentActiveScene()->mainCamera->SetSkybox(device, context, L"Assets/Skybox/1/Environment1HiDef.cubemap.dds", L"Assets/Skybox/1/Environment1Light.cubemap.dds");
+	CurrentActiveScene()->mainCamera->SetSkybox(device, context, L"Assets/Skybox/mp_cupertin/mp_cupertin.dds", L"Assets/Skybox/mp_cupertin/mp_cupertin_irr.dds");
+	CameraController * cameraController = CurrentActiveScene()->mainCamera->AddComponent<CameraController>();
 
 	// Add parent object
-	Object* parentObj = CurrentActiveScene()->AddObject("NewObject");
-	parentObj->transform->SetLocalScale(0.5f, 0.5f, 0.5f);
+	Object * parentObj = CurrentActiveScene()->AddObject("NewObject");
+	parentObj->transform->SetLocalScale(0.05f, 0.05f, 0.05f);
 	parentObj->transform->SetLocalTranslation(0.0f, 0.0f, 5.0f);
 	// Add Components
-	PressSpaceToPlayAudio* playAudioComponent = parentObj->AddComponent<PressSpaceToPlayAudio>();
-	MoveParentObject* moveParentComponent = parentObj->AddComponent<MoveParentObject>();
+	PressSpaceToPlayAudio * playAudioComponent = parentObj->AddComponent<PressSpaceToPlayAudio>();
+	MoveParentObject * moveParentComponent = parentObj->AddComponent<MoveParentObject>();
 
-	// MeshRenderer
-	MeshRenderer* meshRendererComponent = parentObj->AddComponent<MeshRenderer>();
-	// Material
-	std::shared_ptr<UnlitMaterial> unlitMaterial = std::make_shared<UnlitMaterial>(vertexShader, unlitPixelShader, FDirect3D->GetDevice());
-	// Yellow
-	unlitMaterial->parameters.color = { 1.0f, 1.0f, 0.0f, 1.0f };
-	meshRendererComponent->SetMaterial(unlitMaterial);
-	// Mesh
-	Vertex vertices[] =
+
+	// Create an instance of the Importer class
+	Assimp::Importer importer;
+
+	// And have it read the given file with some example postprocessing
+	// Usually - if speed is not the most important aspect for you - you'll 
+	// propably to request more postprocessing than we do in this example.
+	const aiScene * scene = importer.ReadFile("Assets/Models/025_Pikachu/0.obj",
+		aiProcess_CalcTangentSpace
+		| aiProcess_Triangulate
+		| aiProcess_JoinIdenticalVertices
+		| aiProcess_SortByPType
+		| aiProcess_ConvertToLeftHanded
+		| aiProcess_GenSmoothNormals
+		| aiProcess_PreTransformVertices
+	);
+
+	// If the import failed, report it
+	if (!scene)
 	{
-		{DirectX::XMFLOAT3(+0.0f, +1.0f, +0.0f), DirectX::XMFLOAT3(+0.0f, +0.0f, -1.0f), DirectX::XMFLOAT2(0.0f, 0.0f)},
-		{DirectX::XMFLOAT3(+1.5f, -1.0f, +0.0f), DirectX::XMFLOAT3(+0.0f, +0.0f, -1.0f), DirectX::XMFLOAT2(0.0f, 0.0f)},
-		{DirectX::XMFLOAT3(-1.5f, -1.0f, +0.0f), DirectX::XMFLOAT3(+0.0f, +0.0f, -1.0f), DirectX::XMFLOAT2(0.0f, 0.0f)},
-	};
+		LOG_ERROR << importer.GetErrorString();
+		return;
+	}
 
-	int indices[] = { 0, 1, 2 };
-	std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>(vertices, 3, indices, 3, FDirect3D->GetDevice());
-	meshRendererComponent->SetMesh(mesh);
+	int meshes = scene->mNumMeshes;
 
+	for (UINT i = 0; i < scene->mNumMeshes; i++)
+	{
+		std::vector<Vertex> vertices;
+		std::vector<int> indices;
 
-	// Add child object
-	Object* childObj = CurrentActiveScene()->AddObject("NewChildObject");	
-	// Set transform to parent
-	childObj->transform->SetParent(parentObj->transform);
-	
-	childObj->transform->SetLocalScale(0.5f, 0.5f, 0.5f);
-	childObj->transform->SetLocalTranslation(1.0f, 1.0f, 0.0f);
+		aiMesh* aMesh = scene->mMeshes[i];
 
+		vertices.reserve(aMesh->mNumVertices);
+		unsigned int indicesCount = 0;
+		for (UINT c = 0; c < aMesh->mNumFaces; c++)
+			indicesCount += aMesh->mFaces[c].mNumIndices;
+		indices.reserve(indicesCount);
 
-	// MeshRenderer
-	MeshRenderer* childMeshRendererComponent = childObj->AddComponent<MeshRenderer>();
-	// Material
-	std::shared_ptr<UnlitMaterial> unlitMaterialRed = std::make_shared<UnlitMaterial>(vertexShader, unlitPixelShader, FDirect3D->GetDevice());
-	// Red
-	unlitMaterialRed->parameters.color = { 1.0f, 0.0f, 0.0f, 1.0f };
-	childMeshRendererComponent->SetMaterial(unlitMaterialRed);
+		for (UINT j = 0; j < aMesh->mNumVertices; j++)
+		{
+			Vertex newVtx;
+			newVtx.Position = { aMesh->mVertices[j].x, aMesh->mVertices[j].y, aMesh->mVertices[j].z };
+			newVtx.Normal = { aMesh->mNormals[j].x, aMesh->mNormals[j].y, aMesh->mNormals[j].z };
+			newVtx.Tangent = { aMesh->mTangents[j].x, aMesh->mTangents[j].y, aMesh->mTangents[j].z };
+			if (aMesh->HasTextureCoords(0))
+				newVtx.UV = { aMesh->mTextureCoords[0][j].x,aMesh->mTextureCoords[0][j].y };
 
-	// The mesh is the same
-	childMeshRendererComponent->SetMesh(mesh);
+			vertices.push_back(newVtx);
+		}
 
-	// TestTransformObject
-	TestTransform* testTransformComponent = childObj->AddComponent<TestTransform>();
+		for (UINT c = 0; c < aMesh->mNumFaces; c++)
+			for (UINT e = 0; e < aMesh->mFaces[c].mNumIndices; e++)
+				indices.push_back(int(aMesh->mFaces[c].mIndices[e]));
+
+		// MeshRenderer
+		MeshRenderer* meshRendererComponent = parentObj->AddComponent<MeshRenderer>();
+		// Material
+		std::shared_ptr<UnlitMaterial> unlitMaterial = std::make_shared<UnlitMaterial>(vertexShader, unlitPixelShader, device);
+		// Yellow
+		unlitMaterial->parameters.color = { 1.0f, 1.0f, 0.0f, 1.0f };
+		meshRendererComponent->SetMaterial(unlitMaterial);
+		// Mesh
+
+		std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>(&*vertices.begin(), int(vertices.size()), &*indices.begin(), int(indices.size()), device);
+		meshRendererComponent->SetMesh(mesh);
+	}
+
 }

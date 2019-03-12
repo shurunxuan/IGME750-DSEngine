@@ -99,25 +99,4 @@ void MoveParentObject::Update(float deltaTime, float totalTime)
 		scale = DirectX::XMVectorScale(scale, 1 / (1 + deltaTime));
 		object->transform->SetLocalScale(scale);
 	}
-
-
-	// Use left stick of joystick 0 to move camera
-	const float horizontal = FXInput->GetAxis(LX, 0);
-	const float vertical = FXInput->GetAxis(LY, 0);
-
-	DirectX::XMVECTOR position = object->GetScene()->mainCamera->transform->GetLocalTranslation();
-	position = DirectX::XMVectorAdd(position, DirectX::XMVectorScale(object->GetScene()->mainCamera->transform->Right(), deltaTime * horizontal * 2));
-	position = DirectX::XMVectorAdd(position, DirectX::XMVectorScale(object->GetScene()->mainCamera->transform->Forward(), deltaTime * vertical * 2));
-	object->GetScene()->mainCamera->transform->SetLocalTranslation(position);
-
-	// Use left stick of joystick 0 to rotate camera
-	const float rightHorizontal = FXInput->GetAxis(RX, 0);
-	const float rightVertical = FXInput->GetAxis(RY, 0);
-
-	DirectX::XMVECTOR rotation = object->GetScene()->mainCamera->transform->GetLocalRotation();
-	DirectX::XMVECTOR rotationRightAxis = DirectX::XMQuaternionRotationAxis(object->GetScene()->mainCamera->transform->Right(), -deltaTime * rightVertical);
-	DirectX::XMVECTOR rotationUpAxis = DirectX::XMQuaternionRotationAxis(DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f), deltaTime * rightHorizontal);
-	rotation = DirectX::XMQuaternionMultiply(rotation, rotationRightAxis);
-	rotation = DirectX::XMQuaternionMultiply(rotation, rotationUpAxis);
-	object->GetScene()->mainCamera->transform->SetLocalRotation(rotation);
 }

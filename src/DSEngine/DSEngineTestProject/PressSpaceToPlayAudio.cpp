@@ -30,7 +30,7 @@ void PressSpaceToPlayAudio::Update(float deltaTime, float totalTime)
 	if (FRawInput->GetKeyDown(VK_SPACE) && !isPlaying)
 	{
 		// Test play audio file
-		SAudio->PlayAudioFileNonBlock("test3.flac", playbackThread);
+		SAudio->PlayAudioFileNonBlock("Assets/test3.flac", playbackThread);
 		isPlaying = true;
 	}
 

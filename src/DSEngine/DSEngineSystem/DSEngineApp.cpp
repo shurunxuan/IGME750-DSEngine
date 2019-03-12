@@ -14,6 +14,9 @@ DSEngineApp::DSEngineApp()
 	App = this;
 
 	InitLogger();
+
+	device = nullptr;
+	context = nullptr;
 }
 
 
@@ -30,6 +33,10 @@ bool DSEngineApp::Initialize(HINSTANCE hInstance, LPWSTR lpCmdLine, HWND hWnd, i
 	audioSystem.Init();
 	renderingSystem.Init(hWnd, screenWidth, screenHeight);
 	inputSystem.Init(hWnd);
+
+	device = FDirect3D->GetDevice();
+	context = FDirect3D->GetDeviceContext();
+
 	LOG_TRACE << "DSEngineApp Init";
 
 	Init();

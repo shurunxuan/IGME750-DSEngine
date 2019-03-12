@@ -8,7 +8,7 @@ class PressSpaceToPlayAudio :
 	public Component
 {
 public:
-	PressSpaceToPlayAudio(Object* owner);
+	explicit PressSpaceToPlayAudio(Object* owner);
 	~PressSpaceToPlayAudio();
 
 	void Start() override;

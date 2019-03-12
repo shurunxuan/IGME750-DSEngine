@@ -45,8 +45,10 @@ HRESULT DSSRendering::OnResize(unsigned int screenWidth, unsigned int screenHeig
 
 void DSSRendering::Update(const float deltaTime, const float totalTime)
 {
+	// #66CCFF
 	direct3D.ClearRenderTarget(0.4f, 0.8f, 1.0f, 1.0f);
 
+	// Render the scene
 	Camera* camera = App->CurrentActiveScene()->mainCamera;
 	for (Object* object : App->CurrentActiveScene()->allObjects)
 	{
@@ -57,6 +59,9 @@ void DSSRendering::Update(const float deltaTime, const float totalTime)
 			direct3D.Render(camera, meshRenderer);
 		}
 	}
+
+	// Render the skybox
+	direct3D.RenderSkybox(camera);
 
 	direct3D.Present();
 }

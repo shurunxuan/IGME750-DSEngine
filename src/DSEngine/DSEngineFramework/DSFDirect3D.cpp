@@ -21,8 +21,9 @@ DSFDirect3D::~DSFDirect3D()
 	SAFE_RELEASE(device);
 	SAFE_RELEASE(context);
 	SAFE_RELEASE(swapChain);
-	SAFE_RELEASE(backBufferRTV);
+	SAFE_RELEASE(backBufferRTV);	
 	SAFE_RELEASE(depthStencilView);
+	SAFE_RELEASE(depthStencilState);
 }
 
 HRESULT DSFDirect3D::Init(HWND hWnd, unsigned int screenWidth, unsigned int screenHeight)
@@ -37,6 +38,9 @@ HRESULT DSFDirect3D::Init(HWND hWnd, unsigned int screenWidth, unsigned int scre
 	if (FAILED(hr)) return hr;
 
 	hr = CreateDepthStencilView();
+	if (FAILED(hr)) return hr;
+
+	hr = CreateDepthStencilState();
 	if (FAILED(hr)) return hr;
 
 	// Bind the views to the pipeline, so rendering properly 
@@ -83,6 +87,9 @@ HRESULT DSFDirect3D::OnResize(unsigned int screenWidth, unsigned int screenHeigh
 	hr = CreateDepthStencilView();
 	if (FAILED(hr)) return hr;
 
+	hr = CreateDepthStencilState();
+	if (FAILED(hr)) return hr;
+	
 	// Bind the views to the pipeline, so rendering properly 
 	// uses their underlying textures
 	context->OMSetRenderTargets(1, &backBufferRTV, depthStencilView);
@@ -191,6 +198,51 @@ void DSFDirect3D::Render(Camera* camera, MeshRenderer* meshRenderer)
 		mesh->GetIndexCount(),     // The number of indices to use (we could draw a subset if we wanted)
 		0,     // Offset to the first index we want to use
 		0);    // Offset to add to each index when looking up vertices
+}
+
+void DSFDirect3D::RenderSkybox(Camera* camera)
+{
+	// Render Skybox
+	Skybox* skybox = camera->GetSkybox();
+
+	DirectX::XMFLOAT4X4 worldMat{};
+	DirectX::XMFLOAT4X4 viewMat{};
+	DirectX::XMFLOAT4X4 projMat{};
+	XMStoreFloat4x4(&viewMat, XMMatrixInverse(nullptr, camera->transform->GetGlobalWorldMatrix()));
+	XMStoreFloat4x4(&projMat, camera->GetProjectionMatrix());
+	XMStoreFloat4x4(&worldMat, DirectX::XMMatrixTranspose(DirectX::XMMatrixTranslationFromVector(camera->transform->GetGlobalTranslation())));
+
+	bool result;
+	result = skybox->GetVertexShader()->SetMatrix4x4("world", worldMat);
+	if (!result) LOG_WARNING << "Error setting parameter " << "world" << " to skybox vertex shader. Variable not found." << std::endl;
+
+	result = skybox->GetVertexShader()->SetMatrix4x4("view", viewMat);
+	if (!result) LOG_WARNING << "Error setting parameter " << "view" << " to skybox vertex shader. Variable not found." << std::endl;
+
+	result = skybox->GetVertexShader()->SetMatrix4x4("projection", projMat);
+	if (!result) LOG_WARNING << "Error setting parameter " << "projection" << " to vertex skybox shader. Variable not found." << std::endl;
+
+	// Sampler and Texture
+	result = skybox->GetPixelShader()->SetSamplerState("basicSampler", skybox->GetSamplerState());
+	if (!result) LOG_WARNING << "Error setting sampler state " << "basicSampler" << " to skybox pixel shader. Variable not found." << std::endl;
+	result = skybox->GetPixelShader()->SetShaderResourceView("cubemapTexture", skybox->GetCubeMapSRV());
+	if (!result) LOG_WARNING << "Error setting shader resource view " << "cubemapTexture" << " to skybox pixel shader. Variable not found." << std::endl;
+
+	skybox->GetVertexShader()->CopyAllBufferData();
+	skybox->GetPixelShader()->CopyAllBufferData();
+
+	skybox->GetVertexShader()->SetShader();
+	skybox->GetPixelShader()->SetShader();
+
+	ID3D11Buffer* vertexBuffer = skybox->GetVertexBuffer();
+	ID3D11Buffer* indexBuffer = skybox->GetIndexBuffer();
+
+	UINT stride = sizeof(Vertex);
+	UINT offset = 0;
+	context->IASetVertexBuffers(0, 1, &vertexBuffer, &stride, &offset);
+	context->IASetIndexBuffer(indexBuffer, DXGI_FORMAT_R32_UINT, 0);
+
+	context->DrawIndexed(36, 0, 0);
 }
 
 void DSFDirect3D::Present()
@@ -327,6 +379,40 @@ HRESULT DSFDirect3D::CreateDepthStencilView()
 	if (FAILED(hr)) return hr;
 	hr = device->CreateDepthStencilView(depthBufferTexture, nullptr, &depthStencilView);
 	depthBufferTexture->Release();
+	return hr;
+}
+
+HRESULT DSFDirect3D::CreateDepthStencilState()
+{
+	// Depth Stencil Test
+	D3D11_DEPTH_STENCIL_DESC dsDesc;
+
+	// Depth test parameters
+	dsDesc.DepthEnable = true;
+	dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+	dsDesc.DepthFunc = D3D11_COMPARISON_LESS_EQUAL;
+
+	// Stencil test parameters
+	dsDesc.StencilEnable = false;
+	dsDesc.StencilReadMask = D3D11_DEFAULT_STENCIL_READ_MASK;
+	dsDesc.StencilWriteMask = D3D11_DEFAULT_STENCIL_WRITE_MASK;
+
+	// Stencil operations if pixel is front-facing
+	dsDesc.FrontFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
+	dsDesc.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_INCR;
+	dsDesc.FrontFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
+	dsDesc.FrontFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
+
+	// Stencil operations if pixel is back-facing
+	dsDesc.BackFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
+	dsDesc.BackFace.StencilDepthFailOp = D3D11_STENCIL_OP_DECR;
+	dsDesc.BackFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
+	dsDesc.BackFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
+
+	// Create depth stencil state
+	HRESULT hr = device->CreateDepthStencilState(&dsDesc, &depthStencilState);
+	if (FAILED(hr)) return hr;
+	context->OMSetDepthStencilState(depthStencilState, 0);
 	return hr;
 }
 

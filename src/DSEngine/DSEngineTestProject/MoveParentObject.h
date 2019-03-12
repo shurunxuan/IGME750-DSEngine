@@ -6,7 +6,7 @@ class MoveParentObject :
 	public Component
 {
 public:
-	MoveParentObject(Object* owner);
+	explicit MoveParentObject(Object* owner);
 	~MoveParentObject();
 
 	void Start() override;
