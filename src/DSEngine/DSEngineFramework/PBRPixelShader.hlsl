@@ -86,10 +86,12 @@ float PerceptualRoughnessFromSpecularPower(float specPower)
 
 float BurleyToMip(float perceptualRoughness, int mips, float NdR)
 {
-	float specPower = SpecularPowerFromPerceptualRoughness(perceptualRoughness);
-	specPower /= (4 * max(NdR, FLT_EPSILON));
-	float scale = PerceptualRoughnessFromSpecularPower(specPower);
-	return scale * (mips - 1 - mipOffset);
+	//float specPower = SpecularPowerFromPerceptualRoughness(perceptualRoughness);
+	//specPower /= (4 * max(NdR, FLT_EPSILON));
+	//float scale = PerceptualRoughnessFromSpecularPower(specPower);
+	//return scale * (mips - 1 - mipOffset);
+	float fScale = perceptualRoughness * (1.7 - 0.7 * perceptualRoughness);    // approximate remap from LdotR based distribution to NdotH
+	return fScale * (mips - 1 - mipOffset);
 }
 
 float3 DiffuseEnergyConserve(float diffuse, float3 specular, float metalness)
