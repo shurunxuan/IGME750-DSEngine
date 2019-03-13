@@ -4,7 +4,7 @@
 #include "Scene.hpp"
 #include "DSFRawInput.h"
 #include "DSFXInput.h"
-#include "PBRMaterial.h"
+#include "PBRMaterial.hpp"
 #include <queue>
 
 

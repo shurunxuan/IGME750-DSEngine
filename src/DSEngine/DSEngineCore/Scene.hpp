@@ -12,7 +12,9 @@
 #include "Object.hpp"
 #include "Camera.hpp"
 #include "Light.hpp"
+#include "SimpleShader.hpp"
 #include "MeshRenderer.hpp"
+#include "PBRMaterial.hpp"
 
 class Scene
 {
@@ -22,8 +24,8 @@ public:
 	Scene();
 	~Scene();
 
-	void SetD3D11Device(ID3D11Device* d);
-	void SetD3D11DeviceContext(ID3D11DeviceContext* c);
+	void SetD3D11Device(ID3D11Device* d, ID3D11DeviceContext* c);
+	void SetDefaultShader(SimpleVertexShader* vs, SimplePixelShader* ps);
 
 	Object* AddObject(std::string name = "GameObject");
 	Object* Instantiate(Object* obj);
@@ -42,13 +44,16 @@ public:
 
 	Camera* mainCamera;
 private:
-	Object* AddObjectWithNode(const aiScene* scene, aiNode* node, Object* parent);
+	Object* AddObjectWithNode(std::string modelFileName, const aiScene* scene, aiNode* node, Object* parent);
 
 	std::list<Object*> allObjects;
 	std::vector<Light> lights;
 
 	ID3D11Device* device;
 	ID3D11DeviceContext* context;
+
+	SimpleVertexShader* defaultVS;
+	SimplePixelShader* defaultPS;
 };
 
 
@@ -70,14 +75,17 @@ inline Scene::~Scene()
 	allObjects.clear();
 }
 
-inline void Scene::SetD3D11Device(ID3D11Device* d)
+inline void Scene::SetD3D11Device(ID3D11Device* d, ID3D11DeviceContext* c)
 {
 	device = d;
+
+	context = c;
 }
 
-inline void Scene::SetD3D11DeviceContext(ID3D11DeviceContext* c)
+inline void Scene::SetDefaultShader(SimpleVertexShader* vs, SimplePixelShader* ps)
 {
-	context = c;
+	defaultVS = vs;
+	defaultPS = ps;
 }
 
 inline Object* Scene::AddObject(std::string name)
@@ -132,7 +140,7 @@ inline Object* Scene::LoadModelFile(std::string filename)
 
 	aiNode* currentNode = scene->mRootNode;
 
-	Object* newObj = AddObjectWithNode(scene, currentNode, nullptr);
+	Object* newObj = AddObjectWithNode(filename, scene, currentNode, nullptr);
 
 	return newObj;
 }
@@ -166,7 +174,7 @@ inline void Scene::Update(float deltaTime, float totalTime)
 	}
 }
 
-inline Object* Scene::AddObjectWithNode(const aiScene * scene, aiNode * node, Object * parent)
+inline Object* Scene::AddObjectWithNode(std::string modelFileName, const aiScene * scene, aiNode * node, Object * parent)
 {
 	Object* newObj = AddObject(node->mName.C_Str());
 
@@ -207,13 +215,61 @@ inline Object* Scene::AddObjectWithNode(const aiScene * scene, aiNode * node, Ob
 				indices.push_back(int(aMesh->mFaces[c].mIndices[e]));
 
 		// MeshRenderer
-		auto* meshRendererComponent = newObj->AddComponent<MeshRenderer>();
+		auto * meshRendererComponent = newObj->AddComponent<MeshRenderer>();
 
-		//// Material
-		//std::shared_ptr<PBRMaterial> pbrMaterial = std::make_shared<PBRMaterial>(vertexShader, pbrPixelShader, device, context);
-		//// Yellow
-		//pbrMaterial->parameters.albedo = { 1.0f, 0.765557f, 0.336057f };
-		//meshRendererComponent->SetMaterial(pbrMaterial);
+		// Material
+		std::shared_ptr<PBRMaterial> pbrMaterial = std::make_shared<PBRMaterial>(defaultVS, defaultPS, device, context);
+
+		// Load Textures
+		aiMaterial* aMaterial = scene->mMaterials[aMesh->mMaterialIndex];
+
+		// Diffuse Texture
+		unsigned int diffuseTextureCount = aMaterial->GetTextureCount(aiTextureType_DIFFUSE);
+		if (diffuseTextureCount > 0)
+		{
+			aiString as;
+			aiReturn ar;
+			// Only get the first texture
+			ar = aMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &as);
+			if (ar == aiReturn_SUCCESS)
+			{
+				// Try load the texture assuming the path is absolute
+				if (!pbrMaterial->LoadDiffuseTexture(as.C_Str()))
+				{
+					// Try the path relative to model file
+					boost::filesystem::path modelPath(modelFileName);
+					boost::filesystem::path modelFolder = modelPath.parent_path();
+					boost::filesystem::path relativeTexture(as.C_Str());
+					relativeTexture = modelFolder / relativeTexture;
+					pbrMaterial->LoadDiffuseTexture(relativeTexture.generic_string());
+				}
+			}
+		}
+
+		// Normal Texture
+		unsigned int normalTextureCount = aMaterial->GetTextureCount(aiTextureType_NORMALS);
+		if (normalTextureCount > 0)
+		{
+			aiString as;
+			aiReturn ar;
+			// Only get the first texture
+			ar = aMaterial->GetTexture(aiTextureType_NORMALS, 0, &as);
+			if (ar == aiReturn_SUCCESS)
+			{
+				// Try load the texture assuming the path is absolute
+				if (!pbrMaterial->LoadNormalTexture(as.C_Str()))
+				{
+					// Try the path relative to model file
+					boost::filesystem::path modelPath(modelFileName);
+					boost::filesystem::path modelFolder = modelPath.parent_path();
+					boost::filesystem::path relativeTexture(as.C_Str());
+					relativeTexture = modelFolder / relativeTexture;
+					pbrMaterial->LoadNormalTexture(relativeTexture.generic_string());
+				}
+			}
+		}
+
+		meshRendererComponent->SetMaterial(pbrMaterial);
 
 		// Mesh
 		std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>(&*vertices.begin(), int(vertices.size()), &*indices.begin(), int(indices.size()), device);
@@ -223,7 +279,7 @@ inline Object* Scene::AddObjectWithNode(const aiScene * scene, aiNode * node, Ob
 	// Add child nodes
 	for (unsigned int i = 0; i < node->mNumChildren; ++i)
 	{
-		Object* childObj = AddObjectWithNode(scene, node->mChildren[i], newObj);
+		Object* childObj = AddObjectWithNode(modelFileName, scene, node->mChildren[i], newObj);
 	}
 
 	return newObj;

@@ -35,8 +35,5 @@ public:
 	void Init() override;
 
 private:
-
-	SimpleVertexShader* vertexShader;
-	SimplePixelShader* pbrPixelShader;
 };
 

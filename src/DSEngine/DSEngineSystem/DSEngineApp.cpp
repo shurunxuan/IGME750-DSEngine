@@ -17,11 +17,16 @@ DSEngineApp::DSEngineApp()
 
 	device = nullptr;
 	context = nullptr;
+
+	vertexShader = nullptr;
+	pbrPixelShader = nullptr;
 }
 
 
 DSEngineApp::~DSEngineApp()
 {
+	delete vertexShader;
+	delete pbrPixelShader;
 	StopLogger();
 }
 
@@ -37,8 +42,17 @@ bool DSEngineApp::Initialize(HINSTANCE hInstance, LPWSTR lpCmdLine, HWND hWnd, i
 	device = FDirect3D->GetDevice();
 	context = FDirect3D->GetDeviceContext();
 
-	currentScene.SetD3D11Device(device);
-	currentScene.SetD3D11DeviceContext(context);
+	currentScene.SetD3D11Device(device, context);
+
+	// TODO: Could this be done by a resource manager?
+	vertexShader = new SimpleVertexShader(device, context);
+	pbrPixelShader = new SimplePixelShader(device, context);
+
+	vertexShader->LoadShaderFile(L"VertexShader.cso");
+	pbrPixelShader->LoadShaderFile(L"PBRPixelShader.cso");
+
+	currentScene.SetDefaultShader(vertexShader, pbrPixelShader);
+
 
 	LOG_TRACE << "DSEngineApp Init";
 

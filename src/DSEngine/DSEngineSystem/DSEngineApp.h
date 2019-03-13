@@ -26,6 +26,7 @@
 #include "DSSInput.h"
 
 #include "Scene.hpp"
+#include "SimpleShader.hpp"
 
 /**
  * @brief The app class. Game should derive from this
@@ -127,6 +128,9 @@ private:
 	 * @brief Current active scene
 	 */
 	Scene currentScene;
+
+	SimpleVertexShader* vertexShader;
+	SimplePixelShader* pbrPixelShader;
 
 
 protected:

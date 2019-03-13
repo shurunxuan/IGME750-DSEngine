@@ -224,7 +224,6 @@
     <ClCompile Include="CameraController.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MoveParentObject.cpp" />
-    <ClCompile Include="PBRMaterial.cpp" />
     <ClCompile Include="PressSpaceToPlayAudio.cpp" />
     <ClCompile Include="TestGameApp.cpp" />
     <ClCompile Include="UnlitMaterial.cpp" />
@@ -232,22 +231,11 @@
   <ItemGroup>
     <ClInclude Include="CameraController.h" />
     <ClInclude Include="MoveParentObject.h" />
-    <ClInclude Include="PBRMaterial.h" />
     <ClInclude Include="PressSpaceToPlayAudio.h" />
     <ClInclude Include="TestGameApp.h" />
     <ClInclude Include="UnlitMaterial.h" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="PBRPixelShader.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
-    </FxCompile>
     <FxCompile Include="UnlitPixelShader.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
