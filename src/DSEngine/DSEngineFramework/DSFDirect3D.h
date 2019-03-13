@@ -20,6 +20,7 @@
 
 #include "MeshRenderer.hpp"
 #include "Camera.hpp"
+#include "Light.hpp"
 
 #ifndef SAFE_RELEASE
 #define SAFE_RELEASE(x) \
@@ -108,7 +109,7 @@ public:
 
 	void ClearRenderTarget(float r, float g, float b, float a);
 
-	void Render(Camera* camera, MeshRenderer* meshRenderer);
+	void Render(Camera* camera, MeshRenderer* meshRenderer, Light* lights = nullptr, int lightCount = 0);
 
 	void RenderSkybox(Camera* camera);
 

@@ -10,11 +10,12 @@
 #include "UnlitMaterial.h"
 #include "MoveParentObject.h"
 #include "CameraController.h"
+#include "PBRMaterial.h"
 
 TestGameApp::~TestGameApp()
 {
 	delete vertexShader;
-	delete unlitPixelShader;
+	delete pbrPixelShader;
 }
 
 void TestGameApp::Init()
@@ -25,24 +26,25 @@ void TestGameApp::Init()
 	// Load Shaders
 	// TODO: Could this be done by a resource manager?
 	vertexShader = new SimpleVertexShader(device, context);
-	unlitPixelShader = new SimplePixelShader(device, context);
+	pbrPixelShader = new SimplePixelShader(device, context);
 
 	vertexShader->LoadShaderFile(L"VertexShader.cso");
-	unlitPixelShader->LoadShaderFile(L"UnlitPixelShader.cso");
+	pbrPixelShader->LoadShaderFile(L"PBRPixelShader.cso");
 
 	// Set Camera
 	CurrentActiveScene()->mainCamera->UpdateProjectionMatrix(float(width), float(height), 3.1415926f / 4.0f);
-	//CurrentActiveScene()->mainCamera->SetSkybox(device, context, L"Assets/Skybox/1/Environment1HiDef.cubemap.dds", L"Assets/Skybox/1/Environment1Light.cubemap.dds");
-	CurrentActiveScene()->mainCamera->SetSkybox(device, context, L"Assets/Skybox/mp_cupertin/mp_cupertin.dds", L"Assets/Skybox/mp_cupertin/mp_cupertin_irr.dds");
+	CurrentActiveScene()->mainCamera->SetSkybox(device, context, L"Assets/Skybox/1/Environment1HiDef.cubemap.dds", L"Assets/Skybox/1/Environment1Light.cubemap.dds");
+	//CurrentActiveScene()->mainCamera->SetSkybox(device, context, L"Assets/Skybox/mp_cupertin/mp_cupertin.dds", L"Assets/Skybox/mp_cupertin/mp_cupertin_irr.dds");
 	CameraController * cameraController = CurrentActiveScene()->mainCamera->AddComponent<CameraController>();
+
+	// Add a light
+	Light light = DirectionalLight(DirectX::XMFLOAT3(1.0f, 1.0f, 1.0f), DirectX::XMFLOAT3(-1.0f, -1.0f, 0.0f), 1.0f, DirectX::XMFLOAT3(1.0f, 1.0f, 1.0f));;
+	CurrentActiveScene()->AddLight(light);
 
 	// Add parent object
 	Object * parentObj = CurrentActiveScene()->AddObject("NewObject");
 	parentObj->transform->SetLocalScale(0.05f, 0.05f, 0.05f);
 	parentObj->transform->SetLocalTranslation(0.0f, 0.0f, 5.0f);
-	// Add Components
-	PressSpaceToPlayAudio * playAudioComponent = parentObj->AddComponent<PressSpaceToPlayAudio>();
-	MoveParentObject * moveParentComponent = parentObj->AddComponent<MoveParentObject>();
 
 
 	// Create an instance of the Importer class
@@ -76,7 +78,7 @@ void TestGameApp::Init()
 		std::vector<int> indices;
 
 		aiMesh* aMesh = scene->mMeshes[i];
-
+		
 		vertices.reserve(aMesh->mNumVertices);
 		unsigned int indicesCount = 0;
 		for (UINT c = 0; c < aMesh->mNumFaces; c++)
@@ -102,14 +104,19 @@ void TestGameApp::Init()
 		// MeshRenderer
 		MeshRenderer* meshRendererComponent = parentObj->AddComponent<MeshRenderer>();
 		// Material
-		std::shared_ptr<UnlitMaterial> unlitMaterial = std::make_shared<UnlitMaterial>(vertexShader, unlitPixelShader, device);
+		std::shared_ptr<PBRMaterial> pbrMaterial = std::make_shared<PBRMaterial>(vertexShader, pbrPixelShader, device, context);
 		// Yellow
-		unlitMaterial->parameters.color = { 1.0f, 1.0f, 0.0f, 1.0f };
-		meshRendererComponent->SetMaterial(unlitMaterial);
+		pbrMaterial->parameters.albedo = { 1.0f, 0.765557f, 0.336057f };
+		meshRendererComponent->SetMaterial(pbrMaterial);
 		// Mesh
 
 		std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>(&*vertices.begin(), int(vertices.size()), &*indices.begin(), int(indices.size()), device);
 		meshRendererComponent->SetMesh(mesh);
 	}
+
+	// Add Components
+	PressSpaceToPlayAudio* playAudioComponent = parentObj->AddComponent<PressSpaceToPlayAudio>();
+	MoveParentObject* moveParentComponent = parentObj->AddComponent<MoveParentObject>();
+
 
 }

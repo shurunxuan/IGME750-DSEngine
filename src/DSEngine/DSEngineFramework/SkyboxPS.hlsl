@@ -5,6 +5,7 @@ struct VertexToPixel
 };
 
 TextureCube cubemapTexture  : register(t2);
+TextureCube irradianceMap : register(t3);
 SamplerState basicSampler : register(s0);
 
 float4 main(VertexToPixel input) : SV_TARGET

@@ -1,4 +1,4 @@
-
+#define MAX_LIGHTS 128
 // Struct representing the data we expect to receive from earlier pipeline stages
 // - Should match the output of our corresponding vertex shader
 // - The name of the struct itself is unimportant
@@ -15,10 +15,22 @@ struct VertexToPixel
 	float4 worldPos				: POSITION0;
 	float3 normal				: NORMAL;
 	float2 uv					: TEXCOORD;
-	//float3 tangent				: TANGENT;
+	float3 tangent				: TANGENT;
 	//float4 lViewSpacePos		: POSITION1;
 };
 
+
+struct Light
+{
+	int Type;
+	float3 Direction;// 16 bytes
+	float Range;
+	float3 Position;// 32 bytes
+	float Intensity;
+	float3 Color;// 48 bytes
+	float SpotFalloff;
+	float3 AmbientColor;// 64 bytes
+};
 struct Material
 {
 	float4 color;
@@ -28,6 +40,17 @@ cbuffer materialData : register(b0)
 {
 	Material material;
 }
+
+cbuffer cameraData : register(b2)
+{
+	float3 CameraPosition;
+};
+
+cbuffer lightData : register(b2)
+{
+	Light lights[MAX_LIGHTS];
+	int lightCount;
+};
 
 // --------------------------------------------------------
 // The entry point (main method) for our pixel shader

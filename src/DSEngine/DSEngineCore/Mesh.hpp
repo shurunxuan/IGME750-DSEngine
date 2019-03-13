@@ -2,10 +2,7 @@
 #pragma warning(disable:4251)
 #include <DirectXMath.h>
 
-#include <string>
 #include <d3d11.h>
-#include <vector>
-#include "DSFLogging.h"
 
 // --------------------------------------------------------
 // A custom vertex definition
@@ -70,7 +67,6 @@ inline Mesh::Mesh(Vertex* vertices, int verticesCount, int* indices, int indices
 		device->CreateBuffer(&vbd, &initialVertexData, &vertexBuffer);
 	else
 	{
-		LOG_ERROR << "Error when creating vertex buffer: ID3D11Device is null.";
 		system("pause");
 		exit(-1);
 	}
@@ -124,8 +120,6 @@ inline Mesh::Mesh(Vertex* vertices, int verticesCount, int* indices, int indices
 	BoundingBoxCenter.z = lower.z + half.z;
 
 	BoundingBoxExtents = half;
-
-	LOG_INFO << "Mesh created at <0x" << this << "> by " << __FUNCTION__ << ".";
 }
 
 
@@ -133,6 +127,4 @@ inline Mesh::~Mesh()
 {
 	if (vertexBuffer) { vertexBuffer->Release(); }
 	if (indexBuffer) { indexBuffer->Release(); }
-
-	LOG_INFO << "Mesh destroyed at <0x" << this << ">.";
 }

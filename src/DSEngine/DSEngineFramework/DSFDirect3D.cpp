@@ -21,7 +21,7 @@ DSFDirect3D::~DSFDirect3D()
 	SAFE_RELEASE(device);
 	SAFE_RELEASE(context);
 	SAFE_RELEASE(swapChain);
-	SAFE_RELEASE(backBufferRTV);	
+	SAFE_RELEASE(backBufferRTV);
 	SAFE_RELEASE(depthStencilView);
 	SAFE_RELEASE(depthStencilState);
 }
@@ -89,7 +89,7 @@ HRESULT DSFDirect3D::OnResize(unsigned int screenWidth, unsigned int screenHeigh
 
 	hr = CreateDepthStencilState();
 	if (FAILED(hr)) return hr;
-	
+
 	// Bind the views to the pipeline, so rendering properly 
 	// uses their underlying textures
 	context->OMSetRenderTargets(1, &backBufferRTV, depthStencilView);
@@ -131,7 +131,7 @@ void DSFDirect3D::ClearRenderTarget(float r, float g, float b, float a)
 		0);
 }
 
-void DSFDirect3D::Render(Camera* camera, MeshRenderer* meshRenderer)
+void DSFDirect3D::Render(Camera* camera, MeshRenderer* meshRenderer, Light* lights, int lightCount)
 {
 	Material* material = meshRenderer->GetMaterial();
 	Mesh* mesh = meshRenderer->GetMesh();
@@ -157,14 +157,25 @@ void DSFDirect3D::Render(Camera* camera, MeshRenderer* meshRenderer)
 	material->GetVertexShaderPtr()->SetMatrix4x4("view", viewMatrix);
 	material->GetVertexShaderPtr()->SetMatrix4x4("projection", projectionMatrix);
 
-	void* materialData;
-	const size_t materialSize = material->GetMaterialStruct(&materialData);
-	// Material Data
-	material->GetPixelShaderPtr()->SetData(
-		"material",
-		materialData,
-		int(materialSize)
-	);
+
+	DirectX::XMFLOAT3 cameraPosition;
+	DirectX::XMStoreFloat3(&cameraPosition, camera->transform->GetGlobalTranslation());
+	material->GetPixelShaderPtr()->SetFloat3("CameraPosition", cameraPosition);
+
+	material->SetMaterialData();
+
+	material->GetPixelShaderPtr()->SetShaderResourceView("cubemap", camera->GetSkybox()->GetCubeMapSRV());
+	material->GetPixelShaderPtr()->SetShaderResourceView("irradianceMap", camera->GetSkybox()->GetIrradianceMapSRV());
+
+
+	if (lights != nullptr && lightCount > 0)
+	{
+		material->GetPixelShaderPtr()->SetInt("lightCount", lightCount);
+		material->GetPixelShaderPtr()->SetData(
+			"lights",					// The name of the (eventual) variable in the shader
+			lights,							// The address of the data to copy
+			sizeof(Light) * 128);		// The size of the data to copy
+	}
 
 	// Once you've set all of the data you care to change for
 	// the next draw call, you need to actually send it to the GPU
@@ -212,21 +223,17 @@ void DSFDirect3D::RenderSkybox(Camera* camera)
 	XMStoreFloat4x4(&projMat, camera->GetProjectionMatrix());
 	XMStoreFloat4x4(&worldMat, DirectX::XMMatrixTranspose(DirectX::XMMatrixTranslationFromVector(camera->transform->GetGlobalTranslation())));
 
-	bool result;
-	result = skybox->GetVertexShader()->SetMatrix4x4("world", worldMat);
-	if (!result) LOG_WARNING << "Error setting parameter " << "world" << " to skybox vertex shader. Variable not found." << std::endl;
+	skybox->GetVertexShader()->SetMatrix4x4("world", worldMat);
 
-	result = skybox->GetVertexShader()->SetMatrix4x4("view", viewMat);
-	if (!result) LOG_WARNING << "Error setting parameter " << "view" << " to skybox vertex shader. Variable not found." << std::endl;
+	skybox->GetVertexShader()->SetMatrix4x4("view", viewMat);
 
-	result = skybox->GetVertexShader()->SetMatrix4x4("projection", projMat);
-	if (!result) LOG_WARNING << "Error setting parameter " << "projection" << " to vertex skybox shader. Variable not found." << std::endl;
+	skybox->GetVertexShader()->SetMatrix4x4("projection", projMat);
 
 	// Sampler and Texture
-	result = skybox->GetPixelShader()->SetSamplerState("basicSampler", skybox->GetSamplerState());
-	if (!result) LOG_WARNING << "Error setting sampler state " << "basicSampler" << " to skybox pixel shader. Variable not found." << std::endl;
-	result = skybox->GetPixelShader()->SetShaderResourceView("cubemapTexture", skybox->GetCubeMapSRV());
-	if (!result) LOG_WARNING << "Error setting shader resource view " << "cubemapTexture" << " to skybox pixel shader. Variable not found." << std::endl;
+	skybox->GetPixelShader()->SetSamplerState("basicSampler", skybox->GetSamplerState());
+	skybox->GetPixelShader()->SetShaderResourceView("cubemapTexture", skybox->GetCubeMapSRV());
+	skybox->GetPixelShader()->SetShaderResourceView("irradianceMap", skybox->GetIrradianceMapSRV());
+
 
 	skybox->GetVertexShader()->CopyAllBufferData();
 	skybox->GetPixelShader()->CopyAllBufferData();

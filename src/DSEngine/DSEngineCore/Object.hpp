@@ -3,6 +3,7 @@
 
 #include <list>
 #include <string>
+#include <typeinfo>
 
 #define BOOST_ALLOW_DEPRECATED_HEADERS
 #include <boost/uuid/uuid.hpp>
@@ -59,6 +60,8 @@ T* Object::GetComponent()
 	{
 		T* cast = dynamic_cast<T*>(component);
 		if (cast != nullptr) return cast;
+		//if (typeid(component) == typeid(T*))
+		//	return static_cast<T*>(component);
 	}
 	return nullptr;
 }
@@ -71,6 +74,8 @@ std::list<T*> Object::GetComponents()
 	{
 		T* cast = dynamic_cast<T*>(component);
 		if (cast != nullptr) result.push_back(cast);
+		//if (typeid(component) == typeid(T*))
+		//	result.push_back(static_cast<T*>(component));
 	}
 	return result;
 }

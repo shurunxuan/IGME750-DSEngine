@@ -4,6 +4,7 @@
 #include "Scene.hpp"
 #include "DSFRawInput.h"
 #include "DSFXInput.h"
+#include "PBRMaterial.h"
 
 
 MoveParentObject::MoveParentObject(Object* owner)
@@ -18,6 +19,7 @@ MoveParentObject::~MoveParentObject()
 
 void MoveParentObject::Start()
 {
+	meshRenderers = object->GetComponents<MeshRenderer>();
 }
 
 void MoveParentObject::Update(float deltaTime, float totalTime)
@@ -98,5 +100,38 @@ void MoveParentObject::Update(float deltaTime, float totalTime)
 		DirectX::XMVECTOR scale = object->transform->GetLocalScale();
 		scale = DirectX::XMVectorScale(scale, 1 / (1 + deltaTime));
 		object->transform->SetLocalScale(scale);
+	}
+
+	// Use DPad to adjust the material
+	for (MeshRenderer* renderer : meshRenderers)
+	{
+		PBRMaterial* material = static_cast<PBRMaterial*>(renderer->GetMaterial());
+		if (FXInput->GetButton(DPAD_UP, 0))
+		{
+			material->parameters.metalness += 0.3f * deltaTime;
+			if (material->parameters.metalness > 1.0f)
+				material->parameters.metalness = 1.0f;
+		}
+
+		if (FXInput->GetButton(DPAD_DOWN, 0))
+		{
+			material->parameters.metalness -= 0.3f * deltaTime;
+			if (material->parameters.metalness < 0.0f)
+				material->parameters.metalness = 0.0f;
+		}
+
+		if (FXInput->GetButton(DPAD_LEFT, 0))
+		{
+			material->parameters.roughness += 0.3f * deltaTime;
+			if (material->parameters.roughness > 1.0f)
+				material->parameters.roughness = 1.0f;
+		}
+
+		if (FXInput->GetButton(DPAD_RIGHT, 0))
+		{
+			material->parameters.roughness -= 0.3f * deltaTime;
+			if (material->parameters.roughness < 0.0f)
+				material->parameters.roughness = 0.0f;
+		}
 	}
 }

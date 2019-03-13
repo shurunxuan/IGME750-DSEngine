@@ -37,6 +37,6 @@ public:
 private:
 
 	SimpleVertexShader* vertexShader;
-	SimplePixelShader* unlitPixelShader;
+	SimplePixelShader* pbrPixelShader;
 };
 

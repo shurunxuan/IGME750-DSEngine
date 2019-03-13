@@ -50,13 +50,19 @@ void DSSRendering::Update(const float deltaTime, const float totalTime)
 
 	// Render the scene
 	Camera* camera = App->CurrentActiveScene()->mainCamera;
+
+	Light* lights = nullptr;
+	const int lightCount = App->CurrentActiveScene()->GetLightCount();
+	if (lightCount > 0)
+		lights = App->CurrentActiveScene()->GetLightAt(0);
+
 	for (Object* object : App->CurrentActiveScene()->allObjects)
 	{
 		std::list<MeshRenderer*> meshRenderers = object->GetComponents<MeshRenderer>();
 
 		for (MeshRenderer* meshRenderer : meshRenderers)
 		{
-			direct3D.Render(camera, meshRenderer);
+			direct3D.Render(camera, meshRenderer, lights, lightCount);
 		}
 	}
 

@@ -1,10 +1,7 @@
 #pragma once
 
-#include <memory>
 #include <string>
 #include <d3d11.h>
-#include <vector>
-#include <locale>
 #include <codecvt>
 #include <DirectXTK/DDSTextureLoader.h>
 #include "Mesh.hpp"
@@ -96,7 +93,6 @@ inline Skybox::Skybox(ID3D11Device* d, ID3D11DeviceContext* c, const std::wstrin
 		device->CreateBuffer(&vbd, &initialVertexData, &vertexBuffer);
 	else
 	{
-		LOG_ERROR << "Error when creating vertex buffer for skybox: ID3D11Device is null." << std::endl;
 		system("pause");
 		exit(-1);
 	}
@@ -130,10 +126,6 @@ inline Skybox::Skybox(ID3D11Device* d, ID3D11DeviceContext* c, const std::wstrin
 	samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
 
 	HRESULT hr = device->CreateSamplerState(&samplerDesc, &samplerState);
-	if (FAILED(hr))
-		LOG_ERROR << "CreateSamplerState failed at <0x" << this << ">." << std::endl;
-
-	LOG_INFO << "Skybox created at 0x<" << this << "> with file \"" << cubeMapFile << "\"." << std::endl;
 
 	vertexShader = new SimpleVertexShader(device, context);
 	pixelShader = new SimplePixelShader(device, context);

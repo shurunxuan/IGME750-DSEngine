@@ -14,6 +14,9 @@ public:
 	} parameters;
 
 	size_t GetMaterialStruct(void** mtlPtr) override;
+
+private:
+	void SetShaderData() override;
 };
 
 

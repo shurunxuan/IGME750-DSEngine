@@ -5,3 +5,7 @@ size_t UnlitMaterial::GetMaterialStruct(void** mtlPtr)
 	*mtlPtr = &parameters;
 	return sizeof(UnlitMaterialStruct);
 }
+
+void UnlitMaterial::SetShaderData()
+{
+}

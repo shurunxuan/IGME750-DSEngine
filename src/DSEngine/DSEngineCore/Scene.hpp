@@ -2,8 +2,10 @@
 #pragma warning(disable:4251)
 
 #include <list>
+#include <vector>
 #include "Object.hpp"
 #include "Camera.hpp"
+#include "Light.hpp"
 
 class Scene
 {
@@ -17,11 +19,17 @@ public:
 	Object* Instantiate(Object* obj);
 	void DestroyObject(Object* obj);
 
+	void AddLight(Light light);
+	Light* GetLightAt(int index);
+	int GetLightCount();
+	void RemoveLightAt(int index);
+
 	void Update(float deltaTime, float totalTime);
 
 	Camera* mainCamera;
 private:
 	std::list<Object*> allObjects;
+	std::vector<Light> lights;
 };
 
 
@@ -58,6 +66,26 @@ inline void Scene::DestroyObject(Object* obj)
 	if (result == allObjects.end()) return;
 	allObjects.erase(result);
 	delete obj;
+}
+
+inline void Scene::AddLight(Light light)
+{
+	lights.push_back(light);
+}
+
+inline Light* Scene::GetLightAt(int index)
+{
+	return &*(lights.begin() + index);
+}
+
+inline int Scene::GetLightCount()
+{
+	return int(lights.size());
+}
+
+inline void Scene::RemoveLightAt(int index)
+{
+	lights.erase(lights.begin() + index);
 }
 
 inline void Scene::Update(float deltaTime, float totalTime)
