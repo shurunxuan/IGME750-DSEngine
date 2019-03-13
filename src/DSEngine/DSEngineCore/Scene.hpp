@@ -128,7 +128,7 @@ inline Object* Scene::LoadModelFile(std::string filename)
 		| aiProcess_SortByPType
 		| aiProcess_ConvertToLeftHanded
 		| aiProcess_GenSmoothNormals
-		| aiProcess_PreTransformVertices
+		//| aiProcess_PreTransformVertices
 	);
 
 	// If the import failed, report it
