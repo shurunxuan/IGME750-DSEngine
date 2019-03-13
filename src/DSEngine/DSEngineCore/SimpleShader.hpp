@@ -11,6 +11,9 @@
 #include <vector>
 #include <string>
 
+#define min(a, b) ((a) < (b) ? (a) : (b))
+#define max(a, b) ((a) > (b) ? (a) : (b))
+
 // --------------------------------------------------------
 // Used by simple shaders to store information about
 // specific variables in constant buffers
@@ -2033,3 +2036,6 @@ inline int SimpleComputeShader::GetUnorderedAccessViewIndex(std::string name)
 	// Success
 	return result->second;
 }
+
+#undef min
+#undef max

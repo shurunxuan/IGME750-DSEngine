@@ -105,18 +105,28 @@ float4 FresnelSchlick(float4 f0, float fd90, float view)
 float3 IBL(float3 n, float3 v, float3 l, float3 surfaceColor)
 {
 	float3 r = normalize(reflect(-v, n));
+	float3 h = normalize(l + r);
 	float NdV = max(dot(n, v), 0.0);
 	float NdL = max(dot(n, l), 0.0);
 	float NdR = max(dot(n, r), 0.0);
+
+	float cosD = dot(l, h);
 
 	int mipLevels, width, height;
 	cubemap.GetDimensions(0, width, height, mipLevels);
 
 	float3 diffuseImageLighting = irradianceMap.Sample(basicSampler, n).rgb;
+	//float3 diffuseImageLighting = cubemap.SampleLevel(basicSampler, r, BurleyToMip(1, mipLevels, NdR)).rgb;
 	float3 specularImageLighting = cubemap.SampleLevel(basicSampler, r, BurleyToMip(pow(material.roughness, 0.5), mipLevels, NdR)).rgb;
 
 	float4 specularColor = float4(lerp(0.04f.rrr, material.albedo, material.metalness), 1.0f);
-	float4 schlickFresnel = saturate(FresnelSchlick(specularColor, 0.4f, NdV));
+
+	// Disney-Frosbite
+	float energyBias = lerp(0, 0.5, 1 - material.roughness);
+	float energyFactor = lerp(1.0, 1.0 / 1.51, 1 - material.roughness);
+	float3 Fd90 = energyBias + 2.0 * cosD * cosD * (1 - material.roughness);
+
+	float4 schlickFresnel = saturate(FresnelSchlick(specularColor, Fd90, NdV));
 
 	float3 albedo = material.albedo * surfaceColor;
 
@@ -234,7 +244,6 @@ float4 main(VertexToPixel input) : SV_TARGET
 			}
 			break;
 		}
-		float3 h = normalize(l + v);
 		float NdL = saturate(dot(n, l));
 		float NdV = saturate(dot(n, v));
 

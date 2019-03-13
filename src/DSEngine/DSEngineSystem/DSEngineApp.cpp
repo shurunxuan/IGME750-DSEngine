@@ -37,6 +37,9 @@ bool DSEngineApp::Initialize(HINSTANCE hInstance, LPWSTR lpCmdLine, HWND hWnd, i
 	device = FDirect3D->GetDevice();
 	context = FDirect3D->GetDeviceContext();
 
+	currentScene.SetD3D11Device(device);
+	currentScene.SetD3D11DeviceContext(context);
+
 	LOG_TRACE << "DSEngineApp Init";
 
 	Init();

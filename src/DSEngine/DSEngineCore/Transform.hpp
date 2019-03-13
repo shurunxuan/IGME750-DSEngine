@@ -19,6 +19,8 @@ public:
 	void SetParent(Transform* newParent);
 	Transform* GetParent() const;
 
+	std::list<Transform*> GetChildren() const;
+
 	DirectX::XMVECTOR GetLocalTranslation() const;
 	DirectX::XMVECTOR GetLocalScale() const;
 	DirectX::XMVECTOR GetLocalRotation() const;
@@ -119,6 +121,11 @@ inline void Transform::SetParent(Transform* newParent)
 inline Transform* Transform::GetParent() const
 {
 	return parent;
+}
+
+inline std::list<Transform*> Transform::GetChildren() const
+{
+	return children;
 }
 
 inline DirectX::XMVECTOR Transform::GetLocalTranslation() const

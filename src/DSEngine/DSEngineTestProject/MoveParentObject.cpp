@@ -5,6 +5,7 @@
 #include "DSFRawInput.h"
 #include "DSFXInput.h"
 #include "PBRMaterial.h"
+#include <queue>
 
 
 MoveParentObject::MoveParentObject(Object* owner)
@@ -19,7 +20,36 @@ MoveParentObject::~MoveParentObject()
 
 void MoveParentObject::Start()
 {
-	meshRenderers = object->GetComponents<MeshRenderer>();
+	LOG_INFO << "Scene Structure:";
+	std::queue<Object*> objectQueue;
+
+	objectQueue.push(object);
+
+	while (!objectQueue.empty())
+	{
+		// Get the object
+		Object* currentObject = objectQueue.front();
+
+		LOG_INFO << "\tObject: " << currentObject->name << "\tParent: "
+			<< (currentObject->transform->GetParent() == nullptr ?
+				std::string("NULL") :
+				currentObject->transform->GetParent()->object->name);
+
+		// Process BFS
+		objectQueue.pop();
+		std::list<Transform*> children = currentObject->transform->GetChildren();
+		for (Transform* child : children)
+		{
+			objectQueue.push(child->object);
+		}
+
+		// Process material
+		std::list<MeshRenderer*> meshRendererComponents = currentObject->GetComponents<MeshRenderer>();
+		for (MeshRenderer* meshRenderer : meshRendererComponents)
+		{
+			meshRenderers.push_back(meshRenderer);
+		}
+	}
 }
 
 void MoveParentObject::Update(float deltaTime, float totalTime)
