@@ -30,11 +30,6 @@ void MoveParentObject::Start()
 		// Get the object
 		Object* currentObject = objectQueue.front();
 
-		LOG_INFO << "\tObject: " << currentObject->name << "\tParent: "
-			<< (currentObject->transform->GetParent() == nullptr ?
-				std::string("NULL") :
-				currentObject->transform->GetParent()->object->name);
-
 		// Process BFS
 		objectQueue.pop();
 		std::list<Transform*> children = currentObject->transform->GetChildren();

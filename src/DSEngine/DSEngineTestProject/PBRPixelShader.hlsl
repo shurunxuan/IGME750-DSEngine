@@ -124,7 +124,7 @@ float3 IBL(float3 n, float3 v, float3 l, float3 surfaceColor)
 	// Disney-Frosbite
 	float energyBias = lerp(0, 0.5, 1 - material.roughness);
 	float energyFactor = lerp(1.0, 1.0 / 1.51, 1 - material.roughness);
-	float3 Fd90 = energyBias + 2.0 * cosD * cosD * (1 - material.roughness);
+	float Fd90 = energyBias + 2.0 * cosD * cosD * (1 - material.roughness);
 
 	float4 schlickFresnel = saturate(FresnelSchlick(specularColor, Fd90, NdV));
 

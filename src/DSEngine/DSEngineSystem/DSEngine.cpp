@@ -142,7 +142,7 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 			sizeof(RAWINPUTHEADER)) != dwSize)
 			OutputDebugString(TEXT("GetRawInputData does not return correct size !\n"));
 
-		RAWINPUT* raw = reinterpret_cast<RAWINPUT*>(lpb);
+		RAWINPUT * raw = reinterpret_cast<RAWINPUT*>(lpb);
 
 		if (raw->header.dwType == RIM_TYPEKEYBOARD)
 		{
@@ -154,6 +154,11 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 		}
 
 		delete[] lpb;
+		return 0;
+	}
+	case WM_DEVICECHANGE:
+	{
+		FXInput->OnDeviceChange();
 		return 0;
 	}
 	// this message is read when the window is closed

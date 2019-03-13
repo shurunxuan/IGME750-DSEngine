@@ -28,6 +28,9 @@ public:
 	Object* AddObject(std::string name = "GameObject");
 	Object* Instantiate(Object* obj);
 	void DestroyObject(Object* obj);
+
+	std::list<Object*> GetAllObjects();
+
 	Object* LoadModelFile(std::string filename);
 
 	void AddLight(Light light);
@@ -97,6 +100,11 @@ inline void Scene::DestroyObject(Object* obj)
 	delete obj;
 }
 
+inline std::list<Object*> Scene::GetAllObjects()
+{
+	return allObjects;
+}
+
 inline Object* Scene::LoadModelFile(std::string filename)
 {
 	// Create an instance of the Importer class
@@ -105,7 +113,7 @@ inline Object* Scene::LoadModelFile(std::string filename)
 	// And have it read the given file with some example postprocessing
 	// Usually - if speed is not the most important aspect for you - you'll 
 	// propably to request more postprocessing than we do in this example.
-	const aiScene* scene = importer.ReadFile("Assets/Models/025_Pikachu/0.obj",
+	const aiScene* scene = importer.ReadFile(filename,
 		aiProcess_CalcTangentSpace
 		| aiProcess_Triangulate
 		| aiProcess_JoinIdenticalVertices

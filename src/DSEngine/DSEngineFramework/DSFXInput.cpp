@@ -26,10 +26,7 @@ DSFXInput::~DSFXInput()
 
 void DSFXInput::Init()
 {
-	for (DWORD i = 0; i < XUSER_MAX_COUNT; i++)
-	{
-		connected[i] = XInputGetState(i, &lastState[i]) == ERROR_SUCCESS;
-	}
+	OnDeviceChange();
 
 	LOG_TRACE << "DS Engine Framework for XInput Initialized!";
 }
@@ -42,10 +39,10 @@ void DSFXInput::Update()
 		ZeroMemory(&buttonDownState[i], sizeof(XINPUT_STATE));
 		ZeroMemory(&buttonUpState[i], sizeof(XINPUT_STATE));
 
-		connected[i] = XInputGetState(i, &buttonState[i]) == ERROR_SUCCESS;
-
 		if (connected[i])
 		{
+			XInputGetState(i, &buttonState[i]);
+
 			buttonDownState[i].Gamepad.wButtons =
 				buttonState[i].Gamepad.wButtons &
 				~lastState[i].Gamepad.wButtons;
@@ -56,6 +53,14 @@ void DSFXInput::Update()
 		}
 
 		lastState[i] = buttonState[i];
+	}
+}
+
+void DSFXInput::OnDeviceChange()
+{
+	for (DWORD i = 0; i < XUSER_MAX_COUNT; i++)
+	{
+		connected[i] = XInputGetState(i, &buttonState[i]) == ERROR_SUCCESS;
 	}
 }
 

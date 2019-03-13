@@ -4,6 +4,9 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
+#include <boost/uuid/uuid.hpp>
+#include <boost/uuid/uuid_io.hpp>
+
 
 #include "TestGameApp.h"
 #include "PressSpaceToPlayAudio.h"
@@ -45,7 +48,7 @@ void TestGameApp::Init()
 	// Add parent object
 	Object * parentObj = CurrentActiveScene()->LoadModelFile("Assets/Models/025_Pikachu/0.obj");
 	parentObj->transform->SetLocalScale(0.05f, 0.05f, 0.05f);
-	parentObj->transform->SetLocalTranslation(0.0f, 0.0f, 5.0f);
+	parentObj->transform->SetLocalTranslation(-1.0f, 0.0f, 5.0f);
 
 	std::queue<Transform*> transformQueue;
 
@@ -83,4 +86,48 @@ void TestGameApp::Init()
 	MoveParentObject* moveParentComponent = parentObj->AddComponent<MoveParentObject>();
 
 
+	// Add another object
+	Object* anotherObject = CurrentActiveScene()->LoadModelFile("Assets/Models/255_Torchic/0.obj");
+	anotherObject->transform->SetLocalScale(0.05f, 0.05f, 0.05f);
+	anotherObject->transform->SetLocalTranslation(1.0f, 0.0f, 5.0f);
+
+	transformQueue.push(anotherObject->transform);
+
+	while (!transformQueue.empty())
+	{
+		// Get the transform
+		Transform* transform = transformQueue.front();
+
+		// Process BFS
+		transformQueue.pop();
+		std::list<Transform*> children = transform->GetChildren();
+		for (Transform* child : children)
+		{
+			transformQueue.push(child);
+		}
+
+		// Process material
+		Object* obj = transform->object;
+		std::list<MeshRenderer*> meshRenderers = obj->GetComponents<MeshRenderer>();
+		for (MeshRenderer* meshRenderer : meshRenderers)
+		{
+			// Material
+			std::shared_ptr<PBRMaterial> pbrMaterial = std::make_shared<PBRMaterial>(vertexShader, pbrPixelShader, device, context);
+			// Yellow
+			pbrMaterial->parameters.albedo = { 0.955008f, 0.637427f, 0.538163f };
+			meshRenderer->SetMaterial(pbrMaterial);
+		}
+	}
+
+
+	std::list<Object*> allObjects = CurrentActiveScene()->GetAllObjects();
+
+	for (Object* obj : allObjects)
+	{
+		if (obj->transform->GetParent() == nullptr)
+			LOG_INFO << "\tObject: " << obj->name << "\t{" << to_string(obj->GetInstanceID()) << "}";
+		else
+			LOG_INFO << "\tObject: " << obj->name << "\t{" << to_string(obj->GetInstanceID()) << "}\tParent: "
+			<< obj->transform->GetParent()->object->name << "\t{" << to_string(obj->transform->GetParent()->object->GetInstanceID()) << "}";
+	}
 }
