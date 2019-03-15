@@ -20,7 +20,6 @@ MoveParentObject::~MoveParentObject()
 
 void MoveParentObject::Start()
 {
-	LOG_INFO << "Scene Structure:";
 	std::queue<Object*> objectQueue;
 
 	objectQueue.push(object);

@@ -1,5 +1,6 @@
 #include "DSFDirect3D.h"
 #include "DSFLogging.h"
+#include "Light.hpp"
 
 DSFDirect3D* FDirect3D = nullptr;
 
@@ -131,7 +132,7 @@ void DSFDirect3D::ClearRenderTarget(float r, float g, float b, float a)
 		0);
 }
 
-void DSFDirect3D::Render(Camera* camera, MeshRenderer* meshRenderer, Light* lights, int lightCount)
+void DSFDirect3D::Render(Camera* camera, MeshRenderer* meshRenderer, void* lights, int lightCount)
 {
 	Material* material = meshRenderer->GetMaterial();
 	Mesh* mesh = meshRenderer->GetMesh();

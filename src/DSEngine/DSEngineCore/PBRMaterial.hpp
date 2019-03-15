@@ -120,8 +120,7 @@ inline bool PBRMaterial::LoadDiffuseTexture(const std::wstring& diffuseTexture)
 inline bool PBRMaterial::LoadNormalTexture(const std::wstring& normalTexture)
 {
 	if (normalSrvPtr) { normalSrvPtr->Release(); }
-	const HRESULT hr = DirectX::CreateWICTextureFromFileEx(device, context, normalTexture.c_str(), D3D11_REQ_TEXTURE2D_U_OR_V_DIMENSION, D3D11_USAGE_DEFAULT, D3D11_BIND_SHADER_RESOURCE,
-		0, 0, DirectX::WIC_LOADER_FORCE_SRGB, nullptr, &normalSrvPtr);
+	const HRESULT hr = DirectX::CreateWICTextureFromFile(device, context, normalTexture.c_str(), nullptr, &normalSrvPtr);
 	if (SUCCEEDED(hr))
 		if (normalSrvPtr)
 		{

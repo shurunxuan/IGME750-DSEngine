@@ -12,7 +12,7 @@ struct VertexToPixel
 	float4 worldPos		: POSITION;
 	float3 normal		: NORMAL;
 	float2 uv			: TEXCOORD;
-	float3 tangent		: TANGENT;
+	float3 tangent		: TANGENT0;
 };
 
 struct Light
@@ -171,23 +171,25 @@ float4 main(VertexToPixel input) : SV_TARGET
 	float3 v = normalize(float4(CameraPosition, 1.0f) - input.worldPos).xyz;
 	float3 n = normalize(input.normal);
 	float3 t = normalize(input.tangent - dot(input.tangent, n) * n);
+	//float3 b = normalize(input.bitangent - dot(input.bitangent, n) * n);
 	float3 b = normalize(cross(n, t));
+
 	float3 l;
 	float4 result = float4(0, 0, 0, 0);
 	float4 directLighting = float4(0, 0, 0, 0);
 	float4 indirectLighting = float4(0, 0, 0, 0);
-	float3 originalN = n;
+
 	if (material.hasNormalMap)
 	{
 		// Normal Mapping
 		float4 normalMapping = normalTexture.Sample(basicSampler, input.uv);
 		normalMapping = normalMapping * 2 - 1;
-
+		//float4 normalMapping = float4(0.0f, 0.0f, 1.0f, 0.0f);
 		float3x3 TBN = float3x3(t, b, n);
 
 		n = mul(normalMapping.xyz, TBN);
+		n = normalize(n);
 	}
-	n = normalize(n);
 
 	float4 surfaceColor;
 

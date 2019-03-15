@@ -142,6 +142,8 @@ inline Object* Scene::LoadModelFile(std::string filename)
 
 	Object* newObj = AddObjectWithNode(filename, scene, currentNode, nullptr);
 
+	importer.FreeScene();
+
 	return newObj;
 }
 
@@ -202,8 +204,12 @@ inline Object* Scene::AddObjectWithNode(std::string modelFileName, const aiScene
 		{
 			Vertex newVtx;
 			newVtx.Position = { aMesh->mVertices[j].x, aMesh->mVertices[j].y, aMesh->mVertices[j].z };
-			newVtx.Normal = { aMesh->mNormals[j].x, aMesh->mNormals[j].y, aMesh->mNormals[j].z };
-			newVtx.Tangent = { aMesh->mTangents[j].x, aMesh->mTangents[j].y, aMesh->mTangents[j].z };
+			if (aMesh->HasNormals())
+				newVtx.Normal = { aMesh->mNormals[j].x, aMesh->mNormals[j].y, aMesh->mNormals[j].z };
+			if (aMesh->HasTangentsAndBitangents())
+			{
+				newVtx.Tangent = { aMesh->mTangents[j].x, aMesh->mTangents[j].y, aMesh->mTangents[j].z };
+			}
 			if (aMesh->HasTextureCoords(0))
 				newVtx.UV = { aMesh->mTextureCoords[0][j].x,aMesh->mTextureCoords[0][j].y };
 
@@ -221,7 +227,7 @@ inline Object* Scene::AddObjectWithNode(std::string modelFileName, const aiScene
 		std::shared_ptr<PBRMaterial> pbrMaterial = std::make_shared<PBRMaterial>(defaultVS, defaultPS, device, context);
 
 		// Load Textures
-		aiMaterial* aMaterial = scene->mMaterials[aMesh->mMaterialIndex];
+		aiMaterial * aMaterial = scene->mMaterials[aMesh->mMaterialIndex];
 
 		// Diffuse Texture
 		unsigned int diffuseTextureCount = aMaterial->GetTextureCount(aiTextureType_DIFFUSE);
