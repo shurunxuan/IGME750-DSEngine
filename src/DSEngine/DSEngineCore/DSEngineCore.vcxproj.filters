@@ -45,10 +45,10 @@
     <ClInclude Include="Skybox.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Light.hpp">
+    <ClInclude Include="PBRMaterial.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PBRMaterial.hpp">
+    <ClInclude Include="Light.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

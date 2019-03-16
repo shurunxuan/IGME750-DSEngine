@@ -2,6 +2,8 @@
 #pragma warning(disable:4251)
 #include <d3d11.h>
 
+#include <DirectXCollision.h>
+
 #include <list>
 #include <vector>
 
@@ -20,6 +22,7 @@ class Scene
 {
 public:
 	friend class DSSRendering;
+	friend class DSFDirect3D;
 
 	Scene();
 	~Scene();
@@ -35,7 +38,7 @@ public:
 
 	Object* LoadModelFile(std::string filename);
 
-	void AddLight(Light light);
+	void AddLight(LightData light);
 	Light* GetLightAt(int index);
 	int GetLightCount();
 	void RemoveLightAt(int index);
@@ -47,13 +50,16 @@ private:
 	Object* AddObjectWithNode(std::string modelFileName, const aiScene* scene, aiNode* node, Object* parent);
 
 	std::list<Object*> allObjects;
-	std::vector<Light> lights;
+	std::vector<LightData> lightData;
+	std::list<Light*> lights;
 
 	ID3D11Device* device;
 	ID3D11DeviceContext* context;
 
 	SimpleVertexShader* defaultVS;
 	SimplePixelShader* defaultPS;
+
+	DirectX::BoundingBox aabb;
 };
 
 
@@ -147,32 +153,73 @@ inline Object* Scene::LoadModelFile(std::string filename)
 	return newObj;
 }
 
-inline void Scene::AddLight(Light light)
+inline void Scene::AddLight(LightData light)
 {
-	lights.push_back(light);
+	lightData.push_back(light);
+
+	Light* newLight = new Light(&lightData.back(), device, context, mainCamera, &aabb);
+	lights.push_back(newLight);
 }
 
 inline Light* Scene::GetLightAt(int index)
 {
-	return &*(lights.begin() + index);
+	auto it = lights.begin();
+	std::advance(it, index);
+	return *it;
 }
 
 inline int Scene::GetLightCount()
 {
-	return int(lights.size());
+	return int(lightData.size());
 }
 
 inline void Scene::RemoveLightAt(int index)
 {
-	lights.erase(lights.begin() + index);
+	lightData.erase(lightData.begin() + index);
+
+	auto it = lights.begin();
+	std::advance(it, index);
+	Light* lightToBeRemoved = *it;
+	delete lightToBeRemoved;
+	lights.erase(it);
 }
 
 inline void Scene::Update(float deltaTime, float totalTime)
 {
 	mainCamera->Update(deltaTime, totalTime);
+
+	const float inf = std::numeric_limits<float>::infinity();
+	DirectX::XMVECTOR lower = DirectX::XMVectorSet(inf, inf, inf, inf);
+	DirectX::XMVECTOR upper = DirectX::XMVectorSet(-inf, -inf, -inf, -inf);
+
 	for (Object* object : allObjects)
 	{
 		object->Update(deltaTime, totalTime);
+
+		// Update AABB
+		std::list<MeshRenderer*> meshRenderers = object->GetComponents<MeshRenderer>();
+		for (MeshRenderer* renderer : meshRenderers)
+		{
+			//renderer->GetMesh()->aabb;
+			DirectX::BoundingBox transformedAABB;
+			renderer->GetMesh()->aabb.Transform(transformedAABB, renderer->object->transform->GetGlobalWorldMatrix());
+
+			DirectX::XMVECTOR center = XMLoadFloat3(&transformedAABB.Center);
+			DirectX::XMVECTOR extend = XMLoadFloat3(&transformedAABB.Extents);
+
+			DirectX::XMVECTOR minPt = DirectX::XMVectorSubtract(center, extend);
+			DirectX::XMVECTOR maxPt = DirectX::XMVectorAdd(center, extend);
+
+			lower = DirectX::XMVectorMin(lower, minPt);
+			upper = DirectX::XMVectorMax(upper, maxPt);
+		}
+	}
+
+	DirectX::BoundingBox::CreateFromPoints(aabb, lower, upper);
+
+	for (Light* light : lights)
+	{
+		light->UpdateMatrices();
 	}
 }
 

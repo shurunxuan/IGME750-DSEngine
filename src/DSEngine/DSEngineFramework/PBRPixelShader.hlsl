@@ -8,11 +8,12 @@
 // - Each variable must have a semantic, which defines its usage
 struct VertexToPixel
 {
-	float4 position		: SV_POSITION;
-	float4 worldPos		: POSITION;
-	float3 normal		: NORMAL;
-	float2 uv			: TEXCOORD;
-	float3 tangent		: TANGENT0;
+	float4 position				: SV_POSITION;
+	float4 worldPos				: POSITION0;
+	float3 normal				: NORMAL;
+	float2 uv					: TEXCOORD;
+	float3 tangent				: TANGENT0;
+	float4 lViewSpacePos		: POSITION1;
 };
 
 struct Light
@@ -53,11 +54,36 @@ cbuffer cameraData : register(b2)
 	float3 CameraPosition;
 };
 
+cbuffer shadowData : register(b3)
+{
+	//float4x4        cascadeProjection;
+	float4          cascadeOffset[3];
+	float4          cascadeScale[3];
+	int             cascadeLevels; // Number of Cascades
+	int             visualizeCascades; // 1 is to visualize the cascades in different colors. 0 is to just draw the scene
+	int             pcfBlurForLoopStart; // For loop begin value. For a 5x5 Kernal this would be -2.
+	int             pcfBlurForLoopEnd; // For loop end value. For a 5x5 kernel this would be 3.
+
+	// For Map based selection scheme, this keeps the pixels inside of the the valid range.
+	// When there is no border, these values are 0 and 1 respectivley.
+	float           minBorderPadding;
+	float           maxBorderPadding;
+	float           shadowBias;  // A shadow map offset to deal with self shadow artifacts.  
+										   //These artifacts are aggravated by PCF.
+	float           shadowPartitionSize;
+	float           cascadeBlendArea; // Amount to overlap when blending between cascades.
+	float           texelSize;
+	float           nativeTexelSizeInX;
+	float           paddingForCB3; // Padding variables exist because CBs must be a multiple of 16 bytes.
+}
+
 Texture2D diffuseTexture  : register(t0);
 Texture2D normalTexture  : register(t1);
 TextureCube cubemap : register(t2);
 TextureCube irradianceMap : register(t3);
+Texture2D shadowMap : register(t4);
 SamplerState basicSampler : register(s0);
+SamplerComparisonState shadowSampler : register(s1);
 
 // https://www.knaldtech.com/docs/doku.php?id=specular_lys
 static const int mipOffset = 0;
@@ -166,6 +192,120 @@ float3 GGX(float3 n, float3 l, float3 v)
 	return G * D * F;
 }
 
+//--------------------------------------------------------------------------------------
+// Calculate amount to blend between two cascades and the band where blending will occure.
+//--------------------------------------------------------------------------------------
+void CalculateBlendAmountForMap(in float4 shadowMapTextureCoord,
+	in out float currentPixelsBlendBandLocation,
+	out float blendBetweenCascadesAmount)
+{
+	// Calcaulte the blend band for the map based selection.
+	float2 distanceToOne = float2 (1.0f - shadowMapTextureCoord.x, 1.0f - shadowMapTextureCoord.y);
+	currentPixelsBlendBandLocation = min(shadowMapTextureCoord.x, shadowMapTextureCoord.y);
+	float currentPixelsBlendBandLocation2 = min(distanceToOne.x, distanceToOne.y);
+	currentPixelsBlendBandLocation =
+		min(currentPixelsBlendBandLocation, currentPixelsBlendBandLocation2);
+	blendBetweenCascadesAmount = currentPixelsBlendBandLocation / cascadeBlendArea;
+}
+
+void ComputeCoordinatesTransform(in int cascadeIndex,
+	in float4 interpolatedPosition,
+	in out float4 shadowTexCoord,
+	in out float4 shadowTexCoordViewSpace)
+{
+	// Now that we know the correct map, we can transform the world space position of the current fragment                
+	shadowTexCoord = shadowTexCoordViewSpace * cascadeScale[cascadeIndex];
+	shadowTexCoord += cascadeOffset[cascadeIndex];
+
+	shadowTexCoord.x *= shadowPartitionSize;  // precomputed (float)cascadeIndex / (float)CASCADE_CNT
+	shadowTexCoord.x += (shadowPartitionSize * (float)cascadeIndex);
+
+
+}
+
+//--------------------------------------------------------------------------------------
+// This function calculates the screen space depth for shadow space texels
+//--------------------------------------------------------------------------------------
+void CalculateRightAndUpTexelDepthDeltas(in float3 shadowTexDDX,
+	in float3 shadowTexDDY,
+	out float upTextDepthWeight,
+	out float rightTextDepthWeight
+) {
+
+	// We use the derivatives in X and Y to create a transformation matrix.  Because these derivives give us the 
+	// transformation from screen space to shadow space, we need the inverse matrix to take us from shadow space 
+	// to screen space.  This new matrix will allow us to map shadow map texels to screen space.  This will allow 
+	// us to find the screen space depth of a corresponding depth pixel.
+	// This is not a perfect solution as it assumes the underlying geometry of the scene is a plane.  A more 
+	// accureate way of finding the actual depth would be to do a deferred rendering approach and actually 
+	//sample the depth.
+
+	// Using an offset, or using variance shadow maps is a better approach to reducing these artifacts in most cases.
+
+	float2x2 matScreentoShadow = float2x2(shadowTexDDX.xy, shadowTexDDY.xy);
+	float invDeterminant = 1.0f / determinant(matScreentoShadow);
+
+	float2x2 matShadowToScreen = float2x2 (
+		matScreentoShadow._22 * invDeterminant, matScreentoShadow._12 * -invDeterminant,
+		matScreentoShadow._21 * -invDeterminant, matScreentoShadow._11 * invDeterminant);
+
+	float2 rightShadowTexelLocation = float2(texelSize, 0.0f);
+	float2 upShadowTexelLocation = float2(0.0f, texelSize);
+
+	// Transform the right pixel by the shadow space to screen space matrix.
+	float2 rightTexelDepthRatio = mul(rightShadowTexelLocation, matShadowToScreen);
+	float2 upTexelDepthRatio = mul(upShadowTexelLocation, matShadowToScreen);
+
+	// We can now caculate how much depth changes when you move up or right in the shadow map.
+	// We use the ratio of change in x and y times the dervivite in X and Y of the screen space 
+	// depth to calculate this change.
+	upTextDepthWeight =
+		upTexelDepthRatio.x * shadowTexDDX.z
+		+ upTexelDepthRatio.y * shadowTexDDY.z;
+	rightTextDepthWeight =
+		rightTexelDepthRatio.x * shadowTexDDX.z
+		+ rightTexelDepthRatio.y * shadowTexDDY.z;
+
+}
+
+//--------------------------------------------------------------------------------------
+// Use PCF to sample the depth map and return a percent lit value.
+//--------------------------------------------------------------------------------------
+void CalculatePCFPercentLit(in float4 shadowTexCoord,
+	in float rightTexelDepthDelta,
+	in float upTexelDepthDelta,
+	in float blurRowSize,
+	out float percentLit
+)
+{
+	percentLit = 0.0f;
+	// This loop could be unrolled, and texture immediate offsets could be used if the kernel size were fixed.
+	// This would be performance improvment.
+	for (int x = pcfBlurForLoopStart; x < pcfBlurForLoopEnd; ++x)
+	{
+		for (int y = pcfBlurForLoopStart; y < pcfBlurForLoopEnd; ++y)
+		{
+			float depthcompare = shadowTexCoord.z;
+			// A very simple solution to the depth bias problems of PCF is to use an offset.
+			// Unfortunately, too much offset can lead to Peter-panning (shadows near the base of object disappear )
+			// Too little offset can lead to shadow acne ( objects that should not be in shadow are partially self shadowed ).
+			//depthcompare -= shadowBias;
+
+			// Add in derivative computed depth scale based on the x and y pixel.
+			depthcompare += rightTexelDepthDelta * ((float)x) + upTexelDepthDelta * ((float)y);
+
+			// Compare the transformed pixel depth to the depth read from the map.
+			percentLit += shadowMap.SampleCmpLevelZero(shadowSampler,
+				float2(
+					shadowTexCoord.x + (((float)x) * nativeTexelSizeInX),
+					shadowTexCoord.y + (((float)y) * texelSize)
+					),
+				depthcompare);
+		}
+	}
+	percentLit /= (float)blurRowSize;
+}
+
 float4 main(VertexToPixel input) : SV_TARGET
 {
 	float3 v = normalize(float4(CameraPosition, 1.0f) - input.worldPos).xyz;
@@ -251,8 +391,137 @@ float4 main(VertexToPixel input) : SV_TARGET
 		float NdL = saturate(dot(n, l));
 		float NdV = saturate(dot(n, v));
 
+		float lighting = 1;
+		if (i == 0)
+		{
+			//// Only cast shadow for light 0
+			//float2 shadowTexCoords;
+			//float4 lSpacePos = mul(input.lViewSpacePos, cascadeProjection);
+			//shadowTexCoords.x = 0.5f + (lSpacePos.x / lSpacePos.w * 0.5f);
+			//shadowTexCoords.y = 0.5f - (lSpacePos.y / lSpacePos.w * 0.5f);
+			//float pixelDepth = lSpacePos.z / lSpacePos.w;
+
+			//// Check if the pixel texture coordinate is in the view frustum of the 
+			//// light before doing any shadow work.
+			//if ((saturate(shadowTexCoords.x) == shadowTexCoords.x) &&
+			//	(saturate(shadowTexCoords.y) == shadowTexCoords.y) &&
+			//	(pixelDepth > 0))
+			//{
+			//	// Use the SampleCmpLevelZero Texture2D method (or SampleCmp) to sample from 
+			//	// the shadow map.
+			//	lighting = float(shadowMap.SampleCmpLevelZero(
+			//		shadowSampler,
+			//		shadowTexCoords,
+			//		pixelDepth));
+			//}
+
+			float4 shadowMapTextureCoord = 0.0f;
+			float4 shadowMapTextureCoordBlend = 0.0f;
+
+			float percentLit = 0.0f;
+			float percentLitBlend = 0.0f;
+
+
+			float upTextDepthWeight = 0;
+			float rightTextDepthWeight = 0;
+			float upTextDepthWeightBlend = 0;
+			float rightTextDepthWeightBlend = 0;
+
+			int iBlurRowSize = pcfBlurForLoopEnd - pcfBlurForLoopStart;
+			iBlurRowSize *= iBlurRowSize;
+			float blurRowSize = (float)iBlurRowSize;
+
+			int cascadeFound = 0;
+			int nextCascadeIndex = 1;
+
+			float currentPixelDepth;
+
+			int currentCascadeIndex;
+
+			float4 shadowMapTextureCoordViewSpace = input.lViewSpacePos;
+
+			currentCascadeIndex = 0;
+
+			for (int cascadeIndex = 0; cascadeIndex < cascadeLevels && cascadeFound == 0; ++cascadeIndex)
+			{
+				shadowMapTextureCoord = shadowMapTextureCoordViewSpace * cascadeScale[cascadeIndex];
+				shadowMapTextureCoord += cascadeOffset[cascadeIndex];
+
+				if (min(shadowMapTextureCoord.x, shadowMapTextureCoord.y) > minBorderPadding
+					&& max(shadowMapTextureCoord.x, shadowMapTextureCoord.y) < maxBorderPadding)
+				{
+					currentCascadeIndex = cascadeIndex;
+					cascadeFound = 1;
+				}
+			}
+
+			float4 color = 0;
+
+			// Repeat text coord calculations for the next cascade. 
+			// The next cascade index is used for blurring between maps.
+			nextCascadeIndex = min(cascadeLevels - 1, currentCascadeIndex + 1);
+
+			float blendBetweenCascadesAmount = 1.0f;
+			float currentPixelsBlendBandLocation = 1.0f;
+
+			CalculateBlendAmountForMap(shadowMapTextureCoord,
+				currentPixelsBlendBandLocation, blendBetweenCascadesAmount);
+
+			float3 shadowMapTextureCoordDDX;
+			float3 shadowMapTextureCoordDDY;
+			// The derivatives are used to find the slope of the current plane.
+			// The derivative calculation has to be inside of the loop in order to prevent divergent flow control artifacts.
+			shadowMapTextureCoordDDX = ddx(shadowMapTextureCoordViewSpace).xyz;
+			shadowMapTextureCoordDDY = ddy(shadowMapTextureCoordViewSpace).xyz;
+
+			shadowMapTextureCoordDDX *= cascadeScale[currentCascadeIndex].xyz;
+			shadowMapTextureCoordDDY *= cascadeScale[currentCascadeIndex].xyz;
+
+
+			ComputeCoordinatesTransform(currentCascadeIndex,
+				input.worldPos,
+				shadowMapTextureCoord,
+				shadowMapTextureCoordViewSpace);
+
+
+			CalculateRightAndUpTexelDepthDeltas(shadowMapTextureCoordDDX, shadowMapTextureCoordDDY,
+				upTextDepthWeight, rightTextDepthWeight);
+
+			CalculatePCFPercentLit(shadowMapTextureCoord, rightTextDepthWeight,
+				upTextDepthWeight, blurRowSize, percentLit);
+
+			if (currentPixelsBlendBandLocation < cascadeBlendArea)
+			{  // the current pixel is within the blend band.
+
+				// Repeat text coord calculations for the next cascade. 
+				// The next cascade index is used for blurring between maps.
+				shadowMapTextureCoordBlend = shadowMapTextureCoordViewSpace * cascadeScale[nextCascadeIndex];
+				shadowMapTextureCoordBlend += cascadeOffset[nextCascadeIndex];
+
+				ComputeCoordinatesTransform(nextCascadeIndex, input.worldPos,
+					shadowMapTextureCoordBlend,
+					shadowMapTextureCoordViewSpace);
+
+				// We repeat the calcuation for the next cascade layer, when blending between maps.
+				if (currentPixelsBlendBandLocation < cascadeBlendArea)
+				{
+					// the current pixel is within the blend band.
+					CalculateRightAndUpTexelDepthDeltas(shadowMapTextureCoordDDX,
+						shadowMapTextureCoordDDY,
+						upTextDepthWeightBlend,
+						rightTextDepthWeightBlend);
+
+					CalculatePCFPercentLit(shadowMapTextureCoordBlend, rightTextDepthWeightBlend,
+						upTextDepthWeightBlend, blurRowSize, percentLitBlend);
+					percentLit = lerp(percentLitBlend, percentLit, blendBetweenCascadesAmount);
+					// Blend the two calculated shadows by the blend amount.
+				}
+			}
+			lighting = percentLit;
+		}
+
 		float4 lightColor = float4(lights[i].Color.xyz, 0.0);
-		intensity = saturate(intensity * spotAmount);
+		intensity = saturate(intensity * spotAmount) * lighting	;
 		//intensity = saturate(intensity * spotAmount);
 
 		float diffuseFactor = NdL;

@@ -13,11 +13,14 @@ DSSRendering::DSSRendering()
 	__int64 perfFreq;
 	QueryPerformanceFrequency(reinterpret_cast<LARGE_INTEGER*>(&perfFreq));
 	perfCounterSeconds = 1.0 / double(perfFreq);
+
+	shadowVertexShader = nullptr;
 }
 
 
 DSSRendering::~DSSRendering()
 {
+	delete shadowVertexShader;
 }
 
 HRESULT DSSRendering::Init(HWND hWnd, unsigned int screenWidth, unsigned int screenHeight)
@@ -32,6 +35,9 @@ HRESULT DSSRendering::Init(HWND hWnd, unsigned int screenWidth, unsigned int scr
 	startTime = now;
 	currentTime = now;
 	previousTime = now;
+
+	shadowVertexShader = new SimpleVertexShader(direct3D.GetDevice(), direct3D.GetDeviceContext());
+	shadowVertexShader->LoadShaderFile(L"ShadowVS.cso");
 
 	return hr;
 }
@@ -48,13 +54,14 @@ void DSSRendering::Update(const float deltaTime, const float totalTime)
 	// #66CCFF
 	direct3D.ClearRenderTarget(0.4f, 0.8f, 1.0f, 1.0f);
 
+	// Preprocessing
+	for (Light* light : App->CurrentActiveScene()->lights)
+	{
+		direct3D.PreProcess(light, App->CurrentActiveScene()->GetAllObjects(), shadowVertexShader);
+	}
+
 	// Render the scene
 	Camera* camera = App->CurrentActiveScene()->mainCamera;
-
-	Light* lights = nullptr;
-	const int lightCount = App->CurrentActiveScene()->GetLightCount();
-	if (lightCount > 0)
-		lights = App->CurrentActiveScene()->GetLightAt(0);
 
 	for (Object* object : App->CurrentActiveScene()->allObjects)
 	{
@@ -62,7 +69,7 @@ void DSSRendering::Update(const float deltaTime, const float totalTime)
 
 		for (MeshRenderer* meshRenderer : meshRenderers)
 		{
-			direct3D.Render(camera, meshRenderer, lights, lightCount);
+			direct3D.Render(camera, meshRenderer);
 		}
 	}
 

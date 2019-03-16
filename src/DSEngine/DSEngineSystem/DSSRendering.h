@@ -161,6 +161,8 @@ private:
 	 * @brief Time elapsed since last frame
 	 */
 	float fpsTimeElapsed;
+
+	SimpleVertexShader* shadowVertexShader;
 };
 
 /**

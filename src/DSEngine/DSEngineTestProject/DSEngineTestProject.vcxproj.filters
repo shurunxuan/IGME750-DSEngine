@@ -55,9 +55,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="VertexShader.hlsl">
-      <Filter>Shaders</Filter>
-    </FxCompile>
     <FxCompile Include="UnlitPixelShader.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>

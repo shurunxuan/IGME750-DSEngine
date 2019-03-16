@@ -19,6 +19,7 @@
 #include <d3d11.h>
 
 #include "MeshRenderer.hpp"
+#include "Light.hpp"
 #include "Camera.hpp"
 
 #ifndef SAFE_RELEASE
@@ -108,7 +109,11 @@ public:
 
 	void ClearRenderTarget(float r, float g, float b, float a);
 
-	void Render(Camera* camera, MeshRenderer* meshRenderer, void* lights = nullptr, int lightCount = 0);
+	void SetDefaultRenderTarget() const;
+
+	void PreProcess(Light* light, std::list<Object*> objects, SimpleVertexShader* shadowVertexShader);
+
+	void Render(Camera* camera, MeshRenderer* meshRenderer);
 
 	void RenderSkybox(Camera* camera);
 
@@ -188,6 +193,13 @@ private:
 	 */
 	ID3D11DepthStencilState* depthStencilState;
 
+	// Front Face Culling & Back Face Culling render states
+	ID3D11RasterizerState* drawingRenderState;
+	ID3D11RasterizerState* shadowRenderState;
+
+	// Shadow
+	ID3D11SamplerState* comparisonSampler;
+
     /**
      * @brief Create a Device And Swap Buffer object
      * 
@@ -209,6 +221,8 @@ private:
 
 
 	HRESULT CreateDepthStencilState();
+
+	HRESULT CreateShadowAndDrawingRenderState();
 	/**
 	 * @brief Resize the Swap Buffer object
 	 *

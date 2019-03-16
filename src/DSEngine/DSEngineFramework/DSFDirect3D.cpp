@@ -1,6 +1,7 @@
 #include "DSFDirect3D.h"
 #include "DSFLogging.h"
 #include "Light.hpp"
+#include "Scene.hpp"
 
 DSFDirect3D* FDirect3D = nullptr;
 
@@ -13,6 +14,9 @@ DSFDirect3D::DSFDirect3D()
 	swapChain = nullptr;
 	backBufferRTV = nullptr;
 	depthStencilView = nullptr;
+	shadowRenderState = nullptr;
+	drawingRenderState = nullptr;
+	comparisonSampler = nullptr;
 	dxFeatureLevel = {};
 }
 
@@ -25,6 +29,9 @@ DSFDirect3D::~DSFDirect3D()
 	SAFE_RELEASE(backBufferRTV);
 	SAFE_RELEASE(depthStencilView);
 	SAFE_RELEASE(depthStencilState);
+	SAFE_RELEASE(shadowRenderState);
+	SAFE_RELEASE(drawingRenderState);
+	SAFE_RELEASE(comparisonSampler);
 }
 
 HRESULT DSFDirect3D::Init(HWND hWnd, unsigned int screenWidth, unsigned int screenHeight)
@@ -44,20 +51,10 @@ HRESULT DSFDirect3D::Init(HWND hWnd, unsigned int screenWidth, unsigned int scre
 	hr = CreateDepthStencilState();
 	if (FAILED(hr)) return hr;
 
-	// Bind the views to the pipeline, so rendering properly 
-	// uses their underlying textures
-	context->OMSetRenderTargets(1, &backBufferRTV, depthStencilView);
+	hr = CreateShadowAndDrawingRenderState();
+	if (FAILED(hr)) return hr;
 
-	// Lastly, set up a viewport so we render into
-	// to correct portion of the window
-	D3D11_VIEWPORT viewport = {};
-	viewport.TopLeftX = 0;
-	viewport.TopLeftY = 0;
-	viewport.Width = float(width);
-	viewport.Height = float(height);
-	viewport.MinDepth = 0.0f;
-	viewport.MaxDepth = 1.0f;
-	context->RSSetViewports(1, &viewport);
+	SetDefaultRenderTarget();
 
 	LOG_TRACE << "DS Engine Framework for Direct3D Initialized!";
 	// Return the "everything is ok" HRESULT value
@@ -91,20 +88,10 @@ HRESULT DSFDirect3D::OnResize(unsigned int screenWidth, unsigned int screenHeigh
 	hr = CreateDepthStencilState();
 	if (FAILED(hr)) return hr;
 
-	// Bind the views to the pipeline, so rendering properly 
-	// uses their underlying textures
-	context->OMSetRenderTargets(1, &backBufferRTV, depthStencilView);
+	hr = CreateShadowAndDrawingRenderState();
+	if (FAILED(hr)) return hr;
 
-	// Lastly, set up a viewport so we render into
-	// to correct portion of the window
-	D3D11_VIEWPORT viewport = {};
-	viewport.TopLeftX = 0;
-	viewport.TopLeftY = 0;
-	viewport.Width = float(width);
-	viewport.Height = float(height);
-	viewport.MinDepth = 0.0f;
-	viewport.MaxDepth = 1.0f;
-	context->RSSetViewports(1, &viewport);
+	SetDefaultRenderTarget();
 
 	LOG_TRACE << "DS Engine Framework for Direct3D Resize, width = " << width << ", height = " << height;
 	// Return the "everything is ok" HRESULT value
@@ -132,10 +119,107 @@ void DSFDirect3D::ClearRenderTarget(float r, float g, float b, float a)
 		0);
 }
 
-void DSFDirect3D::Render(Camera* camera, MeshRenderer* meshRenderer, void* lights, int lightCount)
+void DSFDirect3D::SetDefaultRenderTarget() const
 {
+	// Bind the views to the pipeline, so rendering properly 
+	// uses their underlying textures
+	context->OMSetRenderTargets(1, &backBufferRTV, depthStencilView);
+
+	// Lastly, set up a viewport so we render into
+	// to correct portion of the window
+	D3D11_VIEWPORT viewport = {};
+	viewport.TopLeftX = 0;
+	viewport.TopLeftY = 0;
+	viewport.Width = float(width);
+	viewport.Height = float(height);
+	viewport.MinDepth = 0.0f;
+	viewport.MaxDepth = 1.0f;
+	context->RSSetViewports(1, &viewport);
+}
+
+void DSFDirect3D::PreProcess(Light* light, std::list<Object*> objects, SimpleVertexShader* shadowVertexShader)
+{
+	// Clear depth stencil view
+	context->ClearDepthStencilView(light->GetShadowDepthView(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+	// Render all the objects in the scene that can cast shadows onto themselves or onto other objects.
+
+	// Only bind the ID3D11DepthStencilView for output.
+	context->OMSetRenderTargets(
+		0,
+		nullptr,
+		light->GetShadowDepthView()
+	);
+
+	// Note that starting with the second frame, the previous call will display
+	// warnings in VS debug output about forcing an unbind of the pixel shader
+	// resource. This warning can be safely ignored when using shadow buffers
+	// as demonstrated in this sample.
+
+	// Set rendering state.
+	context->RSSetState(shadowRenderState);
+
+	// Render Scene from Light Cascade PoV
+	for (int c = 0; c < light->GetCascadeCount(); ++c)
+	{
+		context->RSSetViewports(1, light->GetShadowViewportAt(c));
+		for (Object* object : objects)
+		{
+			std::list<MeshRenderer*> meshRenderers = object->GetComponents<MeshRenderer>();
+			for (MeshRenderer* meshRenderer : meshRenderers)
+			{
+				DirectX::XMFLOAT4X4 viewMat{};
+				DirectX::XMFLOAT4X4 projMat{};
+				DirectX::XMFLOAT4X4 worldMat{};
+				XMStoreFloat4x4(&viewMat, light->GetViewMatrix());
+				XMStoreFloat4x4(&projMat, light->GetProjectionMatrixAt(c));
+				XMStoreFloat4x4(&worldMat, object->transform->GetGlobalWorldMatrix());
+
+				shadowVertexShader->SetMatrix4x4("world", worldMat);
+
+				shadowVertexShader->SetMatrix4x4("view", viewMat);
+
+				shadowVertexShader->SetMatrix4x4("projection", projMat);
+
+				shadowVertexShader->CopyAllBufferData();
+
+				shadowVertexShader->SetShader();
+
+				context->PSSetShader(nullptr, nullptr, 0);
+
+				ID3D11Buffer* vertexBuffer = meshRenderer->GetMesh()->GetVertexBuffer();
+				ID3D11Buffer* indexBuffer = meshRenderer->GetMesh()->GetIndexBuffer();
+				// Set buffers in the input assembler
+				//  - Do this ONCE PER OBJECT you're drawing, since each object might
+				//    have different geometry.
+				UINT stride = sizeof(Vertex);
+				UINT offset = 0;
+				context->IASetVertexBuffers(0, 1, &vertexBuffer, &stride, &offset);
+				context->IASetIndexBuffer(indexBuffer, DXGI_FORMAT_R32_UINT, 0);
+
+				context->DrawIndexed(
+					meshRenderer->GetMesh()->GetIndexCount(),		// The number of indices to use (we could draw a subset if we wanted)
+					0,								// Offset to the first index we want to use
+					0);								// Offset to add to each index when looking up vertices
+			}
+		}
+
+
+	}
+}
+
+void DSFDirect3D::Render(Camera* camera, MeshRenderer* meshRenderer)
+{
+	SetDefaultRenderTarget();
+
+	// Set rendering state.
+	context->RSSetState(drawingRenderState);
+
+
 	Material* material = meshRenderer->GetMaterial();
 	Mesh* mesh = meshRenderer->GetMesh();
+
+	LightData* lights = &(*(meshRenderer->object->GetScene()->lightData.begin()));
+	const int lightCount = meshRenderer->object->GetScene()->GetLightCount();
 
 	DirectX::XMFLOAT4X4 worldMatrix;
 	DirectX::XMFLOAT4X4 itWorldMatrix;
@@ -171,11 +255,56 @@ void DSFDirect3D::Render(Camera* camera, MeshRenderer* meshRenderer, void* light
 
 	if (lights != nullptr && lightCount > 0)
 	{
+		material->GetPixelShaderPtr()->SetSamplerState("shadowSampler", comparisonSampler);
+
+		for (Light* light : meshRenderer->object->GetScene()->lights)
+		{
+			DirectX::XMFLOAT4X4 lViewMat{};
+			XMStoreFloat4x4(&lViewMat, light->GetViewMatrix());
+			material->GetPixelShaderPtr()->SetShaderResourceView("shadowMap", light->GetShadowResourceView());
+			material->GetVertexShaderPtr()->SetMatrix4x4("lView", lViewMat);
+
+			material->GetPixelShaderPtr()->SetInt("pcfBlurForLoopStart", PCF_BLUR_COUNT / -2);
+			material->GetPixelShaderPtr()->SetInt("pcfBlurForLoopEnd", PCF_BLUR_COUNT / 2 + 1);
+			material->GetPixelShaderPtr()->SetFloat("cascadeBlendArea", 0.001f);
+			material->GetPixelShaderPtr()->SetFloat("texelSize", 1.0f / 2048.0f);
+			material->GetPixelShaderPtr()->SetFloat("nativeTexelSizeInX", 1.0f / 2048.0f / light->GetCascadeCount());
+			material->GetPixelShaderPtr()->SetFloat("shadowBias", 0);
+			material->GetPixelShaderPtr()->SetFloat("shadowPartitionSize", 1.0f / light->GetCascadeCount());
+
+			DirectX::XMMATRIX matTextureScale = DirectX::XMMatrixScaling(0.5f, -0.5f, 1.0f);
+			DirectX::XMMATRIX matTextureTranslation = DirectX::XMMatrixTranslation(.5f, .5f, 0.f);
+
+			DirectX::XMFLOAT4 cascadeScale[3];
+			DirectX::XMFLOAT4 cascadeOffset[3];
+			for (int index = 0; index < light->GetCascadeCount(); ++index)
+			{
+				DirectX::XMMATRIX shadowTexture = XMMatrixTranspose(light->GetProjectionMatrixAt(index)) * matTextureScale * matTextureTranslation;
+				cascadeScale[index].x = DirectX::XMVectorGetX(shadowTexture.r[0]);
+				cascadeScale[index].y = DirectX::XMVectorGetY(shadowTexture.r[1]);
+				cascadeScale[index].z = DirectX::XMVectorGetZ(shadowTexture.r[2]);
+				cascadeScale[index].w = 1;
+
+				XMStoreFloat3(reinterpret_cast<DirectX::XMFLOAT3*>(&cascadeOffset[index]), shadowTexture.r[3]);
+				cascadeOffset[index].w = 0;
+			}
+
+			material->GetPixelShaderPtr()->SetData("cascadeOffset", &cascadeOffset, sizeof(DirectX::XMFLOAT4) * 3);
+			material->GetPixelShaderPtr()->SetData("cascadeScale", &cascadeScale, sizeof(DirectX::XMFLOAT4) * 3);
+
+			// The border padding values keep the pixel shader from reading the borders during PCF filtering.
+			material->GetPixelShaderPtr()->SetFloat("maxBorderPadding", (2048.0f - 1.0f) / 2048.0f);
+			material->GetPixelShaderPtr()->SetFloat("minBorderPadding", (1.0f) / 2048.0f);
+			material->GetPixelShaderPtr()->SetInt("cascadeLevels", light->GetCascadeCount());
+
+		}
+
+
 		material->GetPixelShaderPtr()->SetInt("lightCount", lightCount);
 		material->GetPixelShaderPtr()->SetData(
 			"lights",					// The name of the (eventual) variable in the shader
 			lights,							// The address of the data to copy
-			sizeof(Light) * 128);		// The size of the data to copy
+			sizeof(LightData) * 128);		// The size of the data to copy
 	}
 
 	// Once you've set all of the data you care to change for
@@ -210,6 +339,9 @@ void DSFDirect3D::Render(Camera* camera, MeshRenderer* meshRenderer, void* light
 		mesh->GetIndexCount(),     // The number of indices to use (we could draw a subset if we wanted)
 		0,     // Offset to the first index we want to use
 		0);    // Offset to add to each index when looking up vertices
+
+	// Unbind shadowMap
+	material->GetPixelShaderPtr()->SetShaderResourceView("shadowMap", nullptr);
 }
 
 void DSFDirect3D::RenderSkybox(Camera* camera)
@@ -313,7 +445,7 @@ HRESULT DSFDirect3D::CreateDeviceAndSwapBuffer()
 	swapDesc.BufferCount = 2;
 	swapDesc.BufferDesc.Width = width;
 	swapDesc.BufferDesc.Height = height;
-	swapDesc.BufferDesc.RefreshRate.Numerator = 60;
+	swapDesc.BufferDesc.RefreshRate.Numerator = 0;
 	swapDesc.BufferDesc.RefreshRate.Denominator = 1;
 	swapDesc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 	swapDesc.BufferDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
@@ -344,6 +476,11 @@ HRESULT DSFDirect3D::CreateDeviceAndSwapBuffer()
 
 HRESULT DSFDirect3D::CreateRenderTargetView()
 {
+	// Setup RTV descriptor to specify sRGB format.
+	D3D11_RENDER_TARGET_VIEW_DESC rtvDesc = {};
+	rtvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+	rtvDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D;
+
 	// The above function created the back buffer render target
 	// for us, but we need a reference to it
 	ID3D11Texture2D* backBufferTexture;
@@ -358,7 +495,7 @@ HRESULT DSFDirect3D::CreateRenderTargetView()
 	// our local reference to the texture, since we have the view.
 	hr = device->CreateRenderTargetView(
 		backBufferTexture,
-		nullptr,
+		&rtvDesc,
 		&backBufferRTV);
 	backBufferTexture->Release();
 	return hr;
@@ -421,6 +558,58 @@ HRESULT DSFDirect3D::CreateDepthStencilState()
 	HRESULT hr = device->CreateDepthStencilState(&dsDesc, &depthStencilState);
 	if (FAILED(hr)) return hr;
 	context->OMSetDepthStencilState(depthStencilState, 0);
+	return hr;
+}
+
+HRESULT DSFDirect3D::CreateShadowAndDrawingRenderState()
+{
+	D3D11_RASTERIZER_DESC drawingRenderStateDesc;
+	ZeroMemory(&drawingRenderStateDesc, sizeof(D3D11_RASTERIZER_DESC));
+	drawingRenderStateDesc.CullMode = D3D11_CULL_BACK;
+	drawingRenderStateDesc.FillMode = D3D11_FILL_SOLID;
+	drawingRenderStateDesc.DepthClipEnable = true; // Feature level 9_1 requires DepthClipEnable == true
+	HRESULT hr = device->CreateRasterizerState(
+		&drawingRenderStateDesc,
+		&drawingRenderState
+	);
+	if (FAILED(hr)) return hr;
+	D3D11_RASTERIZER_DESC shadowRenderStateDesc;
+	ZeroMemory(&shadowRenderStateDesc, sizeof(D3D11_RASTERIZER_DESC));
+	shadowRenderStateDesc.CullMode = D3D11_CULL_FRONT;
+	shadowRenderStateDesc.FillMode = D3D11_FILL_SOLID;
+	shadowRenderStateDesc.DepthBias = 1000;
+	shadowRenderStateDesc.DepthBiasClamp = 0.0f;
+	shadowRenderStateDesc.SlopeScaledDepthBias = 1.0f;
+	shadowRenderStateDesc.DepthClipEnable = true;
+
+	hr = device->CreateRasterizerState(
+		&shadowRenderStateDesc,
+		&shadowRenderState
+	);
+	if (FAILED(hr)) return hr;
+
+	D3D11_SAMPLER_DESC comparisonSamplerDesc;
+	ZeroMemory(&comparisonSamplerDesc, sizeof(D3D11_SAMPLER_DESC));
+	comparisonSamplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_BORDER;
+	comparisonSamplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_BORDER;
+	comparisonSamplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_BORDER;
+	comparisonSamplerDesc.BorderColor[0] = 1.0f;
+	comparisonSamplerDesc.BorderColor[1] = 1.0f;
+	comparisonSamplerDesc.BorderColor[2] = 1.0f;
+	comparisonSamplerDesc.BorderColor[3] = 1.0f;
+	comparisonSamplerDesc.MinLOD = 0.f;
+	comparisonSamplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
+	comparisonSamplerDesc.MipLODBias = 0.f;
+	comparisonSamplerDesc.MaxAnisotropy = 0;
+	comparisonSamplerDesc.ComparisonFunc = D3D11_COMPARISON_LESS_EQUAL;
+	comparisonSamplerDesc.Filter = D3D11_FILTER_COMPARISON_MIN_MAG_MIP_LINEAR;
+	//comparisonSamplerDesc.MaxAnisotropy = 16;
+
+	hr = device->CreateSamplerState(
+		&comparisonSamplerDesc,
+		&comparisonSampler
+	);
+
 	return hr;
 }
 

@@ -36,10 +36,8 @@ private:
 	D3D11_SAMPLER_DESC samplerDesc;
 	ID3D11SamplerState* samplerState;
 
-	ID3D11Resource* cubeMapTex;
 	ID3D11ShaderResourceView* cubeMapSrv;
 
-	ID3D11Resource* irradianceMapTex;
 	ID3D11ShaderResourceView* irradianceMapSrv;
 };
 
@@ -47,8 +45,10 @@ inline Skybox::Skybox(ID3D11Device* d, ID3D11DeviceContext* c, const std::wstrin
 {
 	device = d;
 	context = c;
-	DirectX::CreateDDSTextureFromFile(device, context, cubeMapFile.c_str(), &cubeMapTex, &cubeMapSrv);
-	DirectX::CreateDDSTextureFromFile(device, context, irradianceMapFile.c_str(), &irradianceMapTex, &irradianceMapSrv);
+	DirectX::CreateDDSTextureFromFileEx(device, context, cubeMapFile.c_str(), D3D11_REQ_TEXTURECUBE_DIMENSION, D3D11_USAGE_DEFAULT, D3D11_BIND_SHADER_RESOURCE,
+		0, 0, true, nullptr, &cubeMapSrv);
+	DirectX::CreateDDSTextureFromFileEx(device, context, irradianceMapFile.c_str(), D3D11_REQ_TEXTURECUBE_DIMENSION, D3D11_USAGE_DEFAULT, D3D11_BIND_SHADER_RESOURCE,
+		0, 0, true, nullptr, &irradianceMapSrv);
 
 	Vertex vertices[8];
 
@@ -144,10 +144,8 @@ inline Skybox::~Skybox()
 
 	if (samplerState) { samplerState->Release(); }
 
-	if (cubeMapTex) { cubeMapTex->Release(); }
 	if (cubeMapSrv) { cubeMapSrv->Release(); }
 
-	if (irradianceMapTex) { irradianceMapTex->Release(); }
 	if (irradianceMapSrv) { irradianceMapSrv->Release(); }
 }
 

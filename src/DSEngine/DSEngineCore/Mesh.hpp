@@ -1,8 +1,11 @@
 #pragma once
 #pragma warning(disable:4251)
 #include <DirectXMath.h>
+#include <DirectXCollision.h>
 
 #include <d3d11.h>
+
+#include <limits>
 
 // --------------------------------------------------------
 // A custom vertex definition
@@ -30,8 +33,7 @@ public:
 	int GetIndexCount() const { return indexCount; }
 
 	// Bounding Box
-	DirectX::XMFLOAT3 BoundingBoxCenter;
-	DirectX::XMFLOAT3 BoundingBoxExtents;
+	DirectX::BoundingBox aabb;
 
 private:
 	// Buffers to hold actual geometry data
@@ -92,8 +94,9 @@ inline Mesh::Mesh(Vertex* vertices, int verticesCount, int* indices, int indices
 	device->CreateBuffer(&ibd, &initialIndexData, &indexBuffer);
 
 	// Calculate Bounding Box out of vertices
-	DirectX::XMFLOAT3 lower = { FLT_MAX , FLT_MAX , FLT_MAX };
-	DirectX::XMFLOAT3 upper = { -FLT_MAX , -FLT_MAX , -FLT_MAX };
+	const float inf = std::numeric_limits<float>::infinity();
+	DirectX::XMFLOAT3 lower = { inf, inf, inf };
+	DirectX::XMFLOAT3 upper = { -inf, -inf, -inf };
 
 	for (int i = 0; i < verticesCount; ++i)
 	{
@@ -111,15 +114,10 @@ inline Mesh::Mesh(Vertex* vertices, int verticesCount, int* indices, int indices
 			upper.z = vertices[i].Position.z;
 	}
 
-	const DirectX::XMFLOAT3 half((upper.x - lower.x) * 0.5f,
-		(upper.y - lower.y) * 0.5f,
-		(upper.z - lower.z) * 0.5f);
+	const DirectX::XMVECTOR lowerPt = DirectX::XMLoadFloat3(&lower);
+	const DirectX::XMVECTOR upperPt = DirectX::XMLoadFloat3(&upper);
 
-	BoundingBoxCenter.x = lower.x + half.x;
-	BoundingBoxCenter.y = lower.y + half.y;
-	BoundingBoxCenter.z = lower.z + half.z;
-
-	BoundingBoxExtents = half;
+	DirectX::BoundingBox::CreateFromPoints(aabb, lowerPt, upperPt);
 }
 
 

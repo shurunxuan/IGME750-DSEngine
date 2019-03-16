@@ -33,12 +33,14 @@ void TestGameApp::Init()
 	CameraController * cameraController = CurrentActiveScene()->mainCamera->AddComponent<CameraController>();
 
 	// Add a light
-	Light light = DirectionalLight(DirectX::XMFLOAT3(1.0f, 1.0f, 1.0f), DirectX::XMFLOAT3(-1.0f, -1.0f, 0.0f), 1.0f, DirectX::XMFLOAT3(1.0f, 1.0f, 1.0f));;
+	LightData light = DirectionalLight(DirectX::XMFLOAT3(1.0f, 1.0f, 1.0f), DirectX::XMFLOAT3(-1.0f, -1.0f, 1.0f), 0.8f, DirectX::XMFLOAT3(1.0f, 1.0f, 1.0f));;
 	CurrentActiveScene()->AddLight(light);
+	//LightData anotherLight = DirectionalLight(DirectX::XMFLOAT3(1.0f, 1.0f, 1.0f), DirectX::XMFLOAT3(1.0f, 1.0f, 0.0f), 0.8f, DirectX::XMFLOAT3(1.0f, 1.0f, 1.0f));;
+	//CurrentActiveScene()->AddLight(anotherLight);
 
 	// Add parent object
-	Object * parentObj = CurrentActiveScene()->LoadModelFile("Assets/Models/Fennekin/a653.dae");
-	//Object * parentObj = CurrentActiveScene()->LoadModelFile("Assets/Models/025_Pikachu/0.obj");
+	//Object * parentObj = CurrentActiveScene()->LoadModelFile("Assets/Models/Fennekin/a653.dae");
+	Object * parentObj = CurrentActiveScene()->LoadModelFile("Assets/Models/025_Pikachu/0.obj");
 	//Object* parentObj = CurrentActiveScene()->LoadModelFile("Assets/Models/Rock/sphereNoNormal.obj");
 	parentObj->transform->SetLocalScale(0.05f, 0.05f, 0.05f);
 	parentObj->transform->SetLocalTranslation(-1.0f, 0.0f, 5.0f);
@@ -50,9 +52,24 @@ void TestGameApp::Init()
 
 	// Add another object
 	//Object* anotherObject = CurrentActiveScene()->LoadModelFile("Assets/Models/Rock/sphere.obj");
-	//Object* anotherObject = CurrentActiveScene()->LoadModelFile("Assets/Models/255_Torchic/0.obj");
-	//anotherObject->transform->SetLocalScale(0.05f, 0.05f, 0.05f);
-	//anotherObject->transform->SetLocalTranslation(1.0f, 0.0f, 5.0f);
+	Object * anotherObject = CurrentActiveScene()->LoadModelFile("Assets/Models/255_Torchic/0.obj");
+	anotherObject->transform->SetLocalScale(0.05f, 0.05f, 0.05f);
+	anotherObject->transform->SetLocalTranslation(1.0f, 0.0f, 5.0f);
+
+	// Add a ground
+	Object * ground = CurrentActiveScene()->LoadModelFile("Assets/Models/Rock/quad.obj");
+	ground->name = "Ground";
+	//ground->transform->SetLocalScale(DirectX::XMVectorSet(2.0f, 2.0f, 2.0f, 0.0f));
+	ground->transform->SetLocalTranslation(DirectX::XMVectorSet(0.0f, -0.01f, 5.0f, 0.0f));
+	const DirectX::XMVECTOR rq = DirectX::XMQuaternionRotationAxis(DirectX::XMVectorSet(0.0f,0.0f, 1.0f, 0.0f), DirectX::XM_PIDIV2);
+	ground->transform->SetLocalRotation(rq);
+
+	Object* groundModelObject = (*ground->transform->GetChildren().begin())->object;
+	MeshRenderer* groundMeshRenderer = groundModelObject->GetComponent<MeshRenderer>();
+	PBRMaterial* groundMaterial = static_cast<PBRMaterial*>(groundMeshRenderer->GetMaterial());
+	groundMaterial->parameters.metalness = 0.0f;
+	groundMaterial->parameters.roughness = 1.0f;
+	groundMaterial->parameters.albedo = DirectX::XMFLOAT3(0.5f, 0.5f, 0.5f);
 
 	LOG_INFO << "Scene Structure:";
 	std::list<Object*> allObjects = CurrentActiveScene()->GetAllObjects();
