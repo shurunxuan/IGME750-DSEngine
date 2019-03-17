@@ -1,4 +1,6 @@
 #pragma once
+#pragma warning(disable:4251)
+
 #include <DirectXMath.h>
 #include <DirectXCollision.h>
 #include "Camera.hpp"
@@ -9,76 +11,294 @@
 
 #define PCF_BLUR_COUNT 3
 
+/**
+ * @brief The data of a light, will be sent to the shader
+ * 
+ */
 struct LightData
 {
+	/**
+	 * @brief Type of the light
+	 * 
+	 * Might be LIGHT_TYPE_DIR, LIGHT_TYPE_POINT or LIGHT_TYPE_SPOT
+	 * 
+	 */
 	int Type;
-	DirectX::XMFLOAT3 Direction;// 16 bytes
+	/**
+	 * @brief The direction of the light
+	 * 
+	 * Have no effect if the light is a point light
+	 * 
+	 */
+	DirectX::XMFLOAT3 Direction;
+	/**
+	 * @brief The range of the light
+	 * 
+	 * Have no effect if the light is a directional light
+	 * 
+	 */
 	float Range;
-	DirectX::XMFLOAT3 Position;// 32 bytes
+	/**
+	 * @brief The position of the light
+	 * 
+	 * Have no effect if the light is a directional light
+	 * 
+	 */
+	DirectX::XMFLOAT3 Position;
+	/**
+	 * @brief The intensity of the light
+	 * 
+	 */
 	float Intensity;
+	/**
+	 * @brief The specular color of the light
+	 * 
+	 */
 	DirectX::XMFLOAT3 Color;// 48 bytes
+	/**
+	 * @brief The fall off of a spot light
+	 * 
+	 * Have no effect if the light is not a spot light
+	 * 
+	 */
 	float SpotFalloff;
+	/**
+	 * @brief The ambient color of the light
+	 * 
+	 * @todo This can be deleted?
+	 * 
+	 */
 	DirectX::XMFLOAT3 AmbientColor;// 64 bytes
 };
 
+/**
+ * @brief The class that represents a light
+ * 
+ */
 class Light
 {
 public:
+	/**
+	 * @brief Construct a new Light object
+	 * 
+	 * @param data The data of the light from an array
+	 * @param d Direct3D 11 Device
+	 * @param c Direct3D 11 Device Context
+	 * @param cam The main camera of the scene
+	 * @param sceneAABB The axis-aligned bounding box of the scene
+	 */
 	Light(LightData* data, ID3D11Device* d, ID3D11DeviceContext* c, Camera* cam, DirectX::BoundingBox* sceneAABB);
+	/**
+	 * @brief Destroy the Light object
+	 * 
+	 */
 	~Light();
 
-
+	/**
+	 * @brief Get the Shadow Map Texture
+	 * 
+	 * @return ID3D11Texture2D* The Shadow Map Texture
+	 */
 	ID3D11Texture2D* GetShadowMap() const;
+	/**
+	 * @brief Get the Shadow Depth View
+	 * 
+	 * @return ID3D11DepthStencilView* The Shadow Depth View
+	 */
 	ID3D11DepthStencilView* GetShadowDepthView() const;
+	/**
+	 * @brief Get the Shadow Resource View
+	 * 
+	 * @return ID3D11ShaderResourceView* The Shadow Resource View
+	 */
 	ID3D11ShaderResourceView* GetShadowResourceView() const;
 
+	/**
+	 * @brief Get the Shadow Viewport at a specified cascade
+	 * 
+	 * @param cascade Indicates the cascade of the shadow
+	 * @return D3D11_VIEWPORT* The viewport
+	 */
 	D3D11_VIEWPORT* GetShadowViewportAt(int cascade) const;
 
+	/**
+	 * @brief Get the View Matrix of the light camera
+	 * 
+	 * @return DirectX::XMMATRIX The view matrix
+	 */
 	DirectX::XMMATRIX GetViewMatrix() const;
+	/**
+	 * @brief Get the number of cascades
+	 * 
+	 * @return int The number of cascades
+	 * 
+	 * @todo This currently only returns 3
+	 */
 	int GetCascadeCount() const;
+	/**
+	 * @brief Get the Projection Matrix at a specified cascade
+	 * 
+	 * @param index Indicates the cascade of the shadow
+	 * @return DirectX::XMMATRIX The projection matrix
+	 */
 	DirectX::XMMATRIX GetProjectionMatrixAt(int index) const;
 
+	/**
+	 * @brief Get the Data of the light
+	 * 
+	 * @return const LightData* The data of the light
+	 */
 	const LightData* GetData() const;
 
+	/**
+	 * @brief Set the Direction of the light
+	 * 
+	 * @param d Direction
+	 */
 	void SetDirection(DirectX::XMFLOAT3 d) const;
+	/**
+	 * @brief Set the Position of the light
+	 * 
+	 * @param p Position
+	 */
 	void SetPosition(DirectX::XMFLOAT3 p) const;
+	/**
+	 * @brief Set the Specular Color of the light
+	 * 
+	 * @param c Color
+	 */
 	void SetColor(DirectX::XMFLOAT3 c) const;
+	/**
+	 * @brief Set the Ambient Color of the light
+	 * 
+	 * @param a Ambient Color
+	 * 
+	 * @todo This could be deleted?
+	 */
 	void SetAmbientColor(DirectX::XMFLOAT3 a) const;
+	/**
+	 * @brief Set the Range of the light
+	 * 
+	 * @param r Range
+	 */
 	void SetRange(float r) const;
+	/**
+	 * @brief Set the Intensity of the light
+	 * 
+	 * @param i Intensity
+	 */
 	void SetIntensity(float i) const;
+	/**
+	 * @brief Set the Fall Off of the spot light
+	 * 
+	 * @param s Fall off
+	 */
 	void SetSpotFallOff(float s) const;
 
+	/**
+	 * @brief Update the matrices related to the light and shadow
+	 * 
+	 */
 	void UpdateMatrices();
 private:
+	/**
+	 * @brief The dimension of the shadow map
+	 * 
+	 */
 	UINT shadowMapDimension;
 
+	/**
+	 * @brief Direct3D 11 device
+	 * 
+	 */
 	ID3D11Device* device;
+	/**
+	 * @brief Direct3D 11 context
+	 * 
+	 */
 	ID3D11DeviceContext* context;
 
+	/**
+	 * @brief Shadow map texture
+	 * 
+	 */
 	ID3D11Texture2D* shadowMap;
+	/**
+	 * @brief Shadow map depth view
+	 * 
+	 */
 	ID3D11DepthStencilView* shadowDepthView;
+	/**
+	 * @brief Shadow map shader resource view
+	 * 
+	 */
 	ID3D11ShaderResourceView* shadowResourceView;
 
+	/**
+	 * @brief The shadow viewport of cascades
+	 * 
+	 */
 	D3D11_VIEWPORT* shadowViewport[3];
 
+	/**
+	 * @brief The main camera of the scene
+	 * 
+	 */
 	Camera* camera;
 
+	/**
+	 * @brief The view matrix of the light
+	 * 
+	 */
 	DirectX::XMMATRIX view;
+	/**
+	 * @brief The projection matrices of the cascades
+	 * 
+	 */
 	DirectX::XMMATRIX projection[3];
 
+	/**
+	 * @brief The light data
+	 * 
+	 */
 	LightData* Data{};
 
-	// Bounding box
-	//DirectX::XMVECTOR sceneAABBMin;
-	//DirectX::XMVECTOR sceneAABBMax;
+	/**
+	 * @brief The pointer points to the axis-aligned bounding box of the scene
+	 * 
+	 */
 	DirectX::BoundingBox* sceneAABB;
 
-	// Shadow map cascades
+	/**
+	 * @brief The max value of the shadow map partitions
+	 * 
+	 */
 	int cascadePartitionsMax = 500;
-	float cascadePartitionsFrustum[3]; // Values are  between near and far
-	int cascadePartitionsZeroToOne[3]; // Values are 0 to 100 and represent a percent of the frustum
+	/**
+	 * @brief The values between near and far plane of a cascade
+	 * 
+	 */
+	float cascadePartitionsFrustum[3];
+	/**
+	 * @brief The values between 0 and 100 representing a percent of the frustum
+	 * 
+	 */
+	int cascadePartitionsZeroToOne[3];
 
+	/**
+	 * @brief Calculate the frustum matrices of a directional light
+	 * 
+	 */
 	void CalculateDirectionalFrustumMatrices();
+
+	/**
+	 * @brief Takes the camera's projection matrix and returns the 8 points that make up a view frustum
+	 * 
+	 * @param fCascadeIntervalBegin Beginning of a cascade interval
+	 * @param fCascadeIntervalEnd End of a cascade interval
+	 * @param vProjection The camera projection matrix
+	 * @param pvCornerPointsWorld The points that make up a view frustum
+	 */
 	void CreateFrustumPointsFromCascadeInterval(float fCascadeIntervalBegin,
 		float fCascadeIntervalEnd,
 		const DirectX::XMMATRIX& vProjection,
@@ -87,6 +307,7 @@ private:
 
 };
 
+/// @cond INLINE_DEFINITION
 inline Light::Light(LightData* data, ID3D11Device* d, ID3D11DeviceContext* c, Camera* cam, DirectX::BoundingBox* sceneAABB)
 {
 	shadowMapDimension = 2048;
@@ -414,11 +635,6 @@ inline void Light::CalculateDirectionalFrustumMatrices()
 	}
 }
 
-//--------------------------------------------------------------------------------------
-// This function takes the camera's projection matrix and returns the 8
-// points that make up a view frustum.
-// The frustum is scaled to fit within the Begin and End interval paramaters.
-//--------------------------------------------------------------------------------------
 inline void Light::CreateFrustumPointsFromCascadeInterval(float fCascadeIntervalBegin,
 	float fCascadeIntervalEnd,
 	const DirectX::XMMATRIX& vProjection,
@@ -451,7 +667,7 @@ inline void Light::CreateFrustumPointsFromCascadeInterval(float fCascadeInterval
 	pvCornerPointsWorld[7] = XMVectorSelect(vRightTopFar, vLeftBottomFar, vGrabY);
 
 }
-
+/// @endcond
 inline LightData DirectionalLight(DirectX::XMFLOAT3 color, DirectX::XMFLOAT3 direction, float intensity, DirectX::XMFLOAT3 ambientColor)
 {
 	LightData result{};

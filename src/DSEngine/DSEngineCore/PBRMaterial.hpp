@@ -1,4 +1,5 @@
 #pragma once
+#pragma warning(disable:4251)
 
 #include "Material.hpp"
 #include <locale>
@@ -8,42 +9,144 @@
 #include <DirectXTK/WICTextureLoader.h>
 #include "DSFLogging.h"
 
+/**
+ * @brief The default physically based rendering material
+ * 
+ */
 class PBRMaterial :
 	public Material
 {
 public:
+	/**
+	 * @brief Construct a new PBRMaterial
+	 * 
+	 * @param d Direct3D 11 device
+	 * @param c Direct3D 11 device context
+	 */
 	explicit PBRMaterial(ID3D11Device* d, ID3D11DeviceContext* c);
+	/**
+	 * @brief Construct a new PBRMaterial with shaders
+	 * 
+	 * @param vtxShader The vertex shader
+	 * @param pxlShader The pixel shader
+	 * @param d Direct3D 11 device
+	 * @param c Direct3D 11 device context
+	 */
 	PBRMaterial(SimpleVertexShader* vtxShader, SimplePixelShader* pxlShader, ID3D11Device* d, ID3D11DeviceContext* c);
+	/**
+	 * @brief Destroy the PBRMaterial object
+	 * 
+	 */
 	~PBRMaterial();
 
+	/**
+	 * @brief The data struct of the PBRMaterial
+	 * 
+	 * @todo Add roughness map and metalness map!
+	 */
 	struct PBRMaterialStruct
 	{
+		/**
+		 * @brief The albedo color
+		 * 
+		 */
 		DirectX::XMFLOAT3 albedo = { 1.0f, 1.0f, 1.0f };
+		/**
+		 * @brief Roughness
+		 * 
+		 */
 		float roughness = 0.5f;
+		/**
+		 * @brief Metalness
+		 * 
+		 */
 		float metalness = 0.5f;
+		/**
+		 * @brief Indicates if the material includes a normal map
+		 * 
+		 */
 		int hasNormalMap = 0;
+		/**
+		 * @brief Indicates if the material includes a diffuse texture
+		 * 
+		 */
 		int hasDiffuseTexture = 0;
 	} parameters;
 
+	/**
+	 * @brief Get the Material Struct
+	 * 
+	 * @param mtlPtr The pointer points to the PBRMaterialStruct
+	 * @return size_t The size of the struct
+	 */
 	size_t GetMaterialStruct(void** mtlPtr) override;
+	/**
+	 * @brief Set the sampler state, normal map and diffuse texture to the pixel shader
+	 * 
+	 */
 	void SetShaderData() override;
 
+	/**
+	 * @brief Load the diffuse texture
+	 * 
+	 * @param diffuseTexture The filename of the diffuse texture
+	 * @return bool Indicates the load succeeded
+	 */
 	bool LoadDiffuseTexture(const std::wstring& diffuseTexture);
+	/**
+	 * @brief Load the normal texture
+	 * 
+	 * @param diffuseTexture The filename of the normal texture
+	 * @return bool Indicates the load succeeded
+	 */
 	bool LoadNormalTexture(const std::wstring& normalTexture);
 
+	/**
+	 * @brief Load the diffuse texture
+	 * 
+	 * @param diffuseTexture The filename of the diffuse texture
+	 * @return bool Indicates the load succeeded
+	 */
 	bool LoadDiffuseTexture(const std::string& diffuseTexture);
+	/**
+	 * @brief Load the normal texture
+	 * 
+	 * @param diffuseTexture The filename of the normal texture
+	 * @return bool Indicates the load succeeded
+	 */
 	bool LoadNormalTexture(const std::string& normalTexture);
 
 private:
+	/**
+	 * @brief The shader resource view of the diffuse texture
+	 * 
+	 */
 	ID3D11ShaderResourceView* diffuseSrvPtr;
+	/**
+	 * @brief The shader resource view of the normal texture
+	 * 
+	 */
 	ID3D11ShaderResourceView* normalSrvPtr;
 
+	/**
+	 * @brief The description of the sampler state
+	 * 
+	 */
 	D3D11_SAMPLER_DESC samplerDesc;
+	/**
+	 * @brief The sampler state used for sampling the textures
+	 * 
+	 */
 	ID3D11SamplerState* samplerState;
 
+	/**
+	 * @brief Direct3D 11 device context
+	 * 
+	 */
 	ID3D11DeviceContext* context;
 };
 
+/// @cond INLINE_DEFINITION
 inline PBRMaterial::PBRMaterial(ID3D11Device* d, ID3D11DeviceContext* c)
 	: Material(d)
 {
@@ -143,3 +246,4 @@ inline bool PBRMaterial::LoadNormalTexture(const std::string& normalTexture)
 	std::wstring wide = converter.from_bytes(normalTexture);
 	return LoadNormalTexture(wide);
 }
+/// @endcond

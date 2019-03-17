@@ -7,42 +7,102 @@
 
 #include <limits>
 
-// --------------------------------------------------------
-// A custom vertex definition
-//
-// You will eventually ADD TO this, and/or make more of these!
-// --------------------------------------------------------
+/**
+ * @brief A vertex in the mesh
+ * 
+ */
 struct Vertex
 {
-	DirectX::XMFLOAT3 Position;	    // The position of the vertex
-	DirectX::XMFLOAT3 Normal;       // The normal of the vertex
-	DirectX::XMFLOAT2 UV;			// The texture uv of the vertex
+	/**
+	 * @brief The position of the vertex
+	 * 
+	 */
+	DirectX::XMFLOAT3 Position;
+	/**
+	 * @brief The normal of the vertex
+	 * 
+	 */
+	DirectX::XMFLOAT3 Normal;
+	/**
+	 * @brief The texcoord of the vertex
+	 * 
+	 */
+	DirectX::XMFLOAT2 UV;
+	/**
+	 * @brief The tangent of the vertex
+	 * 
+	 */
 	DirectX::XMFLOAT3 Tangent;
 };
 
-
+/**
+ * @brief The mesh of a MeshRenderer
+ * 
+ */
 class Mesh
 {
 public:
+	/**
+	 * @brief Construct a new Mesh object
+	 * 
+	 * @param vertices The vertices of the mesh
+	 * @param verticesCount The number of vertices
+	 * @param indices The indices of the vertices
+	 * @param indicesCount The number of indices
+	 * @param device Direct3D 11 device
+	 */
 	Mesh(Vertex* vertices, int verticesCount, int* indices, int indicesCount, ID3D11Device* device);
+	/**
+	 * @brief Destroy the Mesh object
+	 * 
+	 */
 	~Mesh();
 
-	// Getters
-	ID3D11Buffer* GetVertexBuffer() const { return vertexBuffer; }
-	ID3D11Buffer* GetIndexBuffer() const { return indexBuffer; }
-	int GetIndexCount() const { return indexCount; }
+	/**
+	 * @brief Get the Vertex Buffer
+	 * 
+	 * @return ID3D11Buffer* The Vertex Buffer
+	 */
+	ID3D11Buffer* GetVertexBuffer() const;
+	/**
+	 * @brief Get the Index Buffer 
+	 * 
+	 * @return ID3D11Buffer* The Index Buffer
+	 */
+	ID3D11Buffer* GetIndexBuffer() const;
+	/**
+	 * @brief Get the Index count
+	 * 
+	 * @return int The index count
+	 */
+	int GetIndexCount() const;
 
-	// Bounding Box
+	/**
+	 * @brief The axis-aligned bounding box of the mesh
+	 * 
+	 */
 	DirectX::BoundingBox aabb;
 
 private:
-	// Buffers to hold actual geometry data
+	/**
+	 * @brief Vertex Buffer
+	 * 
+	 */
 	ID3D11Buffer* vertexBuffer;
+	/**
+	 * @brief Index Buffer
+	 * 
+	 */
 	ID3D11Buffer* indexBuffer;
 
+	/**
+	 * @brief The index count
+	 * 
+	 */
 	int indexCount;
 };
 
+/// @cond INLINE_DEFINITION
 inline Mesh::Mesh(Vertex* vertices, int verticesCount, int* indices, int indicesCount, ID3D11Device* device)
 {
 	indexCount = indicesCount;
@@ -126,3 +186,20 @@ inline Mesh::~Mesh()
 	if (vertexBuffer) { vertexBuffer->Release(); }
 	if (indexBuffer) { indexBuffer->Release(); }
 }
+
+inline ID3D11Buffer* Mesh::GetVertexBuffer() const
+{
+	return vertexBuffer;
+}
+
+inline ID3D11Buffer* Mesh::GetIndexBuffer() const
+{
+	return indexBuffer;
+}
+
+inline int Mesh::GetIndexCount() const
+{
+	return indexCount;
+}
+
+/// @endcond

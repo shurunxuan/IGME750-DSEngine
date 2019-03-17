@@ -11,48 +11,156 @@
 
 #include "Component.hpp"
 #include "Transform.hpp"
+/// @cond FORWARD_DECLARATION
 class Scene;
+/// @endcond
 
+/**
+ * @brief A game object
+ * 
+ */
 class Object
 {
 public:
+	/**
+	 * @brief Construct a new Object with the name "Object"
+	 * 
+	 * @param scene The scene that owns the object
+	 */
 	Object(Scene* scene);
+	/**
+	 * @brief Construct a new Object with a name
+	 * 
+	 * @param scene The scene that owns the object
+	 * @param name The name of the object
+	 */
 	Object(Scene* scene, std::string name);
+	/**
+	 * @brief Destroy the Object
+	 * 
+	 */
 	virtual ~Object();
 
+	/**
+	 * @brief Get the Instance ID of the object
+	 * 
+	 * @return boost::uuids::uuid The UUID of the object
+	 */
 	boost::uuids::uuid GetInstanceID() const;
 
+	/**
+	 * @brief Get the first Component of a specific type
+	 * 
+	 * @tparam T The type of the component
+	 * @return T* The pointer points to the component, nullptr if nothing is found
+	 * 
+	 * @todo We should consider if we want to use RTTI and dynamic_cast for this.
+	 */
 	template <class T>
 	T* GetComponent();
 
+	/**
+	 * @brief Get all Components of a specific type
+	 * 
+	 * @tparam T The type of the component
+	 * @return std::list<T*> A list of pointers point to the components
+	 */
 	template <class T>
 	std::list<T*> GetComponents();
 
+	/**
+	 * @brief Add a component
+	 * 
+	 * @tparam T The type of the component
+	 * @return T* The pointer of the added component
+	 */
 	template <class T>
 	T* AddComponent();
 
+	/**
+	 * @brief Remove a component
+	 * 
+	 * Nothing happens if there's no such component
+	 * 
+	 * @tparam T The type of the component
+	 * @param component The pointer of the component to be removed
+	 */
 	template <class T>
 	void RemoveComponent(T* component);
 
+	/**
+	 * @brief Called when the scene updates
+	 * 
+	 * Update all the components
+	 * 
+	 * @param deltaTime The time that a frame costs
+	 * @param totalTime The total time from the beginning of the application
+	 */
 	virtual void Update(float deltaTime, float totalTime);
 
+	/**
+	 * @brief Get the scene that owns this object
+	 * 
+	 * @return Scene* The pointer of the scene
+	 */
 	Scene* GetScene();
 
+	/**
+	 * @brief Tell if the UUIDs of two objects are identical
+	 * 
+	 * @param v1 An object
+	 * @param v2 Another object
+	 * @return bool If the UUIDs are identical
+	 */
 	friend bool operator==(const Object& v1, const Object& v2);
+	/**
+	 * @brief Tell if the UUIDs of two objects are not identical
+	 * 
+	 * @param v1 An object
+	 * @param v2 Another object
+	 * @return bool If the UUIDs are not identical
+	 */
 	friend bool operator!=(const Object& v1, const Object& v2);
 
 private:
+	/**
+	 * @brief The UUID of the object
+	 * 
+	 */
 	boost::uuids::uuid id;
+	/**
+	 * @brief The scene that owns the object
+	 * 
+	 */
 	Scene* owner;
 
+	/**
+	 * @brief All components of the object
+	 * 
+	 */
 	std::list<Component*> components;
 public:
+	/**
+	 * @brief The name of the object
+	 * 
+	 */
 	std::string name;
+	/**
+	 * @brief If the object is hidden from the scene
+	 * 
+	 * @todo This does nothing currently
+	 * 
+	 */
 	bool isHidden;
 
+	/**
+	 * @brief The transform of the object
+	 * 
+	 */
 	Transform* transform;
 };
 
+/// @cond INLINE_DEFINITION
 template <class T>
 T* Object::GetComponent()
 {
@@ -155,3 +263,4 @@ inline bool operator!=(const Object & v1, const Object & v2)
 	return v1.id != v2.id;
 }
 
+/// @endcond

@@ -4,6 +4,10 @@
 #include "Object.hpp"
 #include "Component.hpp"
 
+/**
+ * @brief Press Space to play audio
+ * 
+ */
 class PressSpaceToPlayAudio :
 	public Component
 {

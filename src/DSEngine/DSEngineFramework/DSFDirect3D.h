@@ -107,16 +107,52 @@ public:
 	 */
 	HRESULT OnResize(unsigned int screenWidth, unsigned int screenHeight);
 
+    /**
+     * @brief Clear the render target with a color
+     * 
+     * @param r Red
+     * @param g Green
+     * @param b Blue
+     * @param a Alpha
+     */
 	void ClearRenderTarget(float r, float g, float b, float a);
 
+    /**
+     * @brief Set the default render target which is used to render objects
+     * 
+     */
 	void SetDefaultRenderTarget() const;
 
+    /**
+     * @brief Pre-process
+     * 
+     * Render the scene into the depth buffer (shadow mapping)
+     * 
+     * @param light The light source of the corresponding shadow
+     * @param objects All objects that cast shadows in the scene
+     * @param shadowVertexShader The vertex shader that is used to render the depth buffer
+     */
 	void PreProcess(Light* light, std::list<Object*> objects, SimpleVertexShader* shadowVertexShader);
 
+    /**
+     * @brief Render a mesh renderer
+     * 
+     * @param camera The main camera
+     * @param meshRenderer The MeshRenderer component to be rendered
+     */
 	void Render(Camera* camera, MeshRenderer* meshRenderer);
 
+    /**
+     * @brief Render the skybox
+     * 
+     * @param camera The main camera that contains the skybox info
+     */
 	void RenderSkybox(Camera* camera);
 
+    /**
+     * @brief Present the render target to the screen
+     * 
+     */
 	void Present();
 
     /**
@@ -144,8 +180,18 @@ public:
      */
 	D3D_FEATURE_LEVEL GetD3DFeatureLevel() const;
 
+    /**
+     * @brief Get the Direct3D 11 Device
+     * 
+     * @return ID3D11Device* The Direct3D 11 Device
+     */
 	ID3D11Device* GetDevice() const;
 
+    /**
+     * @brief Get the Direct3D 11 Device Context
+     * 
+     * @return ID3D11DeviceContext* The Direct3D 11 Device Context
+     */
 	ID3D11DeviceContext* GetDeviceContext() const;
 
 private:
@@ -193,11 +239,22 @@ private:
 	 */
 	ID3D11DepthStencilState* depthStencilState;
 
-	// Front Face Culling & Back Face Culling render states
+	/**
+	 * @brief The render state that is used for drawing normal objects
+	 * 
+	 */
 	ID3D11RasterizerState* drawingRenderState;
+
+    /**
+     * @brief The render state that is used in shadow mapping pre-processing
+     * 
+     */
 	ID3D11RasterizerState* shadowRenderState;
 
-	// Shadow
+    /**
+     * @brief The comparison sampler which is used when rendering the shadow
+     * 
+     */
 	ID3D11SamplerState* comparisonSampler;
 
     /**
@@ -219,9 +276,18 @@ private:
      */
 	HRESULT CreateDepthStencilView();
 
-
+    /**
+     * @brief Create a Depth Stencil State object
+     * 
+     * @return HRESULT S_OK if succeed, or other
+     */
 	HRESULT CreateDepthStencilState();
 
+    /**
+     * @brief Create render states that are used in rendering shadows and objects
+     * 
+     * @return HRESULT S_OK if succeed, or other
+     */
 	HRESULT CreateShadowAndDrawingRenderState();
 	/**
 	 * @brief Resize the Swap Buffer object

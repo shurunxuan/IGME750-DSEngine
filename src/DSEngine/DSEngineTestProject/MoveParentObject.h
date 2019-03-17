@@ -3,7 +3,10 @@
 #include "Component.hpp"
 #include "MeshRenderer.hpp"
 
-
+/**
+ * @brief Move an object with arrow keys, rotate with numpad, change material property with DPad
+ * 
+ */
 class MoveParentObject :
 	public Component
 {

@@ -1,6 +1,10 @@
 #pragma once
 #include "Component.hpp"
 
+/**
+ * @brief Control the camera with Left & Right Stick
+ * 
+ */
 class CameraController :
 	public Component
 {
