@@ -88,7 +88,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#define-members">Macros</a>  </div>
+<a href="#define-members">Macros</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">Object.hpp File Reference</div>  </div>
 </div><!--header-->
@@ -101,16 +102,21 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <code>#include &lt;typeinfo&gt;</code><br/>
 <code>#include &lt;boost/uuid/uuid.hpp&gt;</code><br/>
 <code>#include &lt;boost/uuid/uuid_generators.hpp&gt;</code><br/>
-<code>#include &quot;<a class="el" href="_component_8hpp_source.html">Component.hpp</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="_transform_8hpp_source.html">Transform.hpp</a>&quot;</code><br/>
-</div>
-<p><a href="_object_8hpp_source.html">Go to the source code of this file.</a></p>
-<table class="memberdecls">
+<code>#include &quot;<a class="el" href="_component_8hpp.html">Component.hpp</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="_transform_8hpp.html">Transform.hpp</a>&quot;</code><br/>
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_object.html">Object</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A game object.  <a href="class_object.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a5dccecbc0e857873822e0b382f434600"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_object_8hpp.html#a5dccecbc0e857873822e0b382f434600">operator==</a> (const <a class="el" href="class_object.html">Object</a> &amp;v1, const <a class="el" href="class_object.html">Object</a> &amp;v2)</td></tr>
+<tr class="separator:a5dccecbc0e857873822e0b382f434600"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9acbe0bbd22f64eefd75c3f671a35091"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_object_8hpp.html#a9acbe0bbd22f64eefd75c3f671a35091">operator!=</a> (const <a class="el" href="class_object.html">Object</a> &amp;v1, const <a class="el" href="class_object.html">Object</a> &amp;v2)</td></tr>
+<tr class="separator:a9acbe0bbd22f64eefd75c3f671a35091"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This file contains the class that represents the game object. </p>
@@ -118,7 +124,92 @@ Classes</h2></td></tr>
 <dl class="section version"><dt>Version</dt><dd>0.1 </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2019/03/09</dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2019 </dd></dl>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="a9acbe0bbd22f64eefd75c3f671a35091"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool operator!= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_object.html">Object</a> &amp;&#160;</td>
+          <td class="paramname"><em>v1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="class_object.html">Object</a> &amp;&#160;</td>
+          <td class="paramname"><em>v2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">v1</td><td>An object </td></tr>
+    <tr><td class="paramname">v2</td><td>Another object </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>bool If the UUIDs are not identical </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a5dccecbc0e857873822e0b382f434600"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool operator== </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_object.html">Object</a> &amp;&#160;</td>
+          <td class="paramname"><em>v1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="class_object.html">Object</a> &amp;&#160;</td>
+          <td class="paramname"><em>v2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">v1</td><td>An object </td></tr>
+    <tr><td class="paramname">v2</td><td>Another object </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>bool If the UUIDs are identical </dd></dl>
+
+</div>
+</div>
+</div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">
