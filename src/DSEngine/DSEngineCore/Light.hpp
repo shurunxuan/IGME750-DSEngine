@@ -320,7 +320,6 @@ private:
 
 };
 
-/// @cond INLINE_DEFINITION
 inline Light::Light(LightData* data, ID3D11Device* d, ID3D11DeviceContext* c, Camera* cam, DirectX::BoundingBox* sceneAABB)
 {
 	shadowMapDimension = 2048;
@@ -680,7 +679,7 @@ inline void Light::CreateFrustumPointsFromCascadeInterval(float fCascadeInterval
 	pvCornerPointsWorld[7] = XMVectorSelect(vRightTopFar, vLeftBottomFar, vGrabY);
 
 }
-/// @endcond
+
 inline LightData DirectionalLight(DirectX::XMFLOAT3 color, DirectX::XMFLOAT3 direction, float intensity, DirectX::XMFLOAT3 ambientColor)
 {
 	LightData result{};

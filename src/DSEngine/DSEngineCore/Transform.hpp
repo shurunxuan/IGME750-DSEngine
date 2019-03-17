@@ -26,9 +26,8 @@
 class Transform : public Component
 {
 public:
-	/// @cond FRIEND_CLASS_DECLARATION
 	friend class Camera;
-	/// @endcond
+	
 	
 	/**
 	 * @brief Construct a new Transform
@@ -277,7 +276,6 @@ private:
 	Transform* parent;
 };
 
-/// @cond INLINE_DEFINITION
 inline Transform::Transform(Object* owner)
 	: Component(owner)
 {
@@ -517,4 +515,4 @@ inline void Transform::ShouldUpdate()
 
 	shouldUpdate = true;
 }
-/// @endcond
+

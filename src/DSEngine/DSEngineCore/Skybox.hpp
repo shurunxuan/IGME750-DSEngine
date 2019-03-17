@@ -145,7 +145,6 @@ private:
 	ID3D11ShaderResourceView* irradianceMapSrv;
 };
 
-/// @cond INLINE_DEFINITION
 inline Skybox::Skybox(ID3D11Device* d, ID3D11DeviceContext* c, const std::wstring& cubeMapFile, const std::wstring& irradianceMapFile)
 {
 	device = d;
@@ -288,4 +287,3 @@ inline ID3D11ShaderResourceView* Skybox::GetIrradianceMapSRV() const
 {
 	return irradianceMapSrv;
 }
-/// @endcond

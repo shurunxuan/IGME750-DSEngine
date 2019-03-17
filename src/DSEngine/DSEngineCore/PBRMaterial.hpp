@@ -159,7 +159,6 @@ private:
 	ID3D11DeviceContext* context;
 };
 
-/// @cond INLINE_DEFINITION
 inline PBRMaterial::PBRMaterial(ID3D11Device* d, ID3D11DeviceContext* c)
 	: Material(d)
 {
@@ -259,4 +258,3 @@ inline bool PBRMaterial::LoadNormalTexture(const std::string& normalTexture)
 	std::wstring wide = converter.from_bytes(normalTexture);
 	return LoadNormalTexture(wide);
 }
-/// @endcond

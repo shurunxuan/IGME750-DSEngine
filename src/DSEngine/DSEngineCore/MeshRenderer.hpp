@@ -89,7 +89,7 @@ private:
 	 */
 	std::shared_ptr<Mesh> mesh;
 };
-/// @cond INLINE_DEFINITION
+
 inline MeshRenderer::MeshRenderer(Object* owner)
 	: Component(owner)
 {
@@ -128,4 +128,3 @@ inline Mesh* MeshRenderer::GetMesh() const
 {
 	return mesh.get();
 }
-/// @endcond

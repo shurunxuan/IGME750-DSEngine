@@ -102,7 +102,6 @@ private:
 	Skybox* skybox;
 };
 
-/// @cond INLINE_DEFINITION
 inline Camera::Camera(Scene *owner, std::string name)
 	: Object(owner, name)
 {

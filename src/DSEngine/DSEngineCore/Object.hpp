@@ -24,9 +24,8 @@
 
 #include "Component.hpp"
 #include "Transform.hpp"
-/// @cond FORWARD_DECLARATION
+
 class Scene;
-/// @endcond
 
 /**
  * @brief A game object
@@ -173,7 +172,6 @@ public:
 	Transform* transform;
 };
 
-/// @cond INLINE_DEFINITION
 template <class T>
 T* Object::GetComponent()
 {
@@ -276,4 +274,3 @@ inline bool operator!=(const Object & v1, const Object & v2)
 	return v1.id != v2.id;
 }
 
-/// @endcond

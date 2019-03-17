@@ -109,7 +109,6 @@ protected:
 	SimplePixelShader* pixelShader;
 };
 
-/// @cond INLINE_DEFINITION
 inline Material::Material(ID3D11Device* d = nullptr)
 {
 	vertexShader = nullptr;

@@ -38,10 +38,9 @@
 class Scene
 {
 public:
-	/// @cond FRIEND_CLASS_DECLARATION
 	friend class DSSRendering;
 	friend class DSFDirect3D;
-	/// @endcond
+	
 
 	/**
 	 * @brief Construct a new Scene
@@ -215,7 +214,6 @@ private:
 	DirectX::BoundingBox aabb;
 };
 
-/// @cond INLINE_DEFINITION
 inline Scene::Scene()
 {
 	mainCamera = new Camera(this);
@@ -491,4 +489,3 @@ inline Object* Scene::AddObjectWithNode(std::string modelFileName, const aiScene
 	return newObj;
 }
 
-/// @endcond

@@ -115,7 +115,6 @@ private:
 	int indexCount;
 };
 
-/// @cond INLINE_DEFINITION
 inline Mesh::Mesh(Vertex* vertices, int verticesCount, int* indices, int indicesCount, ID3D11Device* device)
 {
 	indexCount = indicesCount;
@@ -215,4 +214,3 @@ inline int Mesh::GetIndexCount() const
 	return indexCount;
 }
 
-/// @endcond

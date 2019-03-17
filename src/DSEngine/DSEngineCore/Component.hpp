@@ -17,9 +17,8 @@
 #include <boost/uuid/uuid.hpp>
 #include <boost/uuid/random_generator.hpp>
 
-/// @cond FORWARD_DECLARATION
 class Object;
-/// @endcond
+
 
 /**
  * @brief The component class that will be attached to an object
@@ -80,7 +79,7 @@ private:
 	 */
 	boost::uuids::uuid id;
 };
-/// @cond INLINE_DEFINITION
+
 inline Component::Component(Object* owner)
 	: isActive(true)
 	, object(owner)
@@ -96,5 +95,5 @@ inline boost::uuids::uuid Component::GetInstanceId() const
 {
 	return id;
 }
-/// @endcond
+
 
