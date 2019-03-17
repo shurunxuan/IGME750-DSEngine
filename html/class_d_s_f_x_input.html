@@ -73,7 +73,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -126,6 +126,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_f_x_input.html#a1cd07e59efa5ac3ca8be933b53bd0163">Update</a> ()</td></tr>
 <tr class="memdesc:a1cd07e59efa5ac3ca8be933b53bd0163"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the state of the gamepads. <br/></td></tr>
 <tr class="separator:a1cd07e59efa5ac3ca8be933b53bd0163"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a80d8989539694689aedf95161b27479b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_f_x_input.html#a80d8989539694689aedf95161b27479b">OnDeviceChange</a> ()</td></tr>
+<tr class="memdesc:a80d8989539694689aedf95161b27479b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when a WM_DEVICECHANGE is presented.  <a href="#a80d8989539694689aedf95161b27479b">More...</a><br/></td></tr>
+<tr class="separator:a80d8989539694689aedf95161b27479b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adf884abac534b11cd21cc0e01ab6534d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_f_x_input.html#adf884abac534b11cd21cc0e01ab6534d">GetButton</a> (<a class="el" href="_d_s_f_x_input_8h.html#a7e6fbdd3adeec44f31d384f2abed16cf">DSButtonCode</a> buttonCode, int player) const </td></tr>
 <tr class="memdesc:adf884abac534b11cd21cc0e01ab6534d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the state of if a button is being held.  <a href="#adf884abac534b11cd21cc0e01ab6534d">More...</a><br/></td></tr>
 <tr class="separator:adf884abac534b11cd21cc0e01ab6534d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -633,6 +636,24 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Packed data of if a button is released </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a80d8989539694689aedf95161b27479b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DSFXInput::OnDeviceChange </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Called when a WM_DEVICECHANGE is presented. </p>
+<p>Re-poll the connected controllers </p>
 
 </div>
 </div>
