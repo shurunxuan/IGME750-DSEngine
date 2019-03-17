@@ -1,6 +1,7 @@
 var searchData=
 [
   ['light',['Light',['../class_light.html',1,'Light'],['../class_light.html#af317628bbd925111ca93505c1f9dbbe6',1,'Light::Light()']]],
+  ['light_2ehpp',['Light.hpp',['../_light_8hpp.html',1,'']]],
   ['lightdata',['LightData',['../struct_light_data.html',1,'']]],
   ['loaddiffusetexture',['LoadDiffuseTexture',['../class_p_b_r_material.html#a6b1e2558b9421ba07fe45c82f0404dfd',1,'PBRMaterial::LoadDiffuseTexture(const std::wstring &amp;diffuseTexture)'],['../class_p_b_r_material.html#a2702f2874d7e0bf875a37c39a1a9bcf5',1,'PBRMaterial::LoadDiffuseTexture(const std::string &amp;diffuseTexture)']]],
   ['loadmodelfile',['LoadModelFile',['../class_scene.html#ade0f9630e01a7207e665c83a5338422f',1,'Scene']]],

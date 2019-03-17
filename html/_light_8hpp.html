@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>DS Engine: /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFDirect3D.h File Reference</title>
+<title>DS Engine: /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineCore/Light.hpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -82,79 +82,70 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_c78a9f9d373ff97f507c8e2975adeceb.html">DSEngine</a></li><li class="navelem"><a class="el" href="dir_05866c34796a5a18a36475d6d5e9fc93.html">DSEngineFramework</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_c78a9f9d373ff97f507c8e2975adeceb.html">DSEngine</a></li><li class="navelem"><a class="el" href="dir_c4a3cf7f085df44ca26b12f09df5b974.html">DSEngineCore</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#define-members">Macros</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">DSFDirect3D.h File Reference</div>  </div>
+<div class="title">Light.hpp File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This file declares the framework class for Direct3D.  
+<p>This file contains the class that represents the light.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;Windows.h&gt;</code><br/>
-<code>#include &lt;d3d11.h&gt;</code><br/>
-<code>#include &quot;<a class="el" href="_mesh_renderer_8hpp_source.html">MeshRenderer.hpp</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="_light_8hpp_source.html">Light.hpp</a>&quot;</code><br/>
+<div class="textblock"><code>#include &lt;DirectXMath.h&gt;</code><br/>
+<code>#include &lt;DirectXCollision.h&gt;</code><br/>
 <code>#include &quot;<a class="el" href="_camera_8hpp_source.html">Camera.hpp</a>&quot;</code><br/>
 </div>
-<p><a href="_d_s_f_direct3_d_8h_source.html">Go to the source code of this file.</a></p>
+<p><a href="_light_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_f_direct3_d.html">DSFDirect3D</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The Direct3D Framework of the DS Engine.  <a href="class_d_s_f_direct3_d.html#details">More...</a><br/></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_light_data.html">LightData</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The data of a light, will be sent to the shader.  <a href="struct_light_data.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_light.html">Light</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The class that represents a light.  <a href="class_light.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a2bc549675ca29f733709b4656d22d52a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>SAFE_RELEASE</b>(x)</td></tr>
-<tr class="separator:a2bc549675ca29f733709b4656d22d52a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a916f16daf8da8985c682e74aa47deefe"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a916f16daf8da8985c682e74aa47deefe"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>DSENGINEFRAMEWORK_API</b>&#160;&#160;&#160;__declspec(dllexport)</td></tr>
-<tr class="separator:a916f16daf8da8985c682e74aa47deefe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8229c1b02537492ab81de6efc3346dd7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8229c1b02537492ab81de6efc3346dd7"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>LIGHT_TYPE_DIR</b>&#160;&#160;&#160;0</td></tr>
+<tr class="separator:a8229c1b02537492ab81de6efc3346dd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f12d6ed4836079b90250038db107280"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5f12d6ed4836079b90250038db107280"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>LIGHT_TYPE_POINT</b>&#160;&#160;&#160;1</td></tr>
+<tr class="separator:a5f12d6ed4836079b90250038db107280"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2daaaa4d45657532acb6f3e0859bcbfa"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2daaaa4d45657532acb6f3e0859bcbfa"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>LIGHT_TYPE_SPOT</b>&#160;&#160;&#160;2</td></tr>
+<tr class="separator:a2daaaa4d45657532acb6f3e0859bcbfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af1388289b00d2600385065f3bd227c88"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af1388289b00d2600385065f3bd227c88"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>PCF_BLUR_COUNT</b>&#160;&#160;&#160;3</td></tr>
+<tr class="separator:af1388289b00d2600385065f3bd227c88"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:a853669131f7149896ff16d679ea2445f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a853669131f7149896ff16d679ea2445f"></a>
-DSENGINEFRAMEWORK_API <a class="el" href="class_d_s_f_direct3_d.html">DSFDirect3D</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_d_s_f_direct3_d_8h.html#a853669131f7149896ff16d679ea2445f">FDirect3D</a></td></tr>
-<tr class="memdesc:a853669131f7149896ff16d679ea2445f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The pointer that points to the singleton of the Direct3D Framework. <br/></td></tr>
-<tr class="separator:a853669131f7149896ff16d679ea2445f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:aebdb5f0780ca45cf84ecd60f9beae39b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aebdb5f0780ca45cf84ecd60f9beae39b"></a>
+<a class="el" href="struct_light_data.html">LightData</a>&#160;</td><td class="memItemRight" valign="bottom"><b>DirectionalLight</b> (DirectX::XMFLOAT3 color, DirectX::XMFLOAT3 direction, float intensity, DirectX::XMFLOAT3 ambientColor)</td></tr>
+<tr class="separator:aebdb5f0780ca45cf84ecd60f9beae39b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa65316c6f36f58400d56884ca8de6889"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa65316c6f36f58400d56884ca8de6889"></a>
+<a class="el" href="struct_light_data.html">LightData</a>&#160;</td><td class="memItemRight" valign="bottom"><b>PointLight</b> (DirectX::XMFLOAT3 color, DirectX::XMFLOAT3 position, float range, float intensity)</td></tr>
+<tr class="separator:aa65316c6f36f58400d56884ca8de6889"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34c90f5eabb19e60929ce563f3b31a9a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a34c90f5eabb19e60929ce563f3b31a9a"></a>
+<a class="el" href="struct_light_data.html">LightData</a>&#160;</td><td class="memItemRight" valign="bottom"><b>SpotLight</b> (DirectX::XMFLOAT3 color, DirectX::XMFLOAT3 position, DirectX::XMFLOAT3 direction, float range, float spotFalloff, float intensity)</td></tr>
+<tr class="separator:a34c90f5eabb19e60929ce563f3b31a9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>This file declares the framework class for Direct3D. </p>
+<div class="textblock"><p>This file contains the class that represents the light. </p>
 <dl class="section author"><dt>Author</dt><dd>Victor Shu </dd></dl>
 <dl class="section version"><dt>Version</dt><dd>0.1 </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>2019/02/20</dd></dl>
+<dl class="section date"><dt>Date</dt><dd>2019/03/12</dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2019 </dd></dl>
-</div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="a2bc549675ca29f733709b4656d22d52a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SAFE_RELEASE</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">x</td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">if</span>(x != NULL)        \</div>
-<div class="line">   {                    \</div>
-<div class="line">      x-&gt;Release();     \</div>
-<div class="line">      x = NULL;         \</div>
-<div class="line">   }</div>
-</div><!-- fragment -->
-</div>
-</div>
-</div><!-- contents -->
+</div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">
