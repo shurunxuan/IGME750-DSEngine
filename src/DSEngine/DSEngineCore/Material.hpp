@@ -1,3 +1,16 @@
+/**
+ * @file Material.hpp
+ * @author Victor Shu
+ * @brief This file contains the class that represents
+ * the material of a MeshRenderer
+ * 
+ * @version 0.1
+ * @date 2019/03/11
+ * 
+ * @copyright Copyright (c) 2019
+ * 
+ */
+
 #pragma once
 #pragma warning(disable:4251)
 #include "SimpleShader.hpp"
