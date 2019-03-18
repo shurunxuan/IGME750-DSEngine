@@ -1,6 +1,8 @@
 var searchData=
 [
-  ['draw',['Draw',['../class_d_s_f_direct3_d.html#ace5ea74275bc679500d4da39576bf3b3',1,'DSFDirect3D']]],
+  ['destroyobject',['DestroyObject',['../class_scene.html#a29041a0e7b008b018791c7f50976174c',1,'Scene']]],
+  ['device',['device',['../class_material.html#af95c3777d3097671b96cfe682c596c54',1,'Material::device()'],['../class_d_s_engine_app.html#a1068cfa80626abcc3c17917822dab35d',1,'DSEngineApp::device()']]],
+  ['direction',['Direction',['../struct_light_data.html#a425c13428f284747bb9825f1895318dc',1,'LightData']]],
   ['dsaxiscode',['DSAxisCode',['../_d_s_f_x_input_8h.html#a22550c2bcce3b5808bd63017d726eb84',1,'DSFXInput.h']]],
   ['dsbuttoncode',['DSButtonCode',['../_d_s_f_x_input_8h.html#a7e6fbdd3adeec44f31d384f2abed16cf',1,'DSFXInput.h']]],
   ['dsengine',['DSEngine',['../_d_s_engine_8h.html#af88647598240bb5be393baafecf09ec9',1,'DSEngine.h']]],

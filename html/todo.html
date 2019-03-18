@@ -65,7 +65,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -81,12 +81,40 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><dl class="reflist">
-<dt><a class="anchor" id="_todo000001"></a>Member <a class="el" href="class_d_s_engine_app.html#a4e9d6e41f33e37371aac38f69d10f8de">DSEngineApp::Loop</a>  ()</dt>
+<dt><a class="anchor" id="_todo000002"></a>Member <a class="el" href="class_camera.html#a52152fa632acceb9bfa81ae8433b7372">Camera::GetFarClip</a>  () const </dt>
+<dd>Currently, this only returns 1000.0f  </dd>
+<dt><a class="anchor" id="_todo000001"></a>Member <a class="el" href="class_camera.html#a60d1027046402675449cb355c9d4d36f">Camera::GetNearClip</a>  () const </dt>
+<dd>Currently, this only returns 0.1f  </dd>
+<dt><a class="anchor" id="_todo000015"></a>Member <a class="el" href="class_d_s_engine_app.html#a7843550c1a9fb4f7a4ad2f1d0ffdc78b">DSEngineApp::CurrentActiveScene</a>  ()</dt>
+<dd>This only returns App::currentScene currently. If we are going to have multiple scenes, there should be a scene manager.  </dd>
+<dt><a class="anchor" id="_todo000014"></a>Member <a class="el" href="class_d_s_engine_app.html#a4e9d6e41f33e37371aac38f69d10f8de">DSEngineApp::Loop</a>  ()</dt>
 <dd>Add/change return type or parameters as needed  </dd>
-<dt><a class="anchor" id="_todo000002"></a>Member <a class="el" href="class_d_s_s_rendering.html#a5f5e28740d6c8134793508fa53594942">DSSRendering::Update</a>  (float deltaTime, float totalTime)</dt>
-<dd>This is currently a place holder that reroute the call to <a class="el" href="class_d_s_f_direct3_d.html#ace5ea74275bc679500d4da39576bf3b3" title="Draw on screen. ">DSFDirect3D::Draw</a>  </dd>
-<dt><a class="anchor" id="_todo000003"></a>Class <a class="el" href="class_test_game_app.html">TestGameApp</a>  </dt>
-<dd>This class should contain actual game logic</dd>
+<dt><a class="anchor" id="_todo000016"></a>Member <a class="el" href="class_d_s_s_rendering.html#a5f5e28740d6c8134793508fa53594942">DSSRendering::Update</a>  (float deltaTime, float totalTime)</dt>
+<dd>This is currently a place holder that reroute the call to DSFDirect3D::Draw  </dd>
+<dt><a class="anchor" id="_todo000004"></a>Member <a class="el" href="class_light.html#a9c66939144552122a079cf2daad5a3f4">Light::GetCascadeCount</a>  () const </dt>
+<dd>This currently only returns 3  </dd>
+<dt><a class="anchor" id="_todo000005"></a>Member <a class="el" href="class_light.html#a17d3f8a310b11012b2d0e1a9d5748271">Light::SetAmbientColor</a>  (DirectX::XMFLOAT3 a) const </dt>
+<dd>This could be deleted?  </dd>
+<dt><a class="anchor" id="_todo000003"></a>Member <a class="el" href="struct_light_data.html#aeb659967bc95a64cc6a8f8daa74c7922">LightData::AmbientColor</a>  </dt>
+<dd>This can be deleted? </dd>
+<dt><a class="anchor" id="_todo000006"></a>Member <a class="el" href="class_object.html#a824beb41e45f1fdecc88c15e11983156">Object::GetComponent</a>  ()</dt>
+<dd>We should consider if we want to use RTTI and dynamic_cast for this.  </dd>
+<dt><a class="anchor" id="_todo000007"></a>Member <a class="el" href="class_object.html#abd9673f7c81356e44dc7508fafb5348b">Object::isHidden</a>  </dt>
+<dd>This does nothing currently </dd>
+<dt><a class="anchor" id="_todo000008"></a>Class <a class="el" href="struct_p_b_r_material_1_1_p_b_r_material_struct.html">PBRMaterial::PBRMaterialStruct</a>  </dt>
+<dd>Add roughness map and metalness map!  </dd>
+<dt><a class="anchor" id="_todo000010"></a>Member <a class="el" href="class_scene.html#a29041a0e7b008b018791c7f50976174c">Scene::DestroyObject</a>  (<a class="el" href="class_object.html" title="A game object. ">Object</a> *obj)</dt>
+<dd>THIS DOES NOTHING! DON'T FORGET TO IMPLEMENT THIS  </dd>
+<dt><a class="anchor" id="_todo000011"></a>Member <a class="el" href="class_scene.html#a0789b5606c8c50d0d3c6e0469a5af988">Scene::GetLightAt</a>  (int index)</dt>
+<dd>The "nullptr" part is not implemented  </dd>
+<dt><a class="anchor" id="_todo000009"></a>Member <a class="el" href="class_scene.html#ab7ed32556b9c0381011e12141489b3f9">Scene::Instantiate</a>  (<a class="el" href="class_object.html" title="A game object. ">Object</a> *obj)</dt>
+<dd>THIS DOES NOTHING! DON'T FORGET TO IMPLEMENT THIS  </dd>
+<dt><a class="anchor" id="_todo000012"></a>Member <a class="el" href="class_scene.html#a02b82ebaaee69b1cba47b00cb839ae8c">Scene::RemoveLightAt</a>  (int index)</dt>
+<dd>The "invalid" part is not implemented  </dd>
+<dt><a class="anchor" id="_todo000017"></a>Class <a class="el" href="class_test_game_app.html">TestGameApp</a>  </dt>
+<dd>This class should contain actual game logic </dd>
+<dt><a class="anchor" id="_todo000013"></a>Member <a class="el" href="class_transform.html#a5de927c336d973f4d573d012fd347977">Transform::GetChildren</a>  () const </dt>
+<dd>Consider add a function that get a specified child with a property </dd>
 </dl>
 </div></div><!-- contents -->
 <!-- start footer part -->

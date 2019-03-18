@@ -73,7 +73,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -95,7 +95,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p>The Direct3D Framework of the DS Engine.  
  <a href="class_d_s_f_direct3_d.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="_d_s_f_direct3_d_8h_source.html">DSFDirect3D.h</a>&gt;</code></p>
+<p><code>#include &lt;DSFDirect3D.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -123,9 +123,26 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a5e56c4b26fb0530ba5b79ac850b1c226"><td class="memItemLeft" align="right" valign="top">HRESULT&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_f_direct3_d.html#a5e56c4b26fb0530ba5b79ac850b1c226">OnResize</a> (unsigned int screenWidth, unsigned int screenHeight)</td></tr>
 <tr class="memdesc:a5e56c4b26fb0530ba5b79ac850b1c226"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resize the Direct3D stuff.  <a href="#a5e56c4b26fb0530ba5b79ac850b1c226">More...</a><br/></td></tr>
 <tr class="separator:a5e56c4b26fb0530ba5b79ac850b1c226"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ace5ea74275bc679500d4da39576bf3b3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_f_direct3_d.html#ace5ea74275bc679500d4da39576bf3b3">Draw</a> (float deltaTime, float totalTime)</td></tr>
-<tr class="memdesc:ace5ea74275bc679500d4da39576bf3b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draw on screen.  <a href="#ace5ea74275bc679500d4da39576bf3b3">More...</a><br/></td></tr>
-<tr class="separator:ace5ea74275bc679500d4da39576bf3b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6747280d10cee6b136eda5b03c295391"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_f_direct3_d.html#a6747280d10cee6b136eda5b03c295391">ClearRenderTarget</a> (float r, float g, float b, float a)</td></tr>
+<tr class="memdesc:a6747280d10cee6b136eda5b03c295391"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the render target with a color.  <a href="#a6747280d10cee6b136eda5b03c295391">More...</a><br/></td></tr>
+<tr class="separator:a6747280d10cee6b136eda5b03c295391"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46ec8a68d8bb9b43df772d707297627e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a46ec8a68d8bb9b43df772d707297627e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_f_direct3_d.html#a46ec8a68d8bb9b43df772d707297627e">SetDefaultRenderTarget</a> () const </td></tr>
+<tr class="memdesc:a46ec8a68d8bb9b43df772d707297627e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the default render target which is used to render objects. <br/></td></tr>
+<tr class="separator:a46ec8a68d8bb9b43df772d707297627e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c17e332e91ecf8f20349e67b615ebba"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_f_direct3_d.html#a3c17e332e91ecf8f20349e67b615ebba">PreProcess</a> (<a class="el" href="class_light.html">Light</a> *light, std::list&lt; <a class="el" href="class_object.html">Object</a> * &gt; objects, SimpleVertexShader *shadowVertexShader)</td></tr>
+<tr class="memdesc:a3c17e332e91ecf8f20349e67b615ebba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pre-process.  <a href="#a3c17e332e91ecf8f20349e67b615ebba">More...</a><br/></td></tr>
+<tr class="separator:a3c17e332e91ecf8f20349e67b615ebba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0fb93a73e7f3fceb6c334fa0e31b4219"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_f_direct3_d.html#a0fb93a73e7f3fceb6c334fa0e31b4219">Render</a> (<a class="el" href="class_camera.html">Camera</a> *camera, <a class="el" href="class_mesh_renderer.html">MeshRenderer</a> *meshRenderer)</td></tr>
+<tr class="memdesc:a0fb93a73e7f3fceb6c334fa0e31b4219"><td class="mdescLeft">&#160;</td><td class="mdescRight">Render a mesh renderer.  <a href="#a0fb93a73e7f3fceb6c334fa0e31b4219">More...</a><br/></td></tr>
+<tr class="separator:a0fb93a73e7f3fceb6c334fa0e31b4219"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ace95fb32e4f71b1ec97b0f0818b059"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_f_direct3_d.html#a5ace95fb32e4f71b1ec97b0f0818b059">RenderSkybox</a> (<a class="el" href="class_camera.html">Camera</a> *camera)</td></tr>
+<tr class="memdesc:a5ace95fb32e4f71b1ec97b0f0818b059"><td class="mdescLeft">&#160;</td><td class="mdescRight">Render the skybox.  <a href="#a5ace95fb32e4f71b1ec97b0f0818b059">More...</a><br/></td></tr>
+<tr class="separator:a5ace95fb32e4f71b1ec97b0f0818b059"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19e253baf99603839029207db2cf5073"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a19e253baf99603839029207db2cf5073"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_f_direct3_d.html#a19e253baf99603839029207db2cf5073">Present</a> ()</td></tr>
+<tr class="memdesc:a19e253baf99603839029207db2cf5073"><td class="mdescLeft">&#160;</td><td class="mdescRight">Present the render target to the screen. <br/></td></tr>
+<tr class="separator:a19e253baf99603839029207db2cf5073"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5a29dd50ca07c9ba0a353f1d7979b4da"><td class="memItemLeft" align="right" valign="top">HWND&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_f_direct3_d.html#a5a29dd50ca07c9ba0a353f1d7979b4da">GetWindowHandle</a> () const </td></tr>
 <tr class="memdesc:a5a29dd50ca07c9ba0a353f1d7979b4da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Window Handle.  <a href="#a5a29dd50ca07c9ba0a353f1d7979b4da">More...</a><br/></td></tr>
 <tr class="separator:a5a29dd50ca07c9ba0a353f1d7979b4da"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -138,6 +155,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a9df24a47e33191d979bbd262a527c049"><td class="memItemLeft" align="right" valign="top">D3D_FEATURE_LEVEL&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_f_direct3_d.html#a9df24a47e33191d979bbd262a527c049">GetD3DFeatureLevel</a> () const </td></tr>
 <tr class="memdesc:a9df24a47e33191d979bbd262a527c049"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get Direct3D feature level.  <a href="#a9df24a47e33191d979bbd262a527c049">More...</a><br/></td></tr>
 <tr class="separator:a9df24a47e33191d979bbd262a527c049"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae96477a36d73140a88508b03d7cd206e"><td class="memItemLeft" align="right" valign="top">ID3D11Device *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_f_direct3_d.html#ae96477a36d73140a88508b03d7cd206e">GetDevice</a> () const </td></tr>
+<tr class="memdesc:ae96477a36d73140a88508b03d7cd206e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Direct3D 11 Device.  <a href="#ae96477a36d73140a88508b03d7cd206e">More...</a><br/></td></tr>
+<tr class="separator:ae96477a36d73140a88508b03d7cd206e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a33883764bff5e56ce4caa18db61e14df"><td class="memItemLeft" align="right" valign="top">ID3D11DeviceContext *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_f_direct3_d.html#a33883764bff5e56ce4caa18db61e14df">GetDeviceContext</a> () const </td></tr>
+<tr class="memdesc:a33883764bff5e56ce4caa18db61e14df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Direct3D 11 Device Context.  <a href="#a33883764bff5e56ce4caa18db61e14df">More...</a><br/></td></tr>
+<tr class="separator:a33883764bff5e56ce4caa18db61e14df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The Direct3D Framework of the DS Engine. </p>
@@ -243,21 +266,33 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="ace5ea74275bc679500d4da39576bf3b3"></a>
+<a class="anchor" id="a6747280d10cee6b136eda5b03c295391"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void DSFDirect3D::Draw </td>
+          <td class="memname">void DSFDirect3D::ClearRenderTarget </td>
           <td>(</td>
           <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>deltaTime</em>, </td>
+          <td class="paramname"><em>r</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>totalTime</em>&#160;</td>
+          <td class="paramname"><em>g</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>b</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>a</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -267,11 +302,13 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Draw on screen. </p>
+<p>Clear the render target with a color. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">deltaTime</td><td>The time cost by one frame </td></tr>
-    <tr><td class="paramname">totalTime</td><td>The time since the game started </td></tr>
+    <tr><td class="paramname">r</td><td>Red </td></tr>
+    <tr><td class="paramname">g</td><td>Green </td></tr>
+    <tr><td class="paramname">b</td><td>Blue </td></tr>
+    <tr><td class="paramname">a</td><td>Alpha </td></tr>
   </table>
   </dd>
 </dl>
@@ -293,6 +330,42 @@ Public Member Functions</h2></td></tr>
 
 <p>Get Direct3D feature level. </p>
 <dl class="section return"><dt>Returns</dt><dd>D3D_FEATURE_LEVEL Direct3D feature level </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ae96477a36d73140a88508b03d7cd206e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ID3D11Device* DSFDirect3D::GetDevice </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the Direct3D 11 Device. </p>
+<dl class="section return"><dt>Returns</dt><dd>ID3D11Device* The Direct3D 11 Device </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a33883764bff5e56ce4caa18db61e14df"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ID3D11DeviceContext* DSFDirect3D::GetDeviceContext </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the Direct3D 11 Device Context. </p>
+<dl class="section return"><dt>Returns</dt><dd>ID3D11DeviceContext* The Direct3D 11 Device Context </dd></dl>
 
 </div>
 </div>
@@ -493,8 +566,110 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a3c17e332e91ecf8f20349e67b615ebba"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DSFDirect3D::PreProcess </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_light.html">Light</a> *&#160;</td>
+          <td class="paramname"><em>light</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::list&lt; <a class="el" href="class_object.html">Object</a> * &gt;&#160;</td>
+          <td class="paramname"><em>objects</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">SimpleVertexShader *&#160;</td>
+          <td class="paramname"><em>shadowVertexShader</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Pre-process. </p>
+<p>Render the scene into the depth buffer (shadow mapping)</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">light</td><td>The light source of the corresponding shadow </td></tr>
+    <tr><td class="paramname">objects</td><td>All objects that cast shadows in the scene </td></tr>
+    <tr><td class="paramname">shadowVertexShader</td><td>The vertex shader that is used to render the depth buffer </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a0fb93a73e7f3fceb6c334fa0e31b4219"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DSFDirect3D::Render </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_camera.html">Camera</a> *&#160;</td>
+          <td class="paramname"><em>camera</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_mesh_renderer.html">MeshRenderer</a> *&#160;</td>
+          <td class="paramname"><em>meshRenderer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Render a mesh renderer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">camera</td><td>The main camera </td></tr>
+    <tr><td class="paramname">meshRenderer</td><td>The <a class="el" href="class_mesh_renderer.html" title="The mesh renderer component. ">MeshRenderer</a> component to be rendered </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a5ace95fb32e4f71b1ec97b0f0818b059"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DSFDirect3D::RenderSkybox </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_camera.html">Camera</a> *&#160;</td>
+          <td class="paramname"><em>camera</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Render the skybox. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">camera</td><td>The main camera that contains the skybox info </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/<a class="el" href="_d_s_f_direct3_d_8h_source.html">DSFDirect3D.h</a></li>
+<li>/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/<a class="el" href="_d_s_f_direct3_d_8h.html">DSFDirect3D.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

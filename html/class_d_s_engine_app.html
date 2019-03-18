@@ -73,7 +73,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -86,16 +86,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="class_d_s_engine_app-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">DSEngineApp Class Reference</div>  </div>
+<div class="title">DSEngineApp Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
 </div><!--header-->
 <div class="contents">
 
 <p>The app class. Game should derive from this.  
  <a href="class_d_s_engine_app.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="_d_s_engine_app_8h_source.html">DSEngineApp.h</a>&gt;</code></p>
+<p><code>#include &lt;DSEngineApp.h&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for DSEngineApp:</div>
 <div class="dyncontent">
@@ -126,16 +127,38 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a9170c623c423c3dcd13fa156e88ef285"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_d_s_engine_app.html">DSEngineApp</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_engine_app.html#a9170c623c423c3dcd13fa156e88ef285">operator=</a> (<a class="el" href="class_d_s_engine_app.html">DSEngineApp</a> &amp;&amp;v)=delete</td></tr>
 <tr class="memdesc:a9170c623c423c3dcd13fa156e88ef285"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move assignment operator of <a class="el" href="class_d_s_engine_app.html" title="The app class. Game should derive from this. ">DSEngineApp</a> is deleted since the class is meant to be a singleton.  <a href="#a9170c623c423c3dcd13fa156e88ef285">More...</a><br/></td></tr>
 <tr class="separator:a9170c623c423c3dcd13fa156e88ef285"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab1638326ba6d4cc402e672a5691e6f05"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_engine_app.html#ab1638326ba6d4cc402e672a5691e6f05">Init</a> (HINSTANCE hInstance, LPWSTR lpCmdLine, HWND hWnd, int screenWidth, int screenHeight)</td></tr>
-<tr class="memdesc:ab1638326ba6d4cc402e672a5691e6f05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Actual initialization of the app.  <a href="#ab1638326ba6d4cc402e672a5691e6f05">More...</a><br/></td></tr>
-<tr class="separator:ab1638326ba6d4cc402e672a5691e6f05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35691ccab0726cf15d7a9cbb41a15195"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_engine_app.html#a35691ccab0726cf15d7a9cbb41a15195">Initialize</a> (HINSTANCE hInstance, LPWSTR lpCmdLine, HWND hWnd, int screenWidth, int screenHeight)</td></tr>
+<tr class="memdesc:a35691ccab0726cf15d7a9cbb41a15195"><td class="mdescLeft">&#160;</td><td class="mdescRight">Actual initialization of the app.  <a href="#a35691ccab0726cf15d7a9cbb41a15195">More...</a><br/></td></tr>
+<tr class="separator:a35691ccab0726cf15d7a9cbb41a15195"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a471f76f06f053d994853f2990d177db0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a471f76f06f053d994853f2990d177db0"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_engine_app.html#a471f76f06f053d994853f2990d177db0">Init</a> ()=0</td></tr>
+<tr class="memdesc:a471f76f06f053d994853f2990d177db0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize of the game logic. <br/></td></tr>
+<tr class="separator:a471f76f06f053d994853f2990d177db0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4e9d6e41f33e37371aac38f69d10f8de"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_engine_app.html#a4e9d6e41f33e37371aac38f69d10f8de">Loop</a> ()</td></tr>
 <tr class="memdesc:a4e9d6e41f33e37371aac38f69d10f8de"><td class="mdescLeft">&#160;</td><td class="mdescRight">The game loop. Called in function DSEngine.  <a href="#a4e9d6e41f33e37371aac38f69d10f8de">More...</a><br/></td></tr>
 <tr class="separator:a4e9d6e41f33e37371aac38f69d10f8de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac4ad90a0fc95f11161fdf7cd511efd79"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac4ad90a0fc95f11161fdf7cd511efd79"></a>
-<a class="el" href="class_d_s_s_rendering.html">DSSRendering</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_engine_app.html#ac4ad90a0fc95f11161fdf7cd511efd79">GetRenderingSystem</a> ()</td></tr>
-<tr class="memdesc:ac4ad90a0fc95f11161fdf7cd511efd79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Rendering System instance pointer. <br/></td></tr>
-<tr class="separator:ac4ad90a0fc95f11161fdf7cd511efd79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7843550c1a9fb4f7a4ad2f1d0ffdc78b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_scene.html">Scene</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_engine_app.html#a7843550c1a9fb4f7a4ad2f1d0ffdc78b">CurrentActiveScene</a> ()</td></tr>
+<tr class="memdesc:a7843550c1a9fb4f7a4ad2f1d0ffdc78b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current active scene.  <a href="#a7843550c1a9fb4f7a4ad2f1d0ffdc78b">More...</a><br/></td></tr>
+<tr class="separator:a7843550c1a9fb4f7a4ad2f1d0ffdc78b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:a982b99e033c42a7fda5e8955816af1da"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a982b99e033c42a7fda5e8955816af1da"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_engine_app.html#a982b99e033c42a7fda5e8955816af1da">width</a></td></tr>
+<tr class="memdesc:a982b99e033c42a7fda5e8955816af1da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Screen width. <br/></td></tr>
+<tr class="separator:a982b99e033c42a7fda5e8955816af1da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a585e255b0ef500415bd370992bc8b5d9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a585e255b0ef500415bd370992bc8b5d9"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_engine_app.html#a585e255b0ef500415bd370992bc8b5d9">height</a></td></tr>
+<tr class="memdesc:a585e255b0ef500415bd370992bc8b5d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Screen height. <br/></td></tr>
+<tr class="separator:a585e255b0ef500415bd370992bc8b5d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1068cfa80626abcc3c17917822dab35d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1068cfa80626abcc3c17917822dab35d"></a>
+ID3D11Device *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_engine_app.html#a1068cfa80626abcc3c17917822dab35d">device</a></td></tr>
+<tr class="memdesc:a1068cfa80626abcc3c17917822dab35d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Direct3D 11 device. <br/></td></tr>
+<tr class="separator:a1068cfa80626abcc3c17917822dab35d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7635d4cccfb1e0207340e27b34dfd691"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7635d4cccfb1e0207340e27b34dfd691"></a>
+ID3D11DeviceContext *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_engine_app.html#a7635d4cccfb1e0207340e27b34dfd691">context</a></td></tr>
+<tr class="memdesc:a7635d4cccfb1e0207340e27b34dfd691"><td class="mdescLeft">&#160;</td><td class="mdescRight">Direct3D 11 device context. <br/></td></tr>
+<tr class="separator:a7635d4cccfb1e0207340e27b34dfd691"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The app class. Game should derive from this. </p>
@@ -249,7 +272,25 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="ab1638326ba6d4cc402e672a5691e6f05"></a>
+<a class="anchor" id="a7843550c1a9fb4f7a4ad2f1d0ffdc78b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_scene.html">Scene</a>* DSEngineApp::CurrentActiveScene </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the current active scene. </p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000015">Todo:</a></b></dt><dd>This only returns App::currentScene currently. If we are going to have multiple scenes, there should be a scene manager. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a35691ccab0726cf15d7a9cbb41a15195"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -257,7 +298,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual bool DSEngineApp::Init </td>
+          <td class="memname">virtual bool DSEngineApp::Initialize </td>
           <td>(</td>
           <td class="paramtype">HINSTANCE&#160;</td>
           <td class="paramname"><em>hInstance</em>, </td>
@@ -312,8 +353,6 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if initialization succeeded, or false </dd></dl>
 
-<p>Reimplemented in <a class="el" href="class_test_game_app.html#a1a56f6b8f4915d4117b1e3a425247302">TestGameApp</a>.</p>
-
 </div>
 </div>
 <a class="anchor" id="a4e9d6e41f33e37371aac38f69d10f8de"></a>
@@ -330,7 +369,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The game loop. Called in function DSEngine. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>Add/change return type or parameters as needed </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000014">Todo:</a></b></dt><dd>Add/change return type or parameters as needed </dd></dl>
 
 </div>
 </div>
@@ -399,7 +438,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineSystem/<a class="el" href="_d_s_engine_app_8h_source.html">DSEngineApp.h</a></li>
+<li>/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineSystem/<a class="el" href="_d_s_engine_app_8h.html">DSEngineApp.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
