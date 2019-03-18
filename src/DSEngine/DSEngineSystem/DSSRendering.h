@@ -37,7 +37,7 @@ public:
 	 */
 	~DSSRendering();
 
-		/**
+	/**
 	 * @brief Copy constructor of DSSRendering is deleted
 	 * since the class is meant to be a singleton
 	 * 
@@ -161,6 +161,12 @@ private:
 	 * @brief Time elapsed since last frame
 	 */
 	float fpsTimeElapsed;
+
+	/**
+	 * @brief The vertex shader used in pre-processing shadows
+	 * 
+	 */
+	SimpleVertexShader* shadowVertexShader;
 };
 
 /**

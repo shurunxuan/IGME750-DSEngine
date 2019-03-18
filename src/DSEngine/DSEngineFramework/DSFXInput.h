@@ -127,6 +127,13 @@ public:
 	void Update();
 
 	/**
+	 * @brief Called when a WM_DEVICECHANGE is presented.
+	 * 
+	 * Re-poll the connected controllers
+	 */
+	void OnDeviceChange();
+
+	/**
 	 * @brief Get the state of if a button is being held
 	 * 
 	 * @param buttonCode Button code

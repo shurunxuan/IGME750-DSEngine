@@ -26,10 +26,7 @@ DSFXInput::~DSFXInput()
 
 void DSFXInput::Init()
 {
-	for (DWORD i = 0; i < XUSER_MAX_COUNT; i++)
-	{
-		connected[i] = XInputGetState(i, &lastState[i]) == ERROR_SUCCESS;
-	}
+	OnDeviceChange();
 
 	LOG_TRACE << "DS Engine Framework for XInput Initialized!";
 }
@@ -42,10 +39,10 @@ void DSFXInput::Update()
 		ZeroMemory(&buttonDownState[i], sizeof(XINPUT_STATE));
 		ZeroMemory(&buttonUpState[i], sizeof(XINPUT_STATE));
 
-		connected[i] = XInputGetState(i, &buttonState[i]) == ERROR_SUCCESS;
-
 		if (connected[i])
 		{
+			XInputGetState(i, &buttonState[i]);
+
 			buttonDownState[i].Gamepad.wButtons =
 				buttonState[i].Gamepad.wButtons &
 				~lastState[i].Gamepad.wButtons;
@@ -56,6 +53,14 @@ void DSFXInput::Update()
 		}
 
 		lastState[i] = buttonState[i];
+	}
+}
+
+void DSFXInput::OnDeviceChange()
+{
+	for (DWORD i = 0; i < XUSER_MAX_COUNT; i++)
+	{
+		connected[i] = XInputGetState(i, &buttonState[i]) == ERROR_SUCCESS;
 	}
 }
 
@@ -165,12 +170,12 @@ float DSFXInput::GetAxis(DSAxisCode axisCode, int player, float deadZone) const
 		case LX:
 		case LY:
 			deadZone = float(XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
-				/ float(1 << sizeof(SHORT) * 8);
+				/ float(1 << (sizeof(SHORT) * 8 - 1));
 			break;
 		case RX:
 		case RY:
 			deadZone = float(XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE)
-				/ float(1 << sizeof(SHORT) * 8);
+				/ float(1 << (sizeof(SHORT) * 8 - 1));
 			break;
 		default:
 			return 0.0f;
@@ -178,7 +183,7 @@ float DSFXInput::GetAxis(DSAxisCode axisCode, int player, float deadZone) const
 	}
 
 	const float rawData = GetRawAxis(axisCode, player);
-	return rawData < deadZone ? 0.0f : rawData;
+	return abs(rawData) < deadZone ? 0.0f : rawData;
 }
 
 float DSFXInput::GetRawAxis(DSAxisCode axisCode, int player) const
@@ -195,16 +200,16 @@ float DSFXInput::GetRawAxis(DSAxisCode axisCode, int player) const
 			float(1 << sizeof(BYTE) * 8);
 	case LX:
 		return float(buttonState[player].Gamepad.sThumbLX) /
-			float(1 << sizeof(SHORT) * 8);
+			float(1 << (sizeof(SHORT) * 8 - 1));
 	case LY:
 		return float(buttonState[player].Gamepad.sThumbLY) /
-			float(1 << sizeof(SHORT) * 8);
+			float(1 << (sizeof(SHORT) * 8 - 1));
 	case RX:
 		return float(buttonState[player].Gamepad.sThumbRX) /
-			float(1 << sizeof(SHORT) * 8);
+			float(1 << (sizeof(SHORT) * 8 - 1));
 	case RY:
 		return float(buttonState[player].Gamepad.sThumbRY) /
-			float(1 << sizeof(SHORT) * 8);
+			float(1 << (sizeof(SHORT) * 8 - 1));
 	default: 
 		return 0.0f;
 	}

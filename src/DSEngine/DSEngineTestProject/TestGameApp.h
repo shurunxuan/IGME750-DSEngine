@@ -25,17 +25,15 @@ class TestGameApp :
 	public DSEngineApp
 {
 public:
+
+	~TestGameApp();
+
 	/**
 	 * @brief Override the base class Init function
 	 * Should initialize game-specific things
-	 *
-	 * @param hInstance The instance of the app
-	 * @param lpCmdLine The command line parameters of the app
-	 * @param hWnd The window handle
-	 * @param screenWidth Screen width
-	 * @param screenHeight Screen height
-	 * @return true if initialization succeeded, or false
 	 */
-	bool Init(HINSTANCE hInstance, LPWSTR lpCmdLine, HWND hWnd, int screenWidth, int screenHeight) override;
+	void Init() override;
+
+private:
 };
 
