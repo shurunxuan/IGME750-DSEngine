@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['name',['name',['../class_object.html#a24457e0a387492c80594aec7681a2277',1,'Object']]],
-  ['normal',['Normal',['../struct_vertex.html#a553ed48ae98dda36da8e57cfa53877d4',1,'Vertex']]]
+  ['readframe',['ReadFrame',['../class_d_s_f_f_fmpeg.html#aa4f067a948b598fa09ac42ff6e522558',1,'DSFFFmpeg']]],
+  ['resampleframe',['ResampleFrame',['../class_d_s_f_f_fmpeg.html#a367eef74dca8061b6ffcedd0b36c1c64',1,'DSFFFmpeg']]]
 ];
