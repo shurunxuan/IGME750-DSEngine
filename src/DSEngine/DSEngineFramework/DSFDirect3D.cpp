@@ -137,7 +137,7 @@ void DSFDirect3D::SetDefaultRenderTarget() const
 	context->RSSetViewports(1, &viewport);
 }
 
-void DSFDirect3D::PreProcess(Light* light, std::list<Object*> objects, SimpleVertexShader* shadowVertexShader)
+void DSFDirect3D::ClearAndSetShadowRenderTarget(Light* light) const
 {
 	// Clear depth stencil view
 	context->ClearDepthStencilView(light->GetShadowDepthView(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
@@ -149,7 +149,10 @@ void DSFDirect3D::PreProcess(Light* light, std::list<Object*> objects, SimpleVer
 		nullptr,
 		light->GetShadowDepthView()
 	);
+}
 
+void DSFDirect3D::PreProcess(Light* light, MeshRenderer* meshRenderer, SimpleVertexShader* shadowVertexShader) const
+{
 	// Note that starting with the second frame, the previous call will display
 	// warnings in VS debug output about forcing an unbind of the pixel shader
 	// resource. This warning can be safely ignored when using shadow buffers
@@ -162,48 +165,40 @@ void DSFDirect3D::PreProcess(Light* light, std::list<Object*> objects, SimpleVer
 	for (int c = 0; c < light->GetCascadeCount(); ++c)
 	{
 		context->RSSetViewports(1, light->GetShadowViewportAt(c));
-		for (Object* object : objects)
-		{
-			std::list<MeshRenderer*> meshRenderers = object->GetComponents<MeshRenderer>();
-			for (MeshRenderer* meshRenderer : meshRenderers)
-			{
-				DirectX::XMFLOAT4X4 viewMat{};
-				DirectX::XMFLOAT4X4 projMat{};
-				DirectX::XMFLOAT4X4 worldMat{};
-				XMStoreFloat4x4(&viewMat, light->GetViewMatrix());
-				XMStoreFloat4x4(&projMat, light->GetProjectionMatrixAt(c));
-				XMStoreFloat4x4(&worldMat, object->transform->GetGlobalWorldMatrix());
 
-				shadowVertexShader->SetMatrix4x4("world", worldMat);
+		DirectX::XMFLOAT4X4 viewMat{};
+		DirectX::XMFLOAT4X4 projMat{};
+		DirectX::XMFLOAT4X4 worldMat{};
+		XMStoreFloat4x4(&viewMat, light->GetViewMatrix());
+		XMStoreFloat4x4(&projMat, light->GetProjectionMatrixAt(c));
+		XMStoreFloat4x4(&worldMat, meshRenderer->object->transform->GetGlobalWorldMatrix());
 
-				shadowVertexShader->SetMatrix4x4("view", viewMat);
+		shadowVertexShader->SetMatrix4x4("world", worldMat);
 
-				shadowVertexShader->SetMatrix4x4("projection", projMat);
+		shadowVertexShader->SetMatrix4x4("view", viewMat);
 
-				shadowVertexShader->CopyAllBufferData();
+		shadowVertexShader->SetMatrix4x4("projection", projMat);
 
-				shadowVertexShader->SetShader();
+		shadowVertexShader->CopyAllBufferData();
 
-				context->PSSetShader(nullptr, nullptr, 0);
+		shadowVertexShader->SetShader();
 
-				ID3D11Buffer* vertexBuffer = meshRenderer->GetMesh()->GetVertexBuffer();
-				ID3D11Buffer* indexBuffer = meshRenderer->GetMesh()->GetIndexBuffer();
-				// Set buffers in the input assembler
-				//  - Do this ONCE PER OBJECT you're drawing, since each object might
-				//    have different geometry.
-				UINT stride = sizeof(Vertex);
-				UINT offset = 0;
-				context->IASetVertexBuffers(0, 1, &vertexBuffer, &stride, &offset);
-				context->IASetIndexBuffer(indexBuffer, DXGI_FORMAT_R32_UINT, 0);
+		context->PSSetShader(nullptr, nullptr, 0);
 
-				context->DrawIndexed(
-					meshRenderer->GetMesh()->GetIndexCount(),		// The number of indices to use (we could draw a subset if we wanted)
-					0,								// Offset to the first index we want to use
-					0);								// Offset to add to each index when looking up vertices
-			}
-		}
+		ID3D11Buffer* vertexBuffer = meshRenderer->GetMesh()->GetVertexBuffer();
+		ID3D11Buffer* indexBuffer = meshRenderer->GetMesh()->GetIndexBuffer();
+		// Set buffers in the input assembler
+		//  - Do this ONCE PER OBJECT you're drawing, since each object might
+		//    have different geometry.
+		UINT stride = sizeof(Vertex);
+		UINT offset = 0;
+		context->IASetVertexBuffers(0, 1, &vertexBuffer, &stride, &offset);
+		context->IASetIndexBuffer(indexBuffer, DXGI_FORMAT_R32_UINT, 0);
 
-
+		context->DrawIndexed(
+			meshRenderer->GetMesh()->GetIndexCount(),		// The number of indices to use (we could draw a subset if we wanted)
+			0,								// Offset to the first index we want to use
+			0);								// Offset to add to each index when looking up vertices
 	}
 }
 
@@ -323,8 +318,8 @@ void DSFDirect3D::Render(Camera* camera, MeshRenderer* meshRenderer)
 	// Set buffers in the input assembler
 	//  - Do this ONCE PER OBJECT you're drawing, since each object might
 	//    have different geometry.
-	ID3D11Buffer* vertexBuffer = mesh->GetVertexBuffer();
-	ID3D11Buffer* indexBuffer = mesh->GetIndexBuffer();
+	ID3D11Buffer * vertexBuffer = mesh->GetVertexBuffer();
+	ID3D11Buffer * indexBuffer = mesh->GetIndexBuffer();
 	UINT stride = sizeof(Vertex);
 	UINT offset = 0;
 	context->IASetVertexBuffers(0, 1, &vertexBuffer, &stride, &offset);
@@ -344,7 +339,7 @@ void DSFDirect3D::Render(Camera* camera, MeshRenderer* meshRenderer)
 	material->GetPixelShaderPtr()->SetShaderResourceView("shadowMap", nullptr);
 }
 
-void DSFDirect3D::RenderSkybox(Camera* camera)
+void DSFDirect3D::RenderSkybox(Camera * camera)
 {
 	// Render Skybox
 	Skybox* skybox = camera->GetSkybox();
