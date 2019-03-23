@@ -17,10 +17,16 @@
 #define DSENGINESYSTEM_API __declspec(dllimport)
 #endif
 
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
 #include <Windows.h>
 #include "DSSRendering.h"
-#include "DSFLogging.h"
 #include "DSSAudio.h"
+#include "DSSInput.h"
+
+#include "Scene.hpp"
+#include "SimpleShader.hpp"
 
 /**
  * @brief The app class. Game should derive from this
@@ -73,7 +79,6 @@ public:
 	 */
 	DSEngineApp& operator=(DSEngineApp&& v) = delete;
 
-
 	/**
 	 * @brief Actual initialization of the app
 	 * 
@@ -84,7 +89,13 @@ public:
 	 * @param screenHeight Screen height
 	 * @return true if initialization succeeded, or false
 	 */
-	virtual bool Init(HINSTANCE hInstance, LPWSTR lpCmdLine, HWND hWnd, int screenWidth, int screenHeight);
+	virtual bool Initialize(HINSTANCE hInstance, LPWSTR lpCmdLine, HWND hWnd, int screenWidth, int screenHeight);
+
+	/**
+	 * @brief Initialize of the game logic
+	 * 
+	 */
+	virtual void Init() = 0;
 
 	/**
 	 * @brief The game loop. Called in function DSEngine
@@ -94,9 +105,11 @@ public:
 	void Loop();
 
 	/**
-	 * @brief Get the Rendering System instance pointer
+	 * @brief Get the current active scene
+	 * 
+	 * @todo This only returns App::currentScene currently. If we are going to have multiple scenes, there should be a scene manager.
 	 */
-	DSSRendering* GetRenderingSystem();
+	Scene* CurrentActiveScene();
 
 private:
 	/**
@@ -108,6 +121,53 @@ private:
 	 * @brief The Audio System reference
 	 */
 	DSSAudio audioSystem;
+
+	/**
+	 * @brief The Input System reference
+	 */
+	DSSInput inputSystem;
+
+	/**
+	 * @brief Current active scene
+	 */
+	Scene currentScene;
+
+	/**
+	 * @brief The vertex shader of the default material
+	 * 
+	 */
+	SimpleVertexShader* vertexShader;
+
+	/**
+	 * @brief The pixel shader of the default material
+	 * 
+	 */
+	SimplePixelShader* pbrPixelShader;
+
+protected:
+	/**
+	 * @brief Screen width
+	 * 
+	 */
+	int width;
+	
+	/**
+	 * @brief Screen height
+	 * 
+	 */
+	int height;
+
+	/**
+	 * @brief Direct3D 11 device
+	 * 
+	 */
+	ID3D11Device* device;
+
+	/**
+	 * @brief Direct3D 11 device context
+	 * 
+	 */
+	ID3D11DeviceContext* context;
 };
 
 /**

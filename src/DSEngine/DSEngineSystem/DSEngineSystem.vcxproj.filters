@@ -30,6 +30,7 @@
     <ClInclude Include="DSSAudio.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="HandlerFunctionBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -40,6 +41,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MemberFunctionHandler.h">
+=======
+    <ClInclude Include="DSSInput.h">
+>>>>>>> 29be886dead1f7db82f4da67dfbee5d67200acd9
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -59,10 +63,14 @@
     <ClCompile Include="DSSAudio.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="DSSEventManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MemberFunctionHandler.cpp">
+=======
+    <ClCompile Include="DSSInput.cpp">
+>>>>>>> 29be886dead1f7db82f4da67dfbee5d67200acd9
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

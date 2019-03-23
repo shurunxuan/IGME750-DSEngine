@@ -61,3 +61,10 @@ BOOST_LOG_INLINE_GLOBAL_LOGGER_DEFAULT(global_logger, boost::log::sources::sever
  * Should be called only once at the very beginning of the program
  */
 void DSENGINEFRAMEWORK_API InitLogger();
+
+/**
+ * @brief Stop async global loggers
+ *
+ * Should be called only once at the very end of the program
+ */
+void DSENGINEFRAMEWORK_API StopLogger();

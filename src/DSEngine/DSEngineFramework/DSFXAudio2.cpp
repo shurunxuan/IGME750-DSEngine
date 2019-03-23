@@ -1,9 +1,12 @@
 #include "DSFXAudio2.h"
 #include "DSFLogging.h"
 
+DSFXAudio2* FXAudio2 = nullptr;
 
 DSFXAudio2::DSFXAudio2()
 {
+	FXAudio2 = this;
+
 	xAudio2 = nullptr;
 	masterVoice = nullptr;
 

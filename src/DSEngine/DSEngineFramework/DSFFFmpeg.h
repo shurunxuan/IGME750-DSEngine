@@ -46,6 +46,38 @@ public:
 	~DSFFFmpeg();
 
 	/**
+	* @brief Copy constructor of DSFFFmpeg is deleted
+	* since the class is not meant to be copied/moved
+	*
+	* @param v Another instance
+	*/
+	DSFFFmpeg(const DSFFFmpeg& v) = delete;
+
+	/**
+	 * @brief Move constructor of DSFFFmpeg is deleted
+	 * since the class is not meant to be copied/moved
+	 *
+	 * @param v Another instance
+	 */
+	DSFFFmpeg(DSFFFmpeg&& v) = delete;
+
+	/**
+	 * @brief Copy assignment operator of DSFFFmpeg is deleted
+	 * since the class is not meant to be copied/moved
+	 *
+	 * @param v Another instance
+	 */
+	DSFFFmpeg& operator=(const DSFFFmpeg& v) = delete;
+
+	/**
+	 * @brief Move assignment operator of DSFFFmpeg is deleted
+	 * since the class is not meant to be copied/moved
+	 *
+	 * @param v Another instance
+	 */
+	DSFFFmpeg& operator=(DSFFFmpeg&& v) = delete;
+
+	/**
 	 * @brief Actual initialization of FFmpeg Framework
 	 * 
 	 */

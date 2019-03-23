@@ -1,5 +1,6 @@
 #include <iostream>
 #include "DSEngineApp.h"
+#include "DSFLogging.h"
 
 DSEngineApp* App = nullptr;
 
@@ -11,21 +12,51 @@ DSEngineApp::DSEngineApp()
 	// Thus, it is safe to use App pointer inside DSEngine
 	// function.
 	App = this;
+
+	InitLogger();
+
+	device = nullptr;
+	context = nullptr;
+
+	vertexShader = nullptr;
+	pbrPixelShader = nullptr;
 }
 
 
 DSEngineApp::~DSEngineApp()
 {
+	delete vertexShader;
+	delete pbrPixelShader;
+	StopLogger();
 }
 
-bool DSEngineApp::Init(HINSTANCE hInstance, LPWSTR lpCmdLine, HWND hWnd, int screenWidth, int screenHeight)
+bool DSEngineApp::Initialize(HINSTANCE hInstance, LPWSTR lpCmdLine, HWND hWnd, int screenWidth, int screenHeight)
 {
+	width = screenWidth;
+	height = screenHeight;
+
 	audioSystem.Init();
 	renderingSystem.Init(hWnd, screenWidth, screenHeight);
+	inputSystem.Init(hWnd);
+
+	device = FDirect3D->GetDevice();
+	context = FDirect3D->GetDeviceContext();
+
+	currentScene.SetD3D11Device(device, context);
+
+	// TODO: Could this be done by a resource manager?
+	vertexShader = new SimpleVertexShader(device, context);
+	pbrPixelShader = new SimplePixelShader(device, context);
+
+	vertexShader->LoadShaderFile(L"VertexShader.cso");
+	pbrPixelShader->LoadShaderFile(L"PBRPixelShader.cso");
+
+	currentScene.SetDefaultShader(vertexShader, pbrPixelShader);
+
+
 	LOG_TRACE << "DSEngineApp Init";
 
-	// Test play audio file
-	audioSystem.PlayAudioFileNonBlock("test3.flac");
+	Init();
 
 	return true;
 }
@@ -40,11 +71,15 @@ void DSEngineApp::Loop()
 	const float deltaTime = renderingSystem.GetDeltaTime();
 	const float totalTime = renderingSystem.GetTotalTime();
 
+	inputSystem.Update();
+
+	// This contains the actual game logic
+	currentScene.Update(deltaTime, totalTime);
+
 	renderingSystem.Update(deltaTime, totalTime);
-	std::cout << "DSEngineApp::Loop()" << std::endl;
 }
 
-DSSRendering* DSEngineApp::GetRenderingSystem()
+Scene* DSEngineApp::CurrentActiveScene()
 {
-	return &renderingSystem;
+	return &currentScene;
 }

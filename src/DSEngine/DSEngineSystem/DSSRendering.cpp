@@ -1,19 +1,26 @@
 #include "DSSRendering.h"
 #include "DSFLogging.h"
+#include "DSEngineApp.h"
 #include <iostream>
 
+DSSRendering* SRendering = nullptr;
 
 DSSRendering::DSSRendering()
 {
+	SRendering = this;
+
 	// Query performance counter for accurate timing information
 	__int64 perfFreq;
 	QueryPerformanceFrequency(reinterpret_cast<LARGE_INTEGER*>(&perfFreq));
 	perfCounterSeconds = 1.0 / double(perfFreq);
+
+	shadowVertexShader = nullptr;
 }
 
 
 DSSRendering::~DSSRendering()
 {
+	delete shadowVertexShader;
 }
 
 HRESULT DSSRendering::Init(HWND hWnd, unsigned int screenWidth, unsigned int screenHeight)
@@ -29,17 +36,47 @@ HRESULT DSSRendering::Init(HWND hWnd, unsigned int screenWidth, unsigned int scr
 	currentTime = now;
 	previousTime = now;
 
+	shadowVertexShader = new SimpleVertexShader(direct3D.GetDevice(), direct3D.GetDeviceContext());
+	shadowVertexShader->LoadShaderFile(L"ShadowVS.cso");
+
 	return hr;
 }
 
 HRESULT DSSRendering::OnResize(unsigned int screenWidth, unsigned int screenHeight)
 {
-	return direct3D.OnResize(screenWidth, screenHeight);
+	HRESULT hr = direct3D.OnResize(screenWidth, screenHeight);
+	App->CurrentActiveScene()->mainCamera->UpdateProjectionMatrix(float(screenWidth), float(screenHeight), 3.1415926f / 4.0f);
+	return hr;
 }
 
 void DSSRendering::Update(const float deltaTime, const float totalTime)
 {
-	direct3D.Draw(deltaTime, totalTime);
+	// #66CCFF
+	direct3D.ClearRenderTarget(0.4f, 0.8f, 1.0f, 1.0f);
+
+	// Preprocessing
+	for (Light* light : App->CurrentActiveScene()->lights)
+	{
+		direct3D.PreProcess(light, App->CurrentActiveScene()->GetAllObjects(), shadowVertexShader);
+	}
+
+	// Render the scene
+	Camera* camera = App->CurrentActiveScene()->mainCamera;
+
+	for (Object* object : App->CurrentActiveScene()->allObjects)
+	{
+		std::list<MeshRenderer*> meshRenderers = object->GetComponents<MeshRenderer>();
+
+		for (MeshRenderer* meshRenderer : meshRenderers)
+		{
+			direct3D.Render(camera, meshRenderer);
+		}
+	}
+
+	// Render the skybox
+	direct3D.RenderSkybox(camera);
+
+	direct3D.Present();
 }
 
 
@@ -53,7 +90,7 @@ void DSSRendering::UpdateTimer()
 	// Calculate delta time and clamp to zero
 	//  - Could go negative if CPU goes into power save mode 
 	//    or the process itself gets moved to another core
-	deltaTime = max((float)((currentTime - previousTime) * perfCounterSeconds), 0.0f);
+	deltaTime = std::max(float((currentTime - previousTime) * perfCounterSeconds), 0.0f);
 
 	// Calculate the total time from start to now
 	totalTime = float((currentTime - startTime) * perfCounterSeconds);
