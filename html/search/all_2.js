@@ -3,6 +3,7 @@ var searchData=
   ['camera',['Camera',['../class_camera.html',1,'Camera'],['../class_camera.html#a6311d3cd76b77c6b3d882afc125857ad',1,'Camera::Camera()']]],
   ['camera_2ehpp',['Camera.hpp',['../_camera_8hpp.html',1,'']]],
   ['cameracontroller',['CameraController',['../class_camera_controller.html',1,'']]],
+  ['clearandsetshadowrendertarget',['ClearAndSetShadowRenderTarget',['../class_d_s_f_direct3_d.html#a6bf8f9d6e3a2f3aab47c4dcf083a1e5b',1,'DSFDirect3D']]],
   ['clearrendertarget',['ClearRenderTarget',['../class_d_s_f_direct3_d.html#a6747280d10cee6b136eda5b03c295391',1,'DSFDirect3D']]],
   ['color',['Color',['../struct_light_data.html#a5c68d24703304b05d7881307aaca5e0b',1,'LightData']]],
   ['component',['Component',['../class_component.html',1,'Component'],['../class_component.html#a8134f75cbeca1ec6eedb31500cc25e79',1,'Component::Component()']]],

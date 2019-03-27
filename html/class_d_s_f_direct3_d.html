@@ -130,9 +130,12 @@ Public Member Functions</h2></td></tr>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_f_direct3_d.html#a46ec8a68d8bb9b43df772d707297627e">SetDefaultRenderTarget</a> () const </td></tr>
 <tr class="memdesc:a46ec8a68d8bb9b43df772d707297627e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the default render target which is used to render objects. <br/></td></tr>
 <tr class="separator:a46ec8a68d8bb9b43df772d707297627e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3c17e332e91ecf8f20349e67b615ebba"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_f_direct3_d.html#a3c17e332e91ecf8f20349e67b615ebba">PreProcess</a> (<a class="el" href="class_light.html">Light</a> *light, std::list&lt; <a class="el" href="class_object.html">Object</a> * &gt; objects, SimpleVertexShader *shadowVertexShader)</td></tr>
-<tr class="memdesc:a3c17e332e91ecf8f20349e67b615ebba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pre-process.  <a href="#a3c17e332e91ecf8f20349e67b615ebba">More...</a><br/></td></tr>
-<tr class="separator:a3c17e332e91ecf8f20349e67b615ebba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6bf8f9d6e3a2f3aab47c4dcf083a1e5b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_f_direct3_d.html#a6bf8f9d6e3a2f3aab47c4dcf083a1e5b">ClearAndSetShadowRenderTarget</a> (<a class="el" href="class_light.html">Light</a> *light) const </td></tr>
+<tr class="memdesc:a6bf8f9d6e3a2f3aab47c4dcf083a1e5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the shadow map depth stencil view and set it as the render target.  <a href="#a6bf8f9d6e3a2f3aab47c4dcf083a1e5b">More...</a><br/></td></tr>
+<tr class="separator:a6bf8f9d6e3a2f3aab47c4dcf083a1e5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8061984ef2102381a24c7111545d3668"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_f_direct3_d.html#a8061984ef2102381a24c7111545d3668">PreProcess</a> (<a class="el" href="class_light.html">Light</a> *light, <a class="el" href="class_mesh_renderer.html">MeshRenderer</a> *meshRenderer, SimpleVertexShader *shadowVertexShader) const </td></tr>
+<tr class="memdesc:a8061984ef2102381a24c7111545d3668"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pre-process.  <a href="#a8061984ef2102381a24c7111545d3668">More...</a><br/></td></tr>
+<tr class="separator:a8061984ef2102381a24c7111545d3668"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0fb93a73e7f3fceb6c334fa0e31b4219"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_f_direct3_d.html#a0fb93a73e7f3fceb6c334fa0e31b4219">Render</a> (<a class="el" href="class_camera.html">Camera</a> *camera, <a class="el" href="class_mesh_renderer.html">MeshRenderer</a> *meshRenderer)</td></tr>
 <tr class="memdesc:a0fb93a73e7f3fceb6c334fa0e31b4219"><td class="mdescLeft">&#160;</td><td class="mdescRight">Render a mesh renderer.  <a href="#a0fb93a73e7f3fceb6c334fa0e31b4219">More...</a><br/></td></tr>
 <tr class="separator:a0fb93a73e7f3fceb6c334fa0e31b4219"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -266,6 +269,30 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a6bf8f9d6e3a2f3aab47c4dcf083a1e5b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DSFDirect3D::ClearAndSetShadowRenderTarget </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_light.html">Light</a> *&#160;</td>
+          <td class="paramname"><em>light</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Clear the shadow map depth stencil view and set it as the render target. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">light</td><td>The light source of the shadow map to be rendered </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="a6747280d10cee6b136eda5b03c295391"></a>
 <div class="memitem">
 <div class="memproto">
@@ -566,7 +593,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 </div>
 </div>
-<a class="anchor" id="a3c17e332e91ecf8f20349e67b615ebba"></a>
+<a class="anchor" id="a8061984ef2102381a24c7111545d3668"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -579,8 +606,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::list&lt; <a class="el" href="class_object.html">Object</a> * &gt;&#160;</td>
-          <td class="paramname"><em>objects</em>, </td>
+          <td class="paramtype"><a class="el" href="class_mesh_renderer.html">MeshRenderer</a> *&#160;</td>
+          <td class="paramname"><em>meshRenderer</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -591,7 +618,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td>
+          <td></td><td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -601,7 +628,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">light</td><td>The light source of the corresponding shadow </td></tr>
-    <tr><td class="paramname">objects</td><td>All objects that cast shadows in the scene </td></tr>
+    <tr><td class="paramname">meshRenderer</td><td>The <a class="el" href="class_mesh_renderer.html" title="The mesh renderer component. ">MeshRenderer</a> to be rendered </td></tr>
     <tr><td class="paramname">shadowVertexShader</td><td>The vertex shader that is used to render the depth buffer </td></tr>
   </table>
   </dd>
