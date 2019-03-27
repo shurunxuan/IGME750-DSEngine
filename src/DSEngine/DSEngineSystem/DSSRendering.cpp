@@ -68,7 +68,7 @@ void DSSRendering::Update(const float deltaTime, const float totalTime)
 		direct3D.ClearAndSetShadowRenderTarget(light);
 		for (MeshRenderer* meshRenderer : meshRenderersInScene)
 		{
-			// TODO: Potential light culling here
+			// TODO: if (cull(light, meshRenderer->mesh))
 			direct3D.PreProcess(light, meshRenderer, shadowVertexShader);
 		}
 	}
@@ -79,7 +79,7 @@ void DSSRendering::Update(const float deltaTime, const float totalTime)
 
 	for (MeshRenderer* meshRenderer : meshRenderersInScene)
 	{
-		// TODO: Potential mesh culling here
+		// TODO: if (cull(camera, meshRenderer->mesh)) 
 		direct3D.Render(camera, meshRenderer);
 	}
 

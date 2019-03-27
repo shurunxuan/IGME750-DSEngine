@@ -39,11 +39,16 @@ void TestGameApp::Init()
 	//CurrentActiveScene()->AddLight(anotherLight);
 
 	// Add parent object
-	//Object * parentObj = CurrentActiveScene()->LoadModelFile("Assets/Models/Fennekin/a653.dae");
-	Object * parentObj = CurrentActiveScene()->LoadModelFile("Assets/Models/025_Pikachu/0.obj");
+	Object * parentObj = CurrentActiveScene()->LoadModelFile("Assets/Models/Fennekin/a653.dae");
+	//Object * parentObj = CurrentActiveScene()->LoadModelFile("Assets/Models/025_Pikachu/0.obj");
+	parentObj->name = "Fennekin";
 	//Object* parentObj = CurrentActiveScene()->LoadModelFile("Assets/Models/Rock/sphereNoNormal.obj");
 	parentObj->transform->SetLocalScale(0.05f, 0.05f, 0.05f);
 	parentObj->transform->SetLocalTranslation(-1.0f, 0.0f, 5.0f);
+
+	auto rotation = parentObj->transform->GetLocalRotation();
+	rotation = DirectX::XMQuaternionMultiply(rotation, DirectX::XMQuaternionRotationAxis(DirectX::XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f), DirectX::XM_PIDIV2));
+	parentObj->transform->SetLocalRotation(rotation);
 
 	// Add Components
 	PressSpaceToPlayAudio * playAudioComponent = parentObj->AddComponent<PressSpaceToPlayAudio>();
@@ -52,9 +57,9 @@ void TestGameApp::Init()
 
 	// Add another object
 	//Object* anotherObject = CurrentActiveScene()->LoadModelFile("Assets/Models/Rock/sphere.obj");
-	Object * anotherObject = CurrentActiveScene()->LoadModelFile("Assets/Models/255_Torchic/0.obj");
-	anotherObject->transform->SetLocalScale(0.05f, 0.05f, 0.05f);
-	anotherObject->transform->SetLocalTranslation(1.0f, 0.0f, 5.0f);
+	//Object * anotherObject = CurrentActiveScene()->LoadModelFile("Assets/Models/255_Torchic/0.obj");
+	//anotherObject->transform->SetLocalScale(0.05f, 0.05f, 0.05f);
+	//anotherObject->transform->SetLocalTranslation(1.0f, 0.0f, 5.0f);
 
 	// Add a ground
 	Object * ground = CurrentActiveScene()->LoadModelFile("Assets/Models/Rock/quad.obj");
