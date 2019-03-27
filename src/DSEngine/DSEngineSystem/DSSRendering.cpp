@@ -54,24 +54,35 @@ void DSSRendering::Update(const float deltaTime, const float totalTime)
 	// #66CCFF
 	direct3D.ClearRenderTarget(0.4f, 0.8f, 1.0f, 1.0f);
 
+	std::list<MeshRenderer*> meshRenderersInScene;
+
+	// Get All MeshRenderers
+	for (Object* object : App->CurrentActiveScene()->allObjects)
+	{
+		meshRenderersInScene.merge(object->GetComponents<MeshRenderer>());
+	}
+
 	// Preprocessing
 	for (Light* light : App->CurrentActiveScene()->lights)
 	{
-		direct3D.PreProcess(light, App->CurrentActiveScene()->GetAllObjects(), shadowVertexShader);
+		direct3D.ClearAndSetShadowRenderTarget(light);
+		for (MeshRenderer* meshRenderer : meshRenderersInScene)
+		{
+			// TODO: if (cull(light, meshRenderer->mesh))
+			direct3D.PreProcess(light, meshRenderer, shadowVertexShader);
+		}
 	}
 
 	// Render the scene
 	Camera* camera = App->CurrentActiveScene()->mainCamera;
 
-	for (Object* object : App->CurrentActiveScene()->allObjects)
-	{
-		std::list<MeshRenderer*> meshRenderers = object->GetComponents<MeshRenderer>();
 
-		for (MeshRenderer* meshRenderer : meshRenderers)
-		{
-			direct3D.Render(camera, meshRenderer);
-		}
+	for (MeshRenderer* meshRenderer : meshRenderersInScene)
+	{
+		// TODO: if (cull(camera, meshRenderer->mesh)) 
+		direct3D.Render(camera, meshRenderer);
 	}
+
 
 	// Render the skybox
 	direct3D.RenderSkybox(camera);

@@ -123,16 +123,23 @@ public:
      */
 	void SetDefaultRenderTarget() const;
 
+	/**
+	 * @brief Clear the shadow map depth stencil view and set it as the render target
+	 * 
+	 * @param light The light source of the shadow map to be rendered
+	 */
+	void ClearAndSetShadowRenderTarget(Light* light) const;
+
     /**
      * @brief Pre-process
      * 
      * Render the scene into the depth buffer (shadow mapping)
      * 
      * @param light The light source of the corresponding shadow
-     * @param objects All objects that cast shadows in the scene
+     * @param meshRenderer The MeshRenderer to be rendered
      * @param shadowVertexShader The vertex shader that is used to render the depth buffer
      */
-	void PreProcess(Light* light, std::list<Object*> objects, SimpleVertexShader* shadowVertexShader);
+	void PreProcess(Light* light, MeshRenderer* meshRenderer, SimpleVertexShader* shadowVertexShader) const;
 
     /**
      * @brief Render a mesh renderer
