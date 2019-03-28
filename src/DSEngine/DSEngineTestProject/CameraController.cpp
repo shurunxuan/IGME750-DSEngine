@@ -1,8 +1,6 @@
 #include <DirectXMath.h>
-#include "DSFXInput.h"
 #include "CameraController.h"
 #include "Object.hpp"
-#include "DSFRawInput.h"
 #include "DSSInput.h"
 
 
@@ -26,29 +24,9 @@ void CameraController::Update(float deltaTime, float totalTime)
 	float horizontal = SInput->GetAxis("Horizontal");
 	float vertical = SInput->GetAxis("Vertical");
 
-	if (FRawInput->GetKey('W'))
-	{
-		vertical += 1;
-	}
-
-	if (FRawInput->GetKey('S'))
-	{
-		vertical -= 1;
-	}
-
-	if (FRawInput->GetKey('A'))
-	{
-		horizontal -= 1;
-	}
-
-	if (FRawInput->GetKey('D'))
-	{
-		horizontal += 1;
-	}
-
 	DirectX::XMVECTOR position = object->transform->GetLocalTranslation();
-	position = DirectX::XMVectorAdd(position, DirectX::XMVectorScale(object->transform->Right(), deltaTime * horizontal * 2));
-	position = DirectX::XMVectorAdd(position, DirectX::XMVectorScale(object->transform->Forward(), deltaTime * vertical * 2));
+	position = DirectX::XMVectorAdd(position, DirectX::XMVectorScale(object->transform->Right(), deltaTime * horizontal * 4));
+	position = DirectX::XMVectorAdd(position, DirectX::XMVectorScale(object->transform->Forward(), deltaTime * vertical * 4));
 	object->transform->SetLocalTranslation(position);
 
 	// Use left stick of joystick 0 to rotate camera

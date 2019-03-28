@@ -1,11 +1,9 @@
-#include "DSFLogging.h"
-#include "DSFRawInput.h"
 #include "DSSAudio.h"
 
 #include "PressSpaceToPlayAudio.h"
-#include "DSFXInput.h"
 
 #include "Scene.hpp"
+#include "DSSInput.h"
 
 
 PressSpaceToPlayAudio::PressSpaceToPlayAudio(Object* owner) : Component(owner)
@@ -27,7 +25,7 @@ void PressSpaceToPlayAudio::Start()
 void PressSpaceToPlayAudio::Update(float deltaTime, float totalTime)
 {
 	// Only for test. Don't use FRawInput or FXInput directly after the input system is completed.
-	if (FRawInput->GetKeyDown(VK_SPACE) && !isPlaying)
+	if (SInput->GetButtonDown("PlayAudio") && !isPlaying)
 	{
 		// Test play audio file
 		SAudio->PlayAudioFileNonBlock("Assets/test3.flac", playbackThread);

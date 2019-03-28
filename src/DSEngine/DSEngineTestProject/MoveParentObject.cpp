@@ -2,8 +2,6 @@
 #include "MoveParentObject.h"
 #include "Object.hpp"
 #include "Scene.hpp"
-#include "DSFRawInput.h"
-#include "DSFXInput.h"
 #include "PBRMaterial.hpp"
 #include <queue>
 #include "DSSInput.h"
