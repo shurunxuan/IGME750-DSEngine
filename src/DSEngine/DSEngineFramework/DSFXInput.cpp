@@ -64,7 +64,7 @@ void DSFXInput::OnDeviceChange()
 	}
 }
 
-bool DSFXInput::GetButton(DSButtonCode buttonCode, int player) const
+bool DSFXInput::GetButton(DSJoystickButtonCode buttonCode, int player) const
 {
 	bool result = false;
 	if (player < 0)
@@ -82,7 +82,7 @@ bool DSFXInput::GetButton(DSButtonCode buttonCode, int player) const
 	return result;
 }
 
-bool DSFXInput::GetButtonDown(DSButtonCode buttonCode, int player) const
+bool DSFXInput::GetButtonDown(DSJoystickButtonCode buttonCode, int player) const
 {
 	bool result = false;
 	if (player < 0)
@@ -100,7 +100,7 @@ bool DSFXInput::GetButtonDown(DSButtonCode buttonCode, int player) const
 	return result;
 }
 
-bool DSFXInput::GetButtonUp(DSButtonCode buttonCode, int player) const
+bool DSFXInput::GetButtonUp(DSJoystickButtonCode buttonCode, int player) const
 {
 	bool result = false;
 	if (player < 0)
@@ -154,7 +154,7 @@ WORD DSFXInput::GetUpEvent(int player) const
 	return result;
 }
 
-float DSFXInput::GetAxis(DSAxisCode axisCode, int player, float deadZone) const
+float DSFXInput::GetAxis(DSJoystickAxisCode axisCode, int player, float deadZone) const
 {
 	if (player < 0) player = 0;
 	if (!connected[player]) return 0.0f;
@@ -186,7 +186,7 @@ float DSFXInput::GetAxis(DSAxisCode axisCode, int player, float deadZone) const
 	return abs(rawData) < deadZone ? 0.0f : rawData;
 }
 
-float DSFXInput::GetRawAxis(DSAxisCode axisCode, int player) const
+float DSFXInput::GetRawAxis(DSJoystickAxisCode axisCode, int player) const
 {
 	if (player < 0) player = 0;
 	if (!connected[player]) return 0.0f;
@@ -216,7 +216,7 @@ float DSFXInput::GetRawAxis(DSAxisCode axisCode, int player) const
 	return -1;
 }
 
-DSButtonCode DSFXInput::GetButtonCode(unsigned code)
+DSJoystickButtonCode DSFXInput::GetButtonCode(unsigned code)
 {
 	switch (code)
 	{
@@ -253,7 +253,7 @@ DSButtonCode DSFXInput::GetButtonCode(unsigned code)
 	}
 }
 
-DSAxisCode DSFXInput::GetAxisCode(unsigned code)
+DSJoystickAxisCode DSFXInput::GetAxisCode(unsigned code)
 {
 	switch (code)
 	{
@@ -274,7 +274,7 @@ DSAxisCode DSFXInput::GetAxisCode(unsigned code)
 	}
 }
 
-std::string DSFXInput::GetButtonName(DSButtonCode buttonCode)
+std::string DSFXInput::GetButtonName(DSJoystickButtonCode buttonCode)
 {
 	switch (buttonCode)
 	{
@@ -311,7 +311,7 @@ std::string DSFXInput::GetButtonName(DSButtonCode buttonCode)
 	}
 }
 
-std::string DSFXInput::GetAxisName(DSAxisCode axisCode)
+std::string DSFXInput::GetAxisName(DSJoystickAxisCode axisCode)
 {
 	switch (axisCode) {
 	case LT:
