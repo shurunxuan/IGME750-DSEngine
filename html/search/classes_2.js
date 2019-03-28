@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['light',['Light',['../class_light.html',1,'']]],
-  ['lightdata',['LightData',['../struct_light_data.html',1,'']]]
+  ['ixaudio2voicecallback',['IXAudio2VoiceCallback',['../class_i_x_audio2_voice_callback.html',1,'']]]
 ];
