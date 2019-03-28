@@ -71,7 +71,7 @@ void DSEngineApp::Loop()
 	const float deltaTime = renderingSystem.GetDeltaTime();
 	const float totalTime = renderingSystem.GetTotalTime();
 
-	inputSystem.Update();
+	inputSystem.Update(deltaTime);
 
 	// This contains the actual game logic
 	currentScene.Update(deltaTime, totalTime);
