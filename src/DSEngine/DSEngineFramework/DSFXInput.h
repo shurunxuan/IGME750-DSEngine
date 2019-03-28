@@ -14,9 +14,12 @@
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
 #endif
+#include <boost/thread/mutex.hpp>
 #include <Windows.h>
 #include <xinput.h>
 #include <string>
+
+#pragma warning(disable:4251)
 
 #ifdef DSENGINEFRAMEWORK_EXPORTS
 #define DSENGINEFRAMEWORK_API __declspec(dllexport)
@@ -125,6 +128,10 @@ public:
      * 
      */
     void Update();
+    /**
+     * @brief Get Synchronized data
+     */
+    void SyncUpdate();
 
     /**
      * @brief Called when a WM_DEVICECHANGE is presented.
@@ -140,7 +147,7 @@ public:
      * @param player Joystick number, -1 for all joysticks
      * @return The state of a button is being held
      */
-    bool GetButton(DSJoystickButtonCode buttonCode, int player) const;
+    bool GetButton(DSJoystickButtonCode buttonCode, int player);
     /**
      * @brief Get the state of if a button is pressed
      * 
@@ -148,7 +155,7 @@ public:
      * @param player Joystick number, -1 for all joysticks
      * @return The state of a button is pressed
      */
-    bool GetButtonDown(DSJoystickButtonCode buttonCode, int player) const;
+    bool GetButtonDown(DSJoystickButtonCode buttonCode, int player);
     /**
      * @brief Get the state of if a button is released
      * 
@@ -156,21 +163,21 @@ public:
      * @param player Joystick number, -1 for all joysticks
      * @return The state of a button is released
      */
-    bool GetButtonUp(DSJoystickButtonCode buttonCode, int player) const;
+    bool GetButtonUp(DSJoystickButtonCode buttonCode, int player);
     /**
      * @brief Get all the button pressed events
      * 
      * @param player Joystick number, -1 for the first joysitck
      * @return Packed data of if a button is pressed 
      */
-    WORD GetDownEvent(int player) const;
+    WORD GetDownEvent(int player);
     /**
      * @brief Get all the button released events
      * 
      * @param player Joystick number, -1 for the first joysitck
      * @return Packed data of if a button is released 
      */
-    WORD GetUpEvent(int player) const;
+    WORD GetUpEvent(int player);
     /**
      * @brief Get the processed axis data
      * 
@@ -240,11 +247,27 @@ private:
      * 
      */
     XINPUT_STATE lastState[XUSER_MAX_COUNT]{};
+
+    /**
+     * @brief Synchronize state of the buttons pressed
+     *
+     */
+    XINPUT_STATE syncButtonDownState[XUSER_MAX_COUNT]{};
+    /**
+     * @brief Synchronize state of the buttons released
+     *
+     */
+    XINPUT_STATE syncButtonUpState[XUSER_MAX_COUNT]{};
     /**
      * @brief Current connected joysticks
      * 
      */
     bool connected[XUSER_MAX_COUNT]{};
+
+    /**
+     * @brief Mutex for synchronizing async behaviors
+     */
+    boost::mutex mutex;
 };
 
 /**

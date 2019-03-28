@@ -325,6 +325,7 @@
     <ClInclude Include="DSFFFmpeg.h" />
     <ClInclude Include="DSFLogging.h" />
     <ClInclude Include="DSFRawInput.h" />
+    <ClInclude Include="DSFThreadPool.h" />
     <ClInclude Include="DSFXAudio2.h" />
     <ClInclude Include="DSFXInput.h" />
   </ItemGroup>
@@ -334,6 +335,7 @@
     <ClCompile Include="DSFFFmpeg.cpp" />
     <ClCompile Include="DSFLogging.cpp" />
     <ClCompile Include="DSFRawInput.cpp" />
+    <ClCompile Include="DSFThreadPool.cpp" />
     <ClCompile Include="DSFXAudio2.cpp" />
     <ClCompile Include="DSFXInput.cpp" />
   </ItemGroup>

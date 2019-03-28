@@ -26,10 +26,15 @@ void DSSInput::Init(HWND hWnd)
 	LOG_TRACE << "DS Engine Input System Initialized!";
 }
 
-void DSSInput::Update(float deltaTime)
+void DSSInput::AsyncUpdate(float deltaTime)
 {
 	xInput.Update();
+}
+
+void DSSInput::SyncUpdate(float deltaTime)
+{
 	rawInput.Update();
+	xInput.SyncUpdate();
 
 	for (auto& input : inputs)
 		input.Update(deltaTime);
@@ -92,8 +97,8 @@ float DSSInput::GetRawAxis(const std::string & name)
 
 void DSSInput::GetMousePosition(float* x, float* y) const
 {
-	*x = rawInput.GetMousePosX();
-	*y = rawInput.GetMousePosY();
+	*x = float(rawInput.GetMousePosX());
+	*y = float(rawInput.GetMousePosY());
 }
 
 void DSSInput::RegisterInput(std::string name, std::string posButton, std::string negButton, std::string altPosButton,
@@ -468,7 +473,7 @@ void DSSInputAxis::Update(float deltaTime)
 		if (abs(rawData) < dead)
 			processedAxisValue = 0;
 		else
-			processedAxisValue = rawData / deltaTime / 7500.0f;
+			processedAxisValue = rawData / (deltaTime * 7500.0f);
 	}
 }
 
