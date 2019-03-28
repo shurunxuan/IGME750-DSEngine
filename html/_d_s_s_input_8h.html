@@ -99,9 +99,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="_d_s_f_x_input_8h.html">DSFXInput.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="_d_s_f_raw_input_8h.html">DSFRawInput.h</a>&quot;</code><br/>
+<code>#include &lt;functional&gt;</code><br/>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_s_input_axis.html">DSSInputAxis</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class that represents a input.  <a href="class_d_s_s_input_axis.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_s_input.html">DSSInput</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The Input System of the DS Engine.  <a href="class_d_s_s_input.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -114,6 +118,47 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
+<tr class="memitem:a9d95da2c5da5d856af5126d3377ef408"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9d95da2c5da5d856af5126d3377ef408"></a>
+enum DSENGINESYSTEM_API&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_d_s_s_input_8h.html#a9d95da2c5da5d856af5126d3377ef408">InputType</a></td></tr>
+<tr class="memdesc:a9d95da2c5da5d856af5126d3377ef408"><td class="mdescLeft">&#160;</td><td class="mdescRight">The types of inputs. <br/></td></tr>
+<tr class="separator:a9d95da2c5da5d856af5126d3377ef408"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03bfec859eac87be20f8952c1eb89de0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a03bfec859eac87be20f8952c1eb89de0"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Button</b></td></tr>
+<tr class="separator:a03bfec859eac87be20f8952c1eb89de0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2fc3593b03b2993ef34f3900f6be985e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2fc3593b03b2993ef34f3900f6be985e"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Movement</b></td></tr>
+<tr class="separator:a2fc3593b03b2993ef34f3900f6be985e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb1adbbfccc6d67d6b4d9030e4d1f5d0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acb1adbbfccc6d67d6b4d9030e4d1f5d0"></a>
+enum DSENGINESYSTEM_API&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_d_s_s_input_8h.html#acb1adbbfccc6d67d6b4d9030e4d1f5d0">DSAxisCode</a></td></tr>
+<tr class="memdesc:acb1adbbfccc6d67d6b4d9030e4d1f5d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">The axis code if the input type is not Button. <br/></td></tr>
+<tr class="separator:acb1adbbfccc6d67d6b4d9030e4d1f5d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac037b28af151b8a4e10d7425ddd3cd59"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac037b28af151b8a4e10d7425ddd3cd59"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>MouseX</b></td></tr>
+<tr class="separator:ac037b28af151b8a4e10d7425ddd3cd59"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0119c3d6c40bb05ed020aaba4c20e502"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0119c3d6c40bb05ed020aaba4c20e502"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>MouseY</b></td></tr>
+<tr class="separator:a0119c3d6c40bb05ed020aaba4c20e502"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50141e5caf407b67b163b8d85585efa1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a50141e5caf407b67b163b8d85585efa1"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>MouseWheel</b></td></tr>
+<tr class="separator:a50141e5caf407b67b163b8d85585efa1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e8de404aa48e73c88876115acd836b9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2e8de404aa48e73c88876115acd836b9"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>JoystickLT</b></td></tr>
+<tr class="separator:a2e8de404aa48e73c88876115acd836b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a49222bac4e0e67aab93852d7b9a1227b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a49222bac4e0e67aab93852d7b9a1227b"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>JoystickRT</b></td></tr>
+<tr class="separator:a49222bac4e0e67aab93852d7b9a1227b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e5fac3611926acc53a460304ce62de2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5e5fac3611926acc53a460304ce62de2"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>JoystickLX</b></td></tr>
+<tr class="separator:a5e5fac3611926acc53a460304ce62de2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac42aaf57e189601d007acfff990bbb44"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac42aaf57e189601d007acfff990bbb44"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>JoystickLY</b></td></tr>
+<tr class="separator:ac42aaf57e189601d007acfff990bbb44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51d6a19ba27baf405d26c51a351c7825"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a51d6a19ba27baf405d26c51a351c7825"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>JoystickRX</b></td></tr>
+<tr class="separator:a51d6a19ba27baf405d26c51a351c7825"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae20cadc320911f5c775a6543d7fdfcf5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae20cadc320911f5c775a6543d7fdfcf5"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>JoystickRY</b></td></tr>
+<tr class="separator:ae20cadc320911f5c775a6543d7fdfcf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a218f3ed5e43a7e2e9b8a1380c6c20ee6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a218f3ed5e43a7e2e9b8a1380c6c20ee6"></a>
 DSENGINESYSTEM_API <a class="el" href="class_d_s_s_input.html">DSSInput</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_d_s_s_input_8h.html#a218f3ed5e43a7e2e9b8a1380c6c20ee6">SInput</a></td></tr>
 <tr class="memdesc:a218f3ed5e43a7e2e9b8a1380c6c20ee6"><td class="mdescLeft">&#160;</td><td class="mdescRight">The pointer that points to the singleton of the Input System. <br/></td></tr>

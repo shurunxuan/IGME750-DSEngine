@@ -3,8 +3,7 @@ var searchData=
   ['destroyobject',['DestroyObject',['../class_scene.html#a29041a0e7b008b018791c7f50976174c',1,'Scene']]],
   ['device',['device',['../class_material.html#af95c3777d3097671b96cfe682c596c54',1,'Material::device()'],['../class_d_s_engine_app.html#a1068cfa80626abcc3c17917822dab35d',1,'DSEngineApp::device()']]],
   ['direction',['Direction',['../struct_light_data.html#a425c13428f284747bb9825f1895318dc',1,'LightData']]],
-  ['dsaxiscode',['DSAxisCode',['../_d_s_f_x_input_8h.html#a22550c2bcce3b5808bd63017d726eb84',1,'DSFXInput.h']]],
-  ['dsbuttoncode',['DSButtonCode',['../_d_s_f_x_input_8h.html#a7e6fbdd3adeec44f31d384f2abed16cf',1,'DSFXInput.h']]],
+  ['dsaxiscode',['DSAxisCode',['../_d_s_s_input_8h.html#acb1adbbfccc6d67d6b4d9030e4d1f5d0',1,'DSSInput.h']]],
   ['dsengine',['DSEngine',['../_d_s_engine_8h.html#af88647598240bb5be393baafecf09ec9',1,'DSEngine.h']]],
   ['dsengine_2eh',['DSEngine.h',['../_d_s_engine_8h.html',1,'']]],
   ['dsengineapp',['DSEngineApp',['../class_d_s_engine_app.html',1,'DSEngineApp'],['../class_d_s_engine_app.html#a8b17e62746f385382e0748988c877aab',1,'DSEngineApp::DSEngineApp()'],['../class_d_s_engine_app.html#a8d59019e74366814ad984f616af04aa2',1,'DSEngineApp::DSEngineApp(const DSEngineApp &amp;v)=delete'],['../class_d_s_engine_app.html#a79e7bff95773d7d4e36ae77f60a3f769',1,'DSEngineApp::DSEngineApp(DSEngineApp &amp;&amp;v)=delete']]],
@@ -21,10 +20,13 @@ var searchData=
   ['dsfxaudio2_2eh',['DSFXAudio2.h',['../_d_s_f_x_audio2_8h.html',1,'']]],
   ['dsfxinput',['DSFXInput',['../class_d_s_f_x_input.html',1,'DSFXInput'],['../class_d_s_f_x_input.html#ad244d81cfccf19513f8fb6ed2bddd4cb',1,'DSFXInput::DSFXInput()'],['../class_d_s_f_x_input.html#ad8a8049022ca543796ae144cbeb5f209',1,'DSFXInput::DSFXInput(const DSFXInput &amp;v)=delete'],['../class_d_s_f_x_input.html#a4ee76a0dc4c949166c06b5ee6418b1c0',1,'DSFXInput::DSFXInput(DSFXInput &amp;&amp;v)=delete']]],
   ['dsfxinput_2eh',['DSFXInput.h',['../_d_s_f_x_input_8h.html',1,'']]],
+  ['dsjoystickaxiscode',['DSJoystickAxisCode',['../_d_s_f_x_input_8h.html#a3c5aff8483ea17ad74ce8627f7e95516',1,'DSFXInput.h']]],
+  ['dsjoystickbuttoncode',['DSJoystickButtonCode',['../_d_s_f_x_input_8h.html#a76c1aaf7075123e966502ec3c69082e4',1,'DSFXInput.h']]],
   ['dssaudio',['DSSAudio',['../class_d_s_s_audio.html',1,'DSSAudio'],['../class_d_s_s_audio.html#a3fec91f493918d9e3d4d896ca75134c9',1,'DSSAudio::DSSAudio()'],['../class_d_s_s_audio.html#ac91d7f8bff91f9bd1612b9cab3e1b468',1,'DSSAudio::DSSAudio(const DSSAudio &amp;v)=delete'],['../class_d_s_s_audio.html#ae6ae075a80f696400e47a52fee212492',1,'DSSAudio::DSSAudio(DSSAudio &amp;&amp;v)=delete']]],
   ['dssaudio_2eh',['DSSAudio.h',['../_d_s_s_audio_8h.html',1,'']]],
   ['dssinput',['DSSInput',['../class_d_s_s_input.html',1,'DSSInput'],['../class_d_s_s_input.html#a5d45cea7acc5ac19401a7dd63b7e1900',1,'DSSInput::DSSInput()'],['../class_d_s_s_input.html#a7bc6163494e56c4aedc73527e37f1f67',1,'DSSInput::DSSInput(const DSSInput &amp;v)=delete'],['../class_d_s_s_input.html#abe44c393f3bc89dafa05b47e67837b53',1,'DSSInput::DSSInput(DSSInput &amp;&amp;v)=delete']]],
   ['dssinput_2eh',['DSSInput.h',['../_d_s_s_input_8h.html',1,'']]],
+  ['dssinputaxis',['DSSInputAxis',['../class_d_s_s_input_axis.html',1,'DSSInputAxis'],['../class_d_s_s_input_axis.html#a75935ea87d6d53e563d2cf12f8f02e36',1,'DSSInputAxis::DSSInputAxis()']]],
   ['dssrendering',['DSSRendering',['../class_d_s_s_rendering.html',1,'DSSRendering'],['../class_d_s_s_rendering.html#a1d46f9ae839dc846f37e35e127f3f17e',1,'DSSRendering::DSSRendering()'],['../class_d_s_s_rendering.html#afa477aede773bea55e6d475e47f508e9',1,'DSSRendering::DSSRendering(const DSSRendering &amp;v)=delete'],['../class_d_s_s_rendering.html#a30daa4f13dade48c82206dcff3c8a51a',1,'DSSRendering::DSSRendering(DSSRendering &amp;&amp;v)=delete']]],
   ['dssrendering_2eh',['DSSRendering.h',['../_d_s_s_rendering_8h.html',1,'']]]
 ];
