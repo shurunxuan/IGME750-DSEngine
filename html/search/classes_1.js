@@ -9,5 +9,6 @@ var searchData=
   ['dsfxinput',['DSFXInput',['../class_d_s_f_x_input.html',1,'']]],
   ['dssaudio',['DSSAudio',['../class_d_s_s_audio.html',1,'']]],
   ['dssinput',['DSSInput',['../class_d_s_s_input.html',1,'']]],
+  ['dssinputaxis',['DSSInputAxis',['../class_d_s_s_input_axis.html',1,'']]],
   ['dssrendering',['DSSRendering',['../class_d_s_s_rendering.html',1,'']]]
 ];
