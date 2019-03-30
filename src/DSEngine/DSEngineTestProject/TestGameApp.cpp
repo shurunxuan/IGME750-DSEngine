@@ -20,7 +20,6 @@ TestGameApp::~TestGameApp()
 
 void TestGameApp::Init()
 {
-	// Stub logic
 	LOG_TRACE << "TestGameApp Init";
 
 	// Register Inputs
@@ -36,24 +35,21 @@ void TestGameApp::Init()
 	SInput->RegisterInput("ArrowHorizontal", "joystick right", "joystick left", "right", "left", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
 	SInput->RegisterInput("ArrowVertical", "joystick up", "joystick down", "up", "down", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
 	SInput->RegisterInput("PlayAudio", "space", "", "", "", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
+	SInput->RegisterInput("MoveHorizontal", "l", "j", "joystick b", "joystick x", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
+	SInput->RegisterInput("MoveVertical", "i", "k", "joystick y", "joystick a", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
 
 	// Set Camera
 	CurrentActiveScene()->mainCamera->UpdateProjectionMatrix(float(width), float(height), DirectX::XM_PIDIV4);
 	CurrentActiveScene()->mainCamera->SetSkybox(device, context, L"Assets/Skybox/1/Environment1HiDef.cubemap.dds", L"Assets/Skybox/1/Environment1Light.cubemap.dds");
-	//CurrentActiveScene()->mainCamera->SetSkybox(device, context, L"Assets/Skybox/mp_cupertin/mp_cupertin.dds", L"Assets/Skybox/mp_cupertin/mp_cupertin_irr.dds");
 	CameraController * cameraController = CurrentActiveScene()->mainCamera->AddComponent<CameraController>();
 
 	// Add a light
 	LightData light = DirectionalLight(DirectX::XMFLOAT3(1.0f, 1.0f, 1.0f), DirectX::XMFLOAT3(-1.0f, -1.0f, 1.0f), 0.8f, DirectX::XMFLOAT3(1.0f, 1.0f, 1.0f));;
 	CurrentActiveScene()->AddLight(light);
-	//LightData anotherLight = DirectionalLight(DirectX::XMFLOAT3(1.0f, 1.0f, 1.0f), DirectX::XMFLOAT3(1.0f, 1.0f, 0.0f), 0.8f, DirectX::XMFLOAT3(1.0f, 1.0f, 1.0f));;
-	//CurrentActiveScene()->AddLight(anotherLight);
 
 	// Add parent object
 	Object * parentObj = CurrentActiveScene()->LoadModelFile("Assets/Models/Fennekin/a653.dae");
-	//Object * parentObj = CurrentActiveScene()->LoadModelFile("Assets/Models/025_Pikachu/0.obj");
 	parentObj->name = "Fennekin";
-	//Object* parentObj = CurrentActiveScene()->LoadModelFile("Assets/Models/Rock/sphereNoNormal.obj");
 	parentObj->transform->SetLocalScale(0.05f, 0.05f, 0.05f);
 	parentObj->transform->SetLocalTranslation(-1.0f, 0.0f, 5.0f);
 
@@ -64,13 +60,6 @@ void TestGameApp::Init()
 	// Add Components
 	PressSpaceToPlayAudio * playAudioComponent = parentObj->AddComponent<PressSpaceToPlayAudio>();
 	MoveParentObject * moveParentComponent = parentObj->AddComponent<MoveParentObject>();
-
-
-	// Add another object
-	//Object* anotherObject = CurrentActiveScene()->LoadModelFile("Assets/Models/Rock/sphere.obj");
-	//Object * anotherObject = CurrentActiveScene()->LoadModelFile("Assets/Models/255_Torchic/0.obj");
-	//anotherObject->transform->SetLocalScale(0.05f, 0.05f, 0.05f);
-	//anotherObject->transform->SetLocalTranslation(1.0f, 0.0f, 5.0f);
 
 	// Add a ground
 	Object * ground = CurrentActiveScene()->LoadModelFile("Assets/Models/Rock/quad.obj");

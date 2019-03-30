@@ -171,9 +171,9 @@ private:
 	void BindCallbackFunctions();
 
 	/**
-	 * @brief Update the smoothed axis data
+	 * @brief Update the smoothed value of the axis
 	 * 
-	 * @param deltaTime The time between two input system updates
+	 * @param deltaTime The time between two asynchronized input system updates
 	 */
 	void Update(float deltaTime);
 
@@ -261,11 +261,18 @@ public:
 	 */
 	void Init(HWND hWnd);
 	/**
-	 * @brief Update the input status
+	 * @brief Asynchronized Update of the input system for polls
 	 *
-	 * @param deltaTime The time between two DSSInput updates
+	 * @param deltaTime The time between two asynchronized input system updates
 	 */
-	void Update(float deltaTime);
+	void AsyncUpdate(float deltaTime);
+
+	/**
+	 * @brief Synchronized Update of the input system for callbacks
+	 *
+	 * @param deltaTime The time between two synchronized input system updates
+	 */
+	void SyncUpdate(float deltaTime);
 
 	/**
 	 * @brief Get if the input button is being held
