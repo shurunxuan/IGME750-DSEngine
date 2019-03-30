@@ -73,6 +73,8 @@ void DSEngineApp::Loop()
 
 	inputSystem.Update();
 
+	physicsSystem.Update(deltaTime, totalTime);
+
 	// This contains the actual game logic
 	currentScene.Update(deltaTime, totalTime);
 

@@ -24,6 +24,7 @@
 #include "DSSRendering.h"
 #include "DSSAudio.h"
 #include "DSSInput.h"
+#include "DSSPhysics.h"
 
 #include "Scene.hpp"
 #include "SimpleShader.hpp"
@@ -131,6 +132,11 @@ private:
 	 * @brief Current active scene
 	 */
 	Scene currentScene;
+
+	/**
+	 * @brief The Physics System reference
+	 */
+	DSSPhysics physicsSystem;
 
 	/**
 	 * @brief The vertex shader of the default material

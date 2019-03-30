@@ -66,16 +66,18 @@ void MoveParentObject::Update(float deltaTime, float totalTime)
 
 	if (FRawInput->GetKey(VK_LEFT))
 	{
-		DirectX::XMVECTOR position = object->transform->GetLocalTranslation();
+		/*DirectX::XMVECTOR position = object->transform->GetLocalTranslation();
 		position = DirectX::XMVectorAdd(position, DirectX::XMVectorSet(-deltaTime, 0.0f, 0.0f, 0.0f));
-		object->transform->SetLocalTranslation(position);
+		object->transform->SetLocalTranslation(position);*/
+		object->GetComponent<RigidBody>()->AddForce(-2.0f, 0.0f, 0.0f);
 	}
 
 	if (FRawInput->GetKey(VK_RIGHT))
 	{
-		DirectX::XMVECTOR position = object->transform->GetLocalTranslation();
+		/*DirectX::XMVECTOR position = object->transform->GetLocalTranslation();
 		position = DirectX::XMVectorAdd(position, DirectX::XMVectorSet(deltaTime, 0.0f, 0.0f, 0.0f));
-		object->transform->SetLocalTranslation(position);
+		object->transform->SetLocalTranslation(position);*/
+		object->GetComponent<RigidBody>()->AddForce(2.0f, 0.0f, 0.0f);
 	}
 
 	// Use numpad numbers to rotate object

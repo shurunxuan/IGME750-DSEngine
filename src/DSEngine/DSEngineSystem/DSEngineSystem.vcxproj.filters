@@ -1,77 +1,29 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="DSEngine.cpp" />
+    <ClCompile Include="DSEngineApp.cpp" />
+    <ClCompile Include="DSSAudio.cpp" />
+    <ClCompile Include="DSSInput.cpp" />
+    <ClCompile Include="DSSRendering.cpp" />
+    <ClCompile Include="DSSEventManager.cpp" />
+    <ClCompile Include="MemberFunctionHandler.cpp" />
+    <ClCompile Include="DSSPhysics.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="DSEngine.h" />
+    <ClInclude Include="DSEngineApp.h" />
+    <ClInclude Include="DSSAudio.h" />
+    <ClInclude Include="DSSInput.h" />
+    <ClInclude Include="DSSRendering.h" />
+    <ClInclude Include="Event.h" />
+    <ClInclude Include="DSSEventManager.h" />
+    <ClInclude Include="HandlerFunctionBase.h" />
+    <ClInclude Include="MemberFunctionHandler.h" />
+    <ClInclude Include="DSSPhysics.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="DSEngineApp.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DSEngine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DSSRendering.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DSSAudio.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-<<<<<<< HEAD
-    <ClInclude Include="HandlerFunctionBase.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Event.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DSSEventManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MemberFunctionHandler.h">
-=======
-    <ClInclude Include="DSSInput.h">
->>>>>>> 29be886dead1f7db82f4da67dfbee5d67200acd9
-      <Filter>Header Files</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="dllmain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DSEngineApp.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DSEngine.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DSSRendering.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DSSAudio.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-<<<<<<< HEAD
-    <ClCompile Include="DSSEventManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MemberFunctionHandler.cpp">
-=======
-    <ClCompile Include="DSSInput.cpp">
->>>>>>> 29be886dead1f7db82f4da67dfbee5d67200acd9
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>
