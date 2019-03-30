@@ -24,6 +24,8 @@
 
 #include "Component.hpp"
 #include "Transform.hpp"
+#include "Collider.hpp"
+#include "RigidBody.hpp"
 
 class Scene;
 
@@ -170,6 +172,8 @@ public:
 	 * 
 	 */
 	Transform* transform;
+
+	
 };
 
 template <class T>

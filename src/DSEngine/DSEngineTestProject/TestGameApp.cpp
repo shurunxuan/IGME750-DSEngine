@@ -46,11 +46,16 @@ void TestGameApp::Init()
 	LightData light = DirectionalLight(DirectX::XMFLOAT3(1.0f, 1.0f, 1.0f), DirectX::XMFLOAT3(-1.0f, -1.0f, 1.0f), 0.8f, DirectX::XMFLOAT3(1.0f, 1.0f, 1.0f));;
 	CurrentActiveScene()->AddLight(light);
 
+	
+
+
 	// Add parent object
+
 	Object * parentObj = CurrentActiveScene()->LoadModelFile("Assets/Models/Fennekin/a653.dae");
 	parentObj->name = "Fennekin";
 	parentObj->transform->SetLocalScale(0.05f, 0.05f, 0.05f);
 	parentObj->transform->SetLocalTranslation(-1.0f, 0.0f, 5.0f);
+
 
 	auto rotation = parentObj->transform->GetLocalRotation();
 	rotation = DirectX::XMQuaternionMultiply(rotation, DirectX::XMQuaternionRotationAxis(DirectX::XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f), DirectX::XM_PIDIV2));
@@ -59,6 +64,7 @@ void TestGameApp::Init()
 	// Add Components
 	PressSpaceToPlayAudio * playAudioComponent = parentObj->AddComponent<PressSpaceToPlayAudio>();
 	MoveParentObject * moveParentComponent = parentObj->AddComponent<MoveParentObject>();
+
 
 	// Add a ground
 	Object * ground = CurrentActiveScene()->LoadModelFile("Assets/Models/Rock/quad.obj");
@@ -74,6 +80,7 @@ void TestGameApp::Init()
 	groundMaterial->parameters.metalness = 0.0f;
 	groundMaterial->parameters.roughness = 1.0f;
 	groundMaterial->parameters.albedo = DirectX::XMFLOAT3(0.5f, 0.5f, 0.5f);
+
 
 	LOG_INFO << "Scene Structure:";
 	std::list<Object*> allObjects = CurrentActiveScene()->GetAllObjects();
