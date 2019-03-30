@@ -77,6 +77,15 @@ public:
 	std::list<Transform*> GetChildren() const;
 
 	/**
+	 * @brief Get a child of the transform
+	 *
+	 * @param index The position of the child to be get
+	 *
+	 * @return Transform* The child at a specified position
+	 */
+	Transform* GetChildAt(int index);
+
+	/**
 	 * @brief Get the Local Translation
 	 * 
 	 * @return DirectX::XMVECTOR The local translation
@@ -335,6 +344,15 @@ inline Transform* Transform::GetParent() const
 inline std::list<Transform*> Transform::GetChildren() const
 {
 	return children;
+}
+
+inline Transform* Transform::GetChildAt(int index)
+{
+	if (index >= children.size()) return nullptr;
+	auto it = children.begin();
+	for (int i = 0; i < index; ++i)
+		++it;
+	return *it;
 }
 
 inline DirectX::XMVECTOR Transform::GetLocalTranslation() const

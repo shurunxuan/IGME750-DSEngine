@@ -243,9 +243,11 @@ void DSFDirect3D::Render(Camera* camera, MeshRenderer* meshRenderer)
 	material->GetPixelShaderPtr()->SetFloat3("CameraPosition", cameraPosition);
 
 	material->SetMaterialData();
-
-	material->GetPixelShaderPtr()->SetShaderResourceView("cubemap", camera->GetSkybox()->GetCubeMapSRV());
-	material->GetPixelShaderPtr()->SetShaderResourceView("irradianceMap", camera->GetSkybox()->GetIrradianceMapSRV());
+	if (camera->GetSkybox() != nullptr)
+	{
+		material->GetPixelShaderPtr()->SetShaderResourceView("cubemap", camera->GetSkybox()->GetCubeMapSRV());
+		material->GetPixelShaderPtr()->SetShaderResourceView("irradianceMap", camera->GetSkybox()->GetIrradianceMapSRV());
+	}
 
 
 	if (lights != nullptr && lightCount > 0)
