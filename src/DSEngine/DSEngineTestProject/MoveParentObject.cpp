@@ -68,4 +68,12 @@ void MoveParentObject::Update(float deltaTime, float totalTime)
 		if (material->parameters.roughness < 0.0f)
 			material->parameters.roughness = 0.0f;
 	}
+
+	float horizontal = SInput->GetAxis("MoveHorizontal");
+	float vertical = SInput->GetAxis("MoveVertical");
+
+	auto position = object->transform->GetLocalTranslation();
+	position = DirectX::XMVectorAdd(position, DirectX::XMVectorSet(horizontal * 4 * deltaTime, 0.0f, 0.0f, 0.0f));
+	position = DirectX::XMVectorAdd(position, DirectX::XMVectorSet(0.0f, vertical * 4 * deltaTime, 0.0f, 0.0f));
+	object->transform->SetLocalTranslation(position);
 }

@@ -101,11 +101,11 @@ public:
 
 	// Getting data about variables and resources
 	const SimpleShaderVariable* GetVariableInfo(std::string name);
-	
+
 	const SimpleSRV* GetShaderResourceViewInfo(std::string name);
 	const SimpleSRV* GetShaderResourceViewInfo(unsigned int index);
 	size_t GetShaderResourceViewCount() { return textureTable.size(); }
-	
+
 	const SimpleSampler* GetSamplerInfo(std::string name);
 	const SimpleSampler* GetSamplerInfo(unsigned int index);
 	size_t GetSamplerCount() { return samplerTable.size(); }
@@ -115,12 +115,12 @@ public:
 	unsigned int GetBufferSize(unsigned int index);
 	const SimpleConstantBuffer* GetBufferInfo(std::string name);
 	const SimpleConstantBuffer* GetBufferInfo(unsigned int index);
-	
+
 	// Misc getters
 	ID3DBlob* GetShaderBlob() { return shaderBlob; }
 
 protected:
-	
+
 	bool shaderValid;
 	ID3DBlob* shaderBlob;
 	ID3D11Device* device;
@@ -128,9 +128,9 @@ protected:
 
 	// Resource counts
 	unsigned int constantBufferCount;
-	
+
 	// Maps for variables and buffers
-	SimpleConstantBuffer*		constantBuffers; // For index-based lookup
+	SimpleConstantBuffer* constantBuffers; // For index-based lookup
 	std::vector<SimpleSRV*>		shaderResourceViews;
 	std::vector<SimpleSampler*>	samplerStates;
 	std::unordered_map<std::string, SimpleConstantBuffer*> cbTable;
@@ -329,7 +329,7 @@ inline ISimpleShader::ISimpleShader(ID3D11Device* device, ID3D11DeviceContext* c
 inline ISimpleShader::~ISimpleShader()
 {
 	// Derived class destructors will call this class's CleanUp method
-	if(shaderBlob)
+	if (shaderBlob)
 		shaderBlob->Release();
 }
 
@@ -354,7 +354,7 @@ inline void ISimpleShader::CleanUp()
 
 	for (unsigned int i = 0; i < shaderResourceViews.size(); i++)
 		delete shaderResourceViews[i];
-	
+
 	for (unsigned int i = 0; i < samplerStates.size(); i++)
 		delete samplerStates[i];
 
@@ -398,8 +398,8 @@ inline bool ISimpleShader::LoadShaderFile(LPCWSTR shaderFile)
 		shaderBlob->GetBufferPointer(),
 		shaderBlob->GetBufferSize(),
 		IID_ID3D11ShaderReflection,
-		(void**)&refl);
-	
+		(void**)& refl);
+
 	// Get the description of the shader
 	D3D11_SHADER_DESC shaderDesc;
 	refl->GetDesc(&shaderDesc);
@@ -407,7 +407,7 @@ inline bool ISimpleShader::LoadShaderFile(LPCWSTR shaderFile)
 	// Get the number of buffers and make the resource array
 	constantBufferCount = shaderDesc.ConstantBuffers;
 	constantBuffers = new SimpleConstantBuffer[constantBufferCount];
-	
+
 	// Handle bound resources (like shaders and samplers)
 	unsigned int resourceCount = shaderDesc.BoundResources;
 	for (unsigned int r = 0; r < resourceCount; r++)
@@ -429,7 +429,7 @@ inline bool ISimpleShader::LoadShaderFile(LPCWSTR shaderFile)
 			textureTable.insert(std::pair<std::string, SimpleSRV*>(resourceDesc.Name, srv));
 			shaderResourceViews.push_back(srv);
 		}
-			break;
+		break;
 
 		case D3D_SIT_SAMPLER: // A sampler resource
 		{
@@ -441,7 +441,7 @@ inline bool ISimpleShader::LoadShaderFile(LPCWSTR shaderFile)
 			samplerTable.insert(std::pair<std::string, SimpleSampler*>(resourceDesc.Name, samp));
 			samplerStates.push_back(samp);
 		}
-			break;
+		break;
 		}
 	}
 
@@ -451,11 +451,11 @@ inline bool ISimpleShader::LoadShaderFile(LPCWSTR shaderFile)
 		// Get this buffer
 		ID3D11ShaderReflectionConstantBuffer* cb =
 			refl->GetConstantBufferByIndex(b);
-		
+
 		// Get the description of this buffer
 		D3D11_SHADER_BUFFER_DESC bufferDesc;
 		cb->GetDesc(&bufferDesc);
-		
+
 		// Save the type, which we reference when setting these buffers
 		constantBuffers[b].Type = bufferDesc.Type;
 
@@ -463,7 +463,7 @@ inline bool ISimpleShader::LoadShaderFile(LPCWSTR shaderFile)
 		// we know exactly how it's bound in the shader
 		D3D11_SHADER_INPUT_BIND_DESC bindDesc;
 		refl->GetResourceBindingDescByName(bufferDesc.Name, &bindDesc);
-		
+
 		// Set up the buffer and put its pointer in the table
 		constantBuffers[b].BindIndex = bindDesc.BindPoint;
 		constantBuffers[b].Name = bufferDesc.Name;
@@ -490,7 +490,7 @@ inline bool ISimpleShader::LoadShaderFile(LPCWSTR shaderFile)
 			// Get this variable
 			ID3D11ShaderReflectionVariable* var =
 				cb->GetVariableByIndex(v);
-			
+
 			// Get the description of the variable and its type
 			D3D11_SHADER_VARIABLE_DESC varDesc;
 			var->GetDesc(&varDesc);
@@ -500,7 +500,7 @@ inline bool ISimpleShader::LoadShaderFile(LPCWSTR shaderFile)
 			varStruct.ConstantBufferIndex = b;
 			varStruct.ByteOffset = varDesc.StartOffset;
 			varStruct.Size = varDesc.Size;
-			
+
 			// Get a string version
 			std::string varName(varDesc.Name);
 
@@ -533,7 +533,7 @@ inline SimpleShaderVariable* ISimpleShader::FindVariable(std::string name, int s
 		return 0;
 
 	// Grab the result from the iterator
-	SimpleShaderVariable* var = &(result->second);
+	SimpleShaderVariable * var = &(result->second);
 
 	// Is the data size correct ?
 	if (size > 0 && var->Size != size)
@@ -546,7 +546,7 @@ inline SimpleShaderVariable* ISimpleShader::FindVariable(std::string name, int s
 // --------------------------------------------------------
 // Helper for looking up a constant buffer by name
 // --------------------------------------------------------
-inline SimpleConstantBuffer* ISimpleShader::FindConstantBuffer(std::string name)
+inline SimpleConstantBuffer * ISimpleShader::FindConstantBuffer(std::string name)
 {
 	// Look for the key
 	std::unordered_map<std::string, SimpleConstantBuffer*>::iterator result =
@@ -610,16 +610,16 @@ inline void ISimpleShader::CopyBufferData(unsigned int index)
 	if (!shaderValid) return;
 
 	// Validate the index
-	if(index >= this->constantBufferCount)
+	if (index >= this->constantBufferCount)
 		return;
 
 	// Check for the buffer
-	SimpleConstantBuffer* cb = &this->constantBuffers[index];
+	SimpleConstantBuffer * cb = &this->constantBuffers[index];
 	if (!cb) return;
 
 	// Copy the data and get out
 	deviceContext->UpdateSubresource(
-		cb->ConstantBuffer, 0, 0, 
+		cb->ConstantBuffer, 0, 0,
 		cb->LocalDataBuffer, 0, 0);
 }
 
@@ -641,7 +641,7 @@ inline void ISimpleShader::CopyBufferData(std::string bufferName)
 
 	// Copy the data and get out
 	deviceContext->UpdateSubresource(
-		cb->ConstantBuffer, 0, 0, 
+		cb->ConstantBuffer, 0, 0,
 		cb->LocalDataBuffer, 0, 0);
 }
 
@@ -854,7 +854,7 @@ inline unsigned int ISimpleShader::GetBufferSize(unsigned int index)
 // Gets info about a particular constant buffer 
 // by name, if it exists
 // --------------------------------------------------------
-inline const SimpleConstantBuffer * ISimpleShader::GetBufferInfo(std::string name)
+inline const SimpleConstantBuffer* ISimpleShader::GetBufferInfo(std::string name)
 {
 	return FindConstantBuffer(name);
 }
@@ -864,7 +864,7 @@ inline const SimpleConstantBuffer * ISimpleShader::GetBufferInfo(std::string nam
 //
 // index - the index of the constant buffer
 // --------------------------------------------------------
-inline const SimpleConstantBuffer * ISimpleShader::GetBufferInfo(unsigned int index)
+inline const SimpleConstantBuffer* ISimpleShader::GetBufferInfo(unsigned int index)
 {
 	// Check for valid index
 	if (index >= constantBufferCount) return 0;
@@ -884,9 +884,9 @@ inline const SimpleConstantBuffer * ISimpleShader::GetBufferInfo(unsigned int in
 // --------------------------------------------------------
 // Constructor just calls the base
 // --------------------------------------------------------
-inline SimpleVertexShader::SimpleVertexShader(ID3D11Device* device, ID3D11DeviceContext* context)
-	: ISimpleShader(device, context) 
-{ 
+inline SimpleVertexShader::SimpleVertexShader(ID3D11Device * device, ID3D11DeviceContext * context)
+	: ISimpleShader(device, context)
+{
 	// Ensure we set to zero to successfully trigger
 	// the Input Layout creation during LoadShader()
 	this->inputLayout = 0;
@@ -936,7 +936,7 @@ inline void SimpleVertexShader::CleanUp()
 //
 // Returns true if shader is created correctly, false otherwise
 // --------------------------------------------------------
-inline bool SimpleVertexShader::CreateShader(ID3DBlob* shaderBlob)
+inline bool SimpleVertexShader::CreateShader(ID3DBlob * shaderBlob)
 {
 	// Clean up first, in the event this method is
 	// called more than once on the same object
@@ -964,20 +964,20 @@ inline bool SimpleVertexShader::CreateShader(ID3DBlob* shaderBlob)
 	// https://takinginitiative.wordpress.com/2011/12/11/directx-1011-basic-shader-reflection-automatic-input-layout-creation/
 
 	// Reflect shader info
-	ID3D11ShaderReflection* refl;
+	ID3D11ShaderReflection * refl;
 	D3DReflect(
 		shaderBlob->GetBufferPointer(),
 		shaderBlob->GetBufferSize(),
 		IID_ID3D11ShaderReflection,
-		(void**)&refl);
-	
+		(void**)& refl);
+
 	// Get shader info
 	D3D11_SHADER_DESC shaderDesc;
 	refl->GetDesc(&shaderDesc);
 
 	// Read input layout description from shader info
 	std::vector<D3D11_INPUT_ELEMENT_DESC> inputLayoutDesc;
-	for (unsigned int i = 0; i< shaderDesc.InputParameters; i++)
+	for (unsigned int i = 0; i < shaderDesc.InputParameters; i++)
 	{
 		D3D11_SIGNATURE_PARAMETER_DESC paramDesc;
 		refl->GetInputParameterDesc(i, &paramDesc);
@@ -986,7 +986,7 @@ inline bool SimpleVertexShader::CreateShader(ID3DBlob* shaderBlob)
 		std::string perInstanceStr = "_PER_INSTANCE";
 		std::string sem = paramDesc.SemanticName;
 		int lenDiff = (int)sem.size() - (int)perInstanceStr.size();
-		bool isPerInstance = 
+		bool isPerInstance =
 			lenDiff >= 0 &&
 			sem.compare(lenDiff, perInstanceStr.size(), perInstanceStr) == 0;
 
@@ -1041,9 +1041,9 @@ inline bool SimpleVertexShader::CreateShader(ID3DBlob* shaderBlob)
 
 	// Try to create Input Layout
 	HRESULT hr = device->CreateInputLayout(
-		&inputLayoutDesc[0], 
-		(unsigned int)inputLayoutDesc.size(), 
-		shaderBlob->GetBufferPointer(), 
+		&inputLayoutDesc[0],
+		(unsigned int)inputLayoutDesc.size(),
+		shaderBlob->GetBufferPointer(),
 		shaderBlob->GetBufferSize(),
 		&inputLayout);
 
@@ -1088,7 +1088,7 @@ inline void SimpleVertexShader::SetShaderAndCBs()
 //
 // Returns true if a texture of the given name was found, false otherwise
 // --------------------------------------------------------
-inline bool SimpleVertexShader::SetShaderResourceView(std::string name, ID3D11ShaderResourceView* srv)
+inline bool SimpleVertexShader::SetShaderResourceView(std::string name, ID3D11ShaderResourceView * srv)
 {
 	// Look for the variable and verify
 	const SimpleSRV* srvInfo = GetShaderResourceViewInfo(name);
@@ -1110,7 +1110,7 @@ inline bool SimpleVertexShader::SetShaderResourceView(std::string name, ID3D11Sh
 //
 // Returns true if a sampler of the given name was found, false otherwise
 // --------------------------------------------------------
-inline bool SimpleVertexShader::SetSamplerState(std::string name, ID3D11SamplerState* samplerState)
+inline bool SimpleVertexShader::SetSamplerState(std::string name, ID3D11SamplerState * samplerState)
 {
 	// Look for the variable and verify
 	const SimpleSampler* sampInfo = GetSamplerInfo(name);
@@ -1132,9 +1132,9 @@ inline bool SimpleVertexShader::SetSamplerState(std::string name, ID3D11SamplerS
 // --------------------------------------------------------
 // Constructor just calls the base
 // --------------------------------------------------------
-inline SimplePixelShader::SimplePixelShader(ID3D11Device* device, ID3D11DeviceContext* context)
-	: ISimpleShader(device, context) 
-{ 
+inline SimplePixelShader::SimplePixelShader(ID3D11Device * device, ID3D11DeviceContext * context)
+	: ISimpleShader(device, context)
+{
 	this->shader = 0;
 }
 
@@ -1162,7 +1162,7 @@ inline void SimplePixelShader::CleanUp()
 //
 // Returns true if shader is created correctly, false otherwise
 // --------------------------------------------------------
-inline bool SimplePixelShader::CreateShader(ID3DBlob* shaderBlob)
+inline bool SimplePixelShader::CreateShader(ID3DBlob * shaderBlob)
 {
 	// Clean up first, in the event this method is
 	// called more than once on the same object
@@ -1187,7 +1187,7 @@ inline void SimplePixelShader::SetShaderAndCBs()
 {
 	// Is shader valid?
 	if (!shaderValid) return;
-	
+
 	// Set the shader
 	deviceContext->PSSetShader(shader, 0, 0);
 
@@ -1214,7 +1214,7 @@ inline void SimplePixelShader::SetShaderAndCBs()
 //
 // Returns true if a texture of the given name was found, false otherwise
 // --------------------------------------------------------
-inline bool SimplePixelShader::SetShaderResourceView(std::string name, ID3D11ShaderResourceView* srv)
+inline bool SimplePixelShader::SetShaderResourceView(std::string name, ID3D11ShaderResourceView * srv)
 {
 	// Look for the variable and verify
 	const SimpleSRV* srvInfo = GetShaderResourceViewInfo(name);
@@ -1236,7 +1236,7 @@ inline bool SimplePixelShader::SetShaderResourceView(std::string name, ID3D11Sha
 //
 // Returns true if a sampler of the given name was found, false otherwise
 // --------------------------------------------------------
-inline bool SimplePixelShader::SetSamplerState(std::string name, ID3D11SamplerState* samplerState)
+inline bool SimplePixelShader::SetSamplerState(std::string name, ID3D11SamplerState * samplerState)
 {
 	// Look for the variable and verify
 	const SimpleSampler* sampInfo = GetSamplerInfo(name);
@@ -1260,9 +1260,9 @@ inline bool SimplePixelShader::SetSamplerState(std::string name, ID3D11SamplerSt
 // --------------------------------------------------------
 // Constructor just calls the base
 // --------------------------------------------------------
-inline SimpleDomainShader::SimpleDomainShader(ID3D11Device* device, ID3D11DeviceContext* context)
-	: ISimpleShader(device, context) 
-{ 
+inline SimpleDomainShader::SimpleDomainShader(ID3D11Device * device, ID3D11DeviceContext * context)
+	: ISimpleShader(device, context)
+{
 	this->shader = 0;
 }
 
@@ -1290,7 +1290,7 @@ inline void SimpleDomainShader::CleanUp()
 //
 // Returns true if shader is created correctly, false otherwise
 // --------------------------------------------------------
-inline bool SimpleDomainShader::CreateShader(ID3DBlob* shaderBlob)
+inline bool SimpleDomainShader::CreateShader(ID3DBlob * shaderBlob)
 {
 	// Clean up first, in the event this method is
 	// called more than once on the same object
@@ -1342,7 +1342,7 @@ inline void SimpleDomainShader::SetShaderAndCBs()
 //
 // Returns true if a texture of the given name was found, false otherwise
 // --------------------------------------------------------
-inline bool SimpleDomainShader::SetShaderResourceView(std::string name, ID3D11ShaderResourceView* srv)
+inline bool SimpleDomainShader::SetShaderResourceView(std::string name, ID3D11ShaderResourceView * srv)
 {
 	// Look for the variable and verify
 	const SimpleSRV* srvInfo = GetShaderResourceViewInfo(name);
@@ -1364,7 +1364,7 @@ inline bool SimpleDomainShader::SetShaderResourceView(std::string name, ID3D11Sh
 //
 // Returns true if a sampler of the given name was found, false otherwise
 // --------------------------------------------------------
-inline bool SimpleDomainShader::SetSamplerState(std::string name, ID3D11SamplerState* samplerState)
+inline bool SimpleDomainShader::SetSamplerState(std::string name, ID3D11SamplerState * samplerState)
 {
 	// Look for the variable and verify
 	const SimpleSampler* sampInfo = GetSamplerInfo(name);
@@ -1387,9 +1387,9 @@ inline bool SimpleDomainShader::SetSamplerState(std::string name, ID3D11SamplerS
 // --------------------------------------------------------
 // Constructor just calls the base
 // --------------------------------------------------------
-inline SimpleHullShader::SimpleHullShader(ID3D11Device* device, ID3D11DeviceContext* context)
-	: ISimpleShader(device, context) 
-{ 
+inline SimpleHullShader::SimpleHullShader(ID3D11Device * device, ID3D11DeviceContext * context)
+	: ISimpleShader(device, context)
+{
 	this->shader = 0;
 }
 
@@ -1417,7 +1417,7 @@ inline void SimpleHullShader::CleanUp()
 //
 // Returns true if shader is created correctly, false otherwise
 // --------------------------------------------------------
-inline bool SimpleHullShader::CreateShader(ID3DBlob* shaderBlob)
+inline bool SimpleHullShader::CreateShader(ID3DBlob * shaderBlob)
 {
 	// Clean up first, in the event this method is
 	// called more than once on the same object
@@ -1469,7 +1469,7 @@ inline void SimpleHullShader::SetShaderAndCBs()
 //
 // Returns true if a texture of the given name was found, false otherwise
 // --------------------------------------------------------
-inline bool SimpleHullShader::SetShaderResourceView(std::string name, ID3D11ShaderResourceView* srv)
+inline bool SimpleHullShader::SetShaderResourceView(std::string name, ID3D11ShaderResourceView * srv)
 {
 	// Look for the variable and verify
 	const SimpleSRV* srvInfo = GetShaderResourceViewInfo(name);
@@ -1491,7 +1491,7 @@ inline bool SimpleHullShader::SetShaderResourceView(std::string name, ID3D11Shad
 //
 // Returns true if a sampler of the given name was found, false otherwise
 // --------------------------------------------------------
-inline bool SimpleHullShader::SetSamplerState(std::string name, ID3D11SamplerState* samplerState)
+inline bool SimpleHullShader::SetSamplerState(std::string name, ID3D11SamplerState * samplerState)
 {
 	// Look for the variable and verify
 	const SimpleSampler* sampInfo = GetSamplerInfo(name);
@@ -1515,9 +1515,9 @@ inline bool SimpleHullShader::SetSamplerState(std::string name, ID3D11SamplerSta
 // --------------------------------------------------------
 // Constructor calls the base and sets up potential stream-out options
 // --------------------------------------------------------
-inline SimpleGeometryShader::SimpleGeometryShader(ID3D11Device* device, ID3D11DeviceContext* context, bool useStreamOut, bool allowStreamOutRasterization)
-	: ISimpleShader(device, context) 
-{ 
+inline SimpleGeometryShader::SimpleGeometryShader(ID3D11Device * device, ID3D11DeviceContext * context, bool useStreamOut, bool allowStreamOutRasterization)
+	: ISimpleShader(device, context)
+{
 	this->shader = 0;
 	this->useStreamOut = useStreamOut;
 	this->allowStreamOutRasterization = allowStreamOutRasterization;
@@ -1547,7 +1547,7 @@ inline void SimpleGeometryShader::CleanUp()
 //
 // Returns true if shader is created correctly, false otherwise
 // --------------------------------------------------------
-inline bool SimpleGeometryShader::CreateShader(ID3DBlob* shaderBlob)
+inline bool SimpleGeometryShader::CreateShader(ID3DBlob * shaderBlob)
 {
 	// Clean up first, in the event this method is
 	// called more than once on the same object
@@ -1576,7 +1576,7 @@ inline bool SimpleGeometryShader::CreateShader(ID3DBlob* shaderBlob)
 //
 // Returns true if shader is created correctly, false otherwise
 // --------------------------------------------------------
-inline bool SimpleGeometryShader::CreateShaderWithStreamOut(ID3DBlob* shaderBlob)
+inline bool SimpleGeometryShader::CreateShaderWithStreamOut(ID3DBlob * shaderBlob)
 {
 	// Clean up first, in the event this method is
 	// called more than once on the same object
@@ -1588,7 +1588,7 @@ inline bool SimpleGeometryShader::CreateShaderWithStreamOut(ID3DBlob* shaderBlob
 		shaderBlob->GetBufferPointer(),
 		shaderBlob->GetBufferSize(),
 		IID_ID3D11ShaderReflection,
-		(void**)&refl);
+		(void**)& refl);
 
 	// Get shader info
 	D3D11_SHADER_DESC shaderDesc;
@@ -1602,18 +1602,18 @@ inline bool SimpleGeometryShader::CreateShaderWithStreamOut(ID3DBlob* shaderBlob
 		// Get the info about this entry
 		D3D11_SIGNATURE_PARAMETER_DESC paramDesc;
 		refl->GetOutputParameterDesc(i, &paramDesc);
-		
+
 		// Create the SO Declaration
 		D3D11_SO_DECLARATION_ENTRY entry;
-		entry.SemanticIndex  = paramDesc.SemanticIndex;
-		entry.SemanticName   = paramDesc.SemanticName;
-		entry.Stream         = paramDesc.Stream;
+		entry.SemanticIndex = paramDesc.SemanticIndex;
+		entry.SemanticName = paramDesc.SemanticName;
+		entry.Stream = paramDesc.Stream;
 		entry.StartComponent = 0; // Assume starting at 0
-		entry.OutputSlot     = 0; // Assume the first output slot
+		entry.OutputSlot = 0; // Assume the first output slot
 
 		// Check the mask to determine how many components are used
 		entry.ComponentCount = CalcComponentCount(paramDesc.Mask);
-	
+
 		// Increment the size
 		streamOutVertexSize += entry.ComponentCount * sizeof(float);
 
@@ -1635,7 +1635,7 @@ inline bool SimpleGeometryShader::CreateShaderWithStreamOut(ID3DBlob* shaderBlob
 		rast,                           // Index of the stream to rasterize (if any)
 		NULL,                           // Not using class linkage
 		&shader);
-	
+
 	return (result == S_OK);
 }
 
@@ -1653,7 +1653,7 @@ inline bool SimpleGeometryShader::CreateShaderWithStreamOut(ID3DBlob* shaderBlob
 // Returns true if buffer is created successfully AND stream output
 // was used to create the shader.  False otherwise.
 // --------------------------------------------------------
-inline bool SimpleGeometryShader::CreateCompatibleStreamOutBuffer(ID3D11Buffer** buffer, int vertexCount)
+inline bool SimpleGeometryShader::CreateCompatibleStreamOutBuffer(ID3D11Buffer * *buffer, int vertexCount)
 {
 	// Was stream output actually used?
 	if (!this->useStreamOut || !shaderValid || streamOutVertexSize == 0)
@@ -1661,12 +1661,12 @@ inline bool SimpleGeometryShader::CreateCompatibleStreamOutBuffer(ID3D11Buffer**
 
 	// Set up the buffer description
 	D3D11_BUFFER_DESC desc;
-	desc.BindFlags           = D3D11_BIND_STREAM_OUTPUT | D3D11_BIND_VERTEX_BUFFER;
-	desc.ByteWidth           = streamOutVertexSize * vertexCount;
-	desc.CPUAccessFlags      = 0;
-	desc.MiscFlags           = 0;
+	desc.BindFlags = D3D11_BIND_STREAM_OUTPUT | D3D11_BIND_VERTEX_BUFFER;
+	desc.ByteWidth = streamOutVertexSize * vertexCount;
+	desc.CPUAccessFlags = 0;
+	desc.MiscFlags = 0;
 	desc.StructureByteStride = 0;
-	desc.Usage               = D3D11_USAGE_DEFAULT;
+	desc.Usage = D3D11_USAGE_DEFAULT;
 
 	// Attempt to create the buffer and return the result
 	HRESULT result = device->CreateBuffer(&desc, 0, buffer);
@@ -1676,7 +1676,7 @@ inline bool SimpleGeometryShader::CreateCompatibleStreamOutBuffer(ID3D11Buffer**
 // --------------------------------------------------------
 // Helper method to unbind all stream out buffers from the SO stage
 // --------------------------------------------------------
-inline void SimpleGeometryShader::UnbindStreamOutStage(ID3D11DeviceContext* deviceContext)
+inline void SimpleGeometryShader::UnbindStreamOutStage(ID3D11DeviceContext * deviceContext)
 {
 	unsigned int offset = 0;
 	ID3D11Buffer* unset[1] = { 0 };
@@ -1718,7 +1718,7 @@ inline void SimpleGeometryShader::SetShaderAndCBs()
 //
 // Returns true if a texture of the given name was found, false otherwise
 // --------------------------------------------------------
-inline bool SimpleGeometryShader::SetShaderResourceView(std::string name, ID3D11ShaderResourceView* srv)
+inline bool SimpleGeometryShader::SetShaderResourceView(std::string name, ID3D11ShaderResourceView * srv)
 {
 	// Look for the variable and verify
 	const SimpleSRV* srvInfo = GetShaderResourceViewInfo(name);
@@ -1740,7 +1740,7 @@ inline bool SimpleGeometryShader::SetShaderResourceView(std::string name, ID3D11
 //
 // Returns true if a sampler of the given name was found, false otherwise
 // --------------------------------------------------------
-inline bool SimpleGeometryShader::SetSamplerState(std::string name, ID3D11SamplerState* samplerState)
+inline bool SimpleGeometryShader::SetSamplerState(std::string name, ID3D11SamplerState * samplerState)
 {
 	// Look for the variable and verify
 	const SimpleSampler* sampInfo = GetSamplerInfo(name);
@@ -1780,9 +1780,9 @@ inline unsigned int SimpleGeometryShader::CalcComponentCount(unsigned int mask)
 // --------------------------------------------------------
 // Constructor just calls the base
 // --------------------------------------------------------
-inline SimpleComputeShader::SimpleComputeShader(ID3D11Device* device, ID3D11DeviceContext* context)
-	: ISimpleShader(device, context) 
-{ 
+inline SimpleComputeShader::SimpleComputeShader(ID3D11Device * device, ID3D11DeviceContext * context)
+	: ISimpleShader(device, context)
+{
 	this->shader = 0;
 }
 
@@ -1812,7 +1812,7 @@ inline void SimpleComputeShader::CleanUp()
 //
 // Returns true if shader is created correctly, false otherwise
 // --------------------------------------------------------
-inline bool SimpleComputeShader::CreateShader(ID3DBlob* shaderBlob)
+inline bool SimpleComputeShader::CreateShader(ID3DBlob * shaderBlob)
 {
 	// Clean up first, in the event this method is
 	// called more than once on the same object
@@ -1830,17 +1830,17 @@ inline bool SimpleComputeShader::CreateShader(ID3DBlob* shaderBlob)
 		return false;
 
 	// Set up shader reflection to get information about UAV's
-	ID3D11ShaderReflection* refl;
+	ID3D11ShaderReflection * refl;
 	D3DReflect(
 		shaderBlob->GetBufferPointer(),
 		shaderBlob->GetBufferSize(),
 		IID_ID3D11ShaderReflection,
-		(void**)&refl);
+		(void**)& refl);
 
 	// Get the description of the shader
 	D3D11_SHADER_DESC shaderDesc;
 	refl->GetDesc(&shaderDesc);
-	
+
 	// Grab the thread info
 	threadsTotal = refl->GetThreadGroupSize(
 		&threadsX,
@@ -1961,7 +1961,7 @@ inline void SimpleComputeShader::DispatchByThreads(unsigned int threadsX, unsign
 //
 // Returns true if a texture of the given name was found, false otherwise
 // --------------------------------------------------------
-inline bool SimpleComputeShader::SetShaderResourceView(std::string name, ID3D11ShaderResourceView* srv)
+inline bool SimpleComputeShader::SetShaderResourceView(std::string name, ID3D11ShaderResourceView * srv)
 {
 	// Look for the variable and verify
 	const SimpleSRV* srvInfo = GetShaderResourceViewInfo(name);
@@ -1983,7 +1983,7 @@ inline bool SimpleComputeShader::SetShaderResourceView(std::string name, ID3D11S
 //
 // Returns true if a sampler of the given name was found, false otherwise
 // --------------------------------------------------------
-inline bool SimpleComputeShader::SetSamplerState(std::string name, ID3D11SamplerState* samplerState)
+inline bool SimpleComputeShader::SetSamplerState(std::string name, ID3D11SamplerState * samplerState)
 {
 	// Look for the variable and verify
 	const SimpleSampler* sampInfo = GetSamplerInfo(name);

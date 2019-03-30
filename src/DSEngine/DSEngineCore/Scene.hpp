@@ -108,7 +108,7 @@ public:
 	 * @param filename The filename of the model
 	 * @return Object* The pointer of the parent object added to the scene from the model file
 	 */
-	Object* LoadModelFile(std::string filename);
+	Object* LoadModelFile(const std::string& filename);
 
 	/**
 	 * @brief Add a light to the scene
@@ -167,7 +167,7 @@ private:
 	 * @param parent The direct parent object of the model being added
 	 * @return Object* The pointer of the object added to the scene
 	 */
-	Object* AddObjectWithNode(std::string modelFileName, const aiScene* scene, aiNode* node, Object* parent);
+	Object* AddObjectWithNode(const std::string& modelFileName, const aiScene* scene, aiNode* node, Object* parent);
 
 	/**
 	 * @brief All objects
@@ -270,7 +270,7 @@ inline std::list<Object*> Scene::GetAllObjects()
 	return allObjects;
 }
 
-inline Object* Scene::LoadModelFile(std::string filename)
+inline Object* Scene::LoadModelFile(const std::string& filename)
 {
 	// Create an instance of the Importer class
 	Assimp::Importer importer;
@@ -374,7 +374,7 @@ inline void Scene::Update(float deltaTime, float totalTime)
 	}
 }
 
-inline Object* Scene::AddObjectWithNode(std::string modelFileName, const aiScene * scene, aiNode * node, Object * parent)
+inline Object* Scene::AddObjectWithNode(const std::string& modelFileName, const aiScene * scene, aiNode * node, Object * parent)
 {
 	Object* newObj = AddObject(node->mName.C_Str());
 
