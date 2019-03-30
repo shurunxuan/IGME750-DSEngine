@@ -1,3 +1,5 @@
 <map id="DSEngineApp" name="DSEngineApp">
-<area shape="rect" id="node2" href="$class_test_game_app.html" title="Derived from DSEngineApp. " alt="" coords="5,80,112,107"/>
+<area shape="rect" id="node2" href="$class_racing_game_app.html" title="RacingGameApp" alt="" coords="5,80,125,107"/>
+<area shape="rect" id="node3" href="$class_test_game_app.html" title="Derived from DSEngineApp. " alt="" coords="151,80,257,107"/>
+<area shape="rect" id="node4" href="$class_tower_game_app.html" title="TowerGameApp" alt="" coords="282,80,397,107"/>
 </map>
