@@ -15,5 +15,6 @@ public:
 	void Init() override;
 
 private:
+	SimplePixelShader* unlitShader;
 };
 

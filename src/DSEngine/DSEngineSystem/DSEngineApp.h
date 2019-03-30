@@ -133,18 +133,6 @@ private:
 	 */
 	Scene currentScene;
 
-	/**
-	 * @brief The vertex shader of the default material
-	 * 
-	 */
-	SimpleVertexShader* vertexShader;
-
-	/**
-	 * @brief The pixel shader of the default material
-	 * 
-	 */
-	SimplePixelShader* pbrPixelShader;
-
 	DSFThreadPool* threadPool;
 
 protected:
@@ -171,6 +159,18 @@ protected:
 	 * 
 	 */
 	ID3D11DeviceContext* context;
+
+	/**
+	 * @brief The vertex shader of the default material
+	 *
+	 */
+	SimpleVertexShader* vertexShader;
+
+	/**
+	 * @brief The pixel shader of the default material
+	 *
+	 */
+	SimplePixelShader* pbrPixelShader;
 };
 
 /**
