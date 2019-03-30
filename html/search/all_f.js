@@ -21,7 +21,7 @@ var searchData=
   ['setpixelshaderptr',['SetPixelShaderPtr',['../class_material.html#a6377a720ea33d2e5b5fdaf717c56135d',1,'Material']]],
   ['setposition',['SetPosition',['../class_light.html#a3a4a74426ea6120501798837b4baebf4',1,'Light']]],
   ['setrange',['SetRange',['../class_light.html#af3a9de4bd95927181781bfb826b27ca3',1,'Light']]],
-  ['setshaderdata',['SetShaderData',['../class_material.html#acd85a5f7d48fac268eb6f4518a2c0333',1,'Material::SetShaderData()'],['../class_p_b_r_material.html#a80cae030daec449fc24793172413e085',1,'PBRMaterial::SetShaderData()']]],
+  ['setshaderdata',['SetShaderData',['../class_material.html#acd85a5f7d48fac268eb6f4518a2c0333',1,'Material::SetShaderData()'],['../class_p_b_r_material.html#a80cae030daec449fc24793172413e085',1,'PBRMaterial::SetShaderData()'],['../class_unlit_material.html#a2477594f47d9d4dcece3a149662b7db6',1,'UnlitMaterial::SetShaderData()']]],
   ['setskybox',['SetSkybox',['../class_camera.html#a72d7c88f892a3c3ec020a2228291bd29',1,'Camera']]],
   ['setspotfalloff',['SetSpotFallOff',['../class_light.html#adb7a576a435a057ed1905d426ff96af7',1,'Light']]],
   ['setvertexshaderptr',['SetVertexShaderPtr',['../class_material.html#a212325121e03d452e661514a7b6fd9c5',1,'Material']]],

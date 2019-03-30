@@ -1,3 +1,4 @@
 <map id="Material" name="Material">
 <area shape="rect" id="node2" href="$class_p_b_r_material.html" title="The default physically based rendering material. " alt="" coords="5,80,101,107"/>
+<area shape="rect" id="node3" href="$class_unlit_material.html" title="UnlitMaterial" alt="" coords="126,80,220,107"/>
 </map>

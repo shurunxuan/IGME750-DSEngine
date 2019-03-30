@@ -137,6 +137,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:a5de927c336d973f4d573d012fd347977"><td class="memItemLeft" align="right" valign="top">std::list&lt; <a class="el" href="class_transform.html">Transform</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_transform.html#a5de927c336d973f4d573d012fd347977">GetChildren</a> () const </td></tr>
 <tr class="memdesc:a5de927c336d973f4d573d012fd347977"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get all children of the transform.  <a href="#a5de927c336d973f4d573d012fd347977">More...</a><br/></td></tr>
 <tr class="separator:a5de927c336d973f4d573d012fd347977"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2808e42af29bba82195a7c7e5fa9e99"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_transform.html">Transform</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_transform.html#ac2808e42af29bba82195a7c7e5fa9e99">GetChildAt</a> (int index)</td></tr>
+<tr class="memdesc:ac2808e42af29bba82195a7c7e5fa9e99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a child of the transform.  <a href="#ac2808e42af29bba82195a7c7e5fa9e99">More...</a><br/></td></tr>
+<tr class="separator:ac2808e42af29bba82195a7c7e5fa9e99"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acefb6e9d737a0c7a5b9f20d2857faddb"><td class="memItemLeft" align="right" valign="top">DirectX::XMVECTOR&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_transform.html#acefb6e9d737a0c7a5b9f20d2857faddb">GetLocalTranslation</a> () const </td></tr>
 <tr class="memdesc:acefb6e9d737a0c7a5b9f20d2857faddb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Local Translation.  <a href="#acefb6e9d737a0c7a5b9f20d2857faddb">More...</a><br/></td></tr>
 <tr class="separator:acefb6e9d737a0c7a5b9f20d2857faddb"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -283,6 +286,39 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 <p>Get the Global Forward unit vector of the transform. </p>
 <dl class="section return"><dt>Returns</dt><dd>DirectX::XMVECTOR The Global Forward vector </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ac2808e42af29bba82195a7c7e5fa9e99"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_transform.html">Transform</a> * Transform::GetChildAt </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>index</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get a child of the transform. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">index</td><td>The position of the child to be get</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Transform* The child at a specified position </dd></dl>
 
 </div>
 </div>
