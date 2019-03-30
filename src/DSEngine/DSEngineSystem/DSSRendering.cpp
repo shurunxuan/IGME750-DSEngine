@@ -85,7 +85,8 @@ void DSSRendering::Update(const float deltaTime, const float totalTime)
 
 
 	// Render the skybox
-	direct3D.RenderSkybox(camera);
+	if (camera->GetSkybox() != nullptr)
+		direct3D.RenderSkybox(camera);
 
 	direct3D.Present();
 }
