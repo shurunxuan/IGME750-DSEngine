@@ -14,6 +14,8 @@ DSFXInput::DSFXInput()
 		ZeroMemory(&buttonDownState[i], sizeof(XINPUT_STATE));
 		ZeroMemory(&buttonUpState[i], sizeof(XINPUT_STATE));
 		ZeroMemory(&lastState[i], sizeof(XINPUT_STATE));
+		ZeroMemory(&syncButtonDownState[i], sizeof(XINPUT_STATE));
+		ZeroMemory(&syncButtonUpState[i], sizeof(XINPUT_STATE));
 
 		connected[i] = XInputGetState(i, &lastState[i]) == ERROR_DEVICE_NOT_CONNECTED;
 	}
@@ -33,26 +35,49 @@ void DSFXInput::Init()
 
 void DSFXInput::Update()
 {
+
 	for (DWORD i = 0; i < XUSER_MAX_COUNT; i++)
 	{
+		boost::unique_lock<boost::mutex> lock(mutex);
+
 		ZeroMemory(&buttonState[i], sizeof(XINPUT_STATE));
-		ZeroMemory(&buttonDownState[i], sizeof(XINPUT_STATE));
-		ZeroMemory(&buttonUpState[i], sizeof(XINPUT_STATE));
 
 		if (connected[i])
 		{
 			XInputGetState(i, &buttonState[i]);
 
-			buttonDownState[i].Gamepad.wButtons =
+			buttonDownState[i].Gamepad.wButtons |=
 				buttonState[i].Gamepad.wButtons &
 				~lastState[i].Gamepad.wButtons;
 
-			buttonUpState[i].Gamepad.wButtons =
+			buttonUpState[i].Gamepad.wButtons |=
 				lastState[i].Gamepad.wButtons &
 				~buttonState[i].Gamepad.wButtons;
 		}
 
 		lastState[i] = buttonState[i];
+	}
+
+
+}
+
+void DSFXInput::SyncUpdate()
+{
+	for (DWORD i = 0; i < XUSER_MAX_COUNT; i++)
+	{
+		boost::unique_lock<boost::mutex> lock(mutex);
+
+		ZeroMemory(&syncButtonDownState[i], sizeof(XINPUT_STATE));
+		ZeroMemory(&syncButtonUpState[i], sizeof(XINPUT_STATE));
+
+		if (connected[i])
+		{
+			syncButtonDownState[i] = buttonDownState[i];
+			syncButtonUpState[i] = buttonUpState[i];
+		}
+
+		ZeroMemory(&buttonDownState[i], sizeof(XINPUT_STATE));
+		ZeroMemory(&buttonUpState[i], sizeof(XINPUT_STATE));
 	}
 }
 
@@ -64,7 +89,7 @@ void DSFXInput::OnDeviceChange()
 	}
 }
 
-bool DSFXInput::GetButton(DSButtonCode buttonCode, int player) const
+bool DSFXInput::GetButton(DSJoystickButtonCode buttonCode, int player)
 {
 	bool result = false;
 	if (player < 0)
@@ -77,12 +102,13 @@ bool DSFXInput::GetButton(DSButtonCode buttonCode, int player) const
 	else
 	{
 		if (!connected[player]) return false;
+		boost::unique_lock<boost::mutex> lock(mutex);
 		result = (buttonState[player].Gamepad.wButtons & buttonCode) != 0;
 	}
 	return result;
 }
 
-bool DSFXInput::GetButtonDown(DSButtonCode buttonCode, int player) const
+bool DSFXInput::GetButtonDown(DSJoystickButtonCode buttonCode, int player)
 {
 	bool result = false;
 	if (player < 0)
@@ -95,12 +121,13 @@ bool DSFXInput::GetButtonDown(DSButtonCode buttonCode, int player) const
 	else
 	{
 		if (!connected[player]) return false;
-		result = (buttonDownState[player].Gamepad.wButtons & buttonCode) != 0;
+		boost::unique_lock<boost::mutex> lock(mutex);
+		result = (syncButtonDownState[player].Gamepad.wButtons & buttonCode) != 0;
 	}
 	return result;
 }
 
-bool DSFXInput::GetButtonUp(DSButtonCode buttonCode, int player) const
+bool DSFXInput::GetButtonUp(DSJoystickButtonCode buttonCode, int player)
 {
 	bool result = false;
 	if (player < 0)
@@ -113,12 +140,13 @@ bool DSFXInput::GetButtonUp(DSButtonCode buttonCode, int player) const
 	else
 	{
 		if (!connected[player]) return false;
-		result = (buttonUpState[player].Gamepad.wButtons & buttonCode) != 0;
+		boost::unique_lock<boost::mutex> lock(mutex);
+		result = (syncButtonUpState[player].Gamepad.wButtons & buttonCode) != 0;
 	}
 	return result;
 }
 
-WORD DSFXInput::GetDownEvent(int player) const
+WORD DSFXInput::GetDownEvent(int player)
 {
 	WORD result = 0;
 	if (player < 0)
@@ -131,12 +159,13 @@ WORD DSFXInput::GetDownEvent(int player) const
 	else
 	{
 		if (!connected[player]) return 0;
-		result = buttonDownState[player].Gamepad.wButtons;
+		boost::unique_lock<boost::mutex> lock(mutex);
+		result = syncButtonDownState[player].Gamepad.wButtons;
 	}
 	return result;
 }
 
-WORD DSFXInput::GetUpEvent(int player) const
+WORD DSFXInput::GetUpEvent(int player)
 {
 	WORD result = 0;
 	if (player < 0)
@@ -149,12 +178,13 @@ WORD DSFXInput::GetUpEvent(int player) const
 	else
 	{
 		if (!connected[player]) return 0;
-		result = buttonUpState[player].Gamepad.wButtons;
+		boost::unique_lock<boost::mutex> lock(mutex);
+		result = syncButtonUpState[player].Gamepad.wButtons;
 	}
 	return result;
 }
 
-float DSFXInput::GetAxis(DSAxisCode axisCode, int player, float deadZone) const
+float DSFXInput::GetAxis(DSJoystickAxisCode axisCode, int player, float deadZone) const
 {
 	if (player < 0) player = 0;
 	if (!connected[player]) return 0.0f;
@@ -186,7 +216,7 @@ float DSFXInput::GetAxis(DSAxisCode axisCode, int player, float deadZone) const
 	return abs(rawData) < deadZone ? 0.0f : rawData;
 }
 
-float DSFXInput::GetRawAxis(DSAxisCode axisCode, int player) const
+float DSFXInput::GetRawAxis(DSJoystickAxisCode axisCode, int player) const
 {
 	if (player < 0) player = 0;
 	if (!connected[player]) return 0.0f;
@@ -210,13 +240,13 @@ float DSFXInput::GetRawAxis(DSAxisCode axisCode, int player) const
 	case RY:
 		return float(buttonState[player].Gamepad.sThumbRY) /
 			float(1 << (sizeof(SHORT) * 8 - 1));
-	default: 
+	default:
 		return 0.0f;
 	}
 	return -1;
 }
 
-DSButtonCode DSFXInput::GetButtonCode(unsigned code)
+DSJoystickButtonCode DSFXInput::GetButtonCode(unsigned code)
 {
 	switch (code)
 	{
@@ -253,7 +283,7 @@ DSButtonCode DSFXInput::GetButtonCode(unsigned code)
 	}
 }
 
-DSAxisCode DSFXInput::GetAxisCode(unsigned code)
+DSJoystickAxisCode DSFXInput::GetAxisCode(unsigned code)
 {
 	switch (code)
 	{
@@ -274,7 +304,7 @@ DSAxisCode DSFXInput::GetAxisCode(unsigned code)
 	}
 }
 
-std::string DSFXInput::GetButtonName(DSButtonCode buttonCode)
+std::string DSFXInput::GetButtonName(DSJoystickButtonCode buttonCode)
 {
 	switch (buttonCode)
 	{
@@ -311,7 +341,7 @@ std::string DSFXInput::GetButtonName(DSButtonCode buttonCode)
 	}
 }
 
-std::string DSFXInput::GetAxisName(DSAxisCode axisCode)
+std::string DSFXInput::GetAxisName(DSJoystickAxisCode axisCode)
 {
 	switch (axisCode) {
 	case LT:

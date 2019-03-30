@@ -63,14 +63,18 @@ void DSSRendering::Update(const float deltaTime, const float totalTime)
 	}
 
 	// Preprocessing
+	int lightCount = 0;
 	for (Light* light : App->CurrentActiveScene()->lights)
 	{
-		direct3D.ClearAndSetShadowRenderTarget(light);
+		if (!light->GetData()->CastShadow) break;
+		direct3D.ClearAndSetShadowRenderTarget(light, lightCount);
 		for (MeshRenderer* meshRenderer : meshRenderersInScene)
 		{
 			// TODO: if (cull(light, meshRenderer->mesh))
-			direct3D.PreProcess(light, meshRenderer, shadowVertexShader);
+			direct3D.PreProcess(light, meshRenderer, shadowVertexShader, lightCount);
 		}
+		++lightCount;
+		if (lightCount == MAX_CAST_SHADOW_COUNT) break;
 	}
 
 	// Render the scene

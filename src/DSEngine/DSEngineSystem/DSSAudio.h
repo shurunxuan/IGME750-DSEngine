@@ -28,18 +28,18 @@
 class DSENGINESYSTEM_API DSSAudio
 {
 public:
-	/**
-	 * @brief Construct a new DSSAudio object
-	 * 
-	 * Should set all pointers to nullptr
-	 */
-	DSSAudio();
-	/**
-	 * @brief Destroy the DSSAudio object
-	 * 
-	 * Should delete or release or free all pointers
-	 */
-	~DSSAudio();
+    /**
+     * @brief Construct a new DSSAudio object
+     * 
+     * Should set all pointers to nullptr
+     */
+    DSSAudio();
+    /**
+     * @brief Destroy the DSSAudio object
+     * 
+     * Should delete or release or free all pointers
+     */
+    ~DSSAudio();
 
     /**
      * @brief Copy constructor of DSSAudio is deleted
@@ -73,21 +73,21 @@ public:
      */
     DSSAudio& operator=(DSSAudio&& v) = delete;
 
-	/**
-	 * @brief Actual initialization of the audio system
-	 * 
-	 */
-	void Init();
+    /**
+     * @brief Actual initialization of the audio system
+     * 
+     */
+    void Init();
 
-	/**
-	 * @brief Non-block version of playing an audio file
+    /**
+     * @brief Non-block version of playing an audio file
      * 
      * Creates a thread of PlayAudioFile function
-	 * 
-	 * @param filename Audio file name
-	 * @param playbackThread The audio playback thread
-	 */
-	void PlayAudioFileNonBlock(const char* filename, boost::thread& playbackThread);
+     * 
+     * @param filename Audio file name
+     * @param playbackThread The audio playback thread
+     */
+    void PlayAudioFileNonBlock(const char* filename, boost::thread& playbackThread);
 
     /**
      * @brief Play an audio file
@@ -98,21 +98,21 @@ public:
      * 
      * @param filename Audio file name
      */
-	void PlayAudioFile(const char* filename);
+    void PlayAudioFile(const char* filename);
 
 private:
-	/**
-	 * @brief The XAudio2 Framework reference
-	 * 
-	 */
-	DSFXAudio2 xAudio2;
+    /**
+     * @brief The XAudio2 Framework reference
+     * 
+     */
+    DSFXAudio2 xAudio2;
     /**
      * @brief The FFmpeg Framework reference
      * 
      * Can only play/decode one file at a time
      * 
      */
-	DSFFFmpeg ffmpeg;
+    DSFFFmpeg ffmpeg;
 };
 
 /**

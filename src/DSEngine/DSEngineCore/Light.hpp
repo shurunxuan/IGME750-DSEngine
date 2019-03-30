@@ -24,6 +24,10 @@
 
 #define PCF_BLUR_COUNT 3
 
+#define MAX_DIRECTIONAL_LIGHT_CAST_SHADOW_COUNT 8
+#define MAX_SPOT_LIGHT_CAST_SHADOW_COUNT 8
+#define MAX_POINT_LIGHT_CAST_SHADOW_COUNT 8
+
 /**
  * @brief The data of a light, will be sent to the shader
  * 
@@ -81,7 +85,13 @@ struct LightData
 	 * @todo This can be deleted?
 	 * 
 	 */
-	DirectX::XMFLOAT3 AmbientColor;// 64 bytes
+	DirectX::XMFLOAT3 AmbientColor;
+
+	int CastShadow;
+
+	int ShadowID;
+
+	DirectX::XMFLOAT2 Padding;
 };
 
 /**
@@ -106,25 +116,6 @@ public:
 	 * 
 	 */
 	~Light();
-
-	/**
-	 * @brief Get the Shadow Map Texture
-	 * 
-	 * @return ID3D11Texture2D* The Shadow Map Texture
-	 */
-	ID3D11Texture2D* GetShadowMap() const;
-	/**
-	 * @brief Get the Shadow Depth View
-	 * 
-	 * @return ID3D11DepthStencilView* The Shadow Depth View
-	 */
-	ID3D11DepthStencilView* GetShadowDepthView() const;
-	/**
-	 * @brief Get the Shadow Resource View
-	 * 
-	 * @return ID3D11ShaderResourceView* The Shadow Resource View
-	 */
-	ID3D11ShaderResourceView* GetShadowResourceView() const;
 
 	/**
 	 * @brief Get the Shadow Viewport at a specified cascade
@@ -161,7 +152,7 @@ public:
 	 * 
 	 * @return const LightData* The data of the light
 	 */
-	const LightData* GetData() const;
+	LightData* GetData() const;
 
 	/**
 	 * @brief Set the Direction of the light
@@ -230,22 +221,6 @@ private:
 	 * 
 	 */
 	ID3D11DeviceContext* context;
-
-	/**
-	 * @brief Shadow map texture
-	 * 
-	 */
-	ID3D11Texture2D* shadowMap;
-	/**
-	 * @brief Shadow map depth view
-	 * 
-	 */
-	ID3D11DepthStencilView* shadowDepthView;
-	/**
-	 * @brief Shadow map shader resource view
-	 * 
-	 */
-	ID3D11ShaderResourceView* shadowResourceView;
 
 	/**
 	 * @brief The shadow viewport of cascades
@@ -335,50 +310,6 @@ inline Light::Light(LightData* data, ID3D11Device* d, ID3D11DeviceContext* c, Ca
 
 	this->sceneAABB = sceneAABB;
 
-	shadowMap = nullptr;
-	shadowDepthView = nullptr;
-	shadowResourceView = nullptr;
-
-	D3D11_TEXTURE2D_DESC shadowMapDesc;
-	ZeroMemory(&shadowMapDesc, sizeof(D3D11_TEXTURE2D_DESC));
-	shadowMapDesc.Format = DXGI_FORMAT_R24G8_TYPELESS;
-	shadowMapDesc.MipLevels = 1;
-	shadowMapDesc.ArraySize = 1;
-	shadowMapDesc.SampleDesc.Count = 1;
-	shadowMapDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_DEPTH_STENCIL;
-	shadowMapDesc.Height = shadowMapDimension;
-	shadowMapDesc.Width = shadowMapDimension * 3;
-
-	HRESULT hr = device->CreateTexture2D(
-		&shadowMapDesc,
-		nullptr,
-		&shadowMap
-	);
-
-	D3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc;
-	ZeroMemory(&depthStencilViewDesc, sizeof(D3D11_DEPTH_STENCIL_VIEW_DESC));
-	depthStencilViewDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
-	depthStencilViewDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
-	depthStencilViewDesc.Texture2D.MipSlice = 0;
-
-	D3D11_SHADER_RESOURCE_VIEW_DESC shaderResourceViewDesc;
-	ZeroMemory(&shaderResourceViewDesc, sizeof(D3D11_SHADER_RESOURCE_VIEW_DESC));
-	shaderResourceViewDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
-	shaderResourceViewDesc.Format = DXGI_FORMAT_R24_UNORM_X8_TYPELESS;
-	shaderResourceViewDesc.Texture2D.MipLevels = 1;
-
-	hr = device->CreateDepthStencilView(
-		shadowMap,
-		&depthStencilViewDesc,
-		&shadowDepthView
-	);
-
-	hr = device->CreateShaderResourceView(
-		shadowMap,
-		&shaderResourceViewDesc,
-		&shadowResourceView
-	);
-
 	// Init viewport for shadow rendering
 	for (int cascade = 0; cascade < 3; ++cascade)
 	{
@@ -397,29 +328,10 @@ inline Light::Light(LightData* data, ID3D11Device* d, ID3D11DeviceContext* c, Ca
 
 inline Light::~Light()
 {
-	if (shadowMap) { shadowMap->Release(); }
-	if (shadowDepthView) { shadowDepthView->Release(); }
-	if (shadowResourceView) { shadowResourceView->Release(); }
-
 	for (int cascade = 0; cascade < 3; ++cascade)
 	{
 		delete shadowViewport[cascade];
 	}
-}
-
-inline ID3D11Texture2D* Light::GetShadowMap() const
-{
-	return shadowMap;
-}
-
-inline ID3D11DepthStencilView* Light::GetShadowDepthView() const
-{
-	return shadowDepthView;
-}
-
-inline ID3D11ShaderResourceView* Light::GetShadowResourceView() const
-{
-	return shadowResourceView;
 }
 
 inline D3D11_VIEWPORT* Light::GetShadowViewportAt(int cascade) const
@@ -442,7 +354,7 @@ inline DirectX::XMMATRIX Light::GetProjectionMatrixAt(int index) const
 	return projection[index];
 }
 
-inline const LightData* Light::GetData() const
+inline LightData* Light::GetData() const
 {
 	return Data;
 }
@@ -680,7 +592,7 @@ inline void Light::CreateFrustumPointsFromCascadeInterval(float fCascadeInterval
 
 }
 
-inline LightData DirectionalLight(DirectX::XMFLOAT3 color, DirectX::XMFLOAT3 direction, float intensity, DirectX::XMFLOAT3 ambientColor)
+inline LightData DirectionalLight(DirectX::XMFLOAT3 color, DirectX::XMFLOAT3 direction, float intensity, DirectX::XMFLOAT3 ambientColor, bool castShadow)
 {
 	LightData result{};
 	result.Color = color;
@@ -688,10 +600,11 @@ inline LightData DirectionalLight(DirectX::XMFLOAT3 color, DirectX::XMFLOAT3 dir
 	result.Direction = direction;
 	result.Intensity = intensity;
 	result.Type = LIGHT_TYPE_DIR;
+	result.CastShadow = castShadow ? 1 : 0;
 	return result;
 }
 
-inline LightData PointLight(DirectX::XMFLOAT3 color, DirectX::XMFLOAT3 position, float range, float intensity)
+inline LightData PointLight(DirectX::XMFLOAT3 color, DirectX::XMFLOAT3 position, float range, float intensity, bool castShadow)
 {
 	LightData result{};
 	result.Color = color;
@@ -699,11 +612,12 @@ inline LightData PointLight(DirectX::XMFLOAT3 color, DirectX::XMFLOAT3 position,
 	result.Range = range;
 	result.Intensity = intensity;
 	result.Type = LIGHT_TYPE_POINT;
+	result.CastShadow = castShadow ? 1 : 0;
 	return result;
 }
 
 inline LightData SpotLight(DirectX::XMFLOAT3 color, DirectX::XMFLOAT3 position, DirectX::XMFLOAT3 direction, float range, float spotFalloff,
-	float intensity)
+	float intensity, bool castShadow)
 {
 	LightData result{};
 	result.Color = color;
@@ -713,5 +627,6 @@ inline LightData SpotLight(DirectX::XMFLOAT3 color, DirectX::XMFLOAT3 position, 
 	result.SpotFalloff = spotFalloff;
 	result.Intensity = intensity;
 	result.Type = LIGHT_TYPE_SPOT;
+	result.CastShadow = castShadow ? 1 : 0;
 	return result;
 }

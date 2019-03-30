@@ -17,7 +17,25 @@ DSFDirect3D::DSFDirect3D()
 	shadowRenderState = nullptr;
 	drawingRenderState = nullptr;
 	comparisonSampler = nullptr;
+
+	shadowMapDirectional = nullptr;
+	shadowMapSpot = nullptr;
+	shadowMapPoint = nullptr;
+
+	shadowResourceViewDirectional = nullptr;
+	shadowResourceViewSpot = nullptr;
+	shadowResourceViewPoint = nullptr;
+
+	for (int i = 0; i < MAX_CAST_SHADOW_COUNT; ++i)
+	{
+		shadowDepthViewDirectional[i] = nullptr;
+		shadowDepthViewSpot[i] = nullptr;
+		for (int j = 0; j < 6; ++j)
+			shadowDepthViewPoint[i * 6 + j] = nullptr;
+	}
 	dxFeatureLevel = {};
+
+	shadowMapDimension = 2048;
 }
 
 
@@ -32,6 +50,19 @@ DSFDirect3D::~DSFDirect3D()
 	SAFE_RELEASE(shadowRenderState);
 	SAFE_RELEASE(drawingRenderState);
 	SAFE_RELEASE(comparisonSampler);
+	SAFE_RELEASE(shadowMapDirectional);
+	SAFE_RELEASE(shadowMapSpot);
+	SAFE_RELEASE(shadowMapPoint);
+	SAFE_RELEASE(shadowResourceViewDirectional);
+	SAFE_RELEASE(shadowResourceViewSpot);
+	SAFE_RELEASE(shadowResourceViewPoint);
+	for (int i = 0; i < MAX_CAST_SHADOW_COUNT; ++i)
+	{
+		SAFE_RELEASE(shadowDepthViewDirectional[i]);
+		SAFE_RELEASE(shadowDepthViewSpot[i]);
+		for (int j = 0; j < 6; ++j)
+			SAFE_RELEASE(shadowDepthViewPoint[i * 6 + j]);
+	}
 }
 
 HRESULT DSFDirect3D::Init(HWND hWnd, unsigned int screenWidth, unsigned int screenHeight)
@@ -52,6 +83,9 @@ HRESULT DSFDirect3D::Init(HWND hWnd, unsigned int screenWidth, unsigned int scre
 	if (FAILED(hr)) return hr;
 
 	hr = CreateShadowAndDrawingRenderState();
+	if (FAILED(hr)) return hr;
+
+	hr = CreateShadowMaps();
 	if (FAILED(hr)) return hr;
 
 	SetDefaultRenderTarget();
@@ -83,12 +117,6 @@ HRESULT DSFDirect3D::OnResize(unsigned int screenWidth, unsigned int screenHeigh
 	if (FAILED(hr)) return hr;
 
 	hr = CreateDepthStencilView();
-	if (FAILED(hr)) return hr;
-
-	hr = CreateDepthStencilState();
-	if (FAILED(hr)) return hr;
-
-	hr = CreateShadowAndDrawingRenderState();
 	if (FAILED(hr)) return hr;
 
 	SetDefaultRenderTarget();
@@ -137,21 +165,21 @@ void DSFDirect3D::SetDefaultRenderTarget() const
 	context->RSSetViewports(1, &viewport);
 }
 
-void DSFDirect3D::ClearAndSetShadowRenderTarget(Light* light) const
+void DSFDirect3D::ClearAndSetShadowRenderTarget(Light * light, int lightCount)
 {
 	// Clear depth stencil view
-	context->ClearDepthStencilView(light->GetShadowDepthView(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+	context->ClearDepthStencilView(shadowDepthViewDirectional[lightCount], D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 	// Render all the objects in the scene that can cast shadows onto themselves or onto other objects.
-
+	light->GetData()->ShadowID = lightCount;
 	// Only bind the ID3D11DepthStencilView for output.
 	context->OMSetRenderTargets(
 		0,
 		nullptr,
-		light->GetShadowDepthView()
+		shadowDepthViewDirectional[lightCount]
 	);
 }
 
-void DSFDirect3D::PreProcess(Light* light, MeshRenderer* meshRenderer, SimpleVertexShader* shadowVertexShader) const
+void DSFDirect3D::PreProcess(Light * light, MeshRenderer * meshRenderer, SimpleVertexShader * shadowVertexShader, int lightCount)
 {
 	// Note that starting with the second frame, the previous call will display
 	// warnings in VS debug output about forcing an unbind of the pixel shader
@@ -202,7 +230,7 @@ void DSFDirect3D::PreProcess(Light* light, MeshRenderer* meshRenderer, SimpleVer
 	}
 }
 
-void DSFDirect3D::Render(Camera* camera, MeshRenderer* meshRenderer)
+void DSFDirect3D::Render(Camera * camera, MeshRenderer * meshRenderer)
 {
 	SetDefaultRenderTarget();
 
@@ -251,12 +279,12 @@ void DSFDirect3D::Render(Camera* camera, MeshRenderer* meshRenderer)
 	if (lights != nullptr && lightCount > 0)
 	{
 		material->GetPixelShaderPtr()->SetSamplerState("shadowSampler", comparisonSampler);
+		material->GetPixelShaderPtr()->SetShaderResourceView("shadowMap", shadowResourceViewDirectional);
 
 		for (Light* light : meshRenderer->object->GetScene()->lights)
 		{
 			DirectX::XMFLOAT4X4 lViewMat{};
 			XMStoreFloat4x4(&lViewMat, light->GetViewMatrix());
-			material->GetPixelShaderPtr()->SetShaderResourceView("shadowMap", light->GetShadowResourceView());
 			material->GetVertexShaderPtr()->SetMatrix4x4("lView", lViewMat);
 
 			material->GetPixelShaderPtr()->SetInt("pcfBlurForLoopStart", PCF_BLUR_COUNT / -2);
@@ -290,8 +318,7 @@ void DSFDirect3D::Render(Camera* camera, MeshRenderer* meshRenderer)
 			// The border padding values keep the pixel shader from reading the borders during PCF filtering.
 			material->GetPixelShaderPtr()->SetFloat("maxBorderPadding", (2048.0f - 1.0f) / 2048.0f);
 			material->GetPixelShaderPtr()->SetFloat("minBorderPadding", (1.0f) / 2048.0f);
-			material->GetPixelShaderPtr()->SetInt("cascadeLevels", light->GetCascadeCount());
-
+			break;
 		}
 
 
@@ -604,6 +631,152 @@ HRESULT DSFDirect3D::CreateShadowAndDrawingRenderState()
 		&comparisonSamplerDesc,
 		&comparisonSampler
 	);
+
+	return hr;
+}
+
+HRESULT DSFDirect3D::CreateShadowMaps()
+{
+	D3D11_TEXTURE2D_DESC shadowMapDesc;
+	ZeroMemory(&shadowMapDesc, sizeof(D3D11_TEXTURE2D_DESC));
+	shadowMapDesc.Format = DXGI_FORMAT_R24G8_TYPELESS;
+	shadowMapDesc.MipLevels = 1;
+	shadowMapDesc.ArraySize = MAX_CAST_SHADOW_COUNT;
+	shadowMapDesc.SampleDesc.Count = 1;
+	shadowMapDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_DEPTH_STENCIL;
+	shadowMapDesc.Height = shadowMapDimension;
+	shadowMapDesc.Width = shadowMapDimension * 3;
+
+	HRESULT hr = device->CreateTexture2D(
+		&shadowMapDesc,
+		nullptr,
+		&shadowMapDirectional
+	);
+
+	if (FAILED(hr)) return hr;
+
+	D3D11_SHADER_RESOURCE_VIEW_DESC shaderResourceViewDesc;
+	ZeroMemory(&shaderResourceViewDesc, sizeof(D3D11_SHADER_RESOURCE_VIEW_DESC));
+	shaderResourceViewDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2DARRAY;
+	shaderResourceViewDesc.Texture2DArray.ArraySize = MAX_CAST_SHADOW_COUNT;
+	shaderResourceViewDesc.Texture2DArray.FirstArraySlice = 0;
+	shaderResourceViewDesc.Format = DXGI_FORMAT_R24_UNORM_X8_TYPELESS;
+	shaderResourceViewDesc.Texture2DArray.MipLevels = 1;
+
+	hr = device->CreateShaderResourceView(
+		shadowMapDirectional,
+		&shaderResourceViewDesc,
+		&shadowResourceViewDirectional
+	);
+
+	if (FAILED(hr)) return hr;
+
+	ZeroMemory(&shadowMapDesc, sizeof(D3D11_TEXTURE2D_DESC));
+	shadowMapDesc.Format = DXGI_FORMAT_R24G8_TYPELESS;
+	shadowMapDesc.MipLevels = 1;
+	shadowMapDesc.ArraySize = MAX_CAST_SHADOW_COUNT;
+	shadowMapDesc.SampleDesc.Count = 1;
+	shadowMapDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_DEPTH_STENCIL;
+	shadowMapDesc.Height = shadowMapDimension;
+	shadowMapDesc.Width = shadowMapDimension;
+
+	hr = device->CreateTexture2D(
+		&shadowMapDesc,
+		nullptr,
+		&shadowMapSpot
+	);
+
+	if (FAILED(hr)) return hr;
+
+	ZeroMemory(&shaderResourceViewDesc, sizeof(D3D11_SHADER_RESOURCE_VIEW_DESC));
+	shaderResourceViewDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2DARRAY;
+	shaderResourceViewDesc.Texture2DArray.ArraySize = MAX_CAST_SHADOW_COUNT;
+	shaderResourceViewDesc.Texture2DArray.FirstArraySlice = 0;
+	shaderResourceViewDesc.Format = DXGI_FORMAT_R24_UNORM_X8_TYPELESS;
+	shaderResourceViewDesc.Texture2DArray.MipLevels = 1;
+
+	hr = device->CreateShaderResourceView(
+		shadowMapSpot,
+		&shaderResourceViewDesc,
+		&shadowResourceViewSpot
+	);
+
+	if (FAILED(hr)) return hr;
+
+	//ZeroMemory(&shadowMapDesc, sizeof(D3D11_TEXTURE2D_DESC));
+	//shadowMapDesc.Format = DXGI_FORMAT_R24G8_TYPELESS;
+	//shadowMapDesc.MipLevels = 1;
+	//shadowMapDesc.ArraySize = 6 * MAX_CAST_SHADOW_COUNT;
+	//shadowMapDesc.SampleDesc.Count = 1;
+	//shadowMapDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_DEPTH_STENCIL;
+	//shadowMapDesc.Height = shadowMapDimension;
+	//shadowMapDesc.Width = shadowMapDimension;
+
+	//hr = device->CreateTexture2D(
+	//	&shadowMapDesc,
+	//	nullptr,
+	//	&shadowMapPoint
+	//);
+
+	//if (FAILED(hr)) return hr;
+
+	//ZeroMemory(&shaderResourceViewDesc, sizeof(D3D11_SHADER_RESOURCE_VIEW_DESC));
+	//shaderResourceViewDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURECUBEARRAY;
+	//shaderResourceViewDesc.TextureCubeArray.NumCubes = MAX_CAST_SHADOW_COUNT;
+	//shaderResourceViewDesc.TextureCubeArray.First2DArrayFace = 0;
+	//shaderResourceViewDesc.Format = DXGI_FORMAT_R24_UNORM_X8_TYPELESS;
+	//shaderResourceViewDesc.TextureCubeArray.MipLevels = 1;
+
+	//hr = device->CreateShaderResourceView(
+	//	shadowMapPoint,
+	//	&shaderResourceViewDesc,
+	//	&shadowResourceViewPoint
+	//);
+	//if (FAILED(hr)) return hr;
+
+	for (int i = 0; i < MAX_CAST_SHADOW_COUNT; ++i)
+	{
+		D3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc;
+		ZeroMemory(&depthStencilViewDesc, sizeof(D3D11_DEPTH_STENCIL_VIEW_DESC));
+		depthStencilViewDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+		depthStencilViewDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2DARRAY;
+		depthStencilViewDesc.Texture2DArray.MipSlice = 0;
+		depthStencilViewDesc.Texture2DArray.ArraySize = 1;
+		depthStencilViewDesc.Texture2DArray.FirstArraySlice = i;
+
+
+		hr = device->CreateDepthStencilView(
+			shadowMapDirectional,
+			&depthStencilViewDesc,
+			&shadowDepthViewDirectional[i]
+		);
+		if (FAILED(hr)) return hr;
+
+		hr = device->CreateDepthStencilView(
+			shadowMapSpot,
+			&depthStencilViewDesc,
+			&shadowDepthViewSpot[i]
+		);
+		if (FAILED(hr)) return hr;
+
+		//for (int j = 0; j < 6; ++j)
+		//{
+		//	ZeroMemory(&depthStencilViewDesc, sizeof(D3D11_DEPTH_STENCIL_VIEW_DESC));
+		//	depthStencilViewDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+		//	depthStencilViewDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2DARRAY;
+		//	depthStencilViewDesc.Texture2DArray.MipSlice = 0;
+		//	depthStencilViewDesc.Texture2DArray.ArraySize = 1;
+		//	depthStencilViewDesc.Texture2DArray.FirstArraySlice = i * 6 + j;
+
+		//	hr = device->CreateDepthStencilView(
+		//		shadowMapPoint,
+		//		&depthStencilViewDesc,
+		//		&shadowDepthViewPoint[i * 6 + j]
+		//	);
+		//	if (FAILED(hr)) return hr;
+
+		//}
+	}
 
 	return hr;
 }

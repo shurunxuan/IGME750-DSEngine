@@ -27,6 +27,7 @@
 
 #include "Scene.hpp"
 #include "SimpleShader.hpp"
+#include "DSFThreadPool.h"
 
 /**
  * @brief The app class. Game should derive from this
@@ -143,6 +144,8 @@ private:
 	 * 
 	 */
 	SimplePixelShader* pbrPixelShader;
+
+	DSFThreadPool* threadPool;
 
 protected:
 	/**

@@ -26,6 +26,9 @@ struct Light
 	float3 Color;// 48 bytes
 	float SpotFalloff;
 	float3 AmbientColor;// 64 bytes
+	int castShadow;
+	int shadowID;
+	float2 padding;
 };
 
 struct Material
@@ -81,7 +84,7 @@ Texture2D diffuseTexture  : register(t0);
 Texture2D normalTexture  : register(t1);
 TextureCube cubemap : register(t2);
 TextureCube irradianceMap : register(t3);
-Texture2D shadowMap : register(t4);
+Texture2DArray shadowMap : register(t4);
 SamplerState basicSampler : register(s0);
 SamplerComparisonState shadowSampler : register(s1);
 
@@ -275,6 +278,7 @@ void CalculatePCFPercentLit(in float4 shadowTexCoord,
 	in float rightTexelDepthDelta,
 	in float upTexelDepthDelta,
 	in float blurRowSize,
+	in int shadowMapId,
 	out float percentLit
 )
 {
@@ -296,9 +300,10 @@ void CalculatePCFPercentLit(in float4 shadowTexCoord,
 
 			// Compare the transformed pixel depth to the depth read from the map.
 			percentLit += shadowMap.SampleCmpLevelZero(shadowSampler,
-				float2(
+				float3(
 					shadowTexCoord.x + (((float)x) * nativeTexelSizeInX),
-					shadowTexCoord.y + (((float)y) * texelSize)
+					shadowTexCoord.y + (((float)y) * texelSize),
+					float(shadowMapId)
 					),
 				depthcompare);
 		}
@@ -392,7 +397,7 @@ float4 main(VertexToPixel input) : SV_TARGET
 		float NdV = saturate(dot(n, v));
 
 		float lighting = 1;
-		if (i == 0)
+		if (lights[i].castShadow == 1 && lights[i].shadowID < 8)
 		{
 			//// Only cast shadow for light 0
 			//float2 shadowTexCoords;
@@ -488,7 +493,7 @@ float4 main(VertexToPixel input) : SV_TARGET
 				upTextDepthWeight, rightTextDepthWeight);
 
 			CalculatePCFPercentLit(shadowMapTextureCoord, rightTextDepthWeight,
-				upTextDepthWeight, blurRowSize, percentLit);
+				upTextDepthWeight, blurRowSize, lights[i].shadowID ,percentLit);
 
 			if (currentPixelsBlendBandLocation < cascadeBlendArea)
 			{  // the current pixel is within the blend band.
@@ -512,7 +517,7 @@ float4 main(VertexToPixel input) : SV_TARGET
 						rightTextDepthWeightBlend);
 
 					CalculatePCFPercentLit(shadowMapTextureCoordBlend, rightTextDepthWeightBlend,
-						upTextDepthWeightBlend, blurRowSize, percentLitBlend);
+						upTextDepthWeightBlend, blurRowSize, lights[i].shadowID, percentLitBlend);
 					percentLit = lerp(percentLitBlend, percentLit, blendBetweenCascadesAmount);
 					// Blend the two calculated shadows by the blend amount.
 				}
@@ -521,7 +526,7 @@ float4 main(VertexToPixel input) : SV_TARGET
 		}
 
 		float4 lightColor = float4(lights[i].Color.xyz, 0.0);
-		intensity = saturate(intensity * spotAmount) * lighting	;
+		intensity = saturate(intensity * spotAmount) * lighting;
 		//intensity = saturate(intensity * spotAmount);
 
 		float diffuseFactor = NdL;

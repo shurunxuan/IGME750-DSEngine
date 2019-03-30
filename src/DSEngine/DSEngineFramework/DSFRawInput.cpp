@@ -7,6 +7,7 @@ DSFRawInput* FRawInput = nullptr;
 
 DSFRawInput::DSFRawInput()
 {
+	mouseMoved = false;
 	FRawInput = this;
 	hWnd = nullptr;
 }
@@ -68,6 +69,14 @@ void DSFRawInput::Update()
 
 		lastMouseButtonStates[i] = mouseButtonStates[i];
 	}
+	
+	if (!mouseMoved)
+	{
+		mouseDeltaX = 0;
+		mouseDeltaY = 0;
+		mouseDeltaWheel = 0;
+	}
+	mouseMoved = false;
 }
 
 void DSFRawInput::OnKeyboardInput(RAWKEYBOARD raw)
@@ -84,6 +93,7 @@ void DSFRawInput::OnKeyboardInput(RAWKEYBOARD raw)
 
 void DSFRawInput::OnMouseInput(RAWMOUSE raw)
 {
+	mouseMoved = true;
 	if (raw.usFlags == MOUSE_MOVE_RELATIVE)
 	{
 		mouseDeltaX = raw.lLastX;
