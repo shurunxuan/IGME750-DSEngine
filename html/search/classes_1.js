@@ -4,6 +4,7 @@ var searchData=
   ['dsfdirect3d',['DSFDirect3D',['../class_d_s_f_direct3_d.html',1,'']]],
   ['dsfffmpeg',['DSFFFmpeg',['../class_d_s_f_f_fmpeg.html',1,'']]],
   ['dsfrawinput',['DSFRawInput',['../class_d_s_f_raw_input.html',1,'']]],
+  ['dsfthreadpool',['DSFThreadPool',['../class_d_s_f_thread_pool.html',1,'']]],
   ['dsfvoicecallback',['DSFVoiceCallback',['../class_d_s_f_voice_callback.html',1,'']]],
   ['dsfxaudio2',['DSFXAudio2',['../class_d_s_f_x_audio2.html',1,'']]],
   ['dsfxinput',['DSFXInput',['../class_d_s_f_x_input.html',1,'']]],

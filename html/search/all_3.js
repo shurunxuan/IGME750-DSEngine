@@ -15,6 +15,7 @@ var searchData=
   ['dsflogging_2eh',['DSFLogging.h',['../_d_s_f_logging_8h.html',1,'']]],
   ['dsfrawinput',['DSFRawInput',['../class_d_s_f_raw_input.html',1,'DSFRawInput'],['../class_d_s_f_raw_input.html#aee01fe6f314e76bc0717184ba75abb22',1,'DSFRawInput::DSFRawInput()'],['../class_d_s_f_raw_input.html#a81205d4ee6a469052facc5f04b14ba46',1,'DSFRawInput::DSFRawInput(const DSFRawInput &amp;v)=delete'],['../class_d_s_f_raw_input.html#ac682685ab54f05d44e313b9cf3580029',1,'DSFRawInput::DSFRawInput(DSFRawInput &amp;&amp;v)=delete']]],
   ['dsfrawinput_2eh',['DSFRawInput.h',['../_d_s_f_raw_input_8h.html',1,'']]],
+  ['dsfthreadpool',['DSFThreadPool',['../class_d_s_f_thread_pool.html',1,'DSFThreadPool'],['../class_d_s_f_thread_pool.html#a9d9a5101a04e93fb97e8cc40bd60fc49',1,'DSFThreadPool::DSFThreadPool()']]],
   ['dsfvoicecallback',['DSFVoiceCallback',['../class_d_s_f_voice_callback.html',1,'DSFVoiceCallback'],['../class_d_s_f_voice_callback.html#a0c2d7a87b261c3881d1e5c47339c048f',1,'DSFVoiceCallback::DSFVoiceCallback()']]],
   ['dsfxaudio2',['DSFXAudio2',['../class_d_s_f_x_audio2.html',1,'DSFXAudio2'],['../class_d_s_f_x_audio2.html#a5d6927a41fa3176fd90cc0807a4c3fc8',1,'DSFXAudio2::DSFXAudio2()'],['../class_d_s_f_x_audio2.html#a79830c69f88d7c9fb4deb0303bbf9793',1,'DSFXAudio2::DSFXAudio2(const DSFXAudio2 &amp;v)=delete'],['../class_d_s_f_x_audio2.html#ae0d966315f4ce0e86cb5dcabe617f742',1,'DSFXAudio2::DSFXAudio2(DSFXAudio2 &amp;&amp;v)=delete']]],
   ['dsfxaudio2_2eh',['DSFXAudio2.h',['../_d_s_f_x_audio2_8h.html',1,'']]],

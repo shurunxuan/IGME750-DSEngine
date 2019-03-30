@@ -121,9 +121,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a11bcb463872fdbb357af11205dad70eb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_s_input.html#a11bcb463872fdbb357af11205dad70eb">Init</a> (HWND hWnd)</td></tr>
 <tr class="memdesc:a11bcb463872fdbb357af11205dad70eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Actual initialization of the input system.  <a href="#a11bcb463872fdbb357af11205dad70eb">More...</a><br/></td></tr>
 <tr class="separator:a11bcb463872fdbb357af11205dad70eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1a83669532969190163c9a1068327477"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_s_input.html#a1a83669532969190163c9a1068327477">Update</a> (float deltaTime)</td></tr>
-<tr class="memdesc:a1a83669532969190163c9a1068327477"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the input status.  <a href="#a1a83669532969190163c9a1068327477">More...</a><br/></td></tr>
-<tr class="separator:a1a83669532969190163c9a1068327477"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad0dc439997c35f5a4d07c7651ea53e46"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_s_input.html#ad0dc439997c35f5a4d07c7651ea53e46">AsyncUpdate</a> (float deltaTime)</td></tr>
+<tr class="memdesc:ad0dc439997c35f5a4d07c7651ea53e46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Asynchronized Update of the input system for polls.  <a href="#ad0dc439997c35f5a4d07c7651ea53e46">More...</a><br/></td></tr>
+<tr class="separator:ad0dc439997c35f5a4d07c7651ea53e46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e53f5181b4432e9c1dff85f6a7f57af"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_s_input.html#a7e53f5181b4432e9c1dff85f6a7f57af">SyncUpdate</a> (float deltaTime)</td></tr>
+<tr class="memdesc:a7e53f5181b4432e9c1dff85f6a7f57af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Synchronized Update of the input system for callbacks.  <a href="#a7e53f5181b4432e9c1dff85f6a7f57af">More...</a><br/></td></tr>
+<tr class="separator:a7e53f5181b4432e9c1dff85f6a7f57af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae52cb8aa2999f943faa6b756f0f53787"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_s_input.html#ae52cb8aa2999f943faa6b756f0f53787">GetButton</a> (const std::string &amp;name)</td></tr>
 <tr class="memdesc:ae52cb8aa2999f943faa6b756f0f53787"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get if the input button is being held.  <a href="#ae52cb8aa2999f943faa6b756f0f53787">More...</a><br/></td></tr>
 <tr class="separator:ae52cb8aa2999f943faa6b756f0f53787"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -256,6 +259,30 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>DSSInputAxis</b></td
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="ad0dc439997c35f5a4d07c7651ea53e46"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DSSInput::AsyncUpdate </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>deltaTime</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Asynchronized Update of the input system for polls. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">deltaTime</td><td>The time between two asynchronized input system updates </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="af944cebf578d6b11591070466364ddf1"></a>
 <div class="memitem">
 <div class="memproto">
@@ -609,12 +636,12 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>DSSInputAxis</b></td
 
 </div>
 </div>
-<a class="anchor" id="a1a83669532969190163c9a1068327477"></a>
+<a class="anchor" id="a7e53f5181b4432e9c1dff85f6a7f57af"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void DSSInput::Update </td>
+          <td class="memname">void DSSInput::SyncUpdate </td>
           <td>(</td>
           <td class="paramtype">float&#160;</td>
           <td class="paramname"><em>deltaTime</em></td><td>)</td>
@@ -623,10 +650,10 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>DSSInputAxis</b></td
       </table>
 </div><div class="memdoc">
 
-<p>Update the input status. </p>
+<p>Synchronized Update of the input system for callbacks. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">deltaTime</td><td>The time between two <a class="el" href="class_d_s_s_input.html" title="The Input System of the DS Engine. ">DSSInput</a> updates </td></tr>
+    <tr><td class="paramname">deltaTime</td><td>The time between two synchronized input system updates </td></tr>
   </table>
   </dd>
 </dl>
