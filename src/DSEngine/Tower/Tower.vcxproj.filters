@@ -27,7 +27,11 @@
     <ClCompile Include="UnlitMaterial.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+
     <ClCompile Include="RaycastTest.cpp">
+
+    <ClCompile Include="MoveObject.cpp">
+
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -38,7 +42,11 @@
     <ClInclude Include="UnlitMaterial.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+
     <ClInclude Include="RaycastTest.h">
+
+    <ClInclude Include="MoveObject.h">
+
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

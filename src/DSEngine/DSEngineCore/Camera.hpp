@@ -73,6 +73,13 @@ public:
 	DirectX::XMMATRIX& GetProjectionMatrix();
 
 	/**
+	 * @brief Get the View matrix
+	 *
+	 * @return DirectX::XMMATRIX The reference of the projection matrix
+	 */
+	DirectX::XMMATRIX GetViewMatrix() const;
+
+	/**
 	 * @brief Get the Near Clip of the camera
 	 * 
 	 * @return float Near clip
@@ -89,6 +96,18 @@ public:
 	 */
 	float GetFarClip() const;
 
+	/**
+	 * @brief Get the world point from mouse cursor position (near plane in Z)
+	 * 
+	 * @param x X position of the mouse cursor in screen
+	 * @param y Y position of the mouse cursor in screen
+	 * 
+	 * @return DirectX::XMVECTOR The world position
+	 */
+	DirectX::XMVECTOR ScreenToWorldPoint(float x, float y) const;
+
+	//DirectX::XMFLOAT2 WorldPositionToScreenPoint(DirectX::XMVECTOR worldPosition) const;
+
 private:
 	/**
 	 * @brief The projection matrix
@@ -100,6 +119,16 @@ private:
 	 * 
 	 */
 	Skybox* skybox;
+
+	/**
+	 * @brief Client width
+	 */
+	float width;
+
+	/**
+	 * @brief Client height
+	 */
+	float height;
 };
 
 inline Camera::Camera(Scene *owner, std::string name)
@@ -131,6 +160,8 @@ inline Skybox* Camera::GetSkybox()
 
 inline void Camera::UpdateProjectionMatrix(float width, float height, float fov)
 {
+	this->width = width;
+	this->height = height;
 	// Create the Projection matrix
 	// - This should match the window's aspect ratio, and also update anytime
 	//    the window resizes (which is already happening in OnResize() below)
@@ -147,6 +178,11 @@ inline DirectX::XMMATRIX& Camera::GetProjectionMatrix()
 	return projectionMatrix;
 }
 
+inline DirectX::XMMATRIX Camera::GetViewMatrix() const
+{
+	return XMMatrixTranspose(DirectX::XMMatrixLookToLH(transform->GetGlobalTranslation(), transform->Forward(), transform->Up()));
+}
+
 inline float Camera::GetNearClip() const
 {
 	return 0.1f;
@@ -156,4 +192,29 @@ inline float Camera::GetFarClip() const
 {
 	return 1000.0f;
 }
+
+inline DirectX::XMVECTOR Camera::ScreenToWorldPoint(float x, float y) const
+{
+	const float ndcX = 2.0f * x / width - 1;
+	const float ndcY = -2.0f * y / height + 1;
+	const DirectX::XMMATRIX viewProj = DirectX::XMMatrixMultiply(XMMatrixTranspose(GetViewMatrix()), XMMatrixTranspose(projectionMatrix));
+	const DirectX::XMMATRIX invViewProj = XMMatrixInverse(nullptr, viewProj);
+	const DirectX::XMVECTOR screenPoint = DirectX::XMVectorSet(ndcX, ndcY, 0.0f, 1.0f);
+	DirectX::XMVECTOR worldPos = DirectX::XMVector3TransformCoord(screenPoint, invViewProj);
+	return worldPos;
+
+}
+
+//inline DirectX::XMFLOAT2 Camera::WorldPositionToScreenPoint(DirectX::XMVECTOR worldPosition) const
+//{
+//	const DirectX::XMMATRIX view = XMMatrixInverse(nullptr, XMMatrixTranspose(transform->GetGlobalWorldMatrix()));
+//	const DirectX::XMMATRIX viewProj = DirectX::XMMatrixMultiply(XMMatrixTranspose(projectionMatrix), view);
+//	worldPosition = DirectX::XMVector3Transform(worldPosition, viewProj);
+//	const float x = roundf(((worldPosition.m128_f32[0] + 1) / 2.0f) *
+//		width);
+//	const float y = roundf(((1 - worldPosition.m128_f32[1]) / 2.0f) *
+//		height);
+//	return {x, y};
+//}
+
 ///@endcond
