@@ -6,7 +6,7 @@ vector<TaskCardData> CSVReader::ReadFromFile(string _file) {
 	vector<TaskCardData> data;
 
 	ifstream ip(_file);
-	if (!ip.is_open()) LOG_TRACE << "ERROR: File Open" << '\n';
+	if (!ip.is_open()) LOG_TRACE << "ERROR: File Open";
 
 	string tp;
 	string sc;

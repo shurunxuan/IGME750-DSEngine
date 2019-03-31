@@ -41,7 +41,7 @@ void TowerGameApp::Init()
 	meshRenderer_2->SetMaterial(unlitMaterial_2);
 
 	CSVReader reader;
-	LOG_TRACE << "ReadFile" << '\n';
+	LOG_TRACE << "ReadFile";
 	vector<TaskCardData> data = reader.ReadFromFile("TaskCardData.csv");
 	
 }

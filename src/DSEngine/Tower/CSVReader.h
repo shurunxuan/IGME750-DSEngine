@@ -11,9 +11,9 @@ enum CardType {
 	Senior
 };
 enum Color {
-	Blue,
-	Yellow,
-	Red
+	Blue = 1,
+	Yellow = 10,
+	Red = 100
 };
 
 struct TaskCardData
