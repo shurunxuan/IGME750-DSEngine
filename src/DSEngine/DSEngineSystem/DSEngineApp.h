@@ -142,18 +142,7 @@ private:
 	 */
 	DSSPhysics physicsSystem;
 
-	/**
-	 * @brief The vertex shader of the default material
-	 * 
-	 */
-	SimpleVertexShader* vertexShader;
-
-	/**
-	 * @brief The pixel shader of the default material
-	 * 
-	 */
-	SimplePixelShader* pbrPixelShader;
-
+	
 
 protected:
 	/**

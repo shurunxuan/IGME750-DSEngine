@@ -187,6 +187,7 @@
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BoxCollider.hpp" />
     <ClInclude Include="Camera.hpp" />
     <ClInclude Include="Collider.hpp" />
     <ClInclude Include="Component.hpp" />
@@ -197,6 +198,8 @@
     <ClInclude Include="Object.hpp" />
     <ClInclude Include="PBRMaterial.hpp" />
     <ClInclude Include="Plane.hpp" />
+    <ClInclude Include="Ray.hpp" />
+    <ClInclude Include="RaycastHit.hpp" />
     <ClInclude Include="RigidBody.hpp" />
     <ClInclude Include="Scene.hpp" />
     <ClInclude Include="SimpleShader.hpp" />

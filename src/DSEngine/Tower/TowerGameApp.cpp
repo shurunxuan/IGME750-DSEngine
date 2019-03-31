@@ -1,5 +1,6 @@
 #include "TowerGameApp.h"
 #include "UnlitMaterial.h"
+#include "RaycastTest.h"
 
 TowerGameApp::~TowerGameApp()
 {
@@ -21,6 +22,8 @@ void TowerGameApp::Init()
 	std::shared_ptr<UnlitMaterial> unlitMaterial_0 = std::make_shared<UnlitMaterial>(vertexShader, unlitShader, device);
 	unlitMaterial_0->parameters.Color = DirectX::XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f);
 	meshRenderer_0->SetMaterial(unlitMaterial_0);
+	BoxCollider* collider_0 = Cube_0->AddComponent<BoxCollider>();
+	collider_0->GetCollider()->Transform(*(collider_0->GetCollider()), 1.0f, DirectX::XMQuaternionIdentity(), DirectX::XMVectorSet(-2.0f, -0.5f, 0.0f, 0.0f));
 
 
 	Object* Cube_1 = CurrentActiveScene()->LoadModelFile("Assets/Models/cube.obj");
@@ -30,6 +33,8 @@ void TowerGameApp::Init()
 	std::shared_ptr<UnlitMaterial> unlitMaterial_1 = std::make_shared<UnlitMaterial>(vertexShader, unlitShader, device);
 	unlitMaterial_1->parameters.Color = DirectX::XMFLOAT4(1.0f, 1.0f, 0.0f, 1.0f);
 	meshRenderer_1->SetMaterial(unlitMaterial_1);
+	BoxCollider* collider_1 = Cube_1->AddComponent<BoxCollider>();
+	collider_1->GetCollider()->Transform(*(collider_1->GetCollider()), 1.0f, DirectX::XMQuaternionIdentity(), DirectX::XMVectorSet(+0.0f, -0.5f, 0.0f, 0.0f));
 
 	Object* Cube_2 = CurrentActiveScene()->LoadModelFile("Assets/Models/cube.obj");
 	Cube_2->transform->SetLocalTranslation(+2.0f, -0.5f, 0.0f);
@@ -38,4 +43,11 @@ void TowerGameApp::Init()
 	std::shared_ptr<UnlitMaterial> unlitMaterial_2 = std::make_shared<UnlitMaterial>(vertexShader, unlitShader, device);
 	unlitMaterial_2->parameters.Color = DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f);
 	meshRenderer_2->SetMaterial(unlitMaterial_2);
+	BoxCollider* collider_2 = Cube_2->AddComponent<BoxCollider>();
+	collider_2->GetCollider()->Transform(*(collider_2->GetCollider()), 1.0f, DirectX::XMQuaternionIdentity(), DirectX::XMVectorSet(+2.0f, -0.5f, 0.0f, 0.0f));
+
+	Object* test = CurrentActiveScene()->AddObject("test");
+	RaycastTest* raycastTest = Cube_0->AddComponent<RaycastTest>();
+	CurrentActiveScene()->DestroyObject(test);
+	CurrentActiveScene()->DestroyObject(Cube_2);
 }

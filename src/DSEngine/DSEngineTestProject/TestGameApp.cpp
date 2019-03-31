@@ -51,15 +51,35 @@ void TestGameApp::Init()
 
 	// Add parent object
 
-	Object * parentObj = CurrentActiveScene()->LoadModelFile("Assets/Models/Fennekin/a653.dae");
+	Object * parentObj = CurrentActiveScene()->LoadModelFile("Assets/Models/Rock/sphere.obj");
 	parentObj->name = "Fennekin";
-	parentObj->transform->SetLocalScale(0.05f, 0.05f, 0.05f);
+	//parentObj->transform->SetLocalScale(0.05f, 0.05f, 0.05f);
 	parentObj->transform->SetLocalTranslation(-1.0f, 0.0f, 5.0f);
-
+	Collider* parentCollider = parentObj->AddComponent<Collider>();
+	RigidBody* parentRigidBody = parentObj->AddComponent<RigidBody>();
+	parentCollider->GetCollider()->Transform(*(parentCollider)->GetCollider(),0.5f, DirectX::XMQuaternionIdentity(), DirectX::XMVectorSet(-1.0f, 0.0f, 5.0f,0.0f));
+	parentRigidBody->SetPosition(-1.0f, 0.0f, 5.0f);
+	
 
 	auto rotation = parentObj->transform->GetLocalRotation();
 	rotation = DirectX::XMQuaternionMultiply(rotation, DirectX::XMQuaternionRotationAxis(DirectX::XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f), DirectX::XM_PIDIV2));
 	parentObj->transform->SetLocalRotation(rotation);
+
+	// Add parent object
+
+	Object * anotherObj = CurrentActiveScene()->LoadModelFile("Assets/Models/Rock/sphere.obj");
+	anotherObj->name = "Fennekin";
+	//parentObj->transform->SetLocalScale(0.05f, 0.05f, 0.05f);
+	anotherObj->transform->SetLocalTranslation(3.0f, 0.0f, 5.0f);
+	Collider* anotherCollider = anotherObj->AddComponent<Collider>();
+	RigidBody* anotherRigidBody = anotherObj->AddComponent<RigidBody>();
+	anotherCollider->GetCollider()->Transform(*(anotherCollider)->GetCollider(), 0.5f, DirectX::XMQuaternionIdentity(), DirectX::XMVectorSet(3.0f, 0.0f, 5.0f, 0.0f));
+	anotherRigidBody->SetPosition(3.0f, 0.0f, 5.0f);
+
+
+	auto rotation1 = anotherObj->transform->GetLocalRotation();
+	rotation1 = DirectX::XMQuaternionMultiply(rotation1, DirectX::XMQuaternionRotationAxis(DirectX::XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f), DirectX::XM_PIDIV2));
+	anotherObj->transform->SetLocalRotation(rotation1);
 
 	// Add Components
 	PressSpaceToPlayAudio * playAudioComponent = parentObj->AddComponent<PressSpaceToPlayAudio>();

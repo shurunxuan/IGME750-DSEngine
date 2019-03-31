@@ -5,7 +5,7 @@
 
 using namespace DirectX;
 
-class Collider : public Component 
+class Collider : public Component
 {
 public:
 	explicit Collider(Object* owner);
@@ -30,8 +30,8 @@ private:
 	//BoundingBox colliderBox;
 };
 
-inline Collider::Collider(Object * owner) 
-	:Component (owner)
+inline Collider::Collider(Object * owner)
+	:Component(owner)
 {
 	collider = BoundingSphere();
 }
