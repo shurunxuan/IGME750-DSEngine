@@ -24,8 +24,8 @@ void TowerGameApp::Init()
 	CurrentActiveScene()->mainCamera->transform->SetLocalTranslation(-0.005003646f, 3.973835f, -9.406748f);
 	CurrentActiveScene()->mainCamera->transform->SetLocalRotation(
 		DirectX::XMQuaternionRotationRollPitchYaw(
-			DirectX::XMConvertToRadians(10.828f), 
-			DirectX::XMConvertToRadians(0.133f), 
+			DirectX::XMConvertToRadians(10.828f),
+			DirectX::XMConvertToRadians(0.133f),
 			DirectX::XMConvertToRadians(1.831f)));
 
 	unlitShader = new SimplePixelShader(device, context);
@@ -39,10 +39,11 @@ void TowerGameApp::Init()
 	unlitMaterial_0->parameters.Color = DirectX::XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f);
 	meshRenderer_0->SetMaterial(unlitMaterial_0);
 	BoxCollider* collider_0 = Cube_0->AddComponent<BoxCollider>();
-	collider_0->GetCollider()->Transform(*(collider_0->GetCollider()), 1.0f, DirectX::XMQuaternionIdentity(), DirectX::XMVectorSet(-2.0f, -0.5f, 0.0f, 0.0f));
+	collider_0->GetCollider()->Transform(*(collider_0->GetCollider()), 0.5f, DirectX::XMQuaternionIdentity(), DirectX::XMVectorSet(-2.0f, -0.5f, 0.0f, 0.0f));
 
 
 	Object* Cube_1 = CurrentActiveScene()->LoadModelFile("Assets/Models/cube.obj");
+	Cube_1->name = "cube1";
 	Cube_1->AddComponent<MoveObject>();
 	Cube_1->transform->SetLocalTranslation(+0.0f, -0.5f, 0.0f);
 	Object* Cube_1_Child = Cube_1->transform->GetChildAt(0)->object;
@@ -51,9 +52,10 @@ void TowerGameApp::Init()
 	unlitMaterial_1->parameters.Color = DirectX::XMFLOAT4(1.0f, 1.0f, 0.0f, 1.0f);
 	meshRenderer_1->SetMaterial(unlitMaterial_1);
 	BoxCollider* collider_1 = Cube_1->AddComponent<BoxCollider>();
-	collider_1->GetCollider()->Transform(*(collider_1->GetCollider()), 1.0f, DirectX::XMQuaternionIdentity(), DirectX::XMVectorSet(+0.0f, -0.5f, 0.0f, 0.0f));
+	collider_1->GetCollider()->Transform(*(collider_1->GetCollider()), 0.5f, DirectX::XMQuaternionIdentity(), DirectX::XMVectorSet(+0.0f, -0.5f, 0.0f, 0.0f));
 
 	Object* Cube_2 = CurrentActiveScene()->LoadModelFile("Assets/Models/cube.obj");
+	Cube_2->name = "cube2";
 	Cube_2->transform->SetLocalTranslation(+2.0f, -0.5f, 0.0f);
 	Object* Cube_2_Child = Cube_2->transform->GetChildAt(0)->object;
 	MeshRenderer* meshRenderer_2 = Cube_2_Child->GetComponent<MeshRenderer>();
@@ -62,13 +64,11 @@ void TowerGameApp::Init()
 	meshRenderer_2->SetMaterial(unlitMaterial_2);
 
 	BoxCollider* collider_2 = Cube_2->AddComponent<BoxCollider>();
-	collider_2->GetCollider()->Transform(*(collider_2->GetCollider()), 1.0f, DirectX::XMQuaternionIdentity(), DirectX::XMVectorSet(+2.0f, -0.5f, 0.0f, 0.0f));
+	collider_2->GetCollider()->Transform(*(collider_2->GetCollider()), 0.5f, DirectX::XMQuaternionIdentity(), DirectX::XMVectorSet(+2.0f, -0.5f, 0.0f, 0.0f));
 
 	Object* test = CurrentActiveScene()->AddObject("test");
-	RaycastTest* raycastTest = Cube_0->AddComponent<RaycastTest>();
-	CurrentActiveScene()->DestroyObject(test);
-	CurrentActiveScene()->DestroyObject(Cube_2);
-
+	RaycastTest* raycastTest = test->AddComponent<RaycastTest>();
+	
 
 	LOG_INFO << MoveObject::instance->object->name << " is get from instance";
 

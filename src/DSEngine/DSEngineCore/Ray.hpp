@@ -40,6 +40,7 @@ inline DirectX::XMFLOAT3 Ray::GetDirection()
 	return m_direction;
 }
 
+
 inline Ray::~Ray()
 {
 }

@@ -8,11 +8,11 @@ class RaycastHit
 public:
 	RaycastHit();
 	~RaycastHit();
-	void SetCollider(Collider* other);
-	Collider* GetCollider();
+	void SetCollider(BoxCollider* other);
+	BoxCollider* GetCollider();
 
 private:
-	Collider* collider;
+	BoxCollider* collider;
 };
 
 inline RaycastHit::RaycastHit()
@@ -23,12 +23,12 @@ inline RaycastHit::~RaycastHit()
 {
 }
 
-inline void RaycastHit::SetCollider(Collider* other)
+inline void RaycastHit::SetCollider(BoxCollider* other)
 {
 	collider = other;
 }
 
-inline Collider* RaycastHit::GetCollider()
+inline BoxCollider* RaycastHit::GetCollider()
 {
 	return collider;
 }
