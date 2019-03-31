@@ -75,7 +75,7 @@ var searchData=
   ['getvertexbuffer',['GetVertexBuffer',['../class_mesh.html#a8f026e9bb4e5dcec420536caa6d97561',1,'Mesh::GetVertexBuffer()'],['../class_skybox.html#a773c77fa4dc2a8f49f706d2ef110dc81',1,'Skybox::GetVertexBuffer()']]],
   ['getvertexshader',['GetVertexShader',['../class_skybox.html#abf603bdf04d6bda6329ca199afd30781',1,'Skybox']]],
   ['getvertexshaderptr',['GetVertexShaderPtr',['../class_material.html#a10b620106895e4c0be8e50e35026e508',1,'Material']]],
-  ['getviewmatrix',['GetViewMatrix',['../class_light.html#ad6797c89d6b56c98227019c29274793f',1,'Light']]],
+  ['getviewmatrix',['GetViewMatrix',['../class_camera.html#a3d4bdb418d77631a559932d669988997',1,'Camera::GetViewMatrix()'],['../class_light.html#ad6797c89d6b56c98227019c29274793f',1,'Light::GetViewMatrix()']]],
   ['getwindowhandle',['GetWindowHandle',['../class_d_s_f_direct3_d.html#a5a29dd50ca07c9ba0a353f1d7979b4da',1,'DSFDirect3D']]],
   ['getwindowheight',['GetWindowHeight',['../class_d_s_f_direct3_d.html#a0502fbe367fb16a4ab81096b10dffcfe',1,'DSFDirect3D']]],
   ['getwindowwidth',['GetWindowWidth',['../class_d_s_f_direct3_d.html#a5ccc2888c7c04c38d157aed67311e67d',1,'DSFDirect3D']]]

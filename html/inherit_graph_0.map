@@ -1,8 +1,9 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$class_component.html" title="The component class that will be attached to an object. " alt="" coords="6,107,95,133"/>
+<area shape="rect" id="node1" href="$class_component.html" title="The component class that will be attached to an object. " alt="" coords="6,132,95,159"/>
 <area shape="rect" id="node2" href="$class_camera_controller.html" title="Control the camera with Left &amp; Right Stick. " alt="" coords="166,5,290,32"/>
 <area shape="rect" id="node3" href="$class_mesh_renderer.html" title="The mesh renderer component. " alt="" coords="175,56,281,83"/>
-<area shape="rect" id="node4" href="$class_move_parent_object.html" title="Move an object with arrow keys, rotate with numpad, change material property with DPad..." alt="" coords="163,107,293,133"/>
-<area shape="rect" id="node5" href="$class_press_space_to_play_audio.html" title="Press Space to play audio. " alt="" coords="145,157,311,184"/>
-<area shape="rect" id="node6" href="$class_transform.html" title="The transform of the object. " alt="" coords="187,208,269,235"/>
+<area shape="rect" id="node4" href="$class_move_object.html" title="MoveObject" alt="" coords="182,107,274,133"/>
+<area shape="rect" id="node5" href="$class_move_parent_object.html" title="Move an object with arrow keys, rotate with numpad, change material property with DPad..." alt="" coords="163,157,293,184"/>
+<area shape="rect" id="node6" href="$class_press_space_to_play_audio.html" title="Press Space to play audio. " alt="" coords="145,208,311,235"/>
+<area shape="rect" id="node7" href="$class_transform.html" title="The transform of the object. " alt="" coords="187,259,269,285"/>
 </map>

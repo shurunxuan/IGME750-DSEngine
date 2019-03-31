@@ -1,7 +1,8 @@
 <map id="Component" name="Component">
-<area shape="rect" id="node2" href="$class_camera_controller.html" title="Control the camera with Left &amp; Right Stick. " alt="" coords="5,80,128,107"/>
-<area shape="rect" id="node3" href="$class_mesh_renderer.html" title="The mesh renderer component. " alt="" coords="153,80,260,107"/>
-<area shape="rect" id="node4" href="$class_move_parent_object.html" title="Move an object with arrow keys, rotate with numpad, change material property with DPad..." alt="" coords="284,80,413,107"/>
-<area shape="rect" id="node5" href="$class_press_space_to_play_audio.html" title="Press Space to play audio. " alt="" coords="439,80,605,107"/>
-<area shape="rect" id="node6" href="$class_transform.html" title="The transform of the object. " alt="" coords="630,80,711,107"/>
+<area shape="rect" id="node2" href="$class_camera_controller.html" title="Control the camera with Left &amp; Right Stick. " alt="" coords="166,5,290,32"/>
+<area shape="rect" id="node3" href="$class_mesh_renderer.html" title="The mesh renderer component. " alt="" coords="175,56,281,83"/>
+<area shape="rect" id="node4" href="$class_move_object.html" title="MoveObject" alt="" coords="182,107,274,133"/>
+<area shape="rect" id="node5" href="$class_move_parent_object.html" title="Move an object with arrow keys, rotate with numpad, change material property with DPad..." alt="" coords="163,157,293,184"/>
+<area shape="rect" id="node6" href="$class_press_space_to_play_audio.html" title="Press Space to play audio. " alt="" coords="145,208,311,235"/>
+<area shape="rect" id="node7" href="$class_transform.html" title="The transform of the object. " alt="" coords="187,259,269,285"/>
 </map>

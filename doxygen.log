@@ -68,11 +68,7 @@ Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngin
 Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFLogging.h...
 Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFLogging.h...
 Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFRawInput.h...
-Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework//home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/RacingGame/RacingGameApp.h:6: warning: Compound RacingGameApp is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TowerGameApp.h:6: warning: Compound TowerGameApp is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/UnlitMaterial.h:13: warning: Compound UnlitMaterial::UnlitMaterialStruct is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/UnlitMaterial.h:6: warning: Compound UnlitMaterial is not documented.
-DSFRawInput.h...
+Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFRawInput.h...
 Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFThreadPool.h...
 Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFThreadPool.h...
 Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFXAudio2.h...
@@ -99,6 +95,8 @@ Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngi
 Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineTestProject/TestGameApp.h...
 Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/RacingGame/RacingGameApp.h...
 Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/RacingGame/RacingGameApp.h...
+Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/MoveObject.h...
+Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/MoveObject.h...
 Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TowerGameApp.h...
 Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TowerGameApp.h...
 Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/UnlitMaterial.h...
@@ -122,13 +120,12 @@ Searching for friends...
 Searching for documented defines...
 Computing class inheritance relations...
 Computing class usage relations...
-Flushing cached template relations that have become invalid...
-Creating members for template instances...
-Computing class relations...
-Add enum values to enums...
-Searching for member function documentation...
-Building page list...
-Sear/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineCore/Light.hpp:21: warning: Member LIGHT_TYPE_DIR (macro definition) of file Light.hpp is not documented.
+Flushing cached template relations that have /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/RacingGame/RacingGameApp.h:6: warning: Compound RacingGameApp is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TowerGameApp.h:6: warning: Compound TowerGameApp is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/UnlitMaterial.h:13: warning: Compound UnlitMaterial::UnlitMaterialStruct is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/MoveObject.h:6: warning: Compound MoveObject is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/UnlitMaterial.h:6: warning: Compound UnlitMaterial is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineCore/Light.hpp:21: warning: Member LIGHT_TYPE_DIR (macro definition) of file Light.hpp is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineCore/Light.hpp:22: warning: Member LIGHT_TYPE_POINT (macro definition) of file Light.hpp is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineCore/Light.hpp:23: warning: Member LIGHT_TYPE_SPOT (macro definition) of file Light.hpp is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineCore/Light.hpp:25: warning: Member PCF_BLUR_COUNT (macro definition) of file Light.hpp is not documented.
@@ -168,7 +165,13 @@ Sear/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineCore/Lig
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineSystem/DSSInput.h:49: warning: Member JoystickRY (variable) of file DSSInput.h is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineSystem/DSSRendering.h:15: warning: Member DSENGINESYSTEM_API (macro definition) of file DSSRendering.h is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineTestProject/CameraController.h:12: warning: Member CameraController(Object *owner) (function) of class CameraController is not documented.
-ch for main page...
+become invalid...
+Creating members for template instances...
+Computing class relations...
+Add enum values to enums...
+Searching for member function documentation...
+Building page list...
+Search for main page...
 Computing page relations...
 Determining the scope of groups...
 Sorting lists...
@@ -228,11 +231,9 @@ Generating docs for compound CameraController...
 Generating docs for compound Component...
 Generating docs for compound DSEngineApp...
 Generating docs for compound DSFDirect3D...
-Generating docs for compound DSFFFmpeg...
-Generating docs for compound DSFRawInput...
-Generating docs for compound DSFThreadPool...
-Generating docs for compound DSFVoiceCallback...
-Generating docs for compound DSFXAudio2.../home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineTestProject/MoveParentObject.h:14: warning: Member MoveParentObject(Object *owner) (function) of class MoveParentObject is not documented.
+Generating docs for compound DSF/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/MoveObject.h:8: warning: Member MoveObject(Object *owner) (function) of class MoveObject is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/MoveObject.h:14: warning: Member instance (variable) of class MoveObject is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineTestProject/MoveParentObject.h:14: warning: Member MoveParentObject(Object *owner) (function) of class MoveParentObject is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineCore/PBRMaterial.hpp:87: warning: Member parameters (variable) of class PBRMaterial is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineCore/PBRMaterial.hpp:110: warning: argument 'diffuseTexture' of command @param is not found in the argument list of PBRMaterial::LoadNormalTexture(const std::wstring &normalTexture)
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineCore/PBRMaterial.hpp:110: warning: The following parameters of PBRMaterial::LoadNormalTexture(const std::wstring &normalTexture) are not documented:
@@ -245,7 +246,11 @@ Generating docs for compound DSFXAudio2.../home/travis/build/shurunxuan/IGME750-
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/UnlitMaterial.h:9: warning: Member UnlitMaterial(SimpleVertexShader *vtxShader, SimplePixelShader *pxlShader, ID3D11Device *d) (function) of class UnlitMaterial is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/UnlitMaterial.h:15: warning: Member parameters (variable) of class UnlitMaterial is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/UnlitMaterial.h:14: warning: Member Color (variable) of class UnlitMaterial::UnlitMaterialStruct is not documented.
-
+FFmpeg...
+Generating docs for compound DSFRawInput...
+Generating docs for compound DSFThreadPool...
+Generating docs for compound DSFVoiceCallback...
+Generating docs for compound DSFXAudio2...
 Generating docs for compound DSFXInput...
 Generating docs for compound DSSAudio...
 Generating docs for compound DSSInput...
@@ -257,6 +262,7 @@ Generating docs for compound LightData...
 Generating docs for compound Material...
 Generating docs for compound Mesh...
 Generating docs for compound MeshRenderer...
+Generating docs for compound MoveObject...
 Generating docs for compound MoveParentObject...
 Generating docs for compound Object...
 Generating docs for compound PBRMaterial...
@@ -298,175 +304,178 @@ Generating example index...
 finalizing index lists...
 Running dot...
 Generating dot graphs using 3 parallel threads...
-Running dot for graph 1/115
-Running dot for graph 2/115
-Running dot for graph 3/115
-Running dot for graph 4/115
-Running dot for graph 5/115
-Running dot for graph 6/115
-Running dot for graph 7/115
-Running dot for graph 8/115
-Running dot for graph 9/115
-Running dot for graph 10/115
-Running dot for graph 11/115
-Running dot for graph 12/115
-Running dot for graph 13/115
-Running dot for graph 14/115
-Running dot for graph 15/115
-Running dot for graph 16/115
-Running dot for graph 17/115
-Running dot for graph 18/115
-Running dot for graph 19/115
-Running dot for graph 20/115
-Running dot for graph 21/115
-Running dot for graph 22/115
-Running dot for graph 23/115
-Running dot for graph 24/115
-Running dot for graph 25/115
-Running dot for graph 26/115
-Running dot for graph 27/115
-Running dot for graph 28/115
-Running dot for graph 29/115
-Running dot for graph 30/115
-Running dot for graph 31/115
-Running dot for graph 32/115
-Running dot for graph 33/115
-Running dot for graph 34/115
-Running dot for graph 35/115
-Running dot for graph 36/115
-Running dot for graph 37/115
-Running dot for graph 38/115
-Running dot for graph 39/115
-Running dot for graph 40/115
-Running dot for graph 41/115
-Running dot for graph 42/115
-Running dot for graph 43/115
-Running dot for graph 44/115
-Running dot for graph 45/115
-Running dot for graph 46/115
-Running dot for graph 47/115
-Running dot for graph 48/115
-Running dot for graph 49/115
-Running dot for graph 50/115
-Running dot for graph 51/115
-Running dot for graph 52/115
-Running dot for graph 53/115
-Running dot for graph 54/115
-Running dot for graph 55/115
-Running dot for graph 56/115
-Running dot for graph 57/115
-Running dot for graph 58/115
-Running dot for graph 59/115
-Running dot for graph 60/115
-Running dot for graph 61/115
-Running dot for graph 62/115
-Running dot for graph 63/115
-Running dot for graph 64/115
-Running dot for graph 65/115
-Running dot for graph 66/115
-Running dot for graph 67/115
-Running dot for graph 68/115
-Running dot for graph 69/115
-Running dot for graph 70/115
-Running dot for graph 71/115
-Running dot for graph 72/115
-Running dot for graph 73/115
-Running dot for graph 74/115
-Running dot for graph 75/115
-Running dot for graph 76/115
-Running dot for graph 77/115
-Running dot for graph 78/115
-Running dot for graph 79/115
-Running dot for graph 80/115
-Running dot for graph 81/115
-Running dot for graph 82/115
-Running dot for graph 83/115
-Running dot for graph 84/115
-Running dot for graph 85/115
-Running dot for graph 86/115
-Running dot for graph 87/115
-Running dot for graph 88/115
-Running dot for graph 89/115
-Running dot for graph 90/115
-Running dot for graph 91/115
-Running dot for graph 92/115
-Running dot for graph 93/115
-Running dot for graph 94/115
-Running dot for graph 95/115
-Running dot for graph 96/115
-Running dot for graph 97/115
-Running dot for graph 98/115
-Running dot for graph 99/115
-Running dot for graph 100/115
-Running dot for graph 101/115
-Running dot for graph 102/115
-Running dot for graph 103/115
-Running dot for graph 104/115
-Running dot for graph 105/115
-Running dot for graph 106/115
-Running dot for graph 107/115
-Running dot for graph 108/115
-Running dot for graph 109/115
-Running dot for graph 110/115
-Running dot for graph 111/115
-Running dot for graph 112/115
-Running dot for graph 113/115
-Running dot for graph 114/115
-Running dot for graph 115/115
-Patching output file 1/55
-Patching output file 2/55
-Patching output file 3/55
-Patching output file 4/55
-Patching output file 5/55
-Patching output file 6/55
-Patching output file 7/55
-Patching output file 8/55
-Patching output file 9/55
-Patching output file 10/55
-Patching output file 11/55
-Patching output file 12/55
-Patching output file 13/55
-Patching output file 14/55
-Patching output file 15/55
-Patching output file 16/55
-Patching output file 17/55
-Patching output file 18/55
-Patching output file 19/55
-Patching output file 20/55
-Patching output file 21/55
-Patching output file 22/55
-Patching output file 23/55
-Patching output file 24/55
-Patching output file 25/55
-Patching output file 26/55
-Patching output file 27/55
-Patching output file 28/55
-Patching output file 29/55
-Patching output file 30/55
-Patching output file 31/55
-Patching output file 32/55
-Patching output file 33/55
-Patching output file 34/55
-Patching output file 35/55
-Patching output file 36/55
-Patching output file 37/55
-Patching output file 38/55
-Patching output file 39/55
-Patching output file 40/55
-Patching output file 41/55
-Patching output file 42/55
-Patching output file 43/55
-Patching output file 44/55
-Patching output file 45/55
-Patching output file 46/55
-Patching output file 47/55
-Patching output file 48/55
-Patching output file 49/55
-Patching output file 50/55
-Patching output file 51/55
-Patching output file 52/55
-Patching output file 53/55
-Patching output file 54/55
-Patching output file 55/55
-lookup cache used 455/65536 hits=2241 misses=508
+Running dot for graph 1/117
+Running dot for graph 2/117
+Running dot for graph 3/117
+Running dot for graph 4/117
+Running dot for graph 5/117
+Running dot for graph 6/117
+Running dot for graph 7/117
+Running dot for graph 8/117
+Running dot for graph 9/117
+Running dot for graph 10/117
+Running dot for graph 11/117
+Running dot for graph 12/117
+Running dot for graph 13/117
+Running dot for graph 14/117
+Running dot for graph 15/117
+Running dot for graph 16/117
+Running dot for graph 17/117
+Running dot for graph 18/117
+Running dot for graph 19/117
+Running dot for graph 20/117
+Running dot for graph 21/117
+Running dot for graph 22/117
+Running dot for graph 23/117
+Running dot for graph 24/117
+Running dot for graph 25/117
+Running dot for graph 26/117
+Running dot for graph 27/117
+Running dot for graph 28/117
+Running dot for graph 29/117
+Running dot for graph 30/117
+Running dot for graph 31/117
+Running dot for graph 32/117
+Running dot for graph 33/117
+Running dot for graph 34/117
+Running dot for graph 35/117
+Running dot for graph 36/117
+Running dot for graph 37/117
+Running dot for graph 38/117
+Running dot for graph 39/117
+Running dot for graph 40/117
+Running dot for graph 41/117
+Running dot for graph 42/117
+Running dot for graph 43/117
+Running dot for graph 44/117
+Running dot for graph 45/117
+Running dot for graph 46/117
+Running dot for graph 47/117
+Running dot for graph 48/117
+Running dot for graph 49/117
+Running dot for graph 50/117
+Running dot for graph 51/117
+Running dot for graph 52/117
+Running dot for graph 53/117
+Running dot for graph 54/117
+Running dot for graph 55/117
+Running dot for graph 56/117
+Running dot for graph 57/117
+Running dot for graph 58/117
+Running dot for graph 59/117
+Running dot for graph 60/117
+Running dot for graph 61/117
+Running dot for graph 62/117
+Running dot for graph 63/117
+Running dot for graph 64/117
+Running dot for graph 65/117
+Running dot for graph 66/117
+Running dot for graph 67/117
+Running dot for graph 68/117
+Running dot for graph 69/117
+Running dot for graph 70/117
+Running dot for graph 71/117
+Running dot for graph 72/117
+Running dot for graph 73/117
+Running dot for graph 74/117
+Running dot for graph 75/117
+Running dot for graph 76/117
+Running dot for graph 77/117
+Running dot for graph 78/117
+Running dot for graph 79/117
+Running dot for graph 80/117
+Running dot for graph 81/117
+Running dot for graph 82/117
+Running dot for graph 83/117
+Running dot for graph 84/117
+Running dot for graph 85/117
+Running dot for graph 86/117
+Running dot for graph 87/117
+Running dot for graph 88/117
+Running dot for graph 89/117
+Running dot for graph 90/117
+Running dot for graph 91/117
+Running dot for graph 92/117
+Running dot for graph 93/117
+Running dot for graph 94/117
+Running dot for graph 95/117
+Running dot for graph 96/117
+Running dot for graph 97/117
+Running dot for graph 98/117
+Running dot for graph 99/117
+Running dot for graph 100/117
+Running dot for graph 101/117
+Running dot for graph 102/117
+Running dot for graph 103/117
+Running dot for graph 104/117
+Running dot for graph 105/117
+Running dot for graph 106/117
+Running dot for graph 107/117
+Running dot for graph 108/117
+Running dot for graph 109/117
+Running dot for graph 110/117
+Running dot for graph 111/117
+Running dot for graph 112/117
+Running dot for graph 113/117
+Running dot for graph 114/117
+Running dot for graph 115/117
+Running dot for graph 116/117
+Running dot for graph 117/117
+Patching output file 1/56
+Patching output file 2/56
+Patching output file 3/56
+Patching output file 4/56
+Patching output file 5/56
+Patching output file 6/56
+Patching output file 7/56
+Patching output file 8/56
+Patching output file 9/56
+Patching output file 10/56
+Patching output file 11/56
+Patching output file 12/56
+Patching output file 13/56
+Patching output file 14/56
+Patching output file 15/56
+Patching output file 16/56
+Patching output file 17/56
+Patching output file 18/56
+Patching output file 19/56
+Patching output file 20/56
+Patching output file 21/56
+Patching output file 22/56
+Patching output file 23/56
+Patching output file 24/56
+Patching output file 25/56
+Patching output file 26/56
+Patching output file 27/56
+Patching output file 28/56
+Patching output file 29/56
+Patching output file 30/56
+Patching output file 31/56
+Patching output file 32/56
+Patching output file 33/56
+Patching output file 34/56
+Patching output file 35/56
+Patching output file 36/56
+Patching output file 37/56
+Patching output file 38/56
+Patching output file 39/56
+Patching output file 40/56
+Patching output file 41/56
+Patching output file 42/56
+Patching output file 43/56
+Patching output file 44/56
+Patching output file 45/56
+Patching output file 46/56
+Patching output file 47/56
+Patching output file 48/56
+Patching output file 49/56
+Patching output file 50/56
+Patching output file 51/56
+Patching output file 52/56
+Patching output file 53/56
+Patching output file 54/56
+Patching output file 55/56
+Patching output file 56/56
+lookup cache used 467/65536 hits=2297 misses=523
 finished...
