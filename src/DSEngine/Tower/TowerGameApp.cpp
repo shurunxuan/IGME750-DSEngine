@@ -1,5 +1,6 @@
 #include "TowerGameApp.h"
 #include "CSVReader.h"
+#include "MoveObject.h"
 #include "UnlitMaterial.h"
 
 TowerGameApp::~TowerGameApp()
@@ -37,6 +38,7 @@ void TowerGameApp::Init()
 
 
 	Object* Cube_1 = CurrentActiveScene()->LoadModelFile("Assets/Models/cube.obj");
+	Cube_1->AddComponent<MoveObject>();
 	Cube_1->transform->SetLocalTranslation(+0.0f, -0.5f, 0.0f);
 	Object* Cube_1_Child = Cube_1->transform->GetChildAt(0)->object;
 	MeshRenderer* meshRenderer_1 = Cube_1_Child->GetComponent<MeshRenderer>();
