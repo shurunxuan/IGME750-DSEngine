@@ -223,7 +223,7 @@ void DSFDirect3D::Render(Camera* camera, MeshRenderer* meshRenderer)
 
 	DirectX::XMStoreFloat4x4(&worldMatrix, meshRenderer->object->transform->GetGlobalWorldMatrix());
 	DirectX::XMStoreFloat4x4(&itWorldMatrix, meshRenderer->object->transform->GetGlobalInverseTransposeWorldMatrix());
-	DirectX::XMStoreFloat4x4(&viewMatrix, XMMatrixInverse(nullptr, camera->transform->GetGlobalWorldMatrix()));
+	DirectX::XMStoreFloat4x4(&viewMatrix, camera->GetViewMatrix());
 	DirectX::XMStoreFloat4x4(&projectionMatrix, camera->GetProjectionMatrix());
 
 
