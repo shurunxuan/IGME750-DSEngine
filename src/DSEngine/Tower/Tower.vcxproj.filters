@@ -27,7 +27,7 @@
     <ClCompile Include="UnlitMaterial.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MoveObject.cpp">
+    <ClCompile Include="CSVReader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -38,7 +38,7 @@
     <ClInclude Include="UnlitMaterial.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MoveObject.h">
+    <ClInclude Include="CSVReader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
