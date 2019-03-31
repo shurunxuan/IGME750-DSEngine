@@ -13,8 +13,10 @@ void TowerGameApp::Init()
 	SInput->RegisterInput("Horizontal", "", "", "", "", 10.0f, 0.1f, 10.0f, false, Axis, JoystickLX, -1);
 	SInput->RegisterInput("Vertical", "w", "s", "", "", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
 	SInput->RegisterInput("Vertical", "", "", "", "", 10.0f, 0.1f, 10.0f, false, Axis, JoystickLY, -1);
+	SInput->RegisterInput("Test", "space", "", "", "", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
 
 	CurrentActiveScene()->mainCamera->UpdateProjectionMatrix(float(width), float(height), DirectX::XM_PIDIV4);
+	//CurrentActiveScene()->mainCamera->transform->SetLocalTranslation(0.0f, 0.0f, 0.0f);
 	CurrentActiveScene()->mainCamera->transform->SetLocalTranslation(-0.005003646f, 3.973835f, -9.406748f);
 	CurrentActiveScene()->mainCamera->transform->SetLocalRotation(
 		DirectX::XMQuaternionRotationRollPitchYaw(
