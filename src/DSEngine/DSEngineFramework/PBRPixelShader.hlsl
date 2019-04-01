@@ -164,7 +164,7 @@ float3 IBL(float3 n, float3 v, float3 l, float3 surfaceColor)
 		}
 		else
 		{
-			diffuseImageLighting = cubemap.SampleLevel(basicSampler, r, BurleyToMip(1, mipLevels, NdR)).rgb;
+			diffuseImageLighting = cubemap.SampleLevel(basicSampler, r, BurleyToMip(2, mipLevels, NdR)).rgb;
 		}
 	}
 	else
