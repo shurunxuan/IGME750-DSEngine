@@ -26,35 +26,40 @@ void TowerGameApp::Init()
 	//CurrentActiveScene()->mainCamera->transform->SetLocalTranslation(0.0f, 0.0f, 0.0f);
 	CurrentActiveScene()->mainCamera->transform->SetLocalTranslation(-0.005003646f, 3.973835f, -9.406748f);
 	CurrentActiveScene()->mainCamera->transform->SetLocalRotation(0.094358f, -0.000349f, 0.015797f, 0.995413f);
+	CurrentActiveScene()->mainCamera->SetSkybox(device, context, L"Assets/Skybox/1/Environment1HiDef.cubemap.dds"/*, L"Assets/Skybox/1/Environment1Light.cubemap.dds"*/);
 
 	unlitShader = new SimplePixelShader(device, context);
 	unlitShader->LoadShaderFile(L"UnlitMaterial.cso");
 
-	//Object* Cube_0 = CurrentActiveScene()->LoadModelFile("Assets/Models/cube.obj");
-	//Cube_0->transform->SetLocalTranslation(-2.0f, -0.5f, 0.0f);
-	//Object* Cube_0_Child = Cube_0->transform->GetChildAt(0)->object;
-	//MeshRenderer* meshRenderer_0 = Cube_0_Child->GetComponent<MeshRenderer>();
-	//std::shared_ptr<UnlitMaterial> unlitMaterial_0 = std::make_shared<UnlitMaterial>(vertexShader, unlitShader, device);
-	//unlitMaterial_0->parameters.Color = DirectX::XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f);
-	//meshRenderer_0->SetMaterial(unlitMaterial_0);
+	// Add a light
+	LightData light = DirectionalLight(DirectX::XMFLOAT3(1.0f, 1.0f, 1.0f), DirectX::XMFLOAT3(-1.0f, -1.0f, 1.0f), 0.8f, DirectX::XMFLOAT3(1.0f, 1.0f, 1.0f));;
+	CurrentActiveScene()->AddLight(light);
+
+	Object* Cube_0 = CurrentActiveScene()->LoadModelFile("Assets/Models/cube.obj");
+	Cube_0->transform->SetLocalTranslation(-2.0f, -0.5f, 0.0f);
+	Object* Cube_0_Child = Cube_0->transform->GetChildAt(0)->object;
+	MeshRenderer* meshRenderer_0 = Cube_0_Child->GetComponent<MeshRenderer>();
+	std::shared_ptr<UnlitMaterial> unlitMaterial_0 = std::make_shared<UnlitMaterial>(vertexShader, unlitShader, device);
+	unlitMaterial_0->parameters.Color = DirectX::XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f);
+	meshRenderer_0->SetMaterial(unlitMaterial_0);
 
 
-	//Object* Cube_1 = CurrentActiveScene()->LoadModelFile("Assets/Models/cube.obj");
-	//Cube_1->AddComponent<MoveObject>();
-	//Cube_1->transform->SetLocalTranslation(+0.0f, -0.5f, 0.0f);
-	//Object* Cube_1_Child = Cube_1->transform->GetChildAt(0)->object;
-	//MeshRenderer* meshRenderer_1 = Cube_1_Child->GetComponent<MeshRenderer>();
-	//std::shared_ptr<UnlitMaterial> unlitMaterial_1 = std::make_shared<UnlitMaterial>(vertexShader, unlitShader, device);
-	//unlitMaterial_1->parameters.Color = DirectX::XMFLOAT4(1.0f, 1.0f, 0.0f, 1.0f);
-	//meshRenderer_1->SetMaterial(unlitMaterial_1);
+	Object* Cube_1 = CurrentActiveScene()->LoadModelFile("Assets/Models/cube.obj");
+	Cube_1->AddComponent<MoveObject>();
+	Cube_1->transform->SetLocalTranslation(+0.0f, -0.5f, 0.0f);
+	Object* Cube_1_Child = Cube_1->transform->GetChildAt(0)->object;
+	MeshRenderer* meshRenderer_1 = Cube_1_Child->GetComponent<MeshRenderer>();
+	std::shared_ptr<UnlitMaterial> unlitMaterial_1 = std::make_shared<UnlitMaterial>(vertexShader, unlitShader, device);
+	unlitMaterial_1->parameters.Color = DirectX::XMFLOAT4(1.0f, 1.0f, 0.0f, 1.0f);
+	meshRenderer_1->SetMaterial(unlitMaterial_1);
 
-	//Object* Cube_2 = CurrentActiveScene()->LoadModelFile("Assets/Models/cube.obj");
-	//Cube_2->transform->SetLocalTranslation(+2.0f, -0.5f, 0.0f);
-	//Object* Cube_2_Child = Cube_2->transform->GetChildAt(0)->object;
-	//MeshRenderer* meshRenderer_2 = Cube_2_Child->GetComponent<MeshRenderer>();
-	//std::shared_ptr<UnlitMaterial> unlitMaterial_2 = std::make_shared<UnlitMaterial>(vertexShader, unlitShader, device);
-	//unlitMaterial_2->parameters.Color = DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f);
-	//meshRenderer_2->SetMaterial(unlitMaterial_2);
+	Object* Cube_2 = CurrentActiveScene()->LoadModelFile("Assets/Models/cube.obj");
+	Cube_2->transform->SetLocalTranslation(+2.0f, -0.5f, 0.0f);
+	Object* Cube_2_Child = Cube_2->transform->GetChildAt(0)->object;
+	MeshRenderer* meshRenderer_2 = Cube_2_Child->GetComponent<MeshRenderer>();
+	std::shared_ptr<UnlitMaterial> unlitMaterial_2 = std::make_shared<UnlitMaterial>(vertexShader, unlitShader, device);
+	unlitMaterial_2->parameters.Color = DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f);
+	meshRenderer_2->SetMaterial(unlitMaterial_2);
 
 	Object* TowerBase = CurrentActiveScene()->LoadModelFile("Assets/Models/cube.obj");
 	TowerBase->name = "TowerBase";
@@ -63,9 +68,9 @@ void TowerGameApp::Init()
 	Object* TowerBase_Child = TowerBase->transform->GetChildAt(0)->object;
 	TowerBase_Child->transform->SetLocalScale(+11.18277f, +1.0f, 7.130966f);
 	MeshRenderer* TowerBase_meshRenderer = TowerBase_Child->GetComponent<MeshRenderer>();
-	std::shared_ptr<UnlitMaterial> TowerBase_unlitMaterial = std::make_shared<UnlitMaterial>(vertexShader, unlitShader, device);
-	TowerBase_unlitMaterial->parameters.Color = DirectX::XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-	TowerBase_meshRenderer->SetMaterial(TowerBase_unlitMaterial);
+	PBRMaterial* TowerBase_unlitMaterial = static_cast<PBRMaterial*>(TowerBase_meshRenderer->GetMaterial());
+	//std::shared_ptr<UnlitMaterial> TowerBase_unlitMaterial = std::make_shared<UnlitMaterial>(vertexShader, unlitShader, device);
+	TowerBase_unlitMaterial->parameters.albedo = DirectX::XMFLOAT3(1.0f, 1.0f, 1.0f);
 
 	Object* Decks = CurrentActiveScene()->LoadModelFile("Assets/Models/cube.obj");
 	Decks->name = "Decks";
@@ -78,9 +83,8 @@ void TowerGameApp::Init()
 	Decks_Child->transform->SetLocalScale(1.800004f, 0.5f, 1.300002f);
 	Decks_Child->transform->SetLocalRotation(0.000000f, 0.707107f, 0.000000f, 0.707107f);
 	MeshRenderer* Decks_meshRenderer = Decks_Child->GetComponent<MeshRenderer>();
-	std::shared_ptr<UnlitMaterial> Decks_unlitMaterial = std::make_shared<UnlitMaterial>(vertexShader, unlitShader, device);
-	Decks_unlitMaterial->parameters.Color = DirectX::XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f);
-	Decks_meshRenderer->SetMaterial(Decks_unlitMaterial);
+	PBRMaterial* Decks_unlitMaterial = static_cast<PBRMaterial*>(Decks_meshRenderer->GetMaterial());
+	Decks_unlitMaterial->parameters.albedo = DirectX::XMFLOAT3(0.5f, 0.5f, 0.5f);
 
 	CSVReader reader;
 	LOG_TRACE << "ReadFile";

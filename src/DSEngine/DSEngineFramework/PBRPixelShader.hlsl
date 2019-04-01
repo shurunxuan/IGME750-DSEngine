@@ -52,6 +52,9 @@ cbuffer materialData : register(b1)
 cbuffer cameraData : register(b2)
 {
 	float3 CameraPosition;
+	float4 ClearColor;
+	int HasSkybox;
+	int HasIrradianceMap;
 };
 
 cbuffer shadowData : register(b3)
@@ -149,9 +152,26 @@ float3 IBL(float3 n, float3 v, float3 l, float3 surfaceColor)
 	int mipLevels, width, height;
 	cubemap.GetDimensions(0, width, height, mipLevels);
 
-	float3 diffuseImageLighting = irradianceMap.Sample(basicSampler, n).rgb;
-	//float3 diffuseImageLighting = cubemap.SampleLevel(basicSampler, r, BurleyToMip(1, mipLevels, NdR)).rgb;
-	float3 specularImageLighting = cubemap.SampleLevel(basicSampler, r, BurleyToMip(pow(material.roughness, 0.5), mipLevels, NdR)).rgb;
+	float3 specularImageLighting;
+	float3 diffuseImageLighting;
+
+	if (HasSkybox)
+	{
+		specularImageLighting = cubemap.SampleLevel(basicSampler, r, BurleyToMip(pow(material.roughness, 0.5), mipLevels, NdR)).rgb;
+		if (HasIrradianceMap)
+		{
+			diffuseImageLighting = irradianceMap.Sample(basicSampler, n).rgb;
+		}
+		else
+		{
+			diffuseImageLighting = cubemap.SampleLevel(basicSampler, r, BurleyToMip(1, mipLevels, NdR)).rgb;
+		}
+	}
+	else
+	{
+		specularImageLighting = ClearColor.xyz;
+		diffuseImageLighting = ClearColor.xyz;
+	}
 
 	float4 specularColor = float4(lerp(0.04f.rrr, material.albedo, material.metalness), 1.0f);
 
