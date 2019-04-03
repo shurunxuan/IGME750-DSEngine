@@ -38,11 +38,9 @@ void RaycastTest::Update(float deltaTime, float totalTime)
 	DirectX::XMFLOAT3 rayTarget;
 	DirectX::XMStoreFloat3(&rayTarget, worldPos);
 	Ray my_ray(rayOrigin, rayTarget);
-	LOG_INFO << rayOrigin.x << " " << rayOrigin.y << " " << rayOrigin.z;
 	RaycastHit mHit = RaycastHit();
 	if (SPhysics->Raycast(my_ray, mHit)) {
 		LOG_INFO << mHit.GetCollider()->object->name;
-		LOG_INFO << 1.0f;
 	}
 
 

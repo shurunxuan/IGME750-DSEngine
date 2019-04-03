@@ -98,15 +98,8 @@ void DSEngineApp::Loop()
 
 	inputSystem.SyncUpdate(deltaTime);
 
-	if (!simulatePhysics)
-	{
-		if (FRawInput->GetKeyDown('P'))
-		{
-			simulatePhysics = true;
-		}
-	}
-	if (simulatePhysics)
-		physicsSystem.Update(deltaTime, totalTime);
+
+	physicsSystem.Update(deltaTime, totalTime);
 
 	// This contains the actual game logic
 	currentScene.Update(deltaTime, totalTime);
