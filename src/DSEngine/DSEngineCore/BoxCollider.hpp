@@ -1,3 +1,16 @@
+/**
+ * @file BoxCollider.hpp
+ * @author Weihao Yan
+ * @brief This file contains the class that represents
+ * the BoxCollider
+ *
+ * @version 0.1
+ * @date 2019/04/03
+ *
+ * @copyright Copyright (c) 2019
+ *
+ */
+
 #pragma once
 #pragma warning(disable:4251)
 #include <DirectXCollision.h>

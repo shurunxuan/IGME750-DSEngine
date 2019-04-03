@@ -51,15 +51,6 @@
     <ClInclude Include="Light.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Collider.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RigidBody.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Plane.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Ray.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>

@@ -7,8 +7,6 @@
     <ClCompile Include="DSSAudio.cpp" />
     <ClCompile Include="DSSInput.cpp" />
     <ClCompile Include="DSSRendering.cpp" />
-    <ClCompile Include="DSSEventManager.cpp" />
-    <ClCompile Include="MemberFunctionHandler.cpp" />
     <ClCompile Include="DSSPhysics.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -17,10 +15,6 @@
     <ClInclude Include="DSSAudio.h" />
     <ClInclude Include="DSSInput.h" />
     <ClInclude Include="DSSRendering.h" />
-    <ClInclude Include="Event.h" />
-    <ClInclude Include="DSSEventManager.h" />
-    <ClInclude Include="HandlerFunctionBase.h" />
-    <ClInclude Include="MemberFunctionHandler.h" />
     <ClInclude Include="DSSPhysics.h" />
   </ItemGroup>
   <ItemGroup>
