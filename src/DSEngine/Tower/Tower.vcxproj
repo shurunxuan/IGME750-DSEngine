@@ -178,15 +178,31 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BoardColum.cpp" />
+    <ClCompile Include="Brick.cpp" />
+    <ClCompile Include="BrickDeck.cpp" />
     <ClCompile Include="CSVReader.cpp" />
+    <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MoveObject.cpp" />
+    <ClCompile Include="PlayerManager.cpp" />
+    <ClCompile Include="TaskCard.cpp" />
+    <ClCompile Include="TaskCardGenerator.cpp" />
+    <ClCompile Include="TaskDeck.cpp" />
     <ClCompile Include="TowerGameApp.cpp" />
     <ClCompile Include="UnlitMaterial.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BoardColum.h" />
+    <ClInclude Include="Brick.h" />
+    <ClInclude Include="BrickDeck.h" />
     <ClInclude Include="CSVReader.h" />
+    <ClInclude Include="GameManager.h" />
     <ClInclude Include="MoveObject.h" />
+    <ClInclude Include="PlayerManager.h" />
+    <ClInclude Include="TaskCard.h" />
+    <ClInclude Include="TaskCardGenerator.h" />
+    <ClInclude Include="TaskDeck.h" />
     <ClInclude Include="TowerGameApp.h" />
     <ClInclude Include="UnlitMaterial.h" />
   </ItemGroup>

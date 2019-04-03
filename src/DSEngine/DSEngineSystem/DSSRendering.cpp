@@ -45,7 +45,7 @@ HRESULT DSSRendering::Init(HWND hWnd, unsigned int screenWidth, unsigned int scr
 HRESULT DSSRendering::OnResize(unsigned int screenWidth, unsigned int screenHeight)
 {
 	HRESULT hr = direct3D.OnResize(screenWidth, screenHeight);
-	App->CurrentActiveScene()->mainCamera->UpdateProjectionMatrix(float(screenWidth), float(screenHeight), 3.1415926f / 4.0f);
+	App->CurrentActiveScene()->mainCamera->UpdateProjectionMatrix(float(screenWidth), float(screenHeight), 3.1415926f / 3.0f);
 	return hr;
 }
 

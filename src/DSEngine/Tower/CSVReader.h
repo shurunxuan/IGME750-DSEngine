@@ -5,7 +5,7 @@
 #include <vector>
 
 
-enum CardType {
+enum TaskCardType {
 	Intern = 0,
 	Senior
 };
@@ -17,7 +17,7 @@ enum Color {
 
 struct TaskCardData
 {
-	CardType type;
+	TaskCardType type;
 	int Score;
 	std::vector<int> pattern;
 	std::vector<Color> color;

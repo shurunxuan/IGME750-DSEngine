@@ -1,5 +1,10 @@
 #pragma once
+
 #include "DSEngineApp.h"
+#include "TaskDeck.h"
+#include "BrickDeck.h"
+#include "GameManager.h"
+#include "PlayerManager.h"
 
 class TowerGameApp :
 	public DSEngineApp
@@ -14,7 +19,14 @@ public:
 	 */
 	void Init() override;
 
+	TaskDeck taskDeck;
+	BrickDeck brickDeck;
+	GameManager gameManager;
+	PlayerManager playerManager;
 private:
 	SimplePixelShader* unlitShader;
+
+	void CreateScene();
+	
 };
 
