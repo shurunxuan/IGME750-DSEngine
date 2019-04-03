@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Brick.h"
+#include "BoardManager.h"
 
 enum GameState {
 	Initial = 1,
@@ -21,6 +22,7 @@ public:
 	static GameManager* getInstance();
 	GameState currentGameState;	
 	void Update(GameState);
+	void CheckTaskCompletion();
 	//Brick selectedBrick;
 	GameManager();
 	~GameManager();
