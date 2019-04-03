@@ -178,12 +178,14 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CSVReader.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MoveObject.cpp" />
     <ClCompile Include="TowerGameApp.cpp" />
     <ClCompile Include="UnlitMaterial.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CSVReader.h" />
     <ClInclude Include="MoveObject.h" />
     <ClInclude Include="TowerGameApp.h" />
     <ClInclude Include="UnlitMaterial.h" />

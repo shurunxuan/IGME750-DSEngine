@@ -107,6 +107,7 @@ void DSFDirect3D::ClearRenderTarget(float r, float g, float b, float a)
 
 	// Background color (Cornflower Blue in this case) for clearing
 	const float color[4] = { r, g, b, a };
+	clearColor = DirectX::XMFLOAT4(r, g, b, a);
 
 	// Clear the render target and depth buffer (erases what's on the screen)
 	//  - Do this ONCE PER FRAME
@@ -241,12 +242,27 @@ void DSFDirect3D::Render(Camera* camera, MeshRenderer* meshRenderer)
 	DirectX::XMFLOAT3 cameraPosition;
 	DirectX::XMStoreFloat3(&cameraPosition, camera->transform->GetGlobalTranslation());
 	material->GetPixelShaderPtr()->SetFloat3("CameraPosition", cameraPosition);
+	material->GetPixelShaderPtr()->SetFloat4("ClearColor", clearColor);
 
 	material->SetMaterialData();
 	if (camera->GetSkybox() != nullptr)
 	{
 		material->GetPixelShaderPtr()->SetShaderResourceView("cubemap", camera->GetSkybox()->GetCubeMapSRV());
-		material->GetPixelShaderPtr()->SetShaderResourceView("irradianceMap", camera->GetSkybox()->GetIrradianceMapSRV());
+		material->GetPixelShaderPtr()->SetInt("HasSkybox", 1);
+		if (camera->GetSkybox()->GetIrradianceMapSRV() == nullptr)
+		{
+			material->GetPixelShaderPtr()->SetInt("HasIrradianceMap", 0);
+		}
+		else
+		{
+			material->GetPixelShaderPtr()->SetInt("HasIrradianceMap", 1);
+			material->GetPixelShaderPtr()->SetShaderResourceView("irradianceMap", camera->GetSkybox()->GetIrradianceMapSRV());
+		}
+	}
+	else
+	{
+		material->GetPixelShaderPtr()->SetInt("HasSkybox", 0);
+		material->GetPixelShaderPtr()->SetInt("HasIrradianceMap", 0);
 	}
 
 
@@ -345,7 +361,7 @@ void DSFDirect3D::RenderSkybox(Camera * camera)
 {
 	// Render Skybox
 	Skybox* skybox = camera->GetSkybox();
-
+	if (skybox == nullptr) return;
 	DirectX::XMFLOAT4X4 worldMat{};
 	DirectX::XMFLOAT4X4 viewMat{};
 	DirectX::XMFLOAT4X4 projMat{};
@@ -362,7 +378,6 @@ void DSFDirect3D::RenderSkybox(Camera * camera)
 	// Sampler and Texture
 	skybox->GetPixelShader()->SetSamplerState("basicSampler", skybox->GetSamplerState());
 	skybox->GetPixelShader()->SetShaderResourceView("cubemapTexture", skybox->GetCubeMapSRV());
-	skybox->GetPixelShader()->SetShaderResourceView("irradianceMap", skybox->GetIrradianceMapSRV());
 
 
 	skybox->GetVertexShader()->CopyAllBufferData();
