@@ -42,7 +42,7 @@ void RaycastTest::Update(float deltaTime, float totalTime)
 	RaycastHit mHit = RaycastHit();
 	if (SPhysics->Raycast(my_ray, mHit)) {
 		LOG_INFO << mHit.GetCollider()->object->name;
-
+		LOG_INFO << 1.0f;
 	}
 
 
