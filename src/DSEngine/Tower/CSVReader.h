@@ -4,7 +4,6 @@
 #include <string>
 #include <vector>
 
-using namespace std;
 
 enum CardType {
 	Intern = 0,
@@ -20,13 +19,13 @@ struct TaskCardData
 {
 	CardType type;
 	int Score;
-	vector<int> pattern;
-	vector<Color> color;
+	std::vector<int> pattern;
+	std::vector<Color> color;
 };
 
 class CSVReader {
 public:
-	vector<TaskCardData> ReadFromFile(string _file);
+	std::vector<TaskCardData> ReadFromFile(std::string _file);
 
 private:
 	void tokenize(std::string const &str, const char delim,

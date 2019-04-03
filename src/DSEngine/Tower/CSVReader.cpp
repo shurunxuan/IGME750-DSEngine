@@ -2,6 +2,8 @@
 #include "CSVReader.h"
 #include "UnlitMaterial.h"
 
+using namespace std;
+
 vector<TaskCardData> CSVReader::ReadFromFile(string _file) {
 	vector<TaskCardData> data;
 
