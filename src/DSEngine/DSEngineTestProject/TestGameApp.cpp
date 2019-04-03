@@ -40,6 +40,7 @@ void TestGameApp::Init()
 	// Set Camera
 	CurrentActiveScene()->mainCamera->UpdateProjectionMatrix(float(width), float(height), DirectX::XM_PIDIV4);
 	CurrentActiveScene()->mainCamera->SetSkybox(device, context, L"Assets/Skybox/1/Environment1HiDef.cubemap.dds", L"Assets/Skybox/1/Environment1Light.cubemap.dds");
+	CurrentActiveScene()->mainCamera->transform->SetLocalTranslation(0.0f, 2.0f, -3.0f);
 	CameraController * cameraController = CurrentActiveScene()->mainCamera->AddComponent<CameraController>();
 
 	// Add a light
@@ -54,12 +55,12 @@ void TestGameApp::Init()
 	Object * parentObj = CurrentActiveScene()->LoadModelFile("Assets/Models/Rock/sphere.obj");
 	parentObj->name = "Fennekin";
 	//parentObj->transform->SetLocalScale(0.05f, 0.05f, 0.05f);
-	parentObj->transform->SetLocalTranslation(-1.0f, 0.0f, 5.0f);
+	parentObj->transform->SetLocalTranslation(-4.0f, 3.0f, 5.0f);
 	Collider* parentCollider = parentObj->AddComponent<Collider>();
 	RigidBody* parentRigidBody = parentObj->AddComponent<RigidBody>();
-	parentCollider->GetCollider()->Transform(*(parentCollider)->GetCollider(),0.5f, DirectX::XMQuaternionIdentity(), DirectX::XMVectorSet(-1.0f, 0.0f, 5.0f,0.0f));
-	parentRigidBody->SetPosition(-1.0f, 0.0f, 5.0f);
-	
+	parentCollider->GetCollider()->Transform(*(parentCollider)->GetCollider(),0.5f, DirectX::XMQuaternionIdentity(), DirectX::XMVectorSet(-4.0f, 3.0f, 5.0f,0.0f));
+	parentRigidBody->SetPosition(-4.0f, 3.0f, 5.0f);
+	parentRigidBody->AddForce(2.0f, 0.0f, 0.0f);
 
 	auto rotation = parentObj->transform->GetLocalRotation();
 	rotation = DirectX::XMQuaternionMultiply(rotation, DirectX::XMQuaternionRotationAxis(DirectX::XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f), DirectX::XM_PIDIV2));
@@ -70,11 +71,12 @@ void TestGameApp::Init()
 	Object * anotherObj = CurrentActiveScene()->LoadModelFile("Assets/Models/Rock/sphere.obj");
 	anotherObj->name = "Fennekin";
 	//parentObj->transform->SetLocalScale(0.05f, 0.05f, 0.05f);
-	anotherObj->transform->SetLocalTranslation(3.0f, 0.0f, 5.0f);
+	anotherObj->transform->SetLocalTranslation(4.0f, 3.0f, 5.0f);
 	Collider* anotherCollider = anotherObj->AddComponent<Collider>();
 	RigidBody* anotherRigidBody = anotherObj->AddComponent<RigidBody>();
-	anotherCollider->GetCollider()->Transform(*(anotherCollider)->GetCollider(), 0.5f, DirectX::XMQuaternionIdentity(), DirectX::XMVectorSet(3.0f, 0.0f, 5.0f, 0.0f));
-	anotherRigidBody->SetPosition(3.0f, 0.0f, 5.0f);
+	anotherCollider->GetCollider()->Transform(*(anotherCollider)->GetCollider(), 0.5f, DirectX::XMQuaternionIdentity(), DirectX::XMVectorSet(4.0f, 3.0f, 5.0f, 0.0f));
+	anotherRigidBody->SetPosition(4.0f, 3.0f, 5.0f);
+	anotherRigidBody->AddForce(-2.0f, 0.0f, 0.0f);
 
 
 	auto rotation1 = anotherObj->transform->GetLocalRotation();
@@ -93,6 +95,7 @@ void TestGameApp::Init()
 	ground->transform->SetLocalTranslation(DirectX::XMVectorSet(0.0f, -0.01f, 5.0f, 0.0f));
 	const DirectX::XMVECTOR rq = DirectX::XMQuaternionRotationAxis(DirectX::XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f), DirectX::XM_PIDIV2);
 	ground->transform->SetLocalRotation(rq);
+	ground->transform->SetLocalScale(5.0f,5.0f,5.0f);
 
 	Object * groundModelObject = (*ground->transform->GetChildren().begin())->object;
 	MeshRenderer * groundMeshRenderer = groundModelObject->GetComponent<MeshRenderer>();

@@ -10,24 +10,24 @@ public:
 	Ray();
 	Ray(DirectX::XMFLOAT3 origin, DirectX::XMFLOAT3 direction);
 	DirectX::XMFLOAT3 GetOrigin();
-	DirectX::XMFLOAT3 GetDirection();
+	DirectX::XMFLOAT3 GetTarget();
 	~Ray();
 
 private:
 	DirectX::XMFLOAT3 m_origin;
-	DirectX::XMFLOAT3 m_direction;
+	DirectX::XMFLOAT3 m_target;
 };
 
 inline Ray::Ray()
 {
 	m_origin = DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f);
-	m_direction = DirectX::XMFLOAT3(0.0f, 0.0f, 1.0f);
+	m_target = DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f);
 }
 
 inline Ray::Ray(DirectX::XMFLOAT3 origin, DirectX::XMFLOAT3 direction)
 {
 	m_origin = origin;
-	m_direction = direction;
+	m_target = direction;
 }
 
 inline DirectX::XMFLOAT3 Ray::GetOrigin()
@@ -35,9 +35,9 @@ inline DirectX::XMFLOAT3 Ray::GetOrigin()
 	return m_origin;
 }
 
-inline DirectX::XMFLOAT3 Ray::GetDirection()
+inline DirectX::XMFLOAT3 Ray::GetTarget()
 {
-	return m_direction;
+	return m_target;
 }
 
 

@@ -35,9 +35,9 @@ void RaycastTest::Update(float deltaTime, float totalTime)
 	worldPos = DirectX::XMVectorAdd(cameraPos, diff);
 	DirectX::XMFLOAT3 rayOrigin;
 	DirectX::XMStoreFloat3(&rayOrigin, cameraPos);
-	DirectX::XMFLOAT3 rayDirection;
-	DirectX::XMStoreFloat3(&rayDirection, worldPos);
-	Ray my_ray = Ray(rayOrigin, rayDirection);
+	DirectX::XMFLOAT3 rayTarget;
+	DirectX::XMStoreFloat3(&rayTarget, worldPos);
+	Ray my_ray(rayOrigin, rayTarget);
 	LOG_INFO << rayOrigin.x << " " << rayOrigin.y << " " << rayOrigin.z;
 	RaycastHit mHit = RaycastHit();
 	if (SPhysics->Raycast(my_ray, mHit)) {

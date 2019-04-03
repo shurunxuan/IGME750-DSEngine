@@ -37,6 +37,8 @@ public:
 	void AddForce(float x, float y, float z);
 	void SetForce(float x, float y, float z);
 	void AddForce(DirectX::XMFLOAT3 f);
+	void SetCollisionPoint(float x, float y, float z);
+	void SetCollisionPoint(DirectX::XMFLOAT3 p);
 	void CalculateVelocity(float deltaTime, float totalTime);
 	void CalculateWorldMatrix(float deltaTime, float totalTime);
 
@@ -48,10 +50,12 @@ public:
 	DirectX::XMFLOAT3 GetColliderRotation();
 	DirectX::XMFLOAT3 GetColliderScale();
 	DirectX::XMFLOAT3 GetVelocity();
+	DirectX::XMFLOAT3 GetAngularVelocity();
 	DirectX::XMFLOAT3 GetDirection();
+	DirectX::XMFLOAT3 GetCollisionPoint();
 	DirectX::XMFLOAT4X4 GetWorldMatrix();
 	DirectX::XMFLOAT4X4 GetColliderWorldMatrix();
-	
+	float GetInertia();
 	float GetMass();
 
 private:
@@ -67,6 +71,7 @@ private:
 	DirectX::XMFLOAT3 angularVelocity;
 	DirectX::XMFLOAT3 force;
 	DirectX::XMFLOAT3 direction;
+	DirectX::XMFLOAT3 collisionPoint;
 	float inertia;
 	float mass;
 	float accleration;
@@ -87,6 +92,7 @@ inline RigidBody::RigidBody(Object* owner) : Component(owner) {
 	direction = DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f);
 	angularVelocity = DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f);
 	force = DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f);
+	collisionPoint = DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f);
 	this->SetWorldMatrix();
 }
 
@@ -260,15 +266,27 @@ inline void RigidBody::AddForce(DirectX::XMFLOAT3 f)
 	force = f;
 }
 
+inline void RigidBody::SetCollisionPoint(float x, float y, float z)
+{
+	collisionPoint = DirectX::XMFLOAT3(x, y, z);
+}
+
+inline void RigidBody::SetCollisionPoint(DirectX::XMFLOAT3 p)
+{
+	collisionPoint = p;
+}
+
 inline void RigidBody::CalculateVelocity(float deltaTime, float totalTime)
 {
 	float vel_x = velocity.x + force.x / mass * deltaTime;
 	float vel_y = velocity.y + force.y / mass * deltaTime;
 	float vel_z = velocity.z + force.z / mass * deltaTime;
 	SetVelocity(vel_x, vel_y, vel_z);
+
 	float ang_x = angularVelocity.x + inertia * force.z / mass * deltaTime / 3.1415926f *15 ;
 	float ang_y = angularVelocity.y + inertia * force.y / mass * deltaTime / 3.1415926f *15 ;
 	float ang_z = angularVelocity.z + inertia * force.x / mass * deltaTime / 3.1415926f *15 ;
+
 	SetAngularVelocity(ang_x, ang_y, ang_z);
 	float dir_x;
 	float dir_y;
@@ -313,7 +331,12 @@ inline DirectX::XMFLOAT3 RigidBody::GetRotation()
 
 inline DirectX::XMVECTOR RigidBody::GetRotationQuaterinion()
 {
-	return DirectX::XMQuaternionRotationRollPitchYaw(rotation.x, rotation.y, rotation.z);
+	DirectX::XMVECTOR qx = DirectX::XMQuaternionRotationAxis(XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f), rotation.x);
+	DirectX::XMVECTOR qy = DirectX::XMQuaternionRotationAxis(XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f), rotation.y);
+	DirectX::XMVECTOR qz = DirectX::XMQuaternionRotationAxis(XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f), rotation.z);
+	//return qx * qy * qz;
+	//return DirectX::XMQuaternionRotationRollPitchYaw(rotation.x, rotation.y, rotation.z);
+	return DirectX::XMQuaternionRotationRollPitchYawFromVector(DirectX::XMLoadFloat3(&rotation));
 }
 
 inline DirectX::XMFLOAT3 RigidBody::GetScale()
@@ -336,6 +359,11 @@ inline DirectX::XMFLOAT3 RigidBody::GetColliderScale()
 	return colliderScale;
 }
 
+inline float RigidBody::GetInertia()
+{
+	return inertia;
+}
+
 inline float RigidBody::GetMass()
 {
 	return mass;
@@ -356,9 +384,19 @@ inline DirectX::XMFLOAT3 RigidBody::GetVelocity()
 	return velocity;
 }
 
+inline DirectX::XMFLOAT3 RigidBody::GetAngularVelocity()
+{
+	return angularVelocity;
+}
+
 inline DirectX::XMFLOAT3 RigidBody::GetDirection()
 {
 	return direction;
+}
+
+inline DirectX::XMFLOAT3 RigidBody::GetCollisionPoint()
+{
+	return collisionPoint;
 }
 
 

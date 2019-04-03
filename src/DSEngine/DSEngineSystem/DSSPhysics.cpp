@@ -26,21 +26,31 @@ void DSSPhysics::Update(float deltaTime, float totalTime)
 		if (object->GetComponent<BoxCollider>()) boxColliders.push_back(object->GetComponent<BoxCollider>());
 	}
 
-
 	for (int i = 0; i < colliders.size(); i++) {
 		if (colliders[i]->GetCollider()->Center.y <= 0.49f) {
-			rigidBodies[i]->SetVelocity(rigidBodies[i]->GetVelocity().x, 0, 0);
 			rigidBodies[i]->SetInertia(1.0f);
-			rigidBodies[i]->AddForce(-rigidBodies[i]->GetDirection().x * 1.0f, 0.0f, 0.0f);
+			rigidBodies[i]->SetVelocity(rigidBodies[i]->GetVelocity().x, sqrt(0.4f * pow(rigidBodies[i]->GetVelocity().y,2.0f)) , rigidBodies[i]->GetVelocity().z);
+			DirectX::XMFLOAT3 rawAngularVel = rigidBodies[i]->GetVelocity();
+			float factor = rigidBodies[i]->GetInertia() / 3.1415926f * 15.0f;
+			rawAngularVel = DirectX::XMFLOAT3(rawAngularVel.z * factor, rawAngularVel.y * factor, rawAngularVel.x * factor);
+			rigidBodies[i]->SetAngularVelocity(rawAngularVel);
+			//float rebound = rigidBodies[i]->GetMass() * -(rigidBodies[i]->GetVelocity().y) / deltaTime +  rigidBodies[i]->GetMass() * 2.0f;
+			rigidBodies[i]->AddForce(-rigidBodies[i]->GetDirection().x * 0.5f, 0.0f, -rigidBodies[i]->GetDirection().z * 0.5f);
 			rigidBodies[i]->AddForce(0.0f, 2.0f, 0.0f);
+			rigidBodies[i]->SetCollisionPoint(0.0f, -0.01f, 0.0f);
 		}
 		else rigidBodies[i]->SetInertia(0.0f);
 		for (int j = i + 1; j < colliders.size(); j++) {
 			if (colliders[i]->GetCollider()->Intersects(*colliders[j]->GetCollider())) {
 
 				DirectX::XMFLOAT3 temp = rigidBodies[j]->GetVelocity();
+				DirectX::XMFLOAT3 tempAngu = rigidBodies[j]->GetAngularVelocity();
 				rigidBodies[j]->SetVelocity(rigidBodies[i]->GetVelocity());
+				rigidBodies[j]->SetAngularVelocity(rigidBodies[i]->GetAngularVelocity());
 				rigidBodies[i]->SetVelocity(temp);
+				rigidBodies[i]->SetAngularVelocity(tempAngu);
+
+
 			}
 		}
 	}
@@ -70,7 +80,7 @@ void DSSPhysics::Simulate(float deltaTime, float totalTime)
 bool DSSPhysics::Raycast(Ray ray, RaycastHit &mHit)
 {
 	DirectX::XMFLOAT3 origin = ray.GetOrigin();
-	DirectX::XMFLOAT3 direction = ray.GetDirection();
+	DirectX::XMFLOAT3 direction = ray.GetTarget();
 	for (int i = 0; i < boxColliders.size(); i++) {
 		DirectX::XMFLOAT3 center = boxColliders[i]->GetCollider()->Center;
 		float distanceToSide = sqrt(pow(boxColliders[i]->GetCollider()->Extents.x, 2.0f) + pow(boxColliders[i]->GetCollider()->Extents.y, 2.0f) + pow(boxColliders[i]->GetCollider()->Extents.z, 2.0f));
