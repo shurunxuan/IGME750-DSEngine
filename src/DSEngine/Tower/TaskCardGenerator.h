@@ -7,7 +7,7 @@
 class TaskCardGenerator
 {
 public:
-    static Object* AddTaskCard(Scene* scene, TaskCardData data, std::string name = "TaskCard");
+    static Object* AddTaskCard(Scene* scene, TaskCardData data, Transform* parent, std::string name = "TaskCard");
 	TaskCardGenerator();
 	~TaskCardGenerator();
 };

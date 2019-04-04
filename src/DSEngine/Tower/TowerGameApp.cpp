@@ -9,6 +9,7 @@
 #include <boost/uuid/uuid.hpp>
 #include <boost/uuid/uuid_io.hpp>
 #include <boost/range/adaptor/reversed.hpp>
+#include "TaskCardGenerator.h"
 
 DirectX::XMVECTOR baseRotation = DirectX::XMVectorSet(0.000000f, 0.233445f, 0.000000f, 0.972370f);
 
@@ -226,19 +227,7 @@ void TowerGameApp::CreateScene()
 	cube2Material->parameters.roughness = 0.0f;
 	cube2Material->parameters.metalness = 1.0f;
 
-	Object* testCard_0 = CurrentActiveScene()->LoadModelFile("Assets/Models/cube.obj");
-	testCard_0->transform->SetParent(CardPosition_0->transform);
-	testCard_0->transform->SetLocalTranslation(0, 0, 0);
-	testCard_0->transform->SetLocalRotation(DirectX::XMQuaternionIdentity());
-	testCard_0->transform->SetLocalScale(0.1342f, 0.1844f, 0.01f);
-	Object* testCard_1 = CurrentActiveScene()->LoadModelFile("Assets/Models/cube.obj");
-	testCard_1->transform->SetParent(CardPosition_1->transform);
-	testCard_1->transform->SetLocalTranslation(0, 0, 0);
-	testCard_1->transform->SetLocalRotation(DirectX::XMQuaternionIdentity());
-	testCard_1->transform->SetLocalScale(0.1342f, 0.1844f, 0.01f);
-	Object* testCard_2 = CurrentActiveScene()->LoadModelFile("Assets/Models/cube.obj");
-	testCard_2->transform->SetParent(CardPosition_2->transform);
-	testCard_2->transform->SetLocalTranslation(0, 0, 0);
-	testCard_2->transform->SetLocalRotation(DirectX::XMQuaternionIdentity());
-	testCard_2->transform->SetLocalScale(0.1342f, 0.1844f, 0.01f);
+	TaskCardGenerator::AddTaskCard(CurrentActiveScene(), { Intern, 3, {0,0,1,0,1,0,1,0,0}, {Blue, Blue, Blue} }, CardPosition_0->transform);
+	TaskCardGenerator::AddTaskCard(CurrentActiveScene(), { Intern, 3, {0,0,1,0,1,0,1,0,0}, {Yellow, Yellow, Red} }, CardPosition_1->transform);
+	TaskCardGenerator::AddTaskCard(CurrentActiveScene(), { Senior, 5, {0,1,0,0,1,0,0,1,1}, {Yellow, Yellow, Blue, Red} }, CardPosition_2->transform);
 }
