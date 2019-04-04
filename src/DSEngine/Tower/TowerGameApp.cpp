@@ -160,10 +160,13 @@ void TowerGameApp::CreateScene()
 	Board->transform->SetLocalRotation(baseRotation);
 	Object* Colum_0 = CurrentActiveScene()->AddObject("Colum_0");
 	Colum_0->transform->SetParent(Board->transform);
+	BoardManager::getInstance()->boardColums[0] = Colum_0->AddComponent<BoardColum>();
 	Object* Colum_1 = CurrentActiveScene()->AddObject("Colum_1");
 	Colum_1->transform->SetParent(Board->transform);
+	BoardManager::getInstance()->boardColums[1] = Colum_1->AddComponent<BoardColum>();
 	Object* Colum_2 = CurrentActiveScene()->AddObject("Colum_2");
 	Colum_2->transform->SetParent(Board->transform);
+	BoardManager::getInstance()->boardColums[2] = Colum_2->AddComponent<BoardColum>();
 
 	Object* PlayerHand = CurrentActiveScene()->AddObject("PlayerHand");
 	PlayerHand->transform->SetParent(TowerBase->transform);
