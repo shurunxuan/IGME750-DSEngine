@@ -41,6 +41,8 @@ Object* TaskCardGenerator::AddTaskCard(Scene* scene, TaskCardData data, Transfor
 	MeshRenderer* taskCardMR = taskCard->transform->GetChildAt(0)->object->GetComponent<MeshRenderer>();
 	PBRMaterial* taskCardPBR = static_cast<PBRMaterial*>(taskCardMR->GetMaterial());
 	taskCardPBR->LoadDiffuseTexture(taskCardTexture);
+	taskCardPBR->parameters.metalness = 0.0f;
+	taskCardPBR->parameters.roughness = 1.0f;
 
 	return taskCard;
 }
