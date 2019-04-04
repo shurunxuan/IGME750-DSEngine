@@ -22,7 +22,7 @@ void TaskDeck::Shuffle()
 void TaskDeck::InitDeck()
 {
 	CSVReader reader;
-	std::vector<TaskCardData> data = reader.ReadFromFile("TaskCardData.csv");
+	std::vector<TaskCardData> data = reader.ReadFromFile("Assets/TaskCardData.csv");
 	for (int i = 0; i < data.size(); i++)
 	{
 		TaskCard c(data[i]);
