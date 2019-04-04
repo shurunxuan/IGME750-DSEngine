@@ -52,6 +52,9 @@ cbuffer materialData : register(b1)
 cbuffer cameraData : register(b2)
 {
 	float3 CameraPosition;
+	float4 ClearColor;
+	int HasSkybox;
+	int HasIrradianceMap;
 };
 
 cbuffer shadowData : register(b3)
@@ -125,16 +128,22 @@ float3 DiffuseEnergyConserve(float diffuse, float3 specular, float metalness)
 	return diffuse * ((1 - saturate(specular)) * (1 - metalness));
 }
 
-float4 FresnelSchlick(float4 f0, float fd90, float view)
+half Pow5(half v)
 {
-	return f0 + (fd90 - f0) * pow(max(1.0f - view, 0.1f), 5.0f);
+	return v * v * v * v * v;
+}
+
+// Disney Flavor
+float4 FresnelSchlick(float4 f0, float HdV)
+{
+	return f0 + (1 - f0) * Pow5(1.0f - HdV);
 }
 
 float3 IBL(float3 n, float3 v, float3 l, float3 surfaceColor)
 {
 	float3 r = normalize(reflect(-v, n));
 	float3 h = normalize(l + r);
-	float NdV = max(dot(n, v), 0.0);
+	float HdV = max(dot(h, v), 0.0);
 	float NdL = max(dot(n, l), 0.0);
 	float NdR = max(dot(n, r), 0.0);
 
@@ -143,9 +152,26 @@ float3 IBL(float3 n, float3 v, float3 l, float3 surfaceColor)
 	int mipLevels, width, height;
 	cubemap.GetDimensions(0, width, height, mipLevels);
 
-	float3 diffuseImageLighting = irradianceMap.Sample(basicSampler, n).rgb;
-	//float3 diffuseImageLighting = cubemap.SampleLevel(basicSampler, r, BurleyToMip(1, mipLevels, NdR)).rgb;
-	float3 specularImageLighting = cubemap.SampleLevel(basicSampler, r, BurleyToMip(pow(material.roughness, 0.5), mipLevels, NdR)).rgb;
+	float3 specularImageLighting;
+	float3 diffuseImageLighting;
+
+	if (HasSkybox)
+	{
+		specularImageLighting = cubemap.SampleLevel(basicSampler, r, BurleyToMip(pow(material.roughness, 0.5), mipLevels, NdR)).rgb;
+		if (HasIrradianceMap)
+		{
+			diffuseImageLighting = irradianceMap.Sample(basicSampler, n).rgb;
+		}
+		else
+		{
+			diffuseImageLighting = cubemap.SampleLevel(basicSampler, r, BurleyToMip(2, mipLevels, NdR)).rgb;
+		}
+	}
+	else
+	{
+		specularImageLighting = ClearColor.xyz;
+		diffuseImageLighting = ClearColor.xyz;
+	}
 
 	float4 specularColor = float4(lerp(0.04f.rrr, material.albedo, material.metalness), 1.0f);
 
@@ -154,7 +180,7 @@ float3 IBL(float3 n, float3 v, float3 l, float3 surfaceColor)
 	float energyFactor = lerp(1.0, 1.0 / 1.51, 1 - material.roughness);
 	float Fd90 = energyBias + 2.0 * cosD * cosD * (1 - material.roughness);
 
-	float4 schlickFresnel = saturate(FresnelSchlick(specularColor, Fd90, NdV));
+	float4 schlickFresnel = saturate(FresnelSchlick(specularColor, HdV));
 
 	float3 albedo = material.albedo * surfaceColor;
 
@@ -190,6 +216,14 @@ float3 GGX(float3 n, float3 l, float3 v)
 	float G = min(1, min(2 * NdH * NdV / VdH, 2 * NdH * NdL / VdH));
 
 	return G * D * F;
+}
+
+float DiffuseBurleyDisney(float Roughness, float NoV, float NoL, float VoH)
+{
+	float FD90 = 0.5f + 2 * VoH * VoH * Roughness;
+	float FdV = 1 + (FD90 - 1) * Pow5(1 - NoV);
+	float FdL = 1 + (FD90 - 1) * Pow5(1 - NoL);
+	return (1 / 3.1415926f) * FdV * FdL;
 }
 
 //--------------------------------------------------------------------------------------
@@ -390,6 +424,8 @@ float4 main(VertexToPixel input) : SV_TARGET
 		}
 		float NdL = saturate(dot(n, l));
 		float NdV = saturate(dot(n, v));
+		float3 h = normalize(l + v);
+		float VdH = saturate(dot(v, h));
 
 		float lighting = 1;
 		if (i == 0)
@@ -521,10 +557,10 @@ float4 main(VertexToPixel input) : SV_TARGET
 		}
 
 		float4 lightColor = float4(lights[i].Color.xyz, 0.0);
-		intensity = saturate(intensity * spotAmount) * lighting	;
+		intensity = saturate(intensity * spotAmount) * lighting;
 		//intensity = saturate(intensity * spotAmount);
 
-		float diffuseFactor = NdL;
+		float diffuseFactor = DiffuseBurleyDisney(material.roughness, NdV, NdL, VdH);
 		float4 specularColor = NdL * float4(GGX(n, l, v), 0.0f) * lightColor * intensity;
 
 		specular += specularColor;

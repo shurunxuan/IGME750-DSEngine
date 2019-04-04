@@ -263,6 +263,10 @@ private:
      * 
      */
     ID3D11SamplerState* comparisonSampler;
+	/**
+	 * @brief The color that is used for clearing the render target
+	 */
+	DirectX::XMFLOAT4 clearColor;
 
     /**
      * @brief Create a Device And Swap Buffer object
@@ -302,6 +306,7 @@ private:
      * @return HRESULT S_OK if succeed, or other
      */
     HRESULT ResizeSwapBuffers() const;
+
 };
 
 /**

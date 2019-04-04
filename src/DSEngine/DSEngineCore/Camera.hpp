@@ -147,7 +147,7 @@ inline Camera::~Camera()
 }
 
 inline void Camera::SetSkybox(ID3D11Device* d, ID3D11DeviceContext* c, const std::wstring& cubeMapFile,
-	const std::wstring& irradianceMapFile)
+	const std::wstring& irradianceMapFile = L"")
 {
 	delete skybox;
 	skybox = new Skybox(d, c, cubeMapFile, irradianceMapFile);

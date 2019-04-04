@@ -21,8 +21,6 @@ public:
 	bool Raycast(Ray ray, RaycastHit &mHit);
 	
 private:
-	std::vector<Collider*> colliders;
-	std::vector<RigidBody*> rigidBodies;
 	std::vector<BoxCollider*> boxColliders;
 };
 
