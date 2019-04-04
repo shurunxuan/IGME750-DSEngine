@@ -183,6 +183,7 @@
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="BrickDeck.cpp" />
     <ClCompile Include="CSVReader.cpp" />
+    <ClCompile Include="FreeCam.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MoveObject.cpp" />
@@ -199,6 +200,7 @@
     <ClInclude Include="Brick.h" />
     <ClInclude Include="BrickDeck.h" />
     <ClInclude Include="CSVReader.h" />
+    <ClInclude Include="FreeCam.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="MoveObject.h" />
     <ClInclude Include="PlayerManager.h" />
