@@ -23,7 +23,8 @@ public:
 	GameState currentGameState;	
 	void Update(GameState);
 	void CheckTaskCompletion();
-	//Brick selectedBrick;
+	Brick* selectedBrick;
+	
 	GameManager();
 	~GameManager();
 };

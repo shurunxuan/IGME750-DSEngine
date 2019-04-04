@@ -185,6 +185,7 @@
     <ClCompile Include="CSVReader.cpp" />
     <ClCompile Include="FreeCam.cpp" />
     <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MoveObject.cpp" />
     <ClCompile Include="PlayerManager.cpp" />
@@ -202,6 +203,7 @@
     <ClInclude Include="CSVReader.h" />
     <ClInclude Include="FreeCam.h" />
     <ClInclude Include="GameManager.h" />
+    <ClInclude Include="InputManager.h" />
     <ClInclude Include="MoveObject.h" />
     <ClInclude Include="PlayerManager.h" />
     <ClInclude Include="TaskCard.h" />

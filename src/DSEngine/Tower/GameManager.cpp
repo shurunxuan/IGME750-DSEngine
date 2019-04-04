@@ -25,12 +25,15 @@ void GameManager::Update(GameState gs)
 	{
 	case Initial:		
 		TaskDeck::getInstance()->InitDeck();
+		//BrickDeck::getInstance()->InitDeck();
+		currentGameState = Idle;
 		break;
 	case Idle:
 		break;
 	case BrickSelected:
 		break;
 	case DrawBrick:
+		PlayerManager::getInstance()->DrawBrick(selectedBrick->object->transform->GetGlobalTranslation());
 		break;
 	case DrawTask:
 		if (ContinousDrawTask == true)
