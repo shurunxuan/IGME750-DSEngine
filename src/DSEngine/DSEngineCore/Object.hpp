@@ -24,6 +24,7 @@
 
 #include "Component.hpp"
 #include "Transform.hpp"
+#include "BoxCollider.hpp"
 
 class Scene;
 
@@ -170,6 +171,8 @@ public:
 	 * 
 	 */
 	Transform* transform;
+
+	
 };
 
 template <class T>

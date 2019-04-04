@@ -24,6 +24,7 @@
 #include "DSSRendering.h"
 #include "DSSAudio.h"
 #include "DSSInput.h"
+#include "DSSPhysics.h"
 
 #include "Scene.hpp"
 #include "SimpleShader.hpp"
@@ -133,7 +134,15 @@ private:
 	 */
 	Scene currentScene;
 
+
 	DSFThreadPool* threadPool;
+
+	/**
+	 * @brief The Physics System reference
+	 */
+	DSSPhysics physicsSystem;
+
+	
 
 protected:
 	/**

@@ -5,6 +5,8 @@
 
 DSEngineApp* App = nullptr;
 
+bool simulatePhysics = false;
+
 DSEngineApp::DSEngineApp()
 {
 	// Since the game should initialize its own derived
@@ -49,18 +51,18 @@ bool DSEngineApp::Initialize(HINSTANCE hInstance, LPWSTR lpCmdLine, HWND hWnd, i
 
 	threadPool->Enqueue(
 		[this]()
+	{
+		LOG_TRACE << "High precision joystick input polling thread working at 0x" << boost::this_thread::get_id();
+		while (!threadPool->stop)
 		{
-			LOG_TRACE << "High precision joystick input polling thread working at 0x" << boost::this_thread::get_id();
-			while (!threadPool->stop)
-			{
-				auto nextTime = boost::chrono::high_resolution_clock::now() + boost::chrono::milliseconds(4);
+			auto nextTime = boost::chrono::high_resolution_clock::now() + boost::chrono::milliseconds(4);
 
-				inputSystem.AsyncUpdate(0.004f);
+			inputSystem.AsyncUpdate(0.004f);
 
-				boost::this_thread::sleep_until(nextTime);
-			}
+			boost::this_thread::sleep_until(nextTime);
+		}
 
-		});
+	});
 
 	device = FDirect3D->GetDevice();
 	context = FDirect3D->GetDeviceContext();
@@ -95,6 +97,9 @@ void DSEngineApp::Loop()
 	const float totalTime = renderingSystem.GetTotalTime();
 
 	inputSystem.SyncUpdate(deltaTime);
+
+
+	physicsSystem.Update(deltaTime, totalTime);
 
 	// This contains the actual game logic
 	currentScene.Update(deltaTime, totalTime);

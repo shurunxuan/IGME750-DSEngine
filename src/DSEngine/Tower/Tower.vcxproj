@@ -187,6 +187,9 @@
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="main.cpp" />
+
+    <ClCompile Include="RaycastTest.cpp" />
+
     <ClCompile Include="MoveObject.cpp" />
     <ClCompile Include="PlayerManager.cpp" />
     <ClCompile Include="TaskCard.cpp" />
@@ -196,6 +199,11 @@
     <ClCompile Include="UnlitMaterial.cpp" />
   </ItemGroup>
   <ItemGroup>
+
+    <ClInclude Include="RaycastTest.h" />
+
+    <ClInclude Include="MoveObject.h" />
+
     <ClInclude Include="BoardColum.h" />
     <ClInclude Include="BoardManager.h" />
     <ClInclude Include="Brick.h" />
