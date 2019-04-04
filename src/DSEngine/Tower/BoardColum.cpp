@@ -1,6 +1,6 @@
 #include "BoardColum.h"
-
-
+#include "Object.hpp"
+#include <DirectXMath.h>
 
 BoardColum::BoardColum(Object* owner)
 	: Component(owner)
@@ -27,10 +27,10 @@ void BoardColum::PlaceBrick(Brick* brick)
     bricks[brickCount] = brick;
 
     //Visual effect of BRICK placement
-    //brick->transform.position = transform.position + new Vector3(0, brickHeight * brickCount, 0);
-    //brick.OnPlaced();
-    //++brickCount;
-    //if (brickCount >= BoardManager.Instance.maxBrickPerColum) {
+    brick->object->transform->SetLocalTranslation(DirectX::XMVectorAdd(object->transform->GetLocalTranslation(), DirectX::XMVectorSet(0, brickHeight * brickCount, 0, 0)));
+    brick->OnPlaced();
+    ++brickCount;
+    //if (brickCount >= BoardManager::getInstance()->maxBrickPerColum) {
     //    isFull = true;
     //}
 }

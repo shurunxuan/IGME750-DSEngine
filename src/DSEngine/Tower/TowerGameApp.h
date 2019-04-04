@@ -24,6 +24,8 @@ public:
 	BrickDeck brickDeck;
 	GameManager gameManager;
 	PlayerManager playerManager;
+	BoardManager boardManager;
+
 private:
 	SimplePixelShader* unlitShader;
 
