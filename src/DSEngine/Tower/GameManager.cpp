@@ -36,7 +36,7 @@ void GameManager::Update(GameState gs)
 		PlayerManager::getInstance()->DrawBrick(selectedBrick->object->transform->GetGlobalTranslation());
 		break;
 	case DrawTask:
-		if (ContinousDrawTask == true)
+		if (ContinousDrawTask)
 		{
 			PlayerManager::getInstance()->DrawTaskCard();
 			ContinousDrawTask = false;
@@ -56,7 +56,7 @@ void GameManager::CheckTaskCompletion()
 	for (int n = PlayerManager::getInstance()->tasksInHand.size() - 1; n >= 0; n--)
 	{	
 		std::vector<BrickMatrix> matrices = BoardManager::getInstance()->GetBrickMatrices(PlayerManager::getInstance()->tasksInHand[n]);
-		for(int index = 0; index < matrices.size(); index++)
+		for(size_t index = 0; index < matrices.size(); index++)
 		{
 
 			int result = 0;
@@ -74,9 +74,9 @@ void GameManager::CheckTaskCompletion()
 			{
 				for (int j = 0; j < 3; j++)
 				{
-					if (cells[i, j])
+					if (cells[i][j])
 					{
-						result += (int)matrices[index].bricks[i, j];
+						result += static_cast<int>(matrices[index].bricks[i][j]);
 					}
 				}
 			}
