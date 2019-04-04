@@ -1,8 +1,13 @@
 #pragma once
-class InputManager
+#include "Component.hpp"
+
+class InputManager :
+	public Component
 {
 public:
-	InputManager();
+	explicit InputManager(Object* owner);
 	~InputManager();
-};
 
+	void Start() override;
+	void Update(float deltaTime, float totalTime) override;
+};

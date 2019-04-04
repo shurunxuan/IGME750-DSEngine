@@ -9,6 +9,7 @@
 #include "TaskDeck.h"
 #include "BrickDeck.h"
 #include "FreeCam.h"
+#include "InputManager.h"
 
 #include <boost/uuid/uuid.hpp>
 #include <boost/uuid/uuid_io.hpp>
@@ -43,6 +44,7 @@ void TowerGameApp::Init()
 	CurrentActiveScene()->mainCamera->SetSkybox(device, context, L"Assets/Skybox/1/Environment1HiDef.cubemap.dds", L"Assets/Skybox/1/Environment1Light.cubemap.dds");
 	//CurrentActiveScene()->mainCamera->SetSkybox(device, context, L"Assets/Skybox/mp_cupertin/mp_cupertin.dds", L"Assets/Skybox/mp_cupertin/mp_cupertin_irr.dds");
 	FreeCam * freeCam = CurrentActiveScene()->mainCamera->AddComponent<FreeCam>();
+	InputManager * inputManager = CurrentActiveScene()->mainCamera->AddComponent<InputManager>();
 
 	unlitShader = new SimplePixelShader(device, context);
 	unlitShader->LoadShaderFile(L"UnlitMaterial.cso");
