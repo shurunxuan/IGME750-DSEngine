@@ -28,7 +28,7 @@ void BoardColum::PlaceBrick(Brick* brick)
     bricks.push_back(brick);
 
     //Visual effect of BRICK placement
-    brick->object->transform->SetLocalTranslation(DirectX::XMVectorAdd(object->transform->GetLocalTranslation(), DirectX::XMVectorSet(0, brickHeight * brickCount, 0, 0)));
+    brick->object->transform->SetLocalTranslation(DirectX::XMVectorAdd(object->transform->GetLocalTranslation(), DirectX::XMVectorSet(0, (brickHeight + 0.2f) * brickCount, 0, 0)));
 	//brick->object->transform->SetLocalTranslation(position);
 	//brick->object->transform->SetLocalRotation(DirectX::XMQuaternionIdentity());
 	brick->OnPlaced();

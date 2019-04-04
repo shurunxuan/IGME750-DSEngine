@@ -69,8 +69,8 @@ Brick* BrickDeck::CreateBrick(Scene* scene, BrickColor color, DirectX::XMVECTOR 
 	brickObject->transform->SetLocalTranslation(position);
 	MeshRenderer* renderer = brickObject->transform->GetChildAt(0)->object->GetComponent<MeshRenderer>();
 	PBRMaterial* material = static_cast<PBRMaterial*>(renderer->GetMaterial());
-    material->parameters.roughness = 0.0f;
-	material->parameters.metalness = 1.0f;
+    material->parameters.roughness = 0.1f;
+	material->parameters.metalness = 0.7f;
 
 	Brick* brick = brickObject->AddComponent<Brick>();
 

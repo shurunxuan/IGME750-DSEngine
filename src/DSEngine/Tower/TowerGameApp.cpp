@@ -148,7 +148,7 @@ void TowerGameApp::CreateScene()
 	Board->transform->SetLocalRotation(baseRotation);
 	Object* Colum_0 = CurrentActiveScene()->AddObject("Colum_0");
 	Colum_0->transform->SetParent(Board->transform);	
-	Colum_0->transform->SetLocalTranslation(-1, 0, 0);
+	Colum_0->transform->SetLocalTranslation(-1.2f, 0, 0);
 	Colum_0->transform->SetLocalRotation(DirectX::XMQuaternionIdentity());
 	BoardColum* colum0 = BoardManager::getInstance()->boardColums[0] = Colum_0->AddComponent<BoardColum>();
 	colum0->index = 0;
@@ -160,7 +160,7 @@ void TowerGameApp::CreateScene()
 	colum1->index = 1; 
 	Object* Colum_2 = CurrentActiveScene()->AddObject("Colum_2");
 	Colum_2->transform->SetParent(Board->transform);
-	Colum_2->transform->SetLocalTranslation(1, 0, 0);
+	Colum_2->transform->SetLocalTranslation(1.2f, 0, 0);
 	Colum_2->transform->SetLocalRotation(DirectX::XMQuaternionIdentity());
 	BoardColum* colum2 = BoardManager::getInstance()->boardColums[2] = Colum_2->AddComponent<BoardColum>();
 	colum2->index = 2;
