@@ -182,6 +182,7 @@
     <ClCompile Include="BoardManager.cpp" />
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="BrickDeck.cpp" />
+    <ClCompile Include="ChangeBrickMaterial.cpp" />
     <ClCompile Include="CSVReader.cpp" />
     <ClCompile Include="FreeCam.cpp" />
     <ClCompile Include="GameManager.cpp" />
@@ -197,6 +198,7 @@
     <ClCompile Include="UnlitMaterial.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ChangeBrickMaterial.h" />
     <ClInclude Include="RaycastTest.h" />
     <ClInclude Include="BoardColum.h" />
     <ClInclude Include="BoardManager.h" />
