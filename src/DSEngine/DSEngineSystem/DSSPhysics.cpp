@@ -21,7 +21,11 @@ void DSSPhysics::Update(float deltaTime, float totalTime)
 	{
 		if (object->GetComponent<BoxCollider>()) boxColliders.push_back(object->GetComponent<BoxCollider>());
 	}
-
+	for (int i = 0; i < boxColliders.size(); i++) {
+		DirectX::BoundingBox newBox;
+		newBox.Transform(newBox, 0.5f, DirectX::XMQuaternionIdentity(), boxColliders[i]->object->transform->GetLocalTranslation());
+		*boxColliders[i]->GetCollider() = newBox;
+	}
 }
 
 void DSSPhysics::HandleCollision(float deltaTime, float totalTime)

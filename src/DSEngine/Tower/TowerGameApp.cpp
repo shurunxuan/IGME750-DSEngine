@@ -51,31 +51,41 @@ void TowerGameApp::Init()
 	LightData light = DirectionalLight(DirectX::XMFLOAT3(1.0f, 1.0f, 1.0f), DirectX::XMFLOAT3(-1.0f, -1.0f, 1.0f), 0.8f, DirectX::XMFLOAT3(1.0f, 1.0f, 1.0f));;
 	CurrentActiveScene()->AddLight(light);
 
-	// Object * Cube_0 = CurrentActiveScene()->LoadModelFile("Assets/Models/cube.obj");
-	// Cube_0->transform->SetLocalTranslation(-2.0f, -0.5f, 0.0f);
-	// Object * Cube_0_Child = Cube_0->transform->GetChildAt(0)->object;
-	// MeshRenderer * meshRenderer_0 = Cube_0_Child->GetComponent<MeshRenderer>();
-	// std::shared_ptr<UnlitMaterial> unlitMaterial_0 = std::make_shared<UnlitMaterial>(vertexShader, unlitShader, device);
-	// unlitMaterial_0->parameters.Color = DirectX::XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f);
-	// meshRenderer_0->SetMaterial(unlitMaterial_0);
+	 Object * Cube_0 = CurrentActiveScene()->LoadModelFile("Assets/Models/cube.obj");
+	 Cube_0->transform->SetLocalTranslation(-2.0f, -0.5f, 0.0f);
+	 Object * Cube_0_Child = Cube_0->transform->GetChildAt(0)->object;
+	 MeshRenderer * meshRenderer_0 = Cube_0_Child->GetComponent<MeshRenderer>();
+	 std::shared_ptr<UnlitMaterial> unlitMaterial_0 = std::make_shared<UnlitMaterial>(vertexShader, unlitShader, device);
+	 unlitMaterial_0->parameters.Color = DirectX::XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f);
+	 meshRenderer_0->SetMaterial(unlitMaterial_0);
 
 
-	// Object * Cube_1 = CurrentActiveScene()->LoadModelFile("Assets/Models/cube.obj");
-	// Cube_1->AddComponent<MoveObject>();
-	// Cube_1->transform->SetLocalTranslation(+0.0f, -0.5f, 0.0f);
-	// Object * Cube_1_Child = Cube_1->transform->GetChildAt(0)->object;
-	// MeshRenderer * meshRenderer_1 = Cube_1_Child->GetComponent<MeshRenderer>();
-	// std::shared_ptr<UnlitMaterial> unlitMaterial_1 = std::make_shared<UnlitMaterial>(vertexShader, unlitShader, device);
-	// unlitMaterial_1->parameters.Color = DirectX::XMFLOAT4(1.0f, 1.0f, 0.0f, 1.0f);
-	// meshRenderer_1->SetMaterial(unlitMaterial_1);
+	 //Object * Cube_1 = CurrentActiveScene()->LoadModelFile("Assets/Models/cube.obj");
+	 //Cube_1->AddComponent<MoveObject>();
+	 //Cube_1->transform->SetLocalTranslation(+0.0f, -0.5f, 0.0f);
+	 //Object * Cube_1_Child = Cube_1->transform->GetChildAt(0)->object;
+	 //MeshRenderer * meshRenderer_1 = Cube_1_Child->GetComponent<MeshRenderer>();
+	 //std::shared_ptr<UnlitMaterial> unlitMaterial_1 = std::make_shared<UnlitMaterial>(vertexShader, unlitShader, device);
+	 //unlitMaterial_1->parameters.Color = DirectX::XMFLOAT4(1.0f, 1.0f, 0.0f, 1.0f);
+	 //meshRenderer_1->SetMaterial(unlitMaterial_1);
 
-	// Object * Cube_2 = CurrentActiveScene()->LoadModelFile("Assets/Models/cube.obj");
-	// Cube_2->transform->SetLocalTranslation(+2.0f, -0.5f, 0.0f);
-	// Object * Cube_2_Child = Cube_2->transform->GetChildAt(0)->object;
-	// MeshRenderer * meshRenderer_2 = Cube_2_Child->GetComponent<MeshRenderer>();
-	// std::shared_ptr<UnlitMaterial> unlitMaterial_2 = std::make_shared<UnlitMaterial>(vertexShader, unlitShader, device);
-	// unlitMaterial_2->parameters.Color = DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f);
-	// meshRenderer_2->SetMaterial(unlitMaterial_2);
+	 //Object * Cube_2 = CurrentActiveScene()->LoadModelFile("Assets/Models/cube.obj");
+	 //Cube_2->transform->SetLocalTranslation(+2.0f, -0.5f, 0.0f);
+	 //Object * Cube_2_Child = Cube_2->transform->GetChildAt(0)->object;
+	 //MeshRenderer * meshRenderer_2 = Cube_2_Child->GetComponent<MeshRenderer>();
+	 //std::shared_ptr<UnlitMaterial> unlitMaterial_2 = std::make_shared<UnlitMaterial>(vertexShader, unlitShader, device);
+	 //unlitMaterial_2->parameters.Color = DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f);
+	 //meshRenderer_2->SetMaterial(unlitMaterial_2);
+
+	 //BoxCollider* cube0 = Cube_0->AddComponent<BoxCollider>();
+	 ////cube0->GetCollider()->Transform(*(cube0->GetCollider()), 0.5f, DirectX::XMQuaternionIdentity(), DirectX::XMVectorSet(-2.0f, -0.5f, 0.0f, 0.0f));
+	 //BoxCollider* cube1 = Cube_1->AddComponent<BoxCollider>();
+	 ////cube1->GetCollider()->Transform(*(cube1->GetCollider()), 0.5f, DirectX::XMQuaternionIdentity(), DirectX::XMVectorSet(+0.0f, -0.5f, 0.0f, 0.0f));
+	 //BoxCollider* cube2 = Cube_2->AddComponent<BoxCollider>();
+	 ////cube2->GetCollider()->Transform(*(cube2->GetCollider()), 0.5f, DirectX::XMQuaternionIdentity(), DirectX::XMVectorSet(+2.0f, -0.5f, 0.0f, 0.0f));
+	 //RaycastTest* test = Cube_0->AddComponent<RaycastTest>();
+	 //Cube_1->name = "cube1";
+	 //Cube_2->name = "cube2";
 
 	CreateScene();
 

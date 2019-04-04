@@ -30,7 +30,7 @@ void MoveObject::Update(float deltaTime, float totalTime)
 	position = DirectX::XMVectorAdd(position, DirectX::XMVectorSet(horizontal * 4 * deltaTime, vertical * 4 * deltaTime, 0.0f, 0.0f));
 	object->transform->SetLocalTranslation(position);
 
-	if (SInput->GetButton("Test"))
+	if (SInput->GetButton("test"))
 	{
 		float x;
 		float y;
