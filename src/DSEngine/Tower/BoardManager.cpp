@@ -23,7 +23,7 @@ bool BoardManager::PlaceBrickAt(Brick* brick, BoardColum* colum)
 	if (!colum->isFull)
 	{
 		PlayerManager::getInstance()->UseBrick(brick);
-		PlayerManager::getInstance()->DrawBrick(brick->object->transform->GetGlobalTranslation());
+		PlayerManager::getInstance()->DrawBrick(brick->object->transform);
 		colum->PlaceBrick(brick);
 
 		row = colum->brickCount - 1;
@@ -40,6 +40,7 @@ bool BoardManager::PlaceBrickAt(Brick* brick, BoardColum* colum)
 	}
 
 	GameManager::getInstance()->currentGameState = End;
+	GameManager::getInstance()->Update(End);
 	return true;
 }
 
@@ -52,7 +53,7 @@ std::vector<BrickMatrix> BoardManager::GetBrickMatrices(TaskCard task)
 	{
 		for (int j = 0; j < 3; j++)
 		{
-			cells[2 - i][j] = task.GetTaskData().pattern[i * 3 + j];
+			cells[2 - i][j] = task.GetTaskData().pattern[i * 3 + j] == 1;
 		}
 	}
 
@@ -63,7 +64,7 @@ std::vector<BrickMatrix> BoardManager::GetBrickMatrices(TaskCard task)
 	{
 		for (int j = 0; j < 3; j++)
 		{
-			if (cells[i, j])
+			if (cells[i][j])
 			{
 				int x = r - i;
 				int y = c - j;

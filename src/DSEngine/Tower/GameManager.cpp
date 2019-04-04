@@ -24,16 +24,17 @@ void GameManager::Update(GameState gs)
 	switch (gs)
 	{
 	case Initial:		
-		TaskDeck::getInstance()->InitDeck();
+		//TaskDeck::getInstance()->InitDeck();
 		//BrickDeck::getInstance()->InitDeck();
 		currentGameState = Idle;
 		break;
 	case Idle:
+
 		break;
 	case BrickSelected:
 		break;
 	case DrawBrick:
-		PlayerManager::getInstance()->DrawBrick(selectedBrick->object->transform->GetGlobalTranslation());
+		PlayerManager::getInstance()->DrawBrick(selectedBrick->object->transform);
 		break;
 	case DrawTask:
 		if (ContinousDrawTask)
@@ -44,6 +45,8 @@ void GameManager::Update(GameState gs)
 		currentGameState = Idle;
 		break;
 	case End:
+		CheckTaskCompletion();
+		ContinousDrawTask = true;
 		break;
 	default:
 		break;
@@ -66,7 +69,7 @@ void GameManager::CheckTaskCompletion()
 			{
 				for (int j = 0; j < 3; j++)
 				{
-					cells[2 - i][j] = PlayerManager::getInstance()->tasksInHand[n].GetTaskData().pattern[i * 3 + j];
+					cells[2 - i][j] = PlayerManager::getInstance()->tasksInHand[n].GetTaskData().pattern[i * 3 + j] == 1;
 				}
 			}
 
@@ -80,7 +83,6 @@ void GameManager::CheckTaskCompletion()
 					}
 				}
 			}
-
 			//If value is equal, complete this TASK
 			if (result == PlayerManager::getInstance()->tasksInHand[n].GetColorValue())
 			{

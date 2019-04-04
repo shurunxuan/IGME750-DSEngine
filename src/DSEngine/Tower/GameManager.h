@@ -16,7 +16,7 @@ class GameManager
 {
 private:
 	static GameManager* instance;
-	bool ContinousDrawTask = true;
+	
 
 public:
 	static GameManager* getInstance();
@@ -24,7 +24,7 @@ public:
 	void Update(GameState);
 	void CheckTaskCompletion();
 	Brick* selectedBrick;
-	
+	bool ContinousDrawTask = true;
 	GameManager();
 	~GameManager();
 };

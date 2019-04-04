@@ -21,7 +21,7 @@ BrickDeck::~BrickDeck()
 {
 }
 
-Brick* BrickDeck::OnDraw(DirectX::XMVECTOR position)
+Brick* BrickDeck::OnDraw(Transform* transform)
 {
     int index = rand() % bricks.size();
 	auto it = bricks.begin();
@@ -32,15 +32,15 @@ Brick* BrickDeck::OnDraw(DirectX::XMVECTOR position)
 	}
     Brick* brick = *it;
     bricks.erase(it);
-
+	DirectX::XMVECTOR position = transform->GetLocalTranslation();
     if (GameManager::getInstance()->currentGameState != Initial)
     {
         position = DirectX::XMVectorSubtract(position, DirectX::XMVectorSet(0.0f, 0.5f, 0.0f, 0.0f));
     }
 
-	brick->object->transform->SetLocalTranslation(position);
     brick->object->transform->SetParent(PlayerManager::getInstance()->playerHand->transform);
-
+	brick->object->transform->SetLocalTranslation(position);
+	brick->object->transform->SetLocalRotation(DirectX::XMQuaternionIdentity());
     return brick;
 }
 

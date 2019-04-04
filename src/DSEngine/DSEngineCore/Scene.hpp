@@ -260,6 +260,7 @@ inline Object* Scene::Instantiate(Object* obj)
 inline void Scene::DestroyObject(Object* obj)
 {
 	const auto result = std::find(allObjects.begin(), allObjects.end(), obj);
+	LOG_DEBUG << "Destroied object: " << obj->name;
 	if (result == allObjects.end()) return;
 	allObjects.erase(result);
 	delete obj;

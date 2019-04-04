@@ -21,6 +21,6 @@ public:
     void PlaceBrick(Brick* brick);
 
 private:
-    float brickHeight;
+    float brickHeight = 1.0f;
 };
 

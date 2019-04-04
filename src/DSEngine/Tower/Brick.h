@@ -2,9 +2,9 @@
 #include "Component.hpp"
 
 enum BrickColor {
-	RedBrick = 1,
+	BlueBrick = 1,
 	YellowBrick = 10,
-	BlueBrick = 100,
+	RedBrick = 100,
 	Error = 0,
 	Empty = 0	
 };

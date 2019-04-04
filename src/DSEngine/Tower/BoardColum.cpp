@@ -1,6 +1,7 @@
 #include "BoardColum.h"
 #include "Object.hpp"
 #include <DirectXMath.h>
+#include "BoardManager.h"
 
 BoardColum::BoardColum(Object* owner)
 	: Component(owner)
@@ -24,13 +25,15 @@ void BoardColum::Update(float deltaTime, float totalTime) {}
 
 void BoardColum::PlaceBrick(Brick* brick) 
 {
-    bricks[brickCount] = brick;
+    bricks.push_back(brick);
 
     //Visual effect of BRICK placement
     brick->object->transform->SetLocalTranslation(DirectX::XMVectorAdd(object->transform->GetLocalTranslation(), DirectX::XMVectorSet(0, brickHeight * brickCount, 0, 0)));
-    brick->OnPlaced();
+	//brick->object->transform->SetLocalTranslation(position);
+	//brick->object->transform->SetLocalRotation(DirectX::XMQuaternionIdentity());
+	brick->OnPlaced();
     ++brickCount;
-    //if (brickCount >= BoardManager::getInstance()->maxBrickPerColum) {
-    //    isFull = true;
-    //}
+    if (brickCount >= BoardManager::getInstance()->maxBrickPerColum) {
+        isFull = true;
+    }
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include "TaskCard.h"
+#include "Scene.hpp"
 class TaskDeck
 {
 private:
@@ -9,7 +10,8 @@ public:
 	static TaskDeck* getInstance();
 	std::vector<TaskCard> tasks;
 	void Shuffle();
-	void InitDeck();
+	void InitDeck(Scene* scene);
+	Scene* scene;
 	TaskCard DrawTask();
 	TaskDeck();
 	~TaskDeck();

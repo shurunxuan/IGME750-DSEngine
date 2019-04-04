@@ -14,7 +14,7 @@ public:
     std::list<Brick*> bricks;
     //GameObject[] brickPrefabs;
 
-	Brick* OnDraw(DirectX::XMVECTOR position);
+	Brick* OnDraw(Transform* transform);
 	void InitDeck(Scene* scene);
 	Brick* CreateBrick(Scene* scene, BrickColor color, DirectX::XMVECTOR position);
 

@@ -19,14 +19,16 @@ void TaskDeck::Shuffle()
 	tasks = tempTasks;
 }
 
-void TaskDeck::InitDeck()
+void TaskDeck::InitDeck(Scene* s)
 {
+	scene = s;
 	CSVReader reader;
 	std::vector<TaskCardData> data = reader.ReadFromFile("Assets/TaskCardData.csv");
 	for (int i = 0; i < data.size(); i++)
 	{
 		TaskCard c(data[i]);
 		tasks.push_back(c);
+		TotalNum++;
 	}
 }
 
@@ -34,7 +36,7 @@ TaskCard TaskDeck::DrawTask()
 {
 	int index = rand() % TotalNum;
 	TaskCard task = tasks[index];
-	tasks.erase(tasks.begin()+index);
+	tasks.erase(tasks.begin() + index);
 	TotalNum--;
 	return task;
 }

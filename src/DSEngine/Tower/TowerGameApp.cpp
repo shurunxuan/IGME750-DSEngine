@@ -36,6 +36,11 @@ void TowerGameApp::Init()
 	SInput->RegisterInput("CameraVertical", "", "", "", "", 10.0f, 0.1f, 10.0f, false, Axis, JoystickRY, -1);
 	SInput->RegisterInput("CameraVertical", "", "", "", "", 10.0f, 0.1f, 10.0f, true, Movement, MouseY, -1);
 	SInput->RegisterInput("RightButton", "mouse 1", "", "", "", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
+	SInput->RegisterInput("1", "1", "", "", "", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
+	SInput->RegisterInput("2", "2", "", "", "", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
+	SInput->RegisterInput("3", "3", "", "", "", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
+	SInput->RegisterInput("ESC", "escape", "", "", "", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
+	SInput->RegisterInput("DrawCard", "space", "", "", "", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
 
 	CurrentActiveScene()->mainCamera->UpdateProjectionMatrix(float(width), float(height), DirectX::XM_PI / 3.0f);
 	//CurrentActiveScene()->mainCamera->transform->SetLocalTranslation(0.0f, 0.0f, 0.0f);
@@ -53,38 +58,14 @@ void TowerGameApp::Init()
 	LightData light = DirectionalLight(DirectX::XMFLOAT3(1.0f, 1.0f, 1.0f), DirectX::XMFLOAT3(-1.0f, -1.0f, 1.0f), 0.8f, DirectX::XMFLOAT3(1.0f, 1.0f, 1.0f));;
 	CurrentActiveScene()->AddLight(light);
 
-	// Object * Cube_0 = CurrentActiveScene()->LoadModelFile("Assets/Models/cube.obj");
-	// Cube_0->transform->SetLocalTranslation(-2.0f, -0.5f, 0.0f);
-	// Object * Cube_0_Child = Cube_0->transform->GetChildAt(0)->object;
-	// MeshRenderer * meshRenderer_0 = Cube_0_Child->GetComponent<MeshRenderer>();
-	// std::shared_ptr<UnlitMaterial> unlitMaterial_0 = std::make_shared<UnlitMaterial>(vertexShader, unlitShader, device);
-	// unlitMaterial_0->parameters.Color = DirectX::XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f);
-	// meshRenderer_0->SetMaterial(unlitMaterial_0);
-
-
-	// Object * Cube_1 = CurrentActiveScene()->LoadModelFile("Assets/Models/cube.obj");
-	// Cube_1->AddComponent<MoveObject>();
-	// Cube_1->transform->SetLocalTranslation(+0.0f, -0.5f, 0.0f);
-	// Object * Cube_1_Child = Cube_1->transform->GetChildAt(0)->object;
-	// MeshRenderer * meshRenderer_1 = Cube_1_Child->GetComponent<MeshRenderer>();
-	// std::shared_ptr<UnlitMaterial> unlitMaterial_1 = std::make_shared<UnlitMaterial>(vertexShader, unlitShader, device);
-	// unlitMaterial_1->parameters.Color = DirectX::XMFLOAT4(1.0f, 1.0f, 0.0f, 1.0f);
-	// meshRenderer_1->SetMaterial(unlitMaterial_1);
-
-	// Object * Cube_2 = CurrentActiveScene()->LoadModelFile("Assets/Models/cube.obj");
-	// Cube_2->transform->SetLocalTranslation(+2.0f, -0.5f, 0.0f);
-	// Object * Cube_2_Child = Cube_2->transform->GetChildAt(0)->object;
-	// MeshRenderer * meshRenderer_2 = Cube_2_Child->GetComponent<MeshRenderer>();
-	// std::shared_ptr<UnlitMaterial> unlitMaterial_2 = std::make_shared<UnlitMaterial>(vertexShader, unlitShader, device);
-	// unlitMaterial_2->parameters.Color = DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f);
-	// meshRenderer_2->SetMaterial(unlitMaterial_2);
-
+	BrickDeck::getInstance()->InitDeck(CurrentActiveScene());
+	TaskDeck::getInstance()->InitDeck(CurrentActiveScene());
 	CreateScene();
 
-	BrickDeck::getInstance()->InitDeck(CurrentActiveScene());
-
-
-
+	for (int i = 0; i < 3; i++) {
+		PlayerManager::getInstance()->DrawBrick(PlayerManager::getInstance()->brickPositions[i]->transform);
+	}
+	
 
 
 
@@ -166,15 +147,23 @@ void TowerGameApp::CreateScene()
 	Board->transform->SetLocalTranslation(0, 1, 0);
 	Board->transform->SetLocalRotation(baseRotation);
 	Object* Colum_0 = CurrentActiveScene()->AddObject("Colum_0");
-	Colum_0->transform->SetParent(Board->transform);
-	BoardManager::getInstance()->boardColums[0] = Colum_0->AddComponent<BoardColum>();
+	Colum_0->transform->SetParent(Board->transform);	
+	Colum_0->transform->SetLocalTranslation(-1, 0, 0);
+	Colum_0->transform->SetLocalRotation(DirectX::XMQuaternionIdentity());
+	BoardColum* colum0 = BoardManager::getInstance()->boardColums[0] = Colum_0->AddComponent<BoardColum>();
+	colum0->index = 0;
 	Object* Colum_1 = CurrentActiveScene()->AddObject("Colum_1");
 	Colum_1->transform->SetParent(Board->transform);
-	BoardManager::getInstance()->boardColums[1] = Colum_1->AddComponent<BoardColum>();
+	Colum_1->transform->SetLocalTranslation(0, 0, 0);
+	Colum_1->transform->SetLocalRotation(DirectX::XMQuaternionIdentity());
+	BoardColum* colum1 = BoardManager::getInstance()->boardColums[1] = Colum_1->AddComponent<BoardColum>();
+	colum1->index = 1; 
 	Object* Colum_2 = CurrentActiveScene()->AddObject("Colum_2");
 	Colum_2->transform->SetParent(Board->transform);
-	BoardManager::getInstance()->boardColums[2] = Colum_2->AddComponent<BoardColum>();
-
+	Colum_2->transform->SetLocalTranslation(1, 0, 0);
+	Colum_2->transform->SetLocalRotation(DirectX::XMQuaternionIdentity());
+	BoardColum* colum2 = BoardManager::getInstance()->boardColums[2] = Colum_2->AddComponent<BoardColum>();
+	colum2->index = 2;
 	Object* PlayerHand = CurrentActiveScene()->AddObject("PlayerHand");
 	PlayerHand->transform->SetParent(TowerBase->transform);
 	PlayerHand->transform->SetLocalTranslation(0, 1, 0);
@@ -182,15 +171,17 @@ void TowerGameApp::CreateScene()
 	PlayerManager::getInstance()->playerHand = PlayerHand;
 	Object* BrickPosition_0 = CurrentActiveScene()->AddObject("BrickPosition_0");
 	BrickPosition_0->transform->SetParent(PlayerHand->transform);
-	BrickPosition_0->transform->SetLocalTranslation(3.401627f, 0.03938246f, -2.77f);
+	BrickPosition_0->transform->SetLocalTranslation(2.16f, 0.53938246f, -2.77f);
 	BrickPosition_0->transform->SetLocalRotation(DirectX::XMQuaternionIdentity());
+
 	Object* BrickPosition_1 = CurrentActiveScene()->AddObject("BrickPosition_1");
 	BrickPosition_1->transform->SetParent(PlayerHand->transform);
-	BrickPosition_1->transform->SetLocalTranslation(2.16f, 0.03938246f, -2.77f);
+	BrickPosition_1->transform->SetLocalTranslation(3.401627f, 0.53938246f, -2.77f);
 	BrickPosition_1->transform->SetLocalRotation(DirectX::XMQuaternionIdentity());
+
 	Object* BrickPosition_2 = CurrentActiveScene()->AddObject("BrickPosition_2");
 	BrickPosition_2->transform->SetParent(PlayerHand->transform);
-	BrickPosition_2->transform->SetLocalTranslation(4.61f, 0.03938246f, -2.77f);
+	BrickPosition_2->transform->SetLocalTranslation(4.61f, 0.53938246f, -2.77f);
 	BrickPosition_2->transform->SetLocalRotation(DirectX::XMQuaternionIdentity());
 
 	Object* CardPosition_0 = CurrentActiveScene()->AddObject("CardPosition_0");
@@ -206,38 +197,44 @@ void TowerGameApp::CreateScene()
 	CardPosition_2->transform->SetLocalTranslation(-0.0602f, -0.1108f, 0.3499f);
 	CardPosition_2->transform->SetLocalRotation(-0.000772f, -0.009081f, -0.084690f, 0.996366f);
 
+	PlayerManager::getInstance()->brickPositions[0] = BrickPosition_0;
+	PlayerManager::getInstance()->brickPositions[1] = BrickPosition_1;
+	PlayerManager::getInstance()->brickPositions[2] = BrickPosition_2;
+
+	PlayerManager::getInstance()->taskPos[0] = CardPosition_0;
+	PlayerManager::getInstance()->taskPos[1] = CardPosition_1;
+	PlayerManager::getInstance()->taskPos[2] = CardPosition_2;
 
 
+	//Object* testCube_0 = CurrentActiveScene()->LoadModelFile("Assets/Models/cube.obj");
+	//testCube_0->transform->SetParent(BrickPosition_0->transform);
+	//testCube_0->transform->SetLocalTranslation(0, 0, 0);
+	//testCube_0->transform->SetLocalRotation(DirectX::XMQuaternionIdentity());
+	//MeshRenderer* cube0Renderer = testCube_0->transform->GetChildAt(0)->object->GetComponent<MeshRenderer>();
+	//PBRMaterial* cube0Material = static_cast<PBRMaterial*>(cube0Renderer->GetMaterial());
+	//cube0Material->parameters.albedo = DirectX::XMFLOAT3(1.0f, 0.0f, 0.0f);
+	//cube0Material->parameters.roughness = 0.0f;
+	//cube0Material->parameters.metalness = 1.0f;
+	//Object* testCube_1 = CurrentActiveScene()->LoadModelFile("Assets/Models/cube.obj");
+	//testCube_1->transform->SetParent(BrickPosition_1->transform);
+	//testCube_1->transform->SetLocalTranslation(0, 0, 0);
+	//testCube_1->transform->SetLocalRotation(DirectX::XMQuaternionIdentity());
+	//MeshRenderer* cube1Renderer = testCube_1->transform->GetChildAt(0)->object->GetComponent<MeshRenderer>();
+	//PBRMaterial* cube1Material = static_cast<PBRMaterial*>(cube1Renderer->GetMaterial());
+	//cube1Material->parameters.albedo = DirectX::XMFLOAT3(1.0f, 1.0f, 0.0f);
+	//cube1Material->parameters.roughness = 0.0f;
+	//cube1Material->parameters.metalness = 1.0f;
+	//Object* testCube_2 = CurrentActiveScene()->LoadModelFile("Assets/Models/cube.obj");
+	//testCube_2->transform->SetParent(BrickPosition_2->transform);
+	//testCube_2->transform->SetLocalTranslation(0, 0, 0);
+	//testCube_2->transform->SetLocalRotation(DirectX::XMQuaternionIdentity());
+	//MeshRenderer* cube2Renderer = testCube_2->transform->GetChildAt(0)->object->GetComponent<MeshRenderer>();
+	//PBRMaterial* cube2Material = static_cast<PBRMaterial*>(cube2Renderer->GetMaterial());
+	//cube2Material->parameters.albedo = DirectX::XMFLOAT3(0.0f, 0.0f, 1.0f);
+	//cube2Material->parameters.roughness = 0.0f;
+	//cube2Material->parameters.metalness = 1.0f;
 
-	Object* testCube_0 = CurrentActiveScene()->LoadModelFile("Assets/Models/cube.obj");
-	testCube_0->transform->SetParent(BrickPosition_0->transform);
-	testCube_0->transform->SetLocalTranslation(0, 0, 0);
-	testCube_0->transform->SetLocalRotation(DirectX::XMQuaternionIdentity());
-	MeshRenderer* cube0Renderer = testCube_0->transform->GetChildAt(0)->object->GetComponent<MeshRenderer>();
-	PBRMaterial* cube0Material = static_cast<PBRMaterial*>(cube0Renderer->GetMaterial());
-	cube0Material->parameters.albedo = DirectX::XMFLOAT3(1.0f, 0.0f, 0.0f);
-	cube0Material->parameters.roughness = 0.0f;
-	cube0Material->parameters.metalness = 1.0f;
-	Object* testCube_1 = CurrentActiveScene()->LoadModelFile("Assets/Models/cube.obj");
-	testCube_1->transform->SetParent(BrickPosition_1->transform);
-	testCube_1->transform->SetLocalTranslation(0, 0, 0);
-	testCube_1->transform->SetLocalRotation(DirectX::XMQuaternionIdentity());
-	MeshRenderer* cube1Renderer = testCube_1->transform->GetChildAt(0)->object->GetComponent<MeshRenderer>();
-	PBRMaterial* cube1Material = static_cast<PBRMaterial*>(cube1Renderer->GetMaterial());
-	cube1Material->parameters.albedo = DirectX::XMFLOAT3(1.0f, 1.0f, 0.0f);
-	cube1Material->parameters.roughness = 0.0f;
-	cube1Material->parameters.metalness = 1.0f;
-	Object* testCube_2 = CurrentActiveScene()->LoadModelFile("Assets/Models/cube.obj");
-	testCube_2->transform->SetParent(BrickPosition_2->transform);
-	testCube_2->transform->SetLocalTranslation(0, 0, 0);
-	testCube_2->transform->SetLocalRotation(DirectX::XMQuaternionIdentity());
-	MeshRenderer* cube2Renderer = testCube_2->transform->GetChildAt(0)->object->GetComponent<MeshRenderer>();
-	PBRMaterial* cube2Material = static_cast<PBRMaterial*>(cube2Renderer->GetMaterial());
-	cube2Material->parameters.albedo = DirectX::XMFLOAT3(0.0f, 0.0f, 1.0f);
-	cube2Material->parameters.roughness = 0.0f;
-	cube2Material->parameters.metalness = 1.0f;
-
-	TaskCardGenerator::AddTaskCard(CurrentActiveScene(), { Intern, 3, {0,0,1,0,1,0,1,0,0}, {Blue, Blue, Blue} }, CardPosition_0->transform);
+	/*TaskCardGenerator::AddTaskCard(CurrentActiveScene(), { Intern, 3, {0,0,1,0,1,0,1,0,0}, {Blue, Blue, Blue} }, CardPosition_0->transform);
 	TaskCardGenerator::AddTaskCard(CurrentActiveScene(), { Intern, 3, {0,0,1,0,1,0,1,0,0}, {Yellow, Yellow, Red} }, CardPosition_1->transform);
-	TaskCardGenerator::AddTaskCard(CurrentActiveScene(), { Senior, 5, {0,1,0,0,1,0,0,1,1}, {Yellow, Yellow, Blue, Red} }, CardPosition_2->transform);
+	TaskCardGenerator::AddTaskCard(CurrentActiveScene(), { Senior, 5, {0,1,0,0,1,0,0,1,1}, {Yellow, Yellow, Blue, Red} }, CardPosition_2->transform);*/
 }
