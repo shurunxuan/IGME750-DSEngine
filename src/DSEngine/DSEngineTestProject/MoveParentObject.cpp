@@ -93,7 +93,7 @@ void MoveParentObject::Update(float deltaTime, float totalTime)
 		rotation = DirectX::XMQuaternionMultiply(rotation, rotationRightAxis);
 		object->transform->SetLocalRotation(rotation);
 	}
-
+	
 	if (FRawInput->GetKey(VK_NUMPAD2))
 	{
 		DirectX::XMVECTOR rotation = object->transform->GetLocalRotation();
@@ -109,6 +109,7 @@ void MoveParentObject::Update(float deltaTime, float totalTime)
 		rotation = DirectX::XMQuaternionMultiply(rotation, rotationUpAxis);
 		object->transform->SetLocalRotation(rotation);
 	}
+	
 
 	if (FRawInput->GetKey(VK_NUMPAD6))
 	{
@@ -116,7 +117,6 @@ void MoveParentObject::Update(float deltaTime, float totalTime)
 		DirectX::XMVECTOR rotationUpAxis = DirectX::XMQuaternionRotationAxis(DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f), -deltaTime);
 		rotation = DirectX::XMQuaternionMultiply(rotation, rotationUpAxis);
 		object->transform->SetLocalRotation(rotation);
-
 	}
 
 	// Use 1 to scale up, 2 to scale down

@@ -29,7 +29,7 @@ void DSSPhysics::Update(float deltaTime, float totalTime)
 	for (int i = 0; i < colliders.size(); i++) {
 		if (colliders[i]->GetCollider()->Center.y <= 0.49f) {
 			rigidBodies[i]->SetInertia(1.0f);
-			rigidBodies[i]->SetVelocity(rigidBodies[i]->GetVelocity().x, sqrt(0.4f * pow(rigidBodies[i]->GetVelocity().y,2.0f)) , rigidBodies[i]->GetVelocity().z);
+			rigidBodies[i]->SetVelocity(rigidBodies[i]->GetVelocity().x, sqrt(0.4f * pow(rigidBodies[i]->GetVelocity().y, 2.0f)), rigidBodies[i]->GetVelocity().z);
 			DirectX::XMFLOAT3 rawAngularVel = rigidBodies[i]->GetVelocity();
 			float factor = rigidBodies[i]->GetInertia() / 3.1415926f * 15.0f;
 			rawAngularVel = DirectX::XMFLOAT3(rawAngularVel.z * factor, rawAngularVel.y * factor, rawAngularVel.x * factor);
@@ -58,11 +58,26 @@ void DSSPhysics::Update(float deltaTime, float totalTime)
 
 	for (int i = 0; i < rigidBodies.size(); i++) {
 		rigidBodies[i]->CalculateWorldMatrix(deltaTime, totalTime);
-		BoundingSphere newCollider = BoundingSphere();
-		colliders[i]->GetCollider()->Transform(newCollider, 1.0f, DirectX::XMLoadFloat3(&(rigidBodies[i]->GetColliderRotation())), DirectX::XMLoadFloat3(&(rigidBodies[i]->GetPosition())));
+		BoundingSphere newCollider;
+		newCollider.Transform(newCollider, 0.5f, DirectX::XMLoadFloat3(&(rigidBodies[i]->GetColliderRotation())), DirectX::XMLoadFloat3(&(rigidBodies[i]->GetPosition())));
 		*(colliders[i]->GetCollider()) = newCollider;
 		rigidBodies[i]->object->transform->SetLocalTranslation(DirectX::XMLoadFloat3(&(rigidBodies[i]->GetPosition())));
-		rigidBodies[i]->object->transform->SetLocalRotation(rigidBodies[i]->GetRotationQuaterinion());
+
+
+		/*DirectX::XMMATRIX objX = DirectX::XMMatrixRotationX(rigidBodies[i]->GetColliderRotation().x);
+		DirectX::XMMATRIX objY = DirectX::XMMatrixRotationY(rigidBodies[i]->GetColliderRotation().y);
+		DirectX::XMMATRIX objZ = DirectX::XMMatrixRotationZ(rigidBodies[i]->GetColliderRotation().z);
+		DirectX::XMVECTOR temp = DirectX::XMQuaternionMultiply(rigidBodies[i]->object->transform->GetLocalRotation(), DirectX::XMQuaternionRotationMatrix(objX * objY * objZ));
+		rigidBodies[i]->object->transform->SetLocalRotation(temp);*/
+
+
+		DirectX::XMVECTOR qx = DirectX::XMQuaternionRotationAxis(XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f), rigidBodies[i]->GetColliderRotation().x);
+		DirectX::XMVECTOR qy = DirectX::XMQuaternionRotationAxis(XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f), rigidBodies[i]->GetColliderRotation().y);
+		DirectX::XMVECTOR qz = DirectX::XMQuaternionRotationAxis(XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f), rigidBodies[i]->GetColliderRotation().z);
+		DirectX::XMVECTOR temp = DirectX::XMQuaternionMultiply(rigidBodies[i]->object->transform->GetLocalRotation(), DirectX::XMQuaternionMultiply(DirectX::XMQuaternionMultiply(qz, qy), qx));
+		rigidBodies[i]->object->transform->SetLocalRotation(temp);
+
+		//rigidBodies[i]->object->transform->SetLocalRotation(rigidBodies[i]->GetRotationQuaterinion());
 		//rigidBodies[i]->object->transform->SetLocalRotation(sin(totalTime),0.0f,0.0f,0.5f);
 
 		rigidBodies[i]->SetForce(0.0f, -2.0f, 0.0f);

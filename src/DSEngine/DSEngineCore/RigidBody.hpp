@@ -331,12 +331,19 @@ inline DirectX::XMFLOAT3 RigidBody::GetRotation()
 
 inline DirectX::XMVECTOR RigidBody::GetRotationQuaterinion()
 {
-	DirectX::XMVECTOR qx = DirectX::XMQuaternionRotationAxis(XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f), rotation.x);
+	/*DirectX::XMVECTOR qx = DirectX::XMQuaternionRotationAxis(XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f), rotation.x);
 	DirectX::XMVECTOR qy = DirectX::XMQuaternionRotationAxis(XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f), rotation.y);
 	DirectX::XMVECTOR qz = DirectX::XMQuaternionRotationAxis(XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f), rotation.z);
-	//return qx * qy * qz;
+	return DirectX::XMQuaternionMultiply(DirectX::XMQuaternionMultiply(qz, qy), qx);*/
+
+	DirectX::XMMATRIX objX = DirectX::XMMatrixRotationX(rotation.x);
+	DirectX::XMMATRIX objY = DirectX::XMMatrixRotationY(rotation.y);
+	DirectX::XMMATRIX objZ = DirectX::XMMatrixRotationZ(rotation.z);
+	return DirectX::XMQuaternionRotationMatrix(objX * objY * objZ);
+
+
 	//return DirectX::XMQuaternionRotationRollPitchYaw(rotation.x, rotation.y, rotation.z);
-	return DirectX::XMQuaternionRotationRollPitchYawFromVector(DirectX::XMLoadFloat3(&rotation));
+	//return DirectX::XMQuaternionRotationRollPitchYawFromVector(DirectX::XMLoadFloat3(&rotation));
 }
 
 inline DirectX::XMFLOAT3 RigidBody::GetScale()
