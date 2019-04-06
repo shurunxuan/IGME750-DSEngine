@@ -121,6 +121,15 @@ public:
 	 */
 	int SendBuffer(IXAudio2SourceVoice* sourceVoice);
 
+	/**
+	 * @brief Seek to timestamp
+	 * 
+	 * @param timestamp Target timestamp
+	 * 
+	 * @return int 0 if succeeded, or other
+	 */
+	int Seek(int64_t timestamp);
+
 private:
 	/**
 	 * @brief The format context

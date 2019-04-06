@@ -8,6 +8,7 @@
 #include <boost/range/adaptor/reversed.hpp>
 
 #include "PBRMaterial.hpp"
+#include "AudioSource.hpp"
 
 #include "TestGameApp.h"
 #include "PressSpaceToPlayAudio.h"
@@ -33,7 +34,12 @@ void TestGameApp::Init()
 	SInput->RegisterInput("CameraVertical", "", "", "", "", 10.0f, 0.1f, 10.0f, true, Movement, MouseY, -1);
 	SInput->RegisterInput("ArrowHorizontal", "joystick right", "joystick left", "right", "left", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
 	SInput->RegisterInput("ArrowVertical", "joystick up", "joystick down", "up", "down", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
-	SInput->RegisterInput("PlayAudio", "space", "", "", "", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
+	SInput->RegisterInput("PlayAudio1", "z", "", "", "", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
+	SInput->RegisterInput("PauseAudio1", "x", "", "", "", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
+	SInput->RegisterInput("StopAudio1", "c", "", "", "", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
+	SInput->RegisterInput("PlayAudio2", "v", "", "", "", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
+	SInput->RegisterInput("PauseAudio2", "b", "", "", "", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
+	SInput->RegisterInput("StopAudio2", "n", "", "", "", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
 	SInput->RegisterInput("MoveHorizontal", "l", "j", "joystick b", "joystick x", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
 	SInput->RegisterInput("MoveVertical", "i", "k", "joystick y", "joystick a", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
 
@@ -59,6 +65,15 @@ void TestGameApp::Init()
 	// Add Components
 	PressSpaceToPlayAudio * playAudioComponent = parentObj->AddComponent<PressSpaceToPlayAudio>();
 	MoveParentObject * moveParentComponent = parentObj->AddComponent<MoveParentObject>();
+
+	AudioSource* audioSource1 = parentObj->AddComponent<AudioSource>();
+	AudioSource* audioSource2 = parentObj->AddComponent<AudioSource>();
+
+	playAudioComponent->source1 = audioSource1;
+	playAudioComponent->source2 = audioSource2;
+
+	audioSource1->LoadAudioFile("Assets/test1.flac");
+	audioSource2->LoadAudioFile("Assets/test2.flac");
 
 	// Add a ground
 	Object * ground = CurrentActiveScene()->LoadModelFile("Assets/Models/Rock/quad.obj");

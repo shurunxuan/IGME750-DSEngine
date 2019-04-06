@@ -286,3 +286,24 @@ int DSFFFmpeg::SendBuffer(IXAudio2SourceVoice * sourceVoice)
 	}
 	return 0;
 }
+
+int DSFFFmpeg::Seek(int64_t timestamp)
+{
+
+	avcodec_flush_buffers(codecContext);
+
+
+	int res = avformat_seek_file(formatContext,
+		audioStream->index,
+		timestamp,
+		timestamp,
+		timestamp,
+		0
+	);
+	if (lastFrame != nullptr)
+		av_frame_free(&lastFrame);
+	if (frame != nullptr)
+		av_frame_free(&frame);
+	ReadFrame();
+	return res;
+}
