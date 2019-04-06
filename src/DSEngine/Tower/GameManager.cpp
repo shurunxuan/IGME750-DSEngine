@@ -56,7 +56,7 @@ void GameManager::Update(GameState gs)
 void GameManager::CheckTaskCompletion()
 {
 	std::vector<int> completed;
-	for (int n = PlayerManager::getInstance()->tasksInHand.size() - 1; n >= 0; n--)
+	for (int n = int(PlayerManager::getInstance()->tasksInHand.size()) - 1; n >= 0; n--)
 	{	
 		std::vector<BrickMatrix> matrices = BoardManager::getInstance()->GetBrickMatrices(PlayerManager::getInstance()->tasksInHand[n]);
 		for(size_t index = 0; index < matrices.size(); index++)

@@ -41,7 +41,7 @@ void PlayerManager::UseBrick(Brick* usedBrick)
 	auto it = std::find(bricksInHand.begin(), bricksInHand.end(), usedBrick);
 	if (it != bricksInHand.end())
 	{
-		lastDeleted = it - bricksInHand.begin();
+		lastDeleted = int(it - bricksInHand.begin());
 		bricksInHand.erase(it);
 	}
 }
