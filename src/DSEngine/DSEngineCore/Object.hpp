@@ -170,6 +170,8 @@ public:
 	 * 
 	 */
 	Transform* transform;
+
+	
 };
 
 template <class T>

@@ -51,6 +51,22 @@ void MoveParentObject::Update(float deltaTime, float totalTime)
 	float arrowHorizontal = SInput->GetAxis("ArrowHorizontal");
 	float arrowVertical = SInput->GetAxis("ArrowVertical");
 
+	// Use 1 to scale up, 2 to scale down
+	if (FRawInput->GetKey('1'))
+	{
+		DirectX::XMVECTOR scale = object->transform->GetLocalScale();
+		scale = DirectX::XMVectorScale(scale, 1 + deltaTime);
+		object->transform->SetLocalScale(scale);
+	}
+	if (FRawInput->GetKey('2'))
+	{
+		DirectX::XMVECTOR scale = object->transform->GetLocalScale();
+		scale = DirectX::XMVectorScale(scale, 1 / (1 + deltaTime));
+		object->transform->SetLocalScale(scale);
+	}
+
+	// Use DPad to adjust the material
+
 	for (MeshRenderer* renderer : meshRenderers)
 	{
 		PBRMaterial* material = static_cast<PBRMaterial*>(renderer->GetMaterial());

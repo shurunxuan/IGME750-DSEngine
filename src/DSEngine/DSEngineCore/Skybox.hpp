@@ -3,12 +3,12 @@
  * @author Victor Shu
  * @brief This file contains the class that represents
  * the skybox
- * 
+ *
  * @version 0.1
  * @date 2019/03/12
- * 
+ *
  * @copyright Copyright (c) 2019
- * 
+ *
  */
 
 #pragma once
@@ -21,16 +21,16 @@
 #include "Mesh.hpp"
 #include "SimpleShader.hpp"
 
-/**
- * @brief The class represents a skybox
- * 
- */
+ /**
+  * @brief The class represents a skybox
+  *
+  */
 class Skybox
 {
 public:
 	/**
 	 * @brief Construct a new Skybox from cubemap files
-	 * 
+	 *
 	 * @param d Direct3D 11 device
 	 * @param c Direct3D 11 device context
 	 * @param cubeMapFile The file name of the cubemap of the skybox
@@ -39,120 +39,121 @@ public:
 	Skybox(ID3D11Device* d, ID3D11DeviceContext* c, const std::wstring& cubeMapFile, const std::wstring& irradianceMapFile);
 	/**
 	 * @brief Destroy the Skybox object
-	 * 
+	 *
 	 */
 	~Skybox();
 
 	/**
 	 * @brief Get the Vertex Buffer of the skybox
-	 * 
+	 *
 	 * @return ID3D11Buffer* The Vertex Buffer
 	 */
 	ID3D11Buffer* GetVertexBuffer() const;
 	/**
 	 * @brief Get the Index Buffer of the skybox
-	 * 
+	 *
 	 * @return ID3D11Buffer* The Index Buffer
 	 */
 	ID3D11Buffer* GetIndexBuffer() const;
 
 	/**
 	 * @brief Get the Vertex Shader of the skybox
-	 * 
+	 *
 	 * @return SimpleVertexShader* The vertex shader
 	 */
 	SimpleVertexShader* GetVertexShader() const;
 	/**
 	 * @brief Get the Pixel Shader of the skybox
-	 * 
+	 *
 	 * @return SimplePixelShader* The pixel shader
 	 */
 	SimplePixelShader* GetPixelShader() const;
 
 	/**
 	 * @brief Get the Sampler State for sampling the cubemaps
-	 * 
+	 *
 	 * @return ID3D11SamplerState* The sampler state
 	 */
 	ID3D11SamplerState* GetSamplerState() const;
 
 	/**
 	 * @brief Get the shader resource view of the cubemap
-	 * 
+	 *
 	 * @return ID3D11ShaderResourceView* The shader resource view of the cubemap
 	 */
 	ID3D11ShaderResourceView* GetCubeMapSRV() const;
 	/**
 	 * @brief Get the shader resource view of the irradiance map
-	 * 
+	 *
 	 * @return ID3D11ShaderResourceView* The shader resource view of the irradiance map
 	 */
 	ID3D11ShaderResourceView* GetIrradianceMapSRV() const;
 private:
 	/**
 	 * @brief Direct3D 11 device
-	 * 
+	 *
 	 */
 	ID3D11Device* device;
 	/**
 	 * @brief Direct3D 11 device context
-	 * 
+	 *
 	 */
 	ID3D11DeviceContext* context;
 
 	/**
 	 * @brief Vertex Buffer
-	 * 
+	 *
 	 */
 	ID3D11Buffer* vertexBuffer;
 	/**
 	 * @brief Index Buffer
-	 * 
+	 *
 	 */
 	ID3D11Buffer* indexBuffer;
 
 	/**
 	 * @brief Skybox vertex shader
-	 * 
+	 *
 	 */
 	SimpleVertexShader* vertexShader;
 	/**
 	 * @brief Skybox pixel shader
-	 * 
+	 *
 	 */
 	SimplePixelShader* pixelShader;
 
 	/**
 	 * @brief The description of the sampler state
-	 * 
+	 *
 	 */
 	D3D11_SAMPLER_DESC samplerDesc;
 	/**
 	 * @brief The sampler state
-	 * 
+	 *
 	 */
 	ID3D11SamplerState* samplerState;
 
 	/**
 	 * @brief The shader resource view of the cubemap
-	 * 
+	 *
 	 */
 	ID3D11ShaderResourceView* cubeMapSrv;
 	/**
 	 * @brief The shader resource view of the irradiance map
-	 * 
+	 *
 	 */
 	ID3D11ShaderResourceView* irradianceMapSrv;
 };
 
-inline Skybox::Skybox(ID3D11Device* d, ID3D11DeviceContext* c, const std::wstring& cubeMapFile, const std::wstring& irradianceMapFile)
+inline Skybox::Skybox(ID3D11Device* d, ID3D11DeviceContext* c, const std::wstring& cubeMapFile, const std::wstring& irradianceMapFile = L"")
 {
 	device = d;
 	context = c;
 	DirectX::CreateDDSTextureFromFileEx(device, context, cubeMapFile.c_str(), D3D11_REQ_TEXTURECUBE_DIMENSION, D3D11_USAGE_DEFAULT, D3D11_BIND_SHADER_RESOURCE,
 		0, 0, true, nullptr, &cubeMapSrv);
-	DirectX::CreateDDSTextureFromFileEx(device, context, irradianceMapFile.c_str(), D3D11_REQ_TEXTURECUBE_DIMENSION, D3D11_USAGE_DEFAULT, D3D11_BIND_SHADER_RESOURCE,
-		0, 0, true, nullptr, &irradianceMapSrv);
+	if (!irradianceMapFile.empty())
+		DirectX::CreateDDSTextureFromFileEx(device, context, irradianceMapFile.c_str(), D3D11_REQ_TEXTURECUBE_DIMENSION, D3D11_USAGE_DEFAULT, D3D11_BIND_SHADER_RESOURCE,
+			0, 0, true, nullptr, &irradianceMapSrv);
 
 	Vertex vertices[8];
 

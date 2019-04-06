@@ -52,6 +52,9 @@ cbuffer materialData : register(b1)
 cbuffer cameraData : register(b2)
 {
 	float3 CameraPosition;
+	float4 ClearColor;
+	int HasSkybox;
+	int HasIrradianceMap;
 };
 
 cbuffer shadowData : register(b3)
@@ -131,9 +134,14 @@ half Pow5(half v)
 }
 
 // Disney Flavor
-float4 FresnelSchlick(float4 f0, float HdV)
+//float4 FresnelSchlick(float4 f0, float HdV)
+//{
+//	return f0 + (1 - f0) * Pow5(1.0f - HdV);
+//}
+
+float4 FresnelSchlick(float4 f0, float fd90, float view)
 {
-	return f0 + (1 - f0) * Pow5(1.0f - HdV);
+	return f0 + (fd90 - f0) * Pow5(max(1.0f - view, 0.1f));
 }
 
 float3 IBL(float3 n, float3 v, float3 l, float3 surfaceColor)
@@ -149,9 +157,26 @@ float3 IBL(float3 n, float3 v, float3 l, float3 surfaceColor)
 	int mipLevels, width, height;
 	cubemap.GetDimensions(0, width, height, mipLevels);
 
-	float3 diffuseImageLighting = irradianceMap.Sample(basicSampler, n).rgb;
-	//float3 diffuseImageLighting = cubemap.SampleLevel(basicSampler, r, BurleyToMip(1, mipLevels, NdR)).rgb;
-	float3 specularImageLighting = cubemap.SampleLevel(basicSampler, r, BurleyToMip(pow(material.roughness, 0.5), mipLevels, NdR)).rgb;
+	float3 specularImageLighting;
+	float3 diffuseImageLighting;
+
+	if (HasSkybox)
+	{
+		specularImageLighting = cubemap.SampleLevel(basicSampler, r, BurleyToMip(pow(material.roughness, 0.5), mipLevels, NdR)).rgb;
+		if (HasIrradianceMap)
+		{
+			diffuseImageLighting = irradianceMap.Sample(basicSampler, n).rgb;
+		}
+		else
+		{
+			diffuseImageLighting = cubemap.SampleLevel(basicSampler, r, BurleyToMip(2, mipLevels, NdR)).rgb;
+		}
+	}
+	else
+	{
+		specularImageLighting = ClearColor.xyz;
+		diffuseImageLighting = ClearColor.xyz;
+	}
 
 	float4 specularColor = float4(lerp(0.04f.rrr, material.albedo, material.metalness), 1.0f);
 
@@ -160,7 +185,8 @@ float3 IBL(float3 n, float3 v, float3 l, float3 surfaceColor)
 	float energyFactor = lerp(1.0, 1.0 / 1.51, 1 - material.roughness);
 	float Fd90 = energyBias + 2.0 * cosD * cosD * (1 - material.roughness);
 
-	float4 schlickFresnel = saturate(FresnelSchlick(specularColor, HdV));
+	float4 schlickFresnel = saturate(FresnelSchlick(specularColor, Fd90, saturate(dot(n, v))));
+	//float4 schlickFresnel = saturate(FresnelSchlick(specularColor, HdV));
 
 	float3 albedo = material.albedo * surfaceColor;
 

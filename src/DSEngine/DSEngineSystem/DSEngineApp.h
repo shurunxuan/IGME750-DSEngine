@@ -133,7 +133,10 @@ private:
 	 */
 	Scene currentScene;
 
+
 	DSFThreadPool* threadPool;
+
+	
 
 protected:
 	/**
