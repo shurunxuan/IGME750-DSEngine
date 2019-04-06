@@ -63,7 +63,7 @@ inline void AudioSource::PlaySync()
 	// Start the source voice
 	sourceVoice->Start();
 
-	LOG_TRACE << "Starting audio playback";
+	LOG_TRACE << "Starting audio file \"" << filename << "\" playback at 0x" << boost::this_thread::get_id();
 
 	try
 	{
@@ -143,8 +143,6 @@ inline void AudioSource::LoadAudioFile(const std::string& filename)
 
 	if (!fileOpened) return;
 
-	LOG_TRACE << "Creating new thread 0x" << boost::this_thread::get_id() << " for playing audio \"" << filename << "\"";
-
 	// Parameters to be used when creating source voice
 	int channels;
 	int sampleRate;
@@ -195,9 +193,7 @@ inline void AudioSource::Stop()
 {
 	if (isPlaying || (!isPlaying && !stopped))
 	{
-		// Start the voice first to resume pausing state
 		SetEvent(callback.bufferEvent);
-		sourceVoice->Start();
 		playbackThread.interrupt();
 		playbackThread.join();
 	}
