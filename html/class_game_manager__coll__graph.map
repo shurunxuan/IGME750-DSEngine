@@ -1,0 +1,6 @@
+<map id="GameManager" name="GameManager">
+<area shape="rect" id="node4" href="$class_component.html" title="The component class that will be attached to an object. " alt="" coords="332,96,421,123"/>
+<area shape="rect" id="node5" href="$class_object.html" title="A game object. " alt="" coords="396,277,456,304"/>
+<area shape="rect" id="node3" href="$class_brick.html" title="Brick" alt="" coords="56,187,108,213"/>
+<area shape="rect" id="node7" href="$class_transform.html" title="The transform of the object. " alt="" coords="336,187,417,213"/>
+</map>

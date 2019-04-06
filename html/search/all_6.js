@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['gamemanager',['GameManager',['../class_game_manager.html',1,'']]],
   ['getallobjects',['GetAllObjects',['../class_scene.html#a48230c354dbc4b329d08c6a0dc21dfb6',1,'Scene']]],
   ['getaxis',['GetAxis',['../class_d_s_f_x_input.html#acd88ca45f36c28546c565b2f46386ecf',1,'DSFXInput::GetAxis()'],['../class_d_s_s_input.html#af944cebf578d6b11591070466364ddf1',1,'DSSInput::GetAxis()']]],
   ['getaxiscode',['GetAxisCode',['../class_d_s_f_x_input.html#a58ea9abff0d7bc8eee30060fbad81b1f',1,'DSFXInput']]],
@@ -29,7 +30,7 @@ var searchData=
   ['getglobalworldmatrix',['GetGlobalWorldMatrix',['../class_transform.html#a44e46f6118f64ccaf678973e8f865ab4',1,'Transform']]],
   ['getindexbuffer',['GetIndexBuffer',['../class_mesh.html#a82b8eb8201e45b090e94da4483c01b2d',1,'Mesh::GetIndexBuffer()'],['../class_skybox.html#ab83a91394bb79e77b9bca95bc7f50fc0',1,'Skybox::GetIndexBuffer()']]],
   ['getindexcount',['GetIndexCount',['../class_mesh.html#a495dc710c3fd4102d7c33ccdd1848ec7',1,'Mesh']]],
-  ['getinstanceid',['GetInstanceId',['../class_component.html#a195efec1fdb4c128a7716e611814f113',1,'Component::GetInstanceId()'],['../class_object.html#a10cd6795949efbeadccfe40cafc8b70d',1,'Object::GetInstanceID()']]],
+  ['getinstanceid',['GetInstanceID',['../class_object.html#a10cd6795949efbeadccfe40cafc8b70d',1,'Object::GetInstanceID()'],['../class_component.html#a195efec1fdb4c128a7716e611814f113',1,'Component::GetInstanceId()']]],
   ['getirradiancemapsrv',['GetIrradianceMapSRV',['../class_skybox.html#abdcfe4979a38deac4c58eb0abe828673',1,'Skybox']]],
   ['getkey',['GetKey',['../class_d_s_f_raw_input.html#a203d9a3293dcaf9183b4952ad6dd25fa',1,'DSFRawInput']]],
   ['getkeydown',['GetKeyDown',['../class_d_s_f_raw_input.html#a11eaeee5c52185d000990745a5368976',1,'DSFRawInput']]],

@@ -1,0 +1,5 @@
+<map id="FreeCam" name="FreeCam">
+<area shape="rect" id="node2" href="$class_component.html" title="The component class that will be attached to an object. " alt="" coords="157,96,245,123"/>
+<area shape="rect" id="node6" href="$class_transform.html" title="The transform of the object. " alt="" coords="105,187,185,213"/>
+<area shape="rect" id="node4" href="$class_object.html" title="A game object. " alt="" coords="243,277,303,304"/>
+</map>

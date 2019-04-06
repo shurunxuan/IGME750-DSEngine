@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['scene',['Scene',['../class_scene.html',1,'']]],
-  ['skybox',['Skybox',['../class_skybox.html',1,'']]]
+  ['object',['Object',['../class_object.html',1,'']]]
 ];

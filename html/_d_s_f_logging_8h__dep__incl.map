@@ -1,12 +1,12 @@
 <map id="/home/travis/build/shurunxuan/IGME750&#45;DSEngine/src/DSEngine/DSEngineFramework/DSFLogging.h" name="/home/travis/build/shurunxuan/IGME750&#45;DSEngine/src/DSEngine/DSEngineFramework/DSFLogging.h">
-<area shape="rect" id="node2" href="$_camera_8hpp.html" title="This file contains the class that represents the camera object. " alt="" coords="293,373,480,443"/>
-<area shape="rect" id="node11" href="$_transform_8hpp.html" title="This file contains the class that represents the transform component of an object. " alt="" coords="425,126,625,197"/>
-<area shape="rect" id="node14" href="$_p_b_r_material_8hpp.html" title="This file contains the class that represents the PBR Material. " alt="" coords="677,246,893,317"/>
-<area shape="rect" id="node3" href="$_light_8hpp.html" title="This file contains the class that represents the light. " alt="" coords="263,499,433,570"/>
-<area shape="rect" id="node4" href="$_scene_8hpp.html" title="This file contains the class that represents the scene graph. " alt="" coords="407,619,585,690"/>
-<area shape="rect" id="node9" href="$_d_s_f_direct3_d_8h.html" title="This file declares the framework class for Direct3D. " alt="" coords="138,619,381,690"/>
-<area shape="rect" id="node5" href="$_d_s_engine_app_8h.html" title="This file contains the class that the game app should derive from. " alt="" coords="275,859,501,930"/>
-<area shape="rect" id="node6" href="$_test_game_app_8h.html" title="This file contains the example/test class for the game that is using DSEngine. " alt="" coords="5,979,256,1050"/>
-<area shape="rect" id="node10" href="$_d_s_s_rendering_8h.html" title="This file declares the class for DSEngine Rendering System. " alt="" coords="185,739,417,810"/>
-<area shape="rect" id="node12" href="$_object_8hpp.html" title="This file contains the class that represents the game object. " alt="" coords="434,246,613,317"/>
+<area shape="rect" id="node2" href="$_camera_8hpp.html" title="This file contains the class that represents the camera object. " alt="" coords="319,373,507,443"/>
+<area shape="rect" id="node15" href="$_transform_8hpp.html" title="This file contains the class that represents the transform component of an object. " alt="" coords="781,126,981,197"/>
+<area shape="rect" id="node18" href="$_p_b_r_material_8hpp.html" title="This file contains the class that represents the PBR Material. " alt="" coords="489,126,705,197"/>
+<area shape="rect" id="node3" href="$_light_8hpp.html" title="This file contains the class that represents the light. " alt="" coords="287,499,457,570"/>
+<area shape="rect" id="node4" href="$_scene_8hpp.html" title="This file contains the class that represents the scene graph. " alt="" coords="431,619,609,690"/>
+<area shape="rect" id="node13" href="$_d_s_f_direct3_d_8h.html" title="This file declares the framework class for Direct3D. " alt="" coords="127,619,371,690"/>
+<area shape="rect" id="node5" href="$_d_s_engine_app_8h.html" title="This file contains the class that the game app should derive from. " alt="" coords="247,859,473,930"/>
+<area shape="rect" id="node6" href="$_test_game_app_8h.html" title="This file contains the example/test class for the game that is using DSEngine. " alt="" coords="245,979,496,1050"/>
+<area shape="rect" id="node14" href="$_d_s_s_rendering_8h.html" title="This file declares the class for DSEngine Rendering System. " alt="" coords="119,739,351,810"/>
+<area shape="rect" id="node16" href="$_object_8hpp.html" title="This file contains the class that represents the game object. " alt="" coords="805,246,984,317"/>
 </map>

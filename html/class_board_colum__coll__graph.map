@@ -1,0 +1,5 @@
+<map id="BoardColum" name="BoardColum">
+<area shape="rect" id="node2" href="$class_component.html" title="The component class that will be attached to an object. " alt="" coords="5,96,93,123"/>
+<area shape="rect" id="node6" href="$class_transform.html" title="The transform of the object. " alt="" coords="107,200,188,227"/>
+<area shape="rect" id="node4" href="$class_object.html" title="A game object. " alt="" coords="253,291,312,317"/>
+</map>

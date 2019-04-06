@@ -81,8 +81,16 @@ Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngi
 Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineSystem/DSEngineApp.h...
 Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineSystem/DSSAudio.h...
 Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineSystem/DSSAudio.h...
+Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineSystem/DSSEvent.h...
+Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineSystem/DSSEvent.h...
+Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineSystem/DSSEventSystem.h...
+Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineSystem/DSSEventSystem.h...
+Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineSystem/DSSHandlerFunctionBase.h...
+Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineSystem/DSSHandlerFunctionBase.h...
 Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineSystem/DSSInput.h...
 Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineSystem/DSSInput.h...
+Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineSystem/DSSMemberFunctionHandler.h...
+Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineSystem/DSSMemberFunctionHandler.h...
 Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineSystem/DSSRendering.h...
 Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineSystem/DSSRendering.h...
 Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineTestProject/CameraController.h...
@@ -95,8 +103,54 @@ Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngi
 Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineTestProject/TestGameApp.h...
 Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/RacingGame/RacingGameApp.h...
 Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/RacingGame/RacingGameApp.h...
+Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/BoardColum.h...
+Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/BoardColum.h...
+Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/BoardManager.h...
+Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower//home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/BoardColum.h:7: warning: Compound BoardColum is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TaskDeck.h:5: warning: Compound TaskDeck is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/BrickDeck.h:7: warning: Compound BrickDeck is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/ChangeBrickMaterial.h:8: warning: Compound ChangeBrickMaterial is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/CSVReader.h:26: warning: Compound CSVReader is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/RacingGame/RacingGameApp.h:6: warning: Compound RacingGameApp is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TaskCardGenerator.h:8: warning: Compound TaskCardGenerator is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TowerGameApp.h:12: warning: Compound TowerGameApp is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/InputManager.h:6: warning: Compound InputManager is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/FreeCam.h:6: warning: Compound FreeCam is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/BoardManager.h:11: warning: Compound BoardManager is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/UnlitMaterial.h:13: warning: Compound UnlitMaterial::UnlitMaterialStruct is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TaskCard.h:5: warning: Compound TaskCard is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/GameManager.h:16: warning: Compound GameManager is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/MoveObject.h:6: warning: Compound MoveObject is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/CSVReader.h:19: warning: Compound TaskCardData is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/PlayerManager.h:9: warning: Compound PlayerManager is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/BoardManager.h:6: warning: Compound BrickMatrix is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/Brick.h:14: warning: Compound Brick is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/UnlitMaterial.h:6: warning: Compound UnlitMaterial is not documented.
+BoardManager.h...
+Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/Brick.h...
+Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/Brick.h...
+Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/BrickDeck.h...
+Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/BrickDeck.h...
+Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/ChangeBrickMaterial.h...
+Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/ChangeBrickMaterial.h...
+Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/CSVReader.h...
+Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/CSVReader.h...
+Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/FreeCam.h...
+Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/FreeCam.h...
+Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/GameManager.h...
+Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/GameManager.h...
+Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/InputManager.h...
+Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/InputManager.h...
 Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/MoveObject.h...
 Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/MoveObject.h...
+Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/PlayerManager.h...
+Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/PlayerManager.h...
+Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TaskCard.h...
+Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TaskCard.h...
+Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TaskCardGenerator.h...
+Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TaskCardGenerator.h...
+Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TaskDeck.h...
+Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TaskDeck.h...
 Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TowerGameApp.h...
 Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TowerGameApp.h...
 Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/UnlitMaterial.h...
@@ -120,12 +174,30 @@ Searching for friends...
 Searching for documented defines...
 Computing class inheritance relations...
 Computing class usage relations...
-Flushing cached template relations that have /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/RacingGame/RacingGameApp.h:6: warning: Compound RacingGameApp is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TowerGameApp.h:6: warning: Compound TowerGameApp is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/UnlitMaterial.h:13: warning: Compound UnlitMaterial::UnlitMaterialStruct is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/MoveObject.h:6: warning: Compound MoveObject is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/UnlitMaterial.h:6: warning: Compound UnlitMaterial is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineCore/Light.hpp:21: warning: Member LIGHT_TYPE_DIR (macro definition) of file Light.hpp is not documented.
+Flushing cached template relations that have become invalid...
+Creating members for template instances...
+Computing class relations...
+Add enum values to enums...
+Searching for member function documentation...
+Building page list...
+Search for main page...
+Computing page relations...
+Determining the scope of groups...
+Sorting lists...
+Freeing entry tree
+Determining which enums are documented
+Computing member relations...
+Building full member lists recursively...
+Adding members to member groups.
+Computing member references...
+Inheriting documentation...
+Generating disk names...
+Adding source references...
+Adding xrefitems...
+Sorting member lists...
+Computing dependencies between directories...
+Generating citations page...
+Counting data st/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineCore/Light.hpp:21: warning: Member LIGHT_TYPE_DIR (macro definition) of file Light.hpp is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineCore/Light.hpp:22: warning: Member LIGHT_TYPE_POINT (macro definition) of file Light.hpp is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineCore/Light.hpp:23: warning: Member LIGHT_TYPE_SPOT (macro definition) of file Light.hpp is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineCore/Light.hpp:25: warning: Member PCF_BLUR_COUNT (macro definition) of file Light.hpp is not documented.
@@ -164,31 +236,33 @@ Flushing cached template relations that have /home/travis/build/shurunxuan/IGME7
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineSystem/DSSInput.h:48: warning: Member JoystickRX (variable) of file DSSInput.h is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineSystem/DSSInput.h:49: warning: Member JoystickRY (variable) of file DSSInput.h is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineSystem/DSSRendering.h:15: warning: Member DSENGINESYSTEM_API (macro definition) of file DSSRendering.h is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/BoardColum.h:9: warning: Member BoardColum(Object *owner) (function) of class BoardColum is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/BoardColum.h:21: warning: Member PlaceBrick(Brick *brick) (function) of class BoardColum is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/BoardColum.h:15: warning: Member index (variable) of class BoardColum is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/BoardColum.h:16: warning: Member isFull (variable) of class BoardColum is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/BoardColum.h:18: warning: Member bricks (variable) of class BoardColum is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/BoardColum.h:19: warning: Member brickCount (variable) of class BoardColum is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/BoardManager.h:22: warning: Member PlaceBrickAt(Brick *brick, BoardColum *colum) (function) of class BoardManager is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/BoardManager.h:23: warning: Member GetBrickMatrices(TaskCard task) (function) of class BoardManager is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/BoardManager.h:24: warning: Member GetBrickAt(int r, int c) (function) of class BoardManager is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/BoardManager.h:13: warning: Member getInstance() (function) of class BoardManager is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/BoardManager.h:17: warning: Member maxBrickPerColum (variable) of class BoardManager is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/BoardManager.h:18: warning: Member brickHeight (variable) of class BoardManager is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/BoardManager.h:20: warning: Member boardColums[3] (variable) of class BoardManager is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/Brick.h:16: warning: Member Brick(Object *owner) (function) of class Brick is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/Brick.h:24: warning: Member SetBrickColor(int) (function) of class Brick is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/Brick.h:25: warning: Member OnPlaced() (function) of class Brick is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/Brick.h:22: warning: Member color (variable) of class Brick is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/BrickDeck.h:17: warning: Member OnDraw(Transform *transform) (function) of class BrickDeck is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/BrickDeck.h:18: warning: Member InitDeck(Scene *scene) (function) of class BrickDeck is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/BrickDeck.h:19: warning: Member CreateBrick(Scene *scene, BrickColor color, DirectX::XMVECTOR position) (function) of class BrickDeck is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/BrickDeck.h:11: warning: Member getInstance() (function) of class BrickDeck is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/BrickDeck.h:14: warning: Member bricks (variable) of class BrickDeck is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/BoardManager.h:7: warning: Member bricks[3][3] (variable) of class BrickMatrix is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineTestProject/CameraController.h:12: warning: Member CameraController(Object *owner) (function) of class CameraController is not documented.
-become invalid...
-Creating members for template instances...
-Computing class relations...
-Add enum values to enums...
-Searching for member function documentation...
-Building page list...
-Search for main page...
-Computing page relations...
-Determining the scope of groups...
-Sorting lists...
-Freeing entry tree
-Determining which enums are documented
-Computing member relations...
-Building full member lists recursively...
-Adding members to member groups.
-Computing member references...
-Inheriting documentation...
-Generating disk names...
-Adding source references...
-Adding xrefitems...
-Sorting member lists...
-Computing dependencies between directories...
-Generating citations page...
-Counting data structures...
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/ChangeBrickMaterial.h:10: warning: Member ChangeBrickMaterial(Object *owner) (function) of class ChangeBrickMaterial is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/CSVReader.h:28: warning: Member ReadFromFile(std::string _file) (function) of class CSVReader is not documented.
+ructures...
 Resolving user defined references...
 Finding anchors and sections in the documentation...
 Transferring function references...
@@ -226,12 +300,36 @@ Generating page documentation...
 Generating docs for page todo...
 Generating group documentation...
 Generating class documentation...
+Generating docs for compound BoardColum...
+Generating docs for compound BoardManager...
+Generating docs for compound Brick...
+Generating docs for compound BrickDeck...
+Generating docs for compound BrickMatrix...
 Generating docs for compound Camera...
 Generating docs for compound CameraController...
+Generating docs for compound ChangeBrickMaterial...
 Generating docs for compound Component...
+Generating docs for compound CSVReader...
 Generating docs for compound DSEngineApp...
 Generating docs for compound DSFDirect3D...
-Generating docs for compound DSF/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/MoveObject.h:8: warning: Member MoveObject(Object *owner) (function) of class MoveObject is not documented.
+Generating docs for compound DSFFFmpeg...
+Generating docs for compound DSFRawInput...
+Generating docs for compound DSFThreadPool...
+Generating docs for compound DSFVoiceCallback...
+Generating docs for compound DSFXAudio2...
+Generating docs for compound DSFXInput...
+Generating docs for compound DSSAudio...
+Generating docs for compound DSSInput...
+Generating docs for compound DSSInputAxis...
+Generating docs for compound DSSRe/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/FreeCam.h:8: warning: Member FreeCam(Object *owner) (function) of class FreeCam is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/GameManager.h:24: warning: Member Update(GameState) (function) of class GameManager is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/GameManager.h:25: warning: Member CheckTaskCompletion() (function) of class GameManager is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/GameManager.h:22: warning: Member getInstance() (function) of class GameManager is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/GameManager.h:23: warning: Member currentGameState (variable) of class GameManager is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/GameManager.h:26: warning: Member selectedBrick (variable) of class GameManager is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/GameManager.h:27: warning: Member ContinousDrawTask (variable) of class GameManager is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/InputManager.h:8: warning: Member InputManager(Object *owner) (function) of class InputManager is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/MoveObject.h:8: warning: Member MoveObject(Object *owner) (function) of class MoveObject is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/MoveObject.h:14: warning: Member instance (variable) of class MoveObject is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineTestProject/MoveParentObject.h:14: warning: Member MoveParentObject(Object *owner) (function) of class MoveParentObject is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineCore/PBRMaterial.hpp:87: warning: Member parameters (variable) of class PBRMaterial is not documented.
@@ -241,21 +339,51 @@ Generating docs for compound DSF/home/travis/build/shurunxuan/IGME750-DSEngine/s
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineCore/PBRMaterial.hpp:125: warning: argument 'diffuseTexture' of command @param is not found in the argument list of PBRMaterial::LoadNormalTexture(const std::string &normalTexture)
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineCore/PBRMaterial.hpp:125: warning: The following parameters of PBRMaterial::LoadNormalTexture(const std::string &normalTexture) are not documented:
   parameter 'normalTexture'
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/PlayerManager.h:16: warning: Member AddTask(TaskCard task) (function) of class PlayerManager is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/PlayerManager.h:17: warning: Member DrawTaskCard() (function) of class PlayerManager is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/PlayerManager.h:18: warning: Member DrawBrick(Transform *transform) (function) of class PlayerManager is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/PlayerManager.h:19: warning: Member UseBrick(Brick *usedBrick) (function) of class PlayerManager is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/PlayerManager.h:20: warning: Member CompleteTask(std::vector< int > index) (function) of class PlayerManager is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/PlayerManager.h:21: warning: Member UIUpdateHand() (function) of class PlayerManager is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/PlayerManager.h:13: warning: Member getInstance() (function) of class PlayerManager is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/PlayerManager.h:14: warning: Member tasksInHand (variable) of class PlayerManager is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/PlayerManager.h:15: warning: Member bricksInHand (variable) of class PlayerManager is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/PlayerManager.h:22: warning: Member playerHand (variable) of class PlayerManager is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/PlayerManager.h:23: warning: Member taskPos[3] (variable) of class PlayerManager is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/PlayerManager.h:24: warning: Member brickPositions[3] (variable) of class PlayerManager is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/PlayerManager.h:25: warning: Member UItaskInHand[3] (variable) of class PlayerManager is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/PlayerManager.h:26: warning: Member score (variable) of class PlayerManager is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/PlayerManager.h:27: warning: Member taskCount (variable) of class PlayerManager is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineTestProject/PressSpaceToPlayAudio.h:15: warning: Member PressSpaceToPlayAudio(Object *owner) (function) of class PressSpaceToPlayAudio is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TaskCard.h:7: warning: Member TaskCard(TaskCardData) (function) of class TaskCard is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TaskCard.h:8: warning: Member GetColorValue() (function) of class TaskCard is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TaskCard.h:9: warning: Member GetTaskData() (function) of class TaskCard is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TaskCard.h:10: warning: Member OnCompleted() (function) of class TaskCard is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TaskCard.h:11: warning: Member isCompleted (variable) of class TaskCard is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/CSVReader.h:20: warning: Member type (variable) of class TaskCardData is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/CSVReader.h:21: warning: Member Score (variable) of class TaskCardData is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/CSVReader.h:22: warning: Member pattern (variable) of class TaskCardData is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/CSVReader.h:23: warning: Member color (variable) of class TaskCardData is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TaskCardGenerator.h:10: warning: Member AddTaskCard(Scene *scene, TaskCardData data, Transform *parent, std::string name="TaskCard") (function) of class TaskCardGenerator is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TaskDeck.h:12: warning: Member Shuffle() (function) of class TaskDeck is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TaskDeck.h:13: warning: Member InitDeck(Scene *scene) (function) of class TaskDeck is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TaskDeck.h:15: warning: Member DrawTask() (function) of class TaskDeck is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TaskDeck.h:10: warning: Member getInstance() (function) of class TaskDeck is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TaskDeck.h:11: warning: Member tasks (variable) of class TaskDeck is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TaskDeck.h:14: warning: Member scene (variable) of class TaskDeck is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TowerGameApp.h:23: warning: Member taskDeck (variable) of class TowerGameApp is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TowerGameApp.h:24: warning: Member brickDeck (variable) of class TowerGameApp is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TowerGameApp.h:25: warning: Member gameManager (variable) of class TowerGameApp is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TowerGameApp.h:26: warning: Member playerManager (variable) of class TowerGameApp is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TowerGameApp.h:27: warning: Member boardManager (variable) of class TowerGameApp is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/UnlitMaterial.h:8: warning: Member UnlitMaterial(ID3D11Device *d) (function) of class UnlitMaterial is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/UnlitMaterial.h:9: warning: Member UnlitMaterial(SimpleVertexShader *vtxShader, SimplePixelShader *pxlShader, ID3D11Device *d) (function) of class UnlitMaterial is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/UnlitMaterial.h:15: warning: Member parameters (variable) of class UnlitMaterial is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/UnlitMaterial.h:14: warning: Member Color (variable) of class UnlitMaterial::UnlitMaterialStruct is not documented.
-FFmpeg...
-Generating docs for compound DSFRawInput...
-Generating docs for compound DSFThreadPool...
-Generating docs for compound DSFVoiceCallback...
-Generating docs for compound DSFXAudio2...
-Generating docs for compound DSFXInput...
-Generating docs for compound DSSAudio...
-Generating docs for compound DSSInput...
-Generating docs for compound DSSInputAxis...
-Generating docs for compound DSSRendering...
+ndering...
+Generating docs for compound FreeCam...
+Generating docs for compound GameManager...
+Generating docs for compound InputManager...
 Generating docs for compound IXAudio2VoiceCallback...
 Generating docs for compound Light...
 Generating docs for compound LightData...
@@ -267,10 +395,15 @@ Generating docs for compound MoveParentObject...
 Generating docs for compound Object...
 Generating docs for compound PBRMaterial...
 Generating docs for nested compound PBRMaterial::PBRMaterialStruct...
+Generating docs for compound PlayerManager...
 Generating docs for compound PressSpaceToPlayAudio...
 Generating docs for compound RacingGameApp...
 Generating docs for compound Scene...
 Generating docs for compound Skybox...
+Generating docs for compound TaskCard...
+Generating docs for compound TaskCardData...
+Generating docs for compound TaskCardGenerator...
+Generating docs for compound TaskDeck...
 Generating docs for compound TestGameApp...
 Generating docs for compound TowerGameApp...
 Generating docs for compound Transform...
@@ -304,178 +437,219 @@ Generating example index...
 finalizing index lists...
 Running dot...
 Generating dot graphs using 3 parallel threads...
-Running dot for graph 1/117
-Running dot for graph 2/117
-Running dot for graph 3/117
-Running dot for graph 4/117
-Running dot for graph 5/117
-Running dot for graph 6/117
-Running dot for graph 7/117
-Running dot for graph 8/117
-Running dot for graph 9/117
-Running dot for graph 10/117
-Running dot for graph 11/117
-Running dot for graph 12/117
-Running dot for graph 13/117
-Running dot for graph 14/117
-Running dot for graph 15/117
-Running dot for graph 16/117
-Running dot for graph 17/117
-Running dot for graph 18/117
-Running dot for graph 19/117
-Running dot for graph 20/117
-Running dot for graph 21/117
-Running dot for graph 22/117
-Running dot for graph 23/117
-Running dot for graph 24/117
-Running dot for graph 25/117
-Running dot for graph 26/117
-Running dot for graph 27/117
-Running dot for graph 28/117
-Running dot for graph 29/117
-Running dot for graph 30/117
-Running dot for graph 31/117
-Running dot for graph 32/117
-Running dot for graph 33/117
-Running dot for graph 34/117
-Running dot for graph 35/117
-Running dot for graph 36/117
-Running dot for graph 37/117
-Running dot for graph 38/117
-Running dot for graph 39/117
-Running dot for graph 40/117
-Running dot for graph 41/117
-Running dot for graph 42/117
-Running dot for graph 43/117
-Running dot for graph 44/117
-Running dot for graph 45/117
-Running dot for graph 46/117
-Running dot for graph 47/117
-Running dot for graph 48/117
-Running dot for graph 49/117
-Running dot for graph 50/117
-Running dot for graph 51/117
-Running dot for graph 52/117
-Running dot for graph 53/117
-Running dot for graph 54/117
-Running dot for graph 55/117
-Running dot for graph 56/117
-Running dot for graph 57/117
-Running dot for graph 58/117
-Running dot for graph 59/117
-Running dot for graph 60/117
-Running dot for graph 61/117
-Running dot for graph 62/117
-Running dot for graph 63/117
-Running dot for graph 64/117
-Running dot for graph 65/117
-Running dot for graph 66/117
-Running dot for graph 67/117
-Running dot for graph 68/117
-Running dot for graph 69/117
-Running dot for graph 70/117
-Running dot for graph 71/117
-Running dot for graph 72/117
-Running dot for graph 73/117
-Running dot for graph 74/117
-Running dot for graph 75/117
-Running dot for graph 76/117
-Running dot for graph 77/117
-Running dot for graph 78/117
-Running dot for graph 79/117
-Running dot for graph 80/117
-Running dot for graph 81/117
-Running dot for graph 82/117
-Running dot for graph 83/117
-Running dot for graph 84/117
-Running dot for graph 85/117
-Running dot for graph 86/117
-Running dot for graph 87/117
-Running dot for graph 88/117
-Running dot for graph 89/117
-Running dot for graph 90/117
-Running dot for graph 91/117
-Running dot for graph 92/117
-Running dot for graph 93/117
-Running dot for graph 94/117
-Running dot for graph 95/117
-Running dot for graph 96/117
-Running dot for graph 97/117
-Running dot for graph 98/117
-Running dot for graph 99/117
-Running dot for graph 100/117
-Running dot for graph 101/117
-Running dot for graph 102/117
-Running dot for graph 103/117
-Running dot for graph 104/117
-Running dot for graph 105/117
-Running dot for graph 106/117
-Running dot for graph 107/117
-Running dot for graph 108/117
-Running dot for graph 109/117
-Running dot for graph 110/117
-Running dot for graph 111/117
-Running dot for graph 112/117
-Running dot for graph 113/117
-Running dot for graph 114/117
-Running dot for graph 115/117
-Running dot for graph 116/117
-Running dot for graph 117/117
-Patching output file 1/56
-Patching output file 2/56
-Patching output file 3/56
-Patching output file 4/56
-Patching output file 5/56
-Patching output file 6/56
-Patching output file 7/56
-Patching output file 8/56
-Patching output file 9/56
-Patching output file 10/56
-Patching output file 11/56
-Patching output file 12/56
-Patching output file 13/56
-Patching output file 14/56
-Patching output file 15/56
-Patching output file 16/56
-Patching output file 17/56
-Patching output file 18/56
-Patching output file 19/56
-Patching output file 20/56
-Patching output file 21/56
-Patching output file 22/56
-Patching output file 23/56
-Patching output file 24/56
-Patching output file 25/56
-Patching output file 26/56
-Patching output file 27/56
-Patching output file 28/56
-Patching output file 29/56
-Patching output file 30/56
-Patching output file 31/56
-Patching output file 32/56
-Patching output file 33/56
-Patching output file 34/56
-Patching output file 35/56
-Patching output file 36/56
-Patching output file 37/56
-Patching output file 38/56
-Patching output file 39/56
-Patching output file 40/56
-Patching output file 41/56
-Patching output file 42/56
-Patching output file 43/56
-Patching output file 44/56
-Patching output file 45/56
-Patching output file 46/56
-Patching output file 47/56
-Patching output file 48/56
-Patching output file 49/56
-Patching output file 50/56
-Patching output file 51/56
-Patching output file 52/56
-Patching output file 53/56
-Patching output file 54/56
-Patching output file 55/56
-Patching output file 56/56
-lookup cache used 467/65536 hits=2297 misses=523
+Running dot for graph 1/145
+Running dot for graph 2/145
+Running dot for graph 3/145
+Running dot for graph 4/145
+Running dot for graph 5/145
+Running dot for graph 6/145
+Running dot for graph 7/145
+Running dot for graph 8/145
+Running dot for graph 9/145
+Running dot for graph 10/145
+Running dot for graph 11/145
+Running dot for graph 12/145
+Running dot for graph 13/145
+Running dot for graph 14/145
+Running dot for graph 15/145
+Running dot for graph 16/145
+Running dot for graph 17/145
+Running dot for graph 18/145
+Running dot for graph 19/145
+Running dot for graph 20/145
+Running dot for graph 21/145
+Running dot for graph 22/145
+Running dot for graph 23/145
+Running dot for graph 24/145
+Running dot for graph 25/145
+Running dot for graph 26/145
+Running dot for graph 27/145
+Running dot for graph 28/145
+Running dot for graph 29/145
+Running dot for graph 30/145
+Running dot for graph 31/145
+Running dot for graph 32/145
+Running dot for graph 33/145
+Running dot for graph 34/145
+Running dot for graph 35/145
+Running dot for graph 36/145
+Running dot for graph 37/145
+Running dot for graph 38/145
+Running dot for graph 39/145
+Running dot for graph 40/145
+Running dot for graph 41/145
+Running dot for graph 42/145
+Running dot for graph 43/145
+Running dot for graph 44/145
+Running dot for graph 45/145
+Running dot for graph 46/145
+Running dot for graph 47/145
+Running dot for graph 48/145
+Running dot for graph 49/145
+Running dot for graph 50/145
+Running dot for graph 51/145
+Running dot for graph 52/145
+Running dot for graph 53/145
+Running dot for graph 54/145
+Running dot for graph 55/145
+Running dot for graph 56/145
+Running dot for graph 57/145
+Running dot for graph 58/145
+Running dot for graph 59/145
+Running dot for graph 60/145
+Running dot for graph 61/145
+Running dot for graph 62/145
+Running dot for graph 63/145
+Running dot for graph 64/145
+Running dot for graph 65/145
+Running dot for graph 66/145
+Running dot for graph 67/145
+Running dot for graph 68/145
+Running dot for graph 69/145
+Running dot for graph 70/145
+Running dot for graph 71/145
+Running dot for graph 72/145
+Running dot for graph 73/145
+Running dot for graph 74/145
+Running dot for graph 75/145
+Running dot for graph 76/145
+Running dot for graph 77/145
+Running dot for graph 78/145
+Running dot for graph 79/145
+Running dot for graph 80/145
+Running dot for graph 81/145
+Running dot for graph 82/145
+Running dot for graph 83/145
+Running dot for graph 84/145
+Running dot for graph 85/145
+Running dot for graph 86/145
+Running dot for graph 87/145
+Running dot for graph 88/145
+Running dot for graph 89/145
+Running dot for graph 90/145
+Running dot for graph 91/145
+Running dot for graph 92/145
+Running dot for graph 93/145
+Running dot for graph 94/145
+Running dot for graph 95/145
+Running dot for graph 96/145
+Running dot for graph 97/145
+Running dot for graph 98/145
+Running dot for graph 99/145
+Running dot for graph 100/145
+Running dot for graph 101/145
+Running dot for graph 102/145
+Running dot for graph 103/145
+Running dot for graph 104/145
+Running dot for graph 105/145
+Running dot for graph 106/145
+Running dot for graph 107/145
+Running dot for graph 108/145
+Running dot for graph 109/145
+Running dot for graph 110/145
+Running dot for graph 111/145
+Running dot for graph 112/145
+Running dot for graph 113/145
+Running dot for graph 114/145
+Running dot for graph 115/145
+Running dot for graph 116/145
+Running dot for graph 117/145
+Running dot for graph 118/145
+Running dot for graph 119/145
+Running dot for graph 120/145
+Running dot for graph 121/145
+Running dot for graph 122/145
+Running dot for graph 123/145
+Running dot for graph 124/145
+Running dot for graph 125/145
+Running dot for graph 126/145
+Running dot for graph 127/145
+Running dot for graph 128/145
+Running dot for graph 129/145
+Running dot for graph 130/145
+Running dot for graph 131/145
+Running dot for graph 132/145
+Running dot for graph 133/145
+Running dot for graph 134/145
+Running dot for graph 135/145
+Running dot for graph 136/145
+Running dot for graph 137/145
+Running dot for graph 138/145
+Running dot for graph 139/145
+Running dot for graph 140/145
+Running dot for graph 141/145
+Running dot for graph 142/145
+Running dot for graph 143/145
+Running dot for graph 144/145
+Running dot for graph 145/145
+Patching output file 1/69
+Patching output file 2/69
+Patching output file 3/69
+Patching output file 4/69
+Patching output file 5/69
+Patching output file 6/69
+Patching output file 7/69
+Patching output file 8/69
+Patching output file 9/69
+Patching output file 10/69
+Patching output file 11/69
+Patching output file 12/69
+Patching output file 13/69
+Patching output file 14/69
+Patching output file 15/69
+Patching output file 16/69
+Patching output file 17/69
+Patching output file 18/69
+Patching output file 19/69
+Patching output file 20/69
+Patching output file 21/69
+Patching output file 22/69
+Patching output file 23/69
+Patching output file 24/69
+Patching output file 25/69
+Patching output file 26/69
+Patching output file 27/69
+Patching output file 28/69
+Patching output file 29/69
+Patching output file 30/69
+Patching output file 31/69
+Patching output file 32/69
+Patching output file 33/69
+Patching output file 34/69
+Patching output file 35/69
+Patching output file 36/69
+Patching output file 37/69
+Patching output file 38/69
+Patching output file 39/69
+Patching output file 40/69
+Patching output file 41/69
+Patching output file 42/69
+Patching output file 43/69
+Patching output file 44/69
+Patching output file 45/69
+Patching output file 46/69
+Patching output file 47/69
+Patching output file 48/69
+Patching output file 49/69
+Patching output file 50/69
+Patching output file 51/69
+Patching output file 52/69
+Patching output file 53/69
+Patching output file 54/69
+Patching output file 55/69
+Patching output file 56/69
+Patching output file 57/69
+Patching output file 58/69
+Patching output file 59/69
+Patching output file 60/69
+Patching output file 61/69
+Patching output file 62/69
+Patching output file 63/69
+Patching output file 64/69
+Patching output file 65/69
+Patching output file 66/69
+Patching output file 67/69
+Patching output file 68/69
+Patching output file 69/69
+lookup cache used 578/65536 hits=2724 misses=654
 finished...
