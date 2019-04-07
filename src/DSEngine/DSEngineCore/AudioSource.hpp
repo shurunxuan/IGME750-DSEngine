@@ -65,6 +65,8 @@ inline void AudioSource::PlaySync()
 
 	LOG_TRACE << "Starting audio file \"" << filename << "\" playback at 0x" << boost::this_thread::get_id();
 
+	bool stoppedByStreamEnd = true;
+
 	try
 	{
 		while (true)
@@ -97,6 +99,8 @@ inline void AudioSource::PlaySync()
 		UNREFERENCED_PARAMETER(tie);
 
 		LOG_WARNING << "Audio playback thread interrupted!";
+
+		stoppedByStreamEnd = false;
 	}
 
 	// Stop the source voice
@@ -106,6 +110,11 @@ inline void AudioSource::PlaySync()
 
 	// Clear all queued buffers
 	sourceVoice->FlushSourceBuffers();
+
+	ffmpeg.Seek(0, !stoppedByStreamEnd);
+
+	isPlaying = false;
+	stopped = true;
 }
 
 inline AudioSource::AudioSource(Object* owner)
@@ -197,11 +206,6 @@ inline void AudioSource::Stop()
 		playbackThread.interrupt();
 		playbackThread.join();
 	}
-
-	ffmpeg.Seek(0);
-
-	isPlaying = false;
-	stopped = true;
 }
 
 inline void AudioSource::Pause()

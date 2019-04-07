@@ -287,7 +287,7 @@ int DSFFFmpeg::SendBuffer(IXAudio2SourceVoice * sourceVoice)
 	return 0;
 }
 
-int DSFFFmpeg::Seek(int64_t timestamp)
+int DSFFFmpeg::Seek(int64_t timestamp, bool shouldFreeFrames)
 {
 
 	avcodec_flush_buffers(codecContext);
@@ -300,10 +300,14 @@ int DSFFFmpeg::Seek(int64_t timestamp)
 		timestamp,
 		0
 	);
-	if (lastFrame != nullptr)
-		av_frame_free(&lastFrame);
-	if (frame != nullptr)
-		av_frame_free(&frame);
+	if (shouldFreeFrames)
+	{
+		av_packet_unref(&packet);
+		if (lastFrame != nullptr)
+			av_frame_free(&lastFrame);
+		if (frame != nullptr)
+			av_frame_free(&frame);
+	}
 	ReadFrame();
 	return res;
 }

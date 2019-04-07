@@ -125,10 +125,11 @@ public:
 	 * @brief Seek to timestamp
 	 * 
 	 * @param timestamp Target timestamp
+	 * @param shouldFreeFrames Indicates if freeing frames is required
 	 * 
 	 * @return int 0 if succeeded, or other
 	 */
-	int Seek(int64_t timestamp);
+	int Seek(int64_t timestamp, bool shouldFreeFrames);
 
 private:
 	/**

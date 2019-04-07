@@ -587,7 +587,7 @@ HRESULT DSFDirect3D::CreateShadowAndDrawingRenderState()
 	if (FAILED(hr)) return hr;
 	D3D11_RASTERIZER_DESC shadowRenderStateDesc;
 	ZeroMemory(&shadowRenderStateDesc, sizeof(D3D11_RASTERIZER_DESC));
-	shadowRenderStateDesc.CullMode = D3D11_CULL_BACK;
+	shadowRenderStateDesc.CullMode = D3D11_CULL_FRONT;
 	shadowRenderStateDesc.FillMode = D3D11_FILL_SOLID;
 	shadowRenderStateDesc.DepthBias = 1000;
 	shadowRenderStateDesc.DepthBiasClamp = 0.0f;
