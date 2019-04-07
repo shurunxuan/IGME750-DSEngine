@@ -51,18 +51,18 @@ bool DSEngineApp::Initialize(HINSTANCE hInstance, LPWSTR lpCmdLine, HWND hWnd, i
 
 	threadPool->Enqueue(
 		[this]()
-	{
-		LOG_TRACE << "High precision joystick input polling thread working at 0x" << boost::this_thread::get_id();
-		while (!threadPool->stop)
 		{
-			auto nextTime = boost::chrono::high_resolution_clock::now() + boost::chrono::milliseconds(4);
+			LOG_TRACE << "High precision joystick input polling thread working at 0x" << boost::this_thread::get_id();
+			while (!threadPool->stop)
+			{
+				auto nextTime = boost::chrono::high_resolution_clock::now() + boost::chrono::milliseconds(4);
 
-			inputSystem.AsyncUpdate(0.004f);
+				inputSystem.AsyncUpdate(0.004f);
 
-			boost::this_thread::sleep_until(nextTime);
-		}
+				boost::this_thread::sleep_until(nextTime);
+			}
 
-	});
+		});
 
 	device = FDirect3D->GetDevice();
 	context = FDirect3D->GetDeviceContext();

@@ -230,6 +230,11 @@ inline Scene::~Scene()
 		delete object;
 	}
 	allObjects.clear();
+	for (Light* light : lights)
+	{
+		delete light;
+	}
+	lights.clear();
 }
 
 inline void Scene::SetD3D11Device(ID3D11Device* d, ID3D11DeviceContext* c)
