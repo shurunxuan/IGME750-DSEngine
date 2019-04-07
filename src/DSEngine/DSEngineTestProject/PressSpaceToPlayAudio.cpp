@@ -20,7 +20,8 @@ void PressSpaceToPlayAudio::Start()
 {
 
 }
-
+float ratio = 1.0f;
+float volume = 1.0f;
 void PressSpaceToPlayAudio::Update(float deltaTime, float totalTime)
 {
 	// Only for test. Don't use FRawInput or FXInput directly after the input system is completed.
@@ -59,5 +60,29 @@ void PressSpaceToPlayAudio::Update(float deltaTime, float totalTime)
 	if (SInput->GetButtonDown("StopAudio2"))
 	{
 		source2->Stop();
+	}
+
+	if (SInput->GetButtonDown("Audio1PitchUp"))
+	{
+		ratio *= 1.1f;
+		source1->SetPitch(ratio);
+	}
+
+	if (SInput->GetButtonDown("Audio1PitchDown"))
+	{
+		ratio /= 1.1f;
+		source1->SetPitch(ratio);
+	}	
+	
+	if (SInput->GetButtonDown("Audio1VolumeUp"))
+	{
+		volume += 0.1f;
+		source1->SetVolume(volume);
+	}
+
+	if (SInput->GetButtonDown("Audio1VolumeDown"))
+	{
+		volume -= 0.1f;		
+		source1->SetVolume(volume);
 	}
 }

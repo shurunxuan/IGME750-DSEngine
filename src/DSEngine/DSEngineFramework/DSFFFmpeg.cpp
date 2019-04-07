@@ -32,9 +32,11 @@ DSFFFmpeg::~DSFFFmpeg()
 		swr_free(&swr);
 	av_packet_unref(&packet);
 	if (lastFrame != nullptr)
-		av_frame_free(&lastFrame);
+		if (lastFrame->format >= 0)
+			av_frame_free(&lastFrame);
 	if (frame != nullptr && !eof)
-		av_frame_free(&frame);
+		if (frame->format >= 0)
+			av_frame_free(&frame);
 
 	delete[] swrBuffer;
 
@@ -309,5 +311,6 @@ int DSFFFmpeg::Seek(int64_t timestamp, bool shouldFreeFrames)
 			av_frame_free(&frame);
 	}
 	ReadFrame();
+	eof = false;
 	return res;
 }

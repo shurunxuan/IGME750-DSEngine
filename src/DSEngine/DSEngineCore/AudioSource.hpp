@@ -50,6 +50,9 @@ public:
 	void Stop();
 	void Pause();
 
+	void SetPitch(float frequencyRatio);
+	void SetVolume(float volume);
+
 	bool Loop;
 	bool isPlaying;
 	bool stopped;
@@ -217,4 +220,14 @@ inline void AudioSource::Pause()
 
 	isPlaying = false;
 	stopped = false;
+}
+
+inline void AudioSource::SetPitch(float frequencyRatio)
+{
+	sourceVoice->SetFrequencyRatio(frequencyRatio);
+}
+
+inline void AudioSource::SetVolume(float volume)
+{
+	sourceVoice->SetVolume(volume);
 }
