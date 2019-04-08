@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['object',['object',['../class_component.html#a2aa0e777f7b39ffc4e57b04fdf6293e7',1,'Component']]]
+  ['name',['name',['../class_object.html#a24457e0a387492c80594aec7681a2277',1,'Object']]],
+  ['normal',['Normal',['../struct_vertex.html#a553ed48ae98dda36da8e57cfa53877d4',1,'Vertex']]]
 ];

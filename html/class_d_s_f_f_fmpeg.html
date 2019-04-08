@@ -136,6 +136,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:a85e9de5ba7152adb520d84d83dd727d8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_f_f_fmpeg.html#a85e9de5ba7152adb520d84d83dd727d8">SendBuffer</a> (IXAudio2SourceVoice *sourceVoice)</td></tr>
 <tr class="memdesc:a85e9de5ba7152adb520d84d83dd727d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send the decoded buffer to the XAudio2 source voice.  <a href="#a85e9de5ba7152adb520d84d83dd727d8">More...</a><br/></td></tr>
 <tr class="separator:a85e9de5ba7152adb520d84d83dd727d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0307945ee258fb2c9c58ada9d962b699"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_f_f_fmpeg.html#a0307945ee258fb2c9c58ada9d962b699">Seek</a> (int64_t timestamp, bool shouldFreeFrames)</td></tr>
+<tr class="memdesc:a0307945ee258fb2c9c58ada9d962b699"><td class="mdescLeft">&#160;</td><td class="mdescRight">Seek to timestamp.  <a href="#a0307945ee258fb2c9c58ada9d962b699">More...</a><br/></td></tr>
+<tr class="separator:a0307945ee258fb2c9c58ada9d962b699"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The FFMpeg Framework of the DS Engine. </p>
@@ -404,6 +407,42 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </div><div class="memdoc">
 
 <p>Resample the frame. </p>
+<dl class="section return"><dt>Returns</dt><dd>int 0 if succeeded, or other </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a0307945ee258fb2c9c58ada9d962b699"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int DSFFFmpeg::Seek </td>
+          <td>(</td>
+          <td class="paramtype">int64_t&#160;</td>
+          <td class="paramname"><em>timestamp</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>shouldFreeFrames</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Seek to timestamp. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">timestamp</td><td>Target timestamp </td></tr>
+    <tr><td class="paramname">shouldFreeFrames</td><td>Indicates if freeing frames is required</td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="section return"><dt>Returns</dt><dd>int 0 if succeeded, or other </dd></dl>
 
 </div>
