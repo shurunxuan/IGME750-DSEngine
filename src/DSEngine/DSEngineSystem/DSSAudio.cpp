@@ -19,7 +19,6 @@ DSSAudio::~DSSAudio()
 void DSSAudio::Init()
 {
 	xAudio2.Init();
-	ffmpeg.Init();
 	LOG_TRACE << "DS Engine Audio System Initialized!";
 }
 
@@ -55,7 +54,7 @@ void DSSAudio::Update()
 	{
 		// Don't calculate if source is not 3D
 		if (!source->Is3D) continue;
-		if (!source->isPlaying) continue;
+		if (!source->Playing()) continue;
 		xAudio2.AudioCalculate3D(audioListener, source);
 	}
 }

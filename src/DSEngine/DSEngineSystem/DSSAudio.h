@@ -89,13 +89,6 @@ private:
      * 
      */
     DSFXAudio2 xAudio2;
-    /**
-     * @brief The FFmpeg Framework reference
-     * 
-     * Can only play/decode one file at a time
-     * 
-     */
-    DSFFFmpeg ffmpeg;
 };
 
 /**

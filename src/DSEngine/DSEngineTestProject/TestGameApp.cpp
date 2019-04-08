@@ -74,6 +74,9 @@ void TestGameApp::Init()
 	AudioSource* audioSource1 = parentObj->AddComponent<AudioSource>();
 	audioSource1->Is3D = true;
 	audioSource1->Loop = true;
+
+	//audioSource1->SetDopplerScaler(10.0f);
+	//audioSource1->SetCurveDistanceScaler(100.0f);
 	AudioSource* audioSource2 = parentObj->AddComponent<AudioSource>();
 
 	playAudioComponent->source1 = audioSource1;

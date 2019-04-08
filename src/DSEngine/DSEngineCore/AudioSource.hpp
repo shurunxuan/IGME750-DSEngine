@@ -20,11 +20,20 @@
 #include "Component.hpp"
 #include "Object.hpp"
 
-class AudioSource 
+/**
+ * @brief The Audio Source
+ * 
+ */
+class AudioSource final
 	: public Component
 {
 private:
 	friend class DSFXAudio2;
+
+	/**
+	 * @brief The audio file name
+	 * 
+	 */
 	std::string filename;
 	/**
 	 * @brief The FFmpeg Framework reference
@@ -33,49 +42,270 @@ private:
 	 *
 	 */
 	DSFFFmpeg ffmpeg;
+
+	/**
+	 * @brief The XAudio2 Source Voice
+	 * 
+	 */
 	IXAudio2SourceVoice* sourceVoice;
-	// The callback will be used by the source voice
+	
+	/**
+	 * @brief The Callback that will be used by the source voice
+	 * 
+	 */
 	DSFVoiceCallback callback;
+
+	/**
+	 * @brief The thread that is responsible for audio playback
+	 * 
+	 */
 	boost::thread playbackThread;
 
+	/**
+	 * @brief The X3DAudio Emitter struct
+	 * 
+	 */
 	X3DAUDIO_EMITTER x3dEmitter;
+
+	/**
+	 * @brief The X3DAudio DSP Settings
+	 * 
+	 */
 	X3DAUDIO_DSP_SETTINGS dspSettings;
 
-	DirectX::XMVECTOR audioVelocity;
-	DirectX::XMVECTOR lastPosition;
+	/**
+	 * @brief The global position of last frame
+	 * 
+	 */
+	DirectX::XMFLOAT3 lastPosition;
 
+	/**
+	 * @brief The channels of the audio
+	 * 
+	 * Will be set properly after calling LoadAudioFile
+	 * 
+	 */
 	int channels;
+	/**
+	 * @brief The sample rate of the audio
+	 * 
+	 * Will be set properly after calling LoadAudioFile
+	 * 
+	 */
 	int sampleRate;
+	/**
+	 * @brief The bytes per sample of the audio
+	 * 
+	 * Will be set properly after calling LoadAudioFile
+	 * 
+	 */
 	int bytesPerSample;
 
+	/**
+	 * @brief The frequency ratio of the audio playback
+	 * 
+	 */
 	float frequencyRatio;
+	/**
+	 * @brief The volume of the audio playback
+	 * 
+	 */
+	float volume;
 
+	/**
+	 * @brief Indicates if the audio is playing
+	 * 
+	 */
+	bool isPlaying;
+	/**
+	 * @brief Indicates if the audio is completely stopped
+	 * 
+	 */
+	bool stopped;
+	/**
+	 * @brief Indicates if the audio file is opened
+	 * 
+	 */
+	bool fileOpened;
+
+	/**
+	 * @brief The 3D audio output matrix coefficients
+	 * 
+	 */
 	std::vector<FLOAT32> matrixCoefficients;
+	/**
+	 * @brief The 3D audio channel azimuths
+	 * 
+	 */
 	std::vector<FLOAT32> channelAzimuths;
 
+	/**
+	 * @brief The synchronized audio playback function
+	 * 
+	 */
 	void PlaySync();
 
+	/**
+	 * @brief Update the X3DAudio settings with current set parameters
+	 * 
+	 */
 	void UpdateX3DAudioSettings();
 public:
+	/**
+	 * @brief Construct a new Audio Source object
+	 * 
+	 * @param owner The object that the component is attached to
+	 */
 	AudioSource(Object* owner);
+	/**
+	 * @brief Destroy the Audio Source object
+	 * 
+	 */
 	~AudioSource();
 
+	/**
+	 * @brief Load an audio file
+	 * 
+	 * @param filename The audio file name
+	 */
 	void LoadAudioFile(const std::string& filename);
 
+	/**
+	 * @brief Initialize the FFMpeg framework
+	 * 
+	 */
 	void Start() override;
+	/**
+	 * @brief Update the current position, orientation and velocity of the X3DAudio Emitter
+	 * 
+	 * @param deltaTime The time that a frame costs
+	 * @param totalTime The total time from the beginning of the application
+	 */
 	void Update(float deltaTime, float totalTime) override;
 
+	/**
+	 * @brief Start/resume the audio playback
+	 * 
+	 */
 	void Play();
+	/**
+	 * @brief Stop the audio playback completely
+	 * 
+	 */
 	void Stop();
+	/**
+	 * @brief Pause the audio playback
+	 * 
+	 */
 	void Pause();
 
+	/**
+	 * @brief Indicates if the audio is playing
+	 * 
+	 * @return true if the audio is playing
+	 */
+	bool Playing() const;
+	/**
+	 * @brief Indicates if the audio is completely stopped
+	 * 
+	 * @return true if the audio is completely stopped
+	 */
+	bool Stopped() const;
+	/**
+	 * @brief Indicates if the audio is paused
+	 * 
+	 * @return true if the audio is paused
+	 */
+	bool Paused() const;
+
+	/**
+	 * @brief Set the Frequency Ratio of audio playback
+	 * 
+	 * The value should be between FLT_MIN to FLT_MAX.
+	 * This will affect both the sound pitch and playback speed.
+	 * A value of 1.0f means no change.
+	 * For example, if a 2 times faster speed and an octave higher pitch is desired, 
+	 * set the value to 2.0f.
+	 * 
+	 * @param frequencyRatio The target frequency ratio. Equals to sourceFrequency / targetFrequency
+	 */
 	void SetFrequencyRatio(float frequencyRatio);
+	/**
+	 * @brief Set the Volume of audio playback
+	 * 
+	 * The value can be any float number. A negative number means to negate the phase of the audio.
+	 * A value of 1.0f means no gain. A value of 0.0f means mute.
+	 * 
+	 * @param volume The target volume
+	 */
 	void SetVolume(float volume);
 
+	/**
+	 * @brief Set the Doppler Scaler
+	 * 
+	 * The Doppler Effect Scaler. The bigger the value is, the more obvious the effect is.
+	 * The value should be between 0 to FLT_MAX. Values out of this range will be clamped.
+	 * A value of 0 means no Doppler Effect at all.
+	 * The default value is 1.0f.
+	 * Only used in 3D audio.
+	 * 
+	 * @param dopplerScaler The desired Doppler Effect scaler
+	 */
+	void SetDopplerScaler(float dopplerScaler);
+	/**
+	 * @brief Set the Curve Distance Scaler 
+	 * 
+	 * The Curve Distance Scaler. Distance will have more impact on volume if the value is smaller.
+	 * The value should be between FLT_MIN to FLT_MAX. Values out of this range will be clamped.
+	 * A value of FLT_MIN means almost mute at any position.
+	 * A value of FLT_MAX means the distance has almost no effect on volume.
+	 * The default value is 10.0f.
+	 * Only used in 3D audio.
+	 * 
+	 * @param curveDistanceScaler The desired curve distance scaler
+	 */
+	void SetCurveDistanceScaler(float curveDistanceScaler);
+
+	/**
+	 * @brief Get the Frequency Ratio 
+	 * 
+	 * @return float The frequency ratio
+	 */
+	float GetFrequencyRatio() const;
+	/**
+	 * @brief Get the Volume 
+	 * 
+	 * @return float The volume
+	 */
+	float GetVolume() const;
+
+	/**
+	 * @brief Get the Doppler Scaler
+	 * 
+	 * @return float The doppler scaler
+	 */
+	float GetDopplerScaler() const;
+	/**
+	 * @brief Get the Curve Distance Scaler
+	 * 
+	 * @return float The curve distance scaler
+	 */
+	float GetCurveDistanceScaler() const;
+
+	/**
+	 * @brief Indicates if the audio will loop after finished
+	 * 
+	 * The default value is false.
+	 * 
+	 */
 	bool Loop;
-	bool isPlaying;
-	bool stopped;
-	bool fileOpened;
+	/**
+	 * @brief Indicates if the audio source is a 3D audio source
+	 * 
+	 * If the value is true, one and only one AudioListener component must be presented in the scene.
+	 * If the value is false, no AudioListener is required and no 3D audio calculation will be applied.
+	 * 
+	 */
 	bool Is3D;
 };
 
@@ -158,8 +388,6 @@ inline void AudioSource::UpdateX3DAudioSettings()
 	for (float& channelAzimuth : channelAzimuths)
 		channelAzimuth = 0.0f;
 	x3dEmitter.pChannelAzimuths = &*channelAzimuths.begin();
-	x3dEmitter.CurveDistanceScaler = 10.0f;
-	x3dEmitter.DopplerScaler = 1.0f;
 	dspSettings.SrcChannelCount = channels;
 	dspSettings.DstChannelCount = FXAudio2->GetMasteringVoiceChannel();
 	matrixCoefficients.resize(dspSettings.DstChannelCount * dspSettings.SrcChannelCount);
@@ -180,6 +408,8 @@ inline AudioSource::AudioSource(Object* owner)
 
 	ZeroMemory(&x3dEmitter, sizeof(X3DAUDIO_EMITTER));
 	ZeroMemory(&dspSettings, sizeof(X3DAUDIO_DSP_SETTINGS));
+	x3dEmitter.CurveDistanceScaler = 10.0f;
+	x3dEmitter.DopplerScaler = 1.0f;
 	UpdateX3DAudioSettings();
 }
 
@@ -221,23 +451,20 @@ inline void AudioSource::Start()
 {
 	ffmpeg.Init();
 
-	audioVelocity = DirectX::XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f);
-	lastPosition = object->transform->GetGlobalTranslation();
+	DirectX::XMStoreFloat3(&lastPosition, object->transform->GetGlobalTranslation());
 }
 
 inline void AudioSource::Update(float deltaTime, float totalTime)
 {
 	if (!Is3D) return;
 	const DirectX::XMVECTOR currentPosition = object->transform->GetGlobalTranslation();
-	audioVelocity = DirectX::XMVectorSubtract(currentPosition, lastPosition);
-	audioVelocity = DirectX::XMVectorScale(audioVelocity, 1.0f / deltaTime);
-	lastPosition = currentPosition;
+	DirectX::XMVECTOR audioVelocityVec = DirectX::XMVectorSubtract(currentPosition, DirectX::XMLoadFloat3(&lastPosition));
+	audioVelocityVec = DirectX::XMVectorScale(audioVelocityVec, 1.0f / deltaTime);
+	DirectX::XMStoreFloat3(&lastPosition, currentPosition);
 	DirectX::XMStoreFloat3(&x3dEmitter.OrientFront, object->transform->Forward());
 	DirectX::XMStoreFloat3(&x3dEmitter.OrientTop, object->transform->Up());
 	DirectX::XMStoreFloat3(&x3dEmitter.Position, currentPosition);
-	DirectX::XMStoreFloat3(&x3dEmitter.Velocity, audioVelocity);
-
-	// TODO: Calculate
+	DirectX::XMStoreFloat3(&x3dEmitter.Velocity, audioVelocityVec);
 }
 
 inline void AudioSource::Play()
@@ -286,12 +513,68 @@ inline void AudioSource::Pause()
 	stopped = false;
 }
 
+inline bool AudioSource::Playing() const
+{
+	return isPlaying && !stopped;
+}
+
+inline bool AudioSource::Stopped() const
+{
+	return !isPlaying && stopped;
+}
+
+inline bool AudioSource::Paused() const
+{
+	return !isPlaying && !stopped;
+}
+
 inline void AudioSource::SetFrequencyRatio(float frequencyRatio)
 {
 	this->frequencyRatio = frequencyRatio;
+	if (!Is3D)
+		sourceVoice->SetFrequencyRatio(this->frequencyRatio);
 }
 
 inline void AudioSource::SetVolume(float volume)
 {
 	sourceVoice->SetVolume(volume);
+	this->volume = volume;
+}
+
+inline void AudioSource::SetDopplerScaler(float dopplerScaler)
+{
+	x3dEmitter.DopplerScaler = dopplerScaler;
+	if (x3dEmitter.DopplerScaler < 0)
+		x3dEmitter.DopplerScaler = 0;
+}
+
+inline void AudioSource::SetCurveDistanceScaler(float curveDistanceScaler)
+{
+	x3dEmitter.CurveDistanceScaler = curveDistanceScaler;
+	if (x3dEmitter.CurveDistanceScaler < FLT_MIN)
+		x3dEmitter.CurveDistanceScaler = FLT_MIN;
+}
+
+inline float AudioSource::GetFrequencyRatio() const
+{
+	float result;
+	sourceVoice->GetFrequencyRatio(&result);
+	return result;
+}
+
+inline float AudioSource::GetVolume() const
+{
+	float result;
+	sourceVoice->GetVolume(&result);
+	return result;
+}
+
+inline float AudioSource::GetDopplerScaler() const
+{
+	return x3dEmitter.DopplerScaler;
+}
+
+inline float AudioSource::GetCurveDistanceScaler() const
+{
+	return x3dEmitter.CurveDistanceScaler;
 }
