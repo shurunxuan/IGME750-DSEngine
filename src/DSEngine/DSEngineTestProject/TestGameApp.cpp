@@ -73,12 +73,13 @@ void TestGameApp::Init()
 
 	AudioSource* audioSource1 = parentObj->AddComponent<AudioSource>();
 	audioSource1->Is3D = true;
+	audioSource1->Loop = true;
 	AudioSource* audioSource2 = parentObj->AddComponent<AudioSource>();
 
 	playAudioComponent->source1 = audioSource1;
 	playAudioComponent->source2 = audioSource2;
 
-	audioSource1->LoadAudioFile("Assets/test1.flac");
+	audioSource1->LoadAudioFile("Assets/heli.wav");
 	audioSource2->LoadAudioFile("Assets/test2.flac");
 
 	// Add a ground

@@ -49,7 +49,6 @@ void DSFFFmpeg::Init()
 {
 	// Allocate the format context
 	formatContext = avformat_alloc_context();
-
 	LOG_TRACE << "DS Engine Framework for FFmpeg Initialized!";
 }
 
@@ -132,7 +131,6 @@ int DSFFFmpeg::ReadFrame()
 				swrBufferLength =
 					lastFrame->nb_samples * lastFrame->channels *
 					av_get_bytes_per_sample(av_get_packed_sample_fmt(AVSampleFormat(lastFrame->format)));
-				LOG_TRACE << "End of audio file";
 			}
 			else
 			{

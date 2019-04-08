@@ -102,9 +102,20 @@ inline void AudioSource::PlaySync()
 			// Waiting for the source voice buffer to end
 			WaitForSingleObject(callback.bufferEvent, INFINITE);
 
-			// If FFmpeg hit the end of file, break the loop
+			// If FFmpeg hit the end of file
 			if (i != 0)
-				break;
+			{
+				if (Loop)
+				{
+					// Seek to the start of the file
+					ffmpeg.Seek(0, false);
+				}
+				else
+				{
+					// Break the loop
+					break;
+				}
+			}
 		}
 
 		LOG_TRACE << "Waiting for the stream to end";
@@ -147,7 +158,7 @@ inline void AudioSource::UpdateX3DAudioSettings()
 	for (float& channelAzimuth : channelAzimuths)
 		channelAzimuth = 0.0f;
 	x3dEmitter.pChannelAzimuths = &*channelAzimuths.begin();
-	x3dEmitter.CurveDistanceScaler = 1.0f;
+	x3dEmitter.CurveDistanceScaler = 10.0f;
 	x3dEmitter.DopplerScaler = 1.0f;
 	dspSettings.SrcChannelCount = channels;
 	dspSettings.DstChannelCount = FXAudio2->GetMasteringVoiceChannel();

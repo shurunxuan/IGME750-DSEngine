@@ -83,28 +83,6 @@ public:
 	 * @brief Calculate the 3D audio effects
 	 */
 	void Update();
-
-    /**
-     * @brief Non-block version of playing an audio file
-     * 
-     * Creates a thread of PlayAudioFile function
-     * 
-     * @param filename Audio file name
-     * @param playbackThread The audio playback thread
-     */
-    void PlayAudioFileNonBlock(const char* filename, boost::thread& playbackThread);
-
-    /**
-     * @brief Play an audio file
-     * 
-     * This function will block the thread. 
-     * If you want a non-block version,
-     * consider calling PlayAudioFileNonBlock.
-     * 
-     * @param filename Audio file name
-     */
-    void PlayAudioFile(const char* filename);
-
 private:
     /**
      * @brief The XAudio2 Framework reference
