@@ -51,6 +51,7 @@ void TestGameApp::Init()
 	CurrentActiveScene()->mainCamera->UpdateProjectionMatrix(float(width), float(height), DirectX::XM_PIDIV4);
 	CurrentActiveScene()->mainCamera->SetSkybox(device, context, L"Assets/Skybox/1/Environment1HiDef.cubemap.dds", L"Assets/Skybox/1/Environment1Light.cubemap.dds");
 	CameraController * cameraController = CurrentActiveScene()->mainCamera->AddComponent<CameraController>();
+	CurrentActiveScene()->mainCamera->transform->SetLocalTranslation(0.0f, 0.0f, -10.0f);
 
 	// Add a light
 	LightData light = DirectionalLight(DirectX::XMFLOAT3(1.0f, 1.0f, 1.0f), DirectX::XMFLOAT3(-1.0f, -1.0f, 1.0f), 0.8f, DirectX::XMFLOAT3(1.0f, 1.0f, 1.0f));;
@@ -71,6 +72,7 @@ void TestGameApp::Init()
 	MoveParentObject * moveParentComponent = parentObj->AddComponent<MoveParentObject>();
 
 	AudioSource* audioSource1 = parentObj->AddComponent<AudioSource>();
+	audioSource1->Is3D = true;
 	AudioSource* audioSource2 = parentObj->AddComponent<AudioSource>();
 
 	playAudioComponent->source1 = audioSource1;

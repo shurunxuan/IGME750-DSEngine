@@ -18,11 +18,13 @@
 #include "DSFXAudio2.h"
 #include "DSFLogging.h"
 #include "Component.hpp"
+#include "Object.hpp"
 
 class AudioSource 
 	: public Component
 {
 private:
+	friend class DSFXAudio2;
 	std::string filename;
 	/**
 	 * @brief The FFmpeg Framework reference
@@ -36,7 +38,24 @@ private:
 	DSFVoiceCallback callback;
 	boost::thread playbackThread;
 
+	X3DAUDIO_EMITTER x3dEmitter;
+	X3DAUDIO_DSP_SETTINGS dspSettings;
+
+	DirectX::XMVECTOR audioVelocity;
+	DirectX::XMVECTOR lastPosition;
+
+	int channels;
+	int sampleRate;
+	int bytesPerSample;
+
+	float frequencyRatio;
+
+	std::vector<FLOAT32> matrixCoefficients;
+	std::vector<FLOAT32> channelAzimuths;
+
 	void PlaySync();
+
+	void UpdateX3DAudioSettings();
 public:
 	AudioSource(Object* owner);
 	~AudioSource();
@@ -50,13 +69,14 @@ public:
 	void Stop();
 	void Pause();
 
-	void SetPitch(float frequencyRatio);
+	void SetFrequencyRatio(float frequencyRatio);
 	void SetVolume(float volume);
 
 	bool Loop;
 	bool isPlaying;
 	bool stopped;
 	bool fileOpened;
+	bool Is3D;
 };
 
 inline void AudioSource::PlaySync()
@@ -120,6 +140,21 @@ inline void AudioSource::PlaySync()
 	stopped = true;
 }
 
+inline void AudioSource::UpdateX3DAudioSettings()
+{
+	x3dEmitter.ChannelCount = channels;
+	channelAzimuths.resize(x3dEmitter.ChannelCount);
+	for (float& channelAzimuth : channelAzimuths)
+		channelAzimuth = 0.0f;
+	x3dEmitter.pChannelAzimuths = &*channelAzimuths.begin();
+	x3dEmitter.CurveDistanceScaler = 1.0f;
+	x3dEmitter.DopplerScaler = 1.0f;
+	dspSettings.SrcChannelCount = channels;
+	dspSettings.DstChannelCount = FXAudio2->GetMasteringVoiceChannel();
+	matrixCoefficients.resize(dspSettings.DstChannelCount * dspSettings.SrcChannelCount);
+	dspSettings.pMatrixCoefficients = &*matrixCoefficients.begin();
+}
+
 inline AudioSource::AudioSource(Object* owner)
 	: Component(owner)
 {
@@ -127,7 +162,14 @@ inline AudioSource::AudioSource(Object* owner)
 	stopped = true;
 	fileOpened = false;
 	Loop = false;
+	Is3D = false;
 	sourceVoice = nullptr;
+
+	frequencyRatio = 1.0f;
+
+	ZeroMemory(&x3dEmitter, sizeof(X3DAUDIO_EMITTER));
+	ZeroMemory(&dspSettings, sizeof(X3DAUDIO_DSP_SETTINGS));
+	UpdateX3DAudioSettings();
 }
 
 inline AudioSource::~AudioSource()
@@ -156,24 +198,35 @@ inline void AudioSource::LoadAudioFile(const std::string& filename)
 	if (!fileOpened) return;
 
 	// Parameters to be used when creating source voice
-	int channels;
-	int sampleRate;
-	int bytesPerSample;
-
 	// Initialize the resampler, and get the parameters required
 	ffmpeg.InitSoftwareResampler(&channels, &sampleRate, &bytesPerSample);
 
 	// Create the source voice with the parameters
 	FXAudio2->CreateSourceVoice(&sourceVoice, channels, sampleRate, bytesPerSample, &callback);
+	UpdateX3DAudioSettings();
 }
 
 inline void AudioSource::Start()
 {
 	ffmpeg.Init();
+
+	audioVelocity = DirectX::XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f);
+	lastPosition = object->transform->GetGlobalTranslation();
 }
 
 inline void AudioSource::Update(float deltaTime, float totalTime)
 {
+	if (!Is3D) return;
+	const DirectX::XMVECTOR currentPosition = object->transform->GetGlobalTranslation();
+	audioVelocity = DirectX::XMVectorSubtract(currentPosition, lastPosition);
+	audioVelocity = DirectX::XMVectorScale(audioVelocity, 1.0f / deltaTime);
+	lastPosition = currentPosition;
+	DirectX::XMStoreFloat3(&x3dEmitter.OrientFront, object->transform->Forward());
+	DirectX::XMStoreFloat3(&x3dEmitter.OrientTop, object->transform->Up());
+	DirectX::XMStoreFloat3(&x3dEmitter.Position, currentPosition);
+	DirectX::XMStoreFloat3(&x3dEmitter.Velocity, audioVelocity);
+
+	// TODO: Calculate
 }
 
 inline void AudioSource::Play()
@@ -222,9 +275,9 @@ inline void AudioSource::Pause()
 	stopped = false;
 }
 
-inline void AudioSource::SetPitch(float frequencyRatio)
+inline void AudioSource::SetFrequencyRatio(float frequencyRatio)
 {
-	sourceVoice->SetFrequencyRatio(frequencyRatio);
+	this->frequencyRatio = frequencyRatio;
 }
 
 inline void AudioSource::SetVolume(float volume)

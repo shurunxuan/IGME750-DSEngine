@@ -41,6 +41,7 @@ public:
 	friend class DSSRendering;
 	friend class DSFDirect3D;
 	friend class DSSPhysics;
+	friend class DSSAudio;
 
 	/**
 	 * @brief Construct a new Scene

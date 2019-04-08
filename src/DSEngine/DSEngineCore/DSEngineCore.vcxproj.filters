@@ -54,5 +54,8 @@
     <ClInclude Include="AudioSource.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="AudioListener.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

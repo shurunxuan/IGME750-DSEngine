@@ -79,6 +79,11 @@ public:
      */
     void Init();
 
+	/**
+	 * @brief Calculate the 3D audio effects
+	 */
+	void Update();
+
     /**
      * @brief Non-block version of playing an audio file
      * 

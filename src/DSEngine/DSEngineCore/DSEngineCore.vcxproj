@@ -187,6 +187,7 @@
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AudioListener.hpp" />
     <ClInclude Include="AudioSource.hpp" />
     <ClInclude Include="Camera.hpp" />
     <ClInclude Include="Component.hpp" />

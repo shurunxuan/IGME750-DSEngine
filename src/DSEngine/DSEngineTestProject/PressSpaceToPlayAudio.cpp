@@ -65,13 +65,13 @@ void PressSpaceToPlayAudio::Update(float deltaTime, float totalTime)
 	if (SInput->GetButtonDown("Audio1PitchUp"))
 	{
 		ratio *= 1.1f;
-		source1->SetPitch(ratio);
+		source1->SetFrequencyRatio(ratio);
 	}
 
 	if (SInput->GetButtonDown("Audio1PitchDown"))
 	{
 		ratio /= 1.1f;
-		source1->SetPitch(ratio);
+		source1->SetFrequencyRatio(ratio);
 	}	
 	
 	if (SInput->GetButtonDown("Audio1VolumeUp"))

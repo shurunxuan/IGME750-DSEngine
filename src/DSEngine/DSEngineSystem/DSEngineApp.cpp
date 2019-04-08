@@ -102,6 +102,8 @@ void DSEngineApp::Loop()
 	currentScene.Update(deltaTime, totalTime);
 
 	renderingSystem.Update(deltaTime, totalTime);
+
+	audioSystem.Update();
 }
 
 Scene* DSEngineApp::CurrentActiveScene()
