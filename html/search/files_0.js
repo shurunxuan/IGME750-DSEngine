@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['camera_2ehpp',['Camera.hpp',['../_camera_8hpp.html',1,'']]],
-  ['component_2ehpp',['Component.hpp',['../_component_8hpp.html',1,'']]]
+  ['audiolistener_2ehpp',['AudioListener.hpp',['../_audio_listener_8hpp.html',1,'']]],
+  ['audiosource_2ehpp',['AudioSource.hpp',['../_audio_source_8hpp.html',1,'']]]
 ];

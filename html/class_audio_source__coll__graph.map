@@ -1,0 +1,5 @@
+<map id="AudioSource" name="AudioSource">
+<area shape="rect" id="node2" href="$class_component.html" title="The component class that will be attached to an object. " alt="" coords="122,97,211,124"/>
+<area shape="rect" id="node6" href="$class_transform.html" title="The transform of the object. " alt="" coords="126,189,207,216"/>
+<area shape="rect" id="node4" href="$class_object.html" title="A game object. " alt="" coords="265,280,324,307"/>
+</map>
