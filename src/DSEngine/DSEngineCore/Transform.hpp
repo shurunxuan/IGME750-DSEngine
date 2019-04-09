@@ -348,7 +348,7 @@ inline std::list<Transform*> Transform::GetChildren() const
 
 inline Transform* Transform::GetChildAt(int index)
 {
-	if (index >= children.size()) return nullptr;
+	if (index >= int(children.size())) return nullptr;
 	auto it = children.begin();
 	for (int i = 0; i < index; ++i)
 		++it;
