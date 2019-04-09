@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['_7eaudiolistener',['~AudioListener',['../class_audio_listener.html#a48bee22927fa60463f8a8ed46bf6f2f7',1,'AudioListener']]],
-  ['_7eaudiosource',['~AudioSource',['../class_audio_source.html#a4d4b2be34ec676bf01d1ca1784f79a07',1,'AudioSource']]],
   ['_7ecamera',['~Camera',['../class_camera.html#ad1897942d0ccf91052386388a497349f',1,'Camera']]],
   ['_7ecomponent',['~Component',['../class_component.html#ab8378fa275af98e568a7e91d33d867af',1,'Component']]],
   ['_7edsengineapp',['~DSEngineApp',['../class_d_s_engine_app.html#a2da212050ec21c36c5147e5d0a617c2f',1,'DSEngineApp']]],

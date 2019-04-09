@@ -1,6 +1,5 @@
 <map id="PressSpaceToPlayAudio" name="PressSpaceToPlayAudio">
-<area shape="rect" id="node2" href="$class_component.html" title="The component class that will be attached to an object. " alt="" coords="219,97,308,124"/>
-<area shape="rect" id="node6" href="$class_transform.html" title="The transform of the object. " alt="" coords="102,189,183,216"/>
-<area shape="rect" id="node7" href="$class_audio_source.html" title="The Audio Source. " alt="" coords="347,189,443,216"/>
-<area shape="rect" id="node4" href="$class_object.html" title="A game object. " alt="" coords="61,293,120,320"/>
+<area shape="rect" id="node2" href="$class_component.html" title="The component class that will be attached to an object. " alt="" coords="247,96,336,123"/>
+<area shape="rect" id="node6" href="$class_transform.html" title="The transform of the object. " alt="" coords="195,187,276,213"/>
+<area shape="rect" id="node4" href="$class_object.html" title="A game object. " alt="" coords="334,277,393,304"/>
 </map>

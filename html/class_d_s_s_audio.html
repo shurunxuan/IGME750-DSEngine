@@ -121,10 +121,12 @@ Public Member Functions</h2></td></tr>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_s_audio.html#aa30c6b15c40f2e8f3fa43af636a730fe">Init</a> ()</td></tr>
 <tr class="memdesc:aa30c6b15c40f2e8f3fa43af636a730fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Actual initialization of the audio system. <br/></td></tr>
 <tr class="separator:aa30c6b15c40f2e8f3fa43af636a730fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a261ff980b4b78712bf72f3053f1a5770"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a261ff980b4b78712bf72f3053f1a5770"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_s_audio.html#a261ff980b4b78712bf72f3053f1a5770">Update</a> ()</td></tr>
-<tr class="memdesc:a261ff980b4b78712bf72f3053f1a5770"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the 3D audio effects. <br/></td></tr>
-<tr class="separator:a261ff980b4b78712bf72f3053f1a5770"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac8778541978b901a2bf52972b42dc9d5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_s_audio.html#ac8778541978b901a2bf52972b42dc9d5">PlayAudioFileNonBlock</a> (const char *filename, boost::thread &amp;playbackThread)</td></tr>
+<tr class="memdesc:ac8778541978b901a2bf52972b42dc9d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Non-block version of playing an audio file.  <a href="#ac8778541978b901a2bf52972b42dc9d5">More...</a><br/></td></tr>
+<tr class="separator:ac8778541978b901a2bf52972b42dc9d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a714f653fcf91152dc49b6c1f6f82df7b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_s_audio.html#a714f653fcf91152dc49b6c1f6f82df7b">PlayAudioFile</a> (const char *filename)</td></tr>
+<tr class="memdesc:a714f653fcf91152dc49b6c1f6f82df7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Play an audio file.  <a href="#a714f653fcf91152dc49b6c1f6f82df7b">More...</a><br/></td></tr>
+<tr class="separator:a714f653fcf91152dc49b6c1f6f82df7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The Audio System of the DS Engine. </p>
@@ -288,6 +290,67 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">v</td><td>Another instance </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a714f653fcf91152dc49b6c1f6f82df7b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DSSAudio::PlayAudioFile </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>filename</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Play an audio file. </p>
+<p>This function will block the thread. If you want a non-block version, consider calling PlayAudioFileNonBlock.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filename</td><td>Audio file name </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ac8778541978b901a2bf52972b42dc9d5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DSSAudio::PlayAudioFileNonBlock </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>filename</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">boost::thread &amp;&#160;</td>
+          <td class="paramname"><em>playbackThread</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Non-block version of playing an audio file. </p>
+<p>Creates a thread of PlayAudioFile function</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filename</td><td>Audio file name </td></tr>
+    <tr><td class="paramname">playbackThread</td><td>The audio playback thread </td></tr>
   </table>
   </dd>
 </dl>

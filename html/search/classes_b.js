@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['racinggameapp',['RacingGameApp',['../class_racing_game_app.html',1,'']]]
+  ['scene',['Scene',['../class_scene.html',1,'']]],
+  ['skybox',['Skybox',['../class_skybox.html',1,'']]]
 ];
