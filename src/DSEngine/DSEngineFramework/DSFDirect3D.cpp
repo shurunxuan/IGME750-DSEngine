@@ -23,15 +23,23 @@ DSFDirect3D::DSFDirect3D()
 
 DSFDirect3D::~DSFDirect3D()
 {
-	SAFE_RELEASE(device);
-	SAFE_RELEASE(context);
-	SAFE_RELEASE(swapChain);
-	SAFE_RELEASE(backBufferRTV);
-	SAFE_RELEASE(depthStencilView);
-	SAFE_RELEASE(depthStencilState);
-	SAFE_RELEASE(shadowRenderState);
-	SAFE_RELEASE(drawingRenderState);
 	SAFE_RELEASE(comparisonSampler);
+	SAFE_RELEASE(drawingRenderState);
+	SAFE_RELEASE(shadowRenderState);
+	SAFE_RELEASE(depthStencilState);
+	SAFE_RELEASE(depthStencilView);
+	SAFE_RELEASE(backBufferRTV);
+	SAFE_RELEASE(swapChain);
+	SAFE_RELEASE(context);
+
+#if defined(DEBUG) || defined(_DEBUG)
+	ID3D11Debug * debugDevice;
+	device->QueryInterface(__uuidof(ID3D11Debug), reinterpret_cast<void**>(&debugDevice));
+	debugDevice->ReportLiveDeviceObjects(D3D11_RLDO_DETAIL);
+	SAFE_RELEASE(debugDevice);
+#endif
+	SAFE_RELEASE(device);
+
 }
 
 HRESULT DSFDirect3D::Init(HWND hWnd, unsigned int screenWidth, unsigned int screenHeight)
@@ -471,7 +479,7 @@ HRESULT DSFDirect3D::CreateDeviceAndSwapBuffer()
 	swapDesc.Windowed = true;
 
 	// Attempt to initialize DirectX
-	return D3D11CreateDeviceAndSwapChain(
+	HRESULT hr = D3D11CreateDeviceAndSwapChain(
 		nullptr,				// Video adapter (physical GPU) to use, or null for default
 		D3D_DRIVER_TYPE_HARDWARE,	// We want to use the hardware (GPU)
 		nullptr,				// Used when doing software rendering
@@ -484,6 +492,8 @@ HRESULT DSFDirect3D::CreateDeviceAndSwapBuffer()
 		&device,					// Pointer to our Device pointer
 		&dxFeatureLevel,			// This will hold the actual feature level the app will use
 		&context);					// Pointer to our Device Context pointer
+
+	return hr;
 }
 
 HRESULT DSFDirect3D::CreateRenderTargetView()
@@ -591,7 +601,7 @@ HRESULT DSFDirect3D::CreateShadowAndDrawingRenderState()
 	shadowRenderStateDesc.FillMode = D3D11_FILL_SOLID;
 	shadowRenderStateDesc.DepthBias = 1000;
 	shadowRenderStateDesc.DepthBiasClamp = 0.0f;
-	shadowRenderStateDesc.SlopeScaledDepthBias = 2.0f;
+	shadowRenderStateDesc.SlopeScaledDepthBias = 1.0f;
 	shadowRenderStateDesc.DepthClipEnable = true;
 
 	hr = device->CreateRasterizerState(

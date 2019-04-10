@@ -22,7 +22,7 @@
  * @brief The mesh renderer component
  * 
  */
-class MeshRenderer
+class MeshRenderer final
 	: public Component
 {
 public:

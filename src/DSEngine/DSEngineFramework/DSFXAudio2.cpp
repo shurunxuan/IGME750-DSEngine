@@ -1,5 +1,7 @@
 #include "DSFXAudio2.h"
 #include "DSFLogging.h"
+#include "AudioListener.hpp"
+#include "AudioSource.hpp"
 
 DSFXAudio2* FXAudio2 = nullptr;
 
@@ -23,9 +25,12 @@ DSFXAudio2::~DSFXAudio2()
 void DSFXAudio2::Init()
 {
 	HRESULT hr = CreateXAudio2Engine();
-	if (SUCCEEDED(hr)) hr = CreateMasteringVoice();
-	if (SUCCEEDED(hr))
-		LOG_TRACE << "DS Engine Framework for XAudio2 Initialized!";
+	if (!(SUCCEEDED(hr))) return;
+	hr = CreateMasteringVoice();
+	if (!(SUCCEEDED(hr))) return;
+	hr = CreateX3DAudioInstance();
+	if (!(SUCCEEDED(hr))) return;
+	LOG_TRACE << "DS Engine Framework for XAudio2 Initialized!";
 }
 
 HRESULT DSFXAudio2::CreateXAudio2Engine()
@@ -41,23 +46,27 @@ HRESULT DSFXAudio2::CreateXAudio2Engine()
 HRESULT DSFXAudio2::CreateMasteringVoice()
 {
 	HRESULT hr = xAudio2->CreateMasteringVoice(&masterVoice);
-	XAUDIO2_VOICE_DETAILS voiceDetails = {};
+	voiceDetails = {};
 	masterVoice->GetVoiceDetails(&voiceDetails);
 	LOG_TRACE << "Mastering voice created with " << GetMasteringVoiceChannel() << " channel(s), sample rate " << GetMasteringVoiceSampleRate() << "Hz.";
 	return hr;
 }
 
+HRESULT DSFXAudio2::CreateX3DAudioInstance()
+{
+	DWORD dwChannelMask;
+	masterVoice->GetChannelMask(&dwChannelMask);
+
+	return X3DAudioInitialize(dwChannelMask, X3DAUDIO_SPEED_OF_SOUND, X3DInstance);
+}
+
 unsigned int DSFXAudio2::GetMasteringVoiceSampleRate() const
 {
-	XAUDIO2_VOICE_DETAILS voiceDetails = {};
-	masterVoice->GetVoiceDetails(&voiceDetails);
 	return voiceDetails.InputSampleRate;
 }
 
 unsigned int DSFXAudio2::GetMasteringVoiceChannel() const
 {
-	XAUDIO2_VOICE_DETAILS voiceDetails = {};
-	masterVoice->GetVoiceDetails(&voiceDetails);
 	return voiceDetails.InputChannels;
 }
 
@@ -81,6 +90,34 @@ HRESULT DSFXAudio2::CreateSourceVoice(IXAudio2SourceVoice** ppSourceVoice, int c
 	if (FAILED(hr))
 		LOG_ERROR << "Failed to create source voice";
 	return hr;
+}
+
+void DSFXAudio2::AudioCalculate3D(AudioListener* listener, AudioSource* emitter)
+{
+	X3DAudioCalculate(X3DInstance, &(listener->x3dListener), &(emitter->x3dEmitter), 
+		X3DAUDIO_CALCULATE_MATRIX | 
+		X3DAUDIO_CALCULATE_DOPPLER | 
+		X3DAUDIO_CALCULATE_LPF_DIRECT |
+		X3DAUDIO_CALCULATE_REVERB,
+		&(emitter->dspSettings));
+
+	// Transpose the matrix coefficients. 
+	// TODO: NEED TO FIND WHY
+	std::vector<FLOAT32> coefficientsTransposed;
+	coefficientsTransposed.resize(emitter->dspSettings.SrcChannelCount * emitter->dspSettings.DstChannelCount);
+	for (size_t d = 0; d < emitter->dspSettings.DstChannelCount; ++d)
+		for (size_t s = 0; s < emitter->dspSettings.SrcChannelCount; ++s)
+		{
+			coefficientsTransposed[d * emitter->dspSettings.SrcChannelCount + s] =
+				emitter->dspSettings.pMatrixCoefficients[s * emitter->dspSettings.DstChannelCount + d];
+		}
+
+	// Apply the result
+	emitter->sourceVoice->SetOutputMatrix(masterVoice, emitter->dspSettings.SrcChannelCount, emitter->dspSettings.DstChannelCount, &*coefficientsTransposed.begin());
+	emitter->sourceVoice->SetFrequencyRatio(emitter->dspSettings.DopplerFactor * emitter->frequencyRatio);
+
+	XAUDIO2_FILTER_PARAMETERS FilterParameters = { LowPassFilter, 2.0f * sinf(X3DAUDIO_PI / 6.0f * emitter->dspSettings.LPFDirectCoefficient), 1.0f };
+	emitter->sourceVoice->SetFilterParameters(&FilterParameters);
 }
 
 DSFVoiceCallback::DSFVoiceCallback() :

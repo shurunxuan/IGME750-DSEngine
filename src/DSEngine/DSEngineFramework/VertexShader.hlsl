@@ -85,7 +85,7 @@ VertexToPixel main(VertexShaderInput input)
 	output.position = mul(float4(input.position, 1.0f), worldViewProj);
 	output.worldPos = mul(float4(input.position, 1.0f), world);
 
-	output.lViewSpacePos = mul(float4(input.position + input.normal * 0.001f, 1.0f), lWorldView);
+	output.lViewSpacePos = mul(float4(input.position, 1.0f), lWorldView);
 
 	// Update the normal
 	output.normal = mul(input.normal, (float3x3)itworld);

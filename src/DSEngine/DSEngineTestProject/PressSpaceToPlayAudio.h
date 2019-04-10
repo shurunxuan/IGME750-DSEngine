@@ -3,6 +3,7 @@
 #include <boost/thread/thread.hpp>
 #include "Object.hpp"
 #include "Component.hpp"
+#include <AudioSource.hpp>
 
 /**
  * @brief Press Space to play audio
@@ -18,11 +19,10 @@ public:
 	void Start() override;
 	void Update(float deltaTime, float totalTime) override;
 
+	AudioSource* source1;
+	AudioSource* source2;
+
 private:
-	bool isPlaying;
-	/**
-	 * @brief Temporary audio playback thread for testing
-	 */
-	boost::thread playbackThread;
+
 };
 

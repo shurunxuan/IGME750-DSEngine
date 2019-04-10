@@ -25,8 +25,8 @@ void CameraController::Update(float deltaTime, float totalTime)
 	float vertical = SInput->GetAxis("Vertical");
 
 	DirectX::XMVECTOR position = object->transform->GetLocalTranslation();
-	position = DirectX::XMVectorAdd(position, DirectX::XMVectorScale(object->transform->Right(), deltaTime * horizontal * 4));
-	position = DirectX::XMVectorAdd(position, DirectX::XMVectorScale(object->transform->Forward(), deltaTime * vertical * 4));
+	position = DirectX::XMVectorAdd(position, DirectX::XMVectorScale(object->transform->Right(), deltaTime * horizontal * 20));
+	position = DirectX::XMVectorAdd(position, DirectX::XMVectorScale(object->transform->Forward(), deltaTime * vertical * 20));
 	object->transform->SetLocalTranslation(position);
 
 	// Use left stick of joystick 0 to rotate camera

@@ -18,6 +18,7 @@
 #include "DSFLogging.h"
 #include "Object.hpp"
 #include "Skybox.hpp"
+#include "AudioListener.hpp"
 
 /**
  * @brief Camera
@@ -135,6 +136,7 @@ inline Camera::Camera(Scene *owner, std::string name)
 	: Object(owner, name)
 {
 	skybox = nullptr;
+	AddComponent<AudioListener>();
 	//UpdateViewMatrix();
 
 	//UpdateProjectionMatrix(screenWidth, screenHeight, 3.14159265f / 4.0f);
