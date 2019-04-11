@@ -63,8 +63,6 @@ void DSSRendering::Update(const float deltaTime, const float totalTime)
 {
 	// #66CCFF
 	direct3D.ClearRenderTarget(0.4f, 0.8f, 1.0f, 1.0f);
-	// Restore the blend state
-	direct3D.GetDeviceContext()->OMSetBlendState(nullptr, nullptr, 0xFFFFFF);
 
 	std::list<MeshRenderer*> meshRenderersInScene;
 	std::list<MeshRenderer*> transparentMeshRenderers;
@@ -135,6 +133,9 @@ void DSSRendering::Update(const float deltaTime, const float totalTime)
 		// Render
 		direct3D.Render(camera, meshRenderer);
 	}
+
+	// Restore the blend state
+	direct3D.GetDeviceContext()->OMSetBlendState(nullptr, nullptr, 0xFFFFFF);
 
 	// Post Processing
 	for (PostProcessingMaterial* material : postProcessingMaterials)

@@ -93,21 +93,36 @@ void TestGameApp::Init()
 	CurrentActiveScene()->AddLight(light);
 
 	// Add parent object
-	Object * parentObj = CurrentActiveScene()->LoadModelFile("Assets/Models/Fennekin/a653.dae");
-	parentObj->name = "Fennekin";
-	parentObj->transform->SetLocalScale(0.05f, 0.05f, 0.05f);
-	parentObj->transform->SetLocalTranslation(-1.0f, 0.0f, 5.0f);
+	//Object * parentObj = CurrentActiveScene()->LoadModelFile("Assets/Models/Fennekin/a653.dae");
+	//parentObj->name = "Fennekin";
+	//parentObj->transform->SetLocalScale(0.05f, 0.05f, 0.05f);
+	//parentObj->transform->SetLocalTranslation(-1.0f, 0.0f, 5.0f);
 
-	auto rotation = parentObj->transform->GetLocalRotation();
-	rotation = DirectX::XMQuaternionMultiply(rotation, DirectX::XMQuaternionRotationAxis(DirectX::XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f), DirectX::XM_PIDIV2));
-	parentObj->transform->SetLocalRotation(rotation);
-	//Object* parentObj = nullptr;
-	//for (int i = 0; i < 5; ++i)
-	//{
-	//	Object* obj = CurrentActiveScene()->LoadModelFile("Assets/Models/Rock/sphere.obj");
-	//	obj->transform->SetLocalTranslation((i - 2) * 2.0f, 1.0f, 5.0f);
-	//	if (i == 0) parentObj = obj;
-	//}
+	//auto rotation = parentObj->transform->GetLocalRotation();
+	//rotation = DirectX::XMQuaternionMultiply(rotation, DirectX::XMQuaternionRotationAxis(DirectX::XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f), DirectX::XM_PIDIV2));
+	//parentObj->transform->SetLocalRotation(rotation);
+	Object* parentObj = nullptr;
+	for (int i = 0; i < 5; ++i)
+	{
+		Object* obj = CurrentActiveScene()->LoadModelFile("Assets/Models/Rock/sphere.obj");
+		obj->transform->SetLocalTranslation((i - 2) * 2.0f, 1.0f, 5.0f);
+		MeshRenderer* renderer = obj->transform->GetChildAt(0)->object->GetComponent<MeshRenderer>();
+		PBRMaterial* material = static_cast<PBRMaterial*>(renderer->GetMaterial());
+		material->transparent = true;
+		D3D11_RENDER_TARGET_BLEND_DESC blendDesc;
+		ZeroMemory(&blendDesc, sizeof(D3D11_RENDER_TARGET_BLEND_DESC));
+		blendDesc.BlendEnable = TRUE;
+		blendDesc.SrcBlend = D3D11_BLEND_SRC_ALPHA;
+		blendDesc.DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+		blendDesc.BlendOp = D3D11_BLEND_OP_ADD;
+		blendDesc.SrcBlendAlpha = D3D11_BLEND_ONE;
+		blendDesc.DestBlendAlpha = D3D11_BLEND_ZERO;
+		blendDesc.BlendOpAlpha = D3D11_BLEND_OP_ADD;
+		blendDesc.RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+		material->SetBlendMode(blendDesc);
+		material->parameters.transparency = 0.49f;
+		if (i == 0) parentObj = obj;
+	}
 
 	// Add Components
 	PressSpaceToPlayAudio * playAudioComponent = parentObj->AddComponent<PressSpaceToPlayAudio>();
