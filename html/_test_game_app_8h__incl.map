@@ -1,19 +1,19 @@
 <map id="/home/travis/build/shurunxuan/IGME750&#45;DSEngine/src/DSEngine/DSEngineTestProject/TestGameApp.h" name="/home/travis/build/shurunxuan/IGME750&#45;DSEngine/src/DSEngine/DSEngineTestProject/TestGameApp.h">
-<area shape="rect" id="node2" href="$_d_s_engine_app_8h.html" title="This file contains the class that the game app should derive from. " alt="" coords="1588,125,1703,152"/>
-<area shape="rect" id="node4" href="$_d_s_s_rendering_8h.html" title="This file declares the class for DSEngine Rendering System. " alt="" coords="1585,200,1705,227"/>
-<area shape="rect" id="node21" href="$_d_s_s_audio_8h.html" title="This file declares the class for DSEngine Audio System. " alt="" coords="937,275,1031,301"/>
-<area shape="rect" id="node31" href="$_d_s_s_input_8h.html" title="This file declares the class for DSEngine Input System. " alt="" coords="1329,275,1420,301"/>
-<area shape="rect" id="node37" href="$_scene_8hpp.html" title="This file contains the class that represents the scene graph. " alt="" coords="2213,275,2296,301"/>
-<area shape="rect" id="node5" href="$_d_s_f_direct3_d_8h.html" title="This file declares the framework class for Direct3D. " alt="" coords="1589,275,1700,301"/>
-<area shape="rect" id="node7" href="$_mesh_renderer_8hpp.html" title="This file contains the class that represents the MeshRenderer component. " alt="" coords="2109,349,2240,376"/>
-<area shape="rect" id="node11" href="$_light_8hpp.html" title="This file contains the class that represents the light. " alt="" coords="1608,349,1681,376"/>
-<area shape="rect" id="node14" href="$_camera_8hpp.html" title="This file contains the class that represents the camera object. " alt="" coords="1515,424,1608,451"/>
-<area shape="rect" id="node9" href="$_component_8hpp.html" title="This file contains the class that represents the component of the object. " alt="" coords="2145,648,2260,675"/>
-<area shape="rect" id="node16" href="$_object_8hpp.html" title="This file contains the class that represents the game object. " alt="" coords="2297,499,2383,525"/>
-<area shape="rect" id="node20" href="$_transform_8hpp.html" title="This file contains the class that represents the transform component of an object. " alt="" coords="2196,573,2303,600"/>
-<area shape="rect" id="node23" href="$_d_s_f_x_audio2_8h.html" title="This file declares the framework class for XAudio2. " alt="" coords="864,349,973,376"/>
-<area shape="rect" id="node26" href="$_d_s_f_f_fmpeg_8h.html" title="This file declares the framework class for FFmpeg. " alt="" coords="467,349,575,376"/>
-<area shape="rect" id="node32" href="$_d_s_f_x_input_8h.html" title="This file declares the framework class for Thread Pool. " alt="" coords="997,349,1096,376"/>
-<area shape="rect" id="node35" href="$_d_s_f_raw_input_8h.html" title="This file declares the framework class for Raw Input. " alt="" coords="1171,349,1287,376"/>
-<area shape="rect" id="node43" href="$_p_b_r_material_8hpp.html" title="This file contains the class that represents the PBR Material. " alt="" coords="1963,349,2084,376"/>
+<area shape="rect" id="node2" href="$_d_s_engine_app_8h.html" title="This file contains the class that the game app should derive from. " alt="" coords="1035,125,1149,152"/>
+<area shape="rect" id="node4" href="$_d_s_s_rendering_8h.html" title="This file declares the class for DSEngine Rendering System. " alt="" coords="1345,200,1465,227"/>
+<area shape="rect" id="node20" href="$_d_s_s_audio_8h.html" title="This file declares the class for DSEngine Audio System. " alt="" coords="1201,275,1295,301"/>
+<area shape="rect" id="node30" href="$_d_s_s_input_8h.html" title="This file declares the class for DSEngine Input System. " alt="" coords="239,275,329,301"/>
+<area shape="rect" id="node36" href="$_scene_8hpp.html" title="This file contains the class that represents the scene graph. " alt="" coords="2329,275,2412,301"/>
+<area shape="rect" id="node5" href="$_d_s_f_direct3_d_8h.html" title="This file declares the framework class for Direct3D. " alt="" coords="1911,275,2021,301"/>
+<area shape="rect" id="node7" href="$_mesh_renderer_8hpp.html" title="This file contains the class that represents the MeshRenderer component. " alt="" coords="1901,349,2032,376"/>
+<area shape="rect" id="node11" href="$_light_8hpp.html" title="This file contains the class that represents the light. " alt="" coords="2159,349,2232,376"/>
+<area shape="rect" id="node13" href="$_camera_8hpp.html" title="This file contains the class that represents the camera object. " alt="" coords="2159,424,2252,451"/>
+<area shape="rect" id="node19" href="$_post_processing_material_8hpp.html" title="This file contains the class that represents the material for post processing. " alt="" coords="1691,349,1876,376"/>
+<area shape="rect" id="node9" href="$_material_8hpp.html" title="This file contains the class that represents the material of a MeshRenderer. " alt="" coords="1991,424,2084,451"/>
+<area shape="rect" id="node15" href="$_object_8hpp.html" title="This file contains the class that represents the game object. " alt="" coords="2547,499,2632,525"/>
+<area shape="rect" id="node22" href="$_d_s_f_x_audio2_8h.html" title="This file declares the framework class for XAudio2. " alt="" coords="1288,349,1397,376"/>
+<area shape="rect" id="node25" href="$_d_s_f_f_fmpeg_8h.html" title="This file declares the framework class for FFmpeg. " alt="" coords="1422,349,1529,376"/>
+<area shape="rect" id="node31" href="$_d_s_f_x_input_8h.html" title="This file declares the framework class for Thread Pool. " alt="" coords="44,349,143,376"/>
+<area shape="rect" id="node34" href="$_d_s_f_raw_input_8h.html" title="This file declares the framework class for Raw Input. " alt="" coords="167,349,283,376"/>
+<area shape="rect" id="node41" href="$_p_b_r_material_8hpp.html" title="This file contains the class that represents the PBR Material. " alt="" coords="2359,349,2480,376"/>
 </map>

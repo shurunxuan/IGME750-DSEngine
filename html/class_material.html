@@ -86,8 +86,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="#friends">Friends</a> &#124;
 <a href="class_material-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Material Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
@@ -103,7 +105,7 @@ Inheritance diagram for Material:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_material__inherit__graph.png" border="0" usemap="#_material_inherit__map" alt="Inheritance graph"/></div>
 <map name="_material_inherit__map" id="_material_inherit__map">
-<area shape="rect" id="node2" href="class_p_b_r_material.html" title="The default physically based rendering material. " alt="" coords="5,80,101,107"/><area shape="rect" id="node3" href="class_unlit_material.html" title="UnlitMaterial" alt="" coords="126,80,220,107"/></map>
+<area shape="rect" id="node2" href="class_p_b_r_material.html" title="The default physically based rendering material. " alt="" coords="5,80,101,107"/><area shape="rect" id="node3" href="class_post_processing_material.html" title="The default post processing material that does not set any material/texture data. ..." alt="" coords="125,80,284,107"/><area shape="rect" id="node6" href="class_unlit_material.html" title="UnlitMaterial" alt="" coords="310,80,404,107"/><area shape="rect" id="node4" href="class_p_p_dark_corner_material.html" title="PPDarkCornerMaterial" alt="" coords="38,155,191,181"/><area shape="rect" id="node5" href="class_p_p_gaussian_blur_material.html" title="PPGaussianBlurMaterial" alt="" coords="215,155,379,181"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
 Collaboration diagram for Material:</div>
@@ -144,6 +146,14 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_material.html#a13913b4a4906479b167e2c6f3fc1e698">SetMaterialData</a> ()</td></tr>
 <tr class="memdesc:a13913b4a4906479b167e2c6f3fc1e698"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send the material data to the shader. <br/></td></tr>
 <tr class="separator:a13913b4a4906479b167e2c6f3fc1e698"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43a5657c201283c3649a43bad465cb1f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_material.html#a43a5657c201283c3649a43bad465cb1f">SetBlendMode</a> (D3D11_RENDER_TARGET_BLEND_DESC blendDesc)</td></tr>
+<tr class="separator:a43a5657c201283c3649a43bad465cb1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:a81130d1381766da7779ac967bc9f7099"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_material.html#a81130d1381766da7779ac967bc9f7099">transparent</a></td></tr>
+<tr class="memdesc:a81130d1381766da7779ac967bc9f7099"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if the material is transparent.  <a href="#a81130d1381766da7779ac967bc9f7099">More...</a><br/></td></tr>
+<tr class="separator:a81130d1381766da7779ac967bc9f7099"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -165,6 +175,15 @@ SimpleVertexShader *&#160;</td><td class="memItemRight" valign="bottom"><a class
 SimplePixelShader *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_material.html#a2d5f72389942a160f789dbcf66b1d276">pixelShader</a></td></tr>
 <tr class="memdesc:a2d5f72389942a160f789dbcf66b1d276"><td class="mdescLeft">&#160;</td><td class="mdescRight">The pixel shader. <br/></td></tr>
 <tr class="separator:a2d5f72389942a160f789dbcf66b1d276"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14ec7391013bd7e0b37f72acb70c5c8a"><td class="memItemLeft" align="right" valign="top">ID3D11BlendState *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_material.html#a14ec7391013bd7e0b37f72acb70c5c8a">blendState</a></td></tr>
+<tr class="memdesc:a14ec7391013bd7e0b37f72acb70c5c8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates the blend mode.  <a href="#a14ec7391013bd7e0b37f72acb70c5c8a">More...</a><br/></td></tr>
+<tr class="separator:a14ec7391013bd7e0b37f72acb70c5c8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
+Friends</h2></td></tr>
+<tr class="memitem:ab4379e93cc7cfc6787425eb77374c1d3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab4379e93cc7cfc6787425eb77374c1d3"></a>
+class&#160;</td><td class="memItemRight" valign="bottom"><b>DSSRendering</b></td></tr>
+<tr class="separator:ab4379e93cc7cfc6787425eb77374c1d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The material of a <a class="el" href="class_mesh_renderer.html" title="The mesh renderer component. ">MeshRenderer</a>. </p>
@@ -284,7 +303,7 @@ SimplePixelShader *&#160;</td><td class="memItemRight" valign="bottom"><a class=
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>size_t The size of the struct </dd></dl>
 
-<p>Implemented in <a class="el" href="class_p_b_r_material.html#a62cc0568ebbfc8aa24d3242728466ce5">PBRMaterial</a>, and <a class="el" href="class_unlit_material.html#ae1a15bcc38d8c8b82cdaa5942e97edf5">UnlitMaterial</a>.</p>
+<p>Implemented in <a class="el" href="class_p_b_r_material.html#a62cc0568ebbfc8aa24d3242728466ce5">PBRMaterial</a>, <a class="el" href="class_post_processing_material.html#a92c57422cb2dcca28de1f13e58f0f50d">PostProcessingMaterial</a>, <a class="el" href="class_unlit_material.html#ae1a15bcc38d8c8b82cdaa5942e97edf5">UnlitMaterial</a>, <a class="el" href="class_p_p_dark_corner_material.html#a51d5e0264b2c2de5e800f498c25ed830">PPDarkCornerMaterial</a>, and <a class="el" href="class_p_p_gaussian_blur_material.html#a3340cbbc35cd48d446885e111fec0f80">PPGaussianBlurMaterial</a>.</p>
 
 </div>
 </div>
@@ -337,6 +356,32 @@ SimplePixelShader *&#160;</td><td class="memItemRight" valign="bottom"><a class=
 
 <p>Get the <a class="el" href="struct_vertex.html" title="A vertex in the mesh. ">Vertex</a> Shader Pointer. </p>
 <dl class="section return"><dt>Returns</dt><dd>SimpleVertexShader* The <a class="el" href="struct_vertex.html" title="A vertex in the mesh. ">Vertex</a> Shader Pointer </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a43a5657c201283c3649a43bad465cb1f"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Material::SetBlendMode </td>
+          <td>(</td>
+          <td class="paramtype">D3D11_RENDER_TARGET_BLEND_DESC&#160;</td>
+          <td class="paramname"><em>blendDesc</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Set the blend mode of the material</p>
+<p>Have no effect when transparent is false (Set the transparent variable first!) </p>
 
 </div>
 </div>
@@ -396,7 +441,7 @@ SimplePixelShader *&#160;</td><td class="memItemRight" valign="bottom"><a class=
 <p>Set other data needed by the shaders. </p>
 <p>This must be implemented even if there's no other things to set </p>
 
-<p>Implemented in <a class="el" href="class_p_b_r_material.html#a80cae030daec449fc24793172413e085">PBRMaterial</a>, and <a class="el" href="class_unlit_material.html#a2477594f47d9d4dcece3a149662b7db6">UnlitMaterial</a>.</p>
+<p>Implemented in <a class="el" href="class_p_b_r_material.html#a80cae030daec449fc24793172413e085">PBRMaterial</a>, <a class="el" href="class_post_processing_material.html#a0386d3a66b58108ecf16dc5b2c21cdf6">PostProcessingMaterial</a>, <a class="el" href="class_unlit_material.html#a2477594f47d9d4dcece3a149662b7db6">UnlitMaterial</a>, <a class="el" href="class_p_p_dark_corner_material.html#ad5a81551e0884b8c7d92827d4d2fedb1">PPDarkCornerMaterial</a>, and <a class="el" href="class_p_p_gaussian_blur_material.html#a94b442067b93cb3b318b005d7b0b4e88">PPGaussianBlurMaterial</a>.</p>
 
 </div>
 </div>
@@ -429,6 +474,45 @@ SimplePixelShader *&#160;</td><td class="memItemRight" valign="bottom"><a class=
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="a14ec7391013bd7e0b37f72acb70c5c8a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">ID3D11BlendState* Material::blendState</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Indicates the blend mode. </p>
+<p>Will be ignored if the transparent is false </p>
+
+</div>
+</div>
+<a class="anchor" id="a81130d1381766da7779ac967bc9f7099"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Material::transparent</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Indicates if the material is transparent. </p>
+<p>This will have effect on the order of the mesh being rendered Set this first before setting the blend mode </p>
 
 </div>
 </div>

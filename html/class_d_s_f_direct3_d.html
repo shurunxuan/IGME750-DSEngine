@@ -142,6 +142,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:a5ace95fb32e4f71b1ec97b0f0818b059"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_f_direct3_d.html#a5ace95fb32e4f71b1ec97b0f0818b059">RenderSkybox</a> (<a class="el" href="class_camera.html">Camera</a> *camera)</td></tr>
 <tr class="memdesc:a5ace95fb32e4f71b1ec97b0f0818b059"><td class="mdescLeft">&#160;</td><td class="mdescRight">Render the skybox.  <a href="#a5ace95fb32e4f71b1ec97b0f0818b059">More...</a><br/></td></tr>
 <tr class="separator:a5ace95fb32e4f71b1ec97b0f0818b059"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f3a20eaa1f6733cc7466351bc6277e9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_f_direct3_d.html#a8f3a20eaa1f6733cc7466351bc6277e9">PostProcessing</a> (<a class="el" href="class_post_processing_material.html">PostProcessingMaterial</a> *postProcessingMaterial)</td></tr>
+<tr class="memdesc:a8f3a20eaa1f6733cc7466351bc6277e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Post Processing.  <a href="#a8f3a20eaa1f6733cc7466351bc6277e9">More...</a><br/></td></tr>
+<tr class="separator:a8f3a20eaa1f6733cc7466351bc6277e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a19e253baf99603839029207db2cf5073"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a19e253baf99603839029207db2cf5073"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_f_direct3_d.html#a19e253baf99603839029207db2cf5073">Present</a> ()</td></tr>
 <tr class="memdesc:a19e253baf99603839029207db2cf5073"><td class="mdescLeft">&#160;</td><td class="mdescRight">Present the render target to the screen. <br/></td></tr>
@@ -587,6 +590,34 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">v</td><td>Another instance </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a8f3a20eaa1f6733cc7466351bc6277e9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DSFDirect3D::PostProcessing </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_post_processing_material.html">PostProcessingMaterial</a> *&#160;</td>
+          <td class="paramname"><em>postProcessingMaterial</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Post Processing. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sourceIndex</td><td>The source render target of the post processing part, valid number 0 ~ D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT - 1 </td></tr>
+    <tr><td class="paramname">targetIndex</td><td>The target render target of the post processing part, valid number -1 ~ D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT - 1, a negative number means render to the back buffer (screen) </td></tr>
+    <tr><td class="paramname">postProcessingVS</td><td>The vertex shader that will be used for post processing </td></tr>
+    <tr><td class="paramname">postProcessingPS</td><td>The pixel shader that will be used for post processing </td></tr>
+    <tr><td class="paramname"></td><td></td></tr>
   </table>
   </dd>
 </dl>

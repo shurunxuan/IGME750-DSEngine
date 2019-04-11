@@ -1,4 +1,4 @@
 <map id="PBRMaterial" name="PBRMaterial">
-<area shape="rect" id="node2" href="$class_material.html" title="The material of a MeshRenderer. " alt="" coords="239,117,307,144"/>
-<area shape="rect" id="node6" href="$struct_p_b_r_material_1_1_p_b_r_material_struct.html" title="The data struct of the PBRMaterial. " alt="" coords="469,110,648,151"/>
+<area shape="rect" id="node2" href="$class_material.html" title="The material of a MeshRenderer. " alt="" coords="370,132,438,159"/>
+<area shape="rect" id="node8" href="$struct_p_b_r_material_1_1_p_b_r_material_struct.html" title="The data struct of the PBRMaterial. " alt="" coords="315,311,493,353"/>
 </map>

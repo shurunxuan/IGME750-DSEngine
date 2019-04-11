@@ -110,7 +110,7 @@ Collaboration diagram for PBRMaterial:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_p_b_r_material__coll__graph.png" border="0" usemap="#_p_b_r_material_coll__map" alt="Collaboration graph"/></div>
 <map name="_p_b_r_material_coll__map" id="_p_b_r_material_coll__map">
-<area shape="rect" id="node2" href="class_material.html" title="The material of a MeshRenderer. " alt="" coords="239,117,307,144"/><area shape="rect" id="node6" href="struct_p_b_r_material_1_1_p_b_r_material_struct.html" title="The data struct of the PBRMaterial. " alt="" coords="469,110,648,151"/></map>
+<area shape="rect" id="node2" href="class_material.html" title="The material of a MeshRenderer. " alt="" coords="370,132,438,159"/><area shape="rect" id="node8" href="struct_p_b_r_material_1_1_p_b_r_material_struct.html" title="The data struct of the PBRMaterial. " alt="" coords="315,311,493,353"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
@@ -177,6 +177,8 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_material.html#a13913b4a4906479b167e2c6f3fc1e698">SetMaterialData</a> ()</td></tr>
 <tr class="memdesc:a13913b4a4906479b167e2c6f3fc1e698 inherit pub_methods_class_material"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send the material data to the shader. <br/></td></tr>
 <tr class="separator:a13913b4a4906479b167e2c6f3fc1e698 inherit pub_methods_class_material"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43a5657c201283c3649a43bad465cb1f inherit pub_methods_class_material"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_material.html#a43a5657c201283c3649a43bad465cb1f">SetBlendMode</a> (D3D11_RENDER_TARGET_BLEND_DESC blendDesc)</td></tr>
+<tr class="separator:a43a5657c201283c3649a43bad465cb1f inherit pub_methods_class_material"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -184,6 +186,10 @@ Public Attributes</h2></td></tr>
 struct <br class="typebreak"/>
 <a class="el" href="struct_p_b_r_material_1_1_p_b_r_material_struct.html">PBRMaterial::PBRMaterialStruct</a>&#160;</td><td class="memItemRight" valign="bottom"><b>parameters</b></td></tr>
 <tr class="separator:a4a9e10c8aaa4150f355529b0c4be4cff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_attribs_class_material"><td colspan="2" onclick="javascript:toggleInherit('pub_attribs_class_material')"><img src="closed.png" alt="-"/>&#160;Public Attributes inherited from <a class="el" href="class_material.html">Material</a></td></tr>
+<tr class="memitem:a81130d1381766da7779ac967bc9f7099 inherit pub_attribs_class_material"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_material.html#a81130d1381766da7779ac967bc9f7099">transparent</a></td></tr>
+<tr class="memdesc:a81130d1381766da7779ac967bc9f7099 inherit pub_attribs_class_material"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if the material is transparent.  <a href="#a81130d1381766da7779ac967bc9f7099">More...</a><br/></td></tr>
+<tr class="separator:a81130d1381766da7779ac967bc9f7099 inherit pub_attribs_class_material"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -200,6 +206,9 @@ SimpleVertexShader *&#160;</td><td class="memItemRight" valign="bottom"><a class
 SimplePixelShader *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_material.html#a2d5f72389942a160f789dbcf66b1d276">pixelShader</a></td></tr>
 <tr class="memdesc:a2d5f72389942a160f789dbcf66b1d276 inherit pro_attribs_class_material"><td class="mdescLeft">&#160;</td><td class="mdescRight">The pixel shader. <br/></td></tr>
 <tr class="separator:a2d5f72389942a160f789dbcf66b1d276 inherit pro_attribs_class_material"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14ec7391013bd7e0b37f72acb70c5c8a inherit pro_attribs_class_material"><td class="memItemLeft" align="right" valign="top">ID3D11BlendState *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_material.html#a14ec7391013bd7e0b37f72acb70c5c8a">blendState</a></td></tr>
+<tr class="memdesc:a14ec7391013bd7e0b37f72acb70c5c8a inherit pro_attribs_class_material"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates the blend mode.  <a href="#a14ec7391013bd7e0b37f72acb70c5c8a">More...</a><br/></td></tr>
+<tr class="separator:a14ec7391013bd7e0b37f72acb70c5c8a inherit pro_attribs_class_material"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The default physically based rendering material. </p>

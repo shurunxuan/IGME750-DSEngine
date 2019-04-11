@@ -1,4 +1,4 @@
 <map id="UnlitMaterial" name="UnlitMaterial">
-<area shape="rect" id="node2" href="$class_material.html" title="The material of a MeshRenderer. " alt="" coords="241,104,308,131"/>
-<area shape="rect" id="node6" href="$struct_unlit_material_1_1_unlit_material_struct.html" title="UnlitMaterial::UnlitMaterial\lStruct" alt="" coords="407,97,583,138"/>
+<area shape="rect" id="node2" href="$class_material.html" title="The material of a MeshRenderer. " alt="" coords="342,132,410,159"/>
+<area shape="rect" id="node8" href="$struct_unlit_material_1_1_unlit_material_struct.html" title="UnlitMaterial::UnlitMaterial\lStruct" alt="" coords="288,205,464,246"/>
 </map>

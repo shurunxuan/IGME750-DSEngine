@@ -1,0 +1,5 @@
+<map id="PPDarkCornerMaterial" name="PPDarkCornerMaterial">
+<area shape="rect" id="node2" href="$class_post_processing_material.html" title="The default post processing material that does not set any material/texture data. ..." alt="" coords="411,208,569,235"/>
+<area shape="rect" id="node3" href="$class_material.html" title="The material of a MeshRenderer. " alt="" coords="369,96,436,123"/>
+<area shape="rect" id="node10" href="$struct_p_p_dark_corner_material_1_1_dark_corner_parameters.html" title="PPDarkCornerMaterial\l::DarkCornerParameters" alt="" coords="595,201,759,242"/>
+</map>

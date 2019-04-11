@@ -21,6 +21,7 @@ var searchData=
   ['_7emeshrenderer',['~MeshRenderer',['../class_mesh_renderer.html#aeae128e155e478309aa8fd434abc7892',1,'MeshRenderer']]],
   ['_7eobject',['~Object',['../class_object.html#ae8f5483f459e46687bd01e6f9977afd3',1,'Object']]],
   ['_7epbrmaterial',['~PBRMaterial',['../class_p_b_r_material.html#a095774999eb0092d766c8006d0bc490a',1,'PBRMaterial']]],
+  ['_7epostprocessingmaterial',['~PostProcessingMaterial',['../class_post_processing_material.html#a8aa981d2fd9eb370da217f21e2b50513',1,'PostProcessingMaterial']]],
   ['_7escene',['~Scene',['../class_scene.html#a3b8cec2e32546713915f8c6303c951f1',1,'Scene']]],
   ['_7eskybox',['~Skybox',['../class_skybox.html#a62ad4c6b4b1965a0a6d8536a50d4c090',1,'Skybox']]],
   ['_7etransform',['~Transform',['../class_transform.html#a4212c64c9faa144ba24cc0ec56547267',1,'Transform']]]

@@ -140,6 +140,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:a5f5e28740d6c8134793508fa53594942"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_s_rendering.html#a5f5e28740d6c8134793508fa53594942">Update</a> (float deltaTime, float totalTime)</td></tr>
 <tr class="memdesc:a5f5e28740d6c8134793508fa53594942"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the rendering system every frame.  <a href="#a5f5e28740d6c8134793508fa53594942">More...</a><br/></td></tr>
 <tr class="separator:a5f5e28740d6c8134793508fa53594942"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7aba2ae92f545f649eab5b14a8fee87e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_s_rendering.html#a7aba2ae92f545f649eab5b14a8fee87e">RegisterPostProcessing</a> (<a class="el" href="class_post_processing_material.html">PostProcessingMaterial</a> *postProcessingMaterial)</td></tr>
+<tr class="memdesc:a7aba2ae92f545f649eab5b14a8fee87e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register a new post processing effect.  <a href="#a7aba2ae92f545f649eab5b14a8fee87e">More...</a><br/></td></tr>
+<tr class="separator:a7aba2ae92f545f649eab5b14a8fee87e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ac1d6afb8e8dee1f2d200415fe06701"><td class="memItemLeft" align="right" valign="top">SimpleVertexShader *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_s_s_rendering.html#a0ac1d6afb8e8dee1f2d200415fe06701">GetDefaultPostProcessingVertexShader</a> () const </td></tr>
+<tr class="memdesc:a0ac1d6afb8e8dee1f2d200415fe06701"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the default vertex shader for post processing.  <a href="#a0ac1d6afb8e8dee1f2d200415fe06701">More...</a><br/></td></tr>
+<tr class="separator:a0ac1d6afb8e8dee1f2d200415fe06701"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The Rendering System of the DS Engine. </p>
@@ -245,6 +251,24 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a0ac1d6afb8e8dee1f2d200415fe06701"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">SimpleVertexShader* DSSRendering::GetDefaultPostProcessingVertexShader </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the default vertex shader for post processing. </p>
+<dl class="section return"><dt>Returns</dt><dd>SimpleVertexShader* The pointer of the desired vertex shader </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a03b9a4be8276214504d88eb0c3832a05"></a>
 <div class="memitem">
 <div class="memproto">
@@ -418,6 +442,31 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">v</td><td>Another instance </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a7aba2ae92f545f649eab5b14a8fee87e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DSSRendering::RegisterPostProcessing </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_post_processing_material.html">PostProcessingMaterial</a> *&#160;</td>
+          <td class="paramname"><em>postProcessingMaterial</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Register a new post processing effect. </p>
+<p>Registered post processing effect will be applied by order</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">postProcessingMaterial</td><td>The post processing material </td></tr>
   </table>
   </dd>
 </dl>

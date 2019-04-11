@@ -1,5 +1,6 @@
 <map id="/home/travis/build/shurunxuan/IGME750&#45;DSEngine/src/DSEngine/DSEngineCore/MeshRenderer.hpp" name="/home/travis/build/shurunxuan/IGME750&#45;DSEngine/src/DSEngine/DSEngineCore/MeshRenderer.hpp">
-<area shape="rect" id="node3" href="$_component_8hpp.html" title="This file contains the class that represents the component of the object. " alt="" coords="231,125,345,152"/>
-<area shape="rect" id="node6" href="$_material_8hpp.html" title="This file contains the class that represents the material of a MeshRenderer. " alt="" coords="403,125,496,152"/>
-<area shape="rect" id="node8" href="$_mesh_8hpp.html" title="This file contains the class that represents the mesh of a MeshRenderer. " alt="" coords="710,125,788,152"/>
+<area shape="rect" id="node3" href="$_component_8hpp.html" title="This file contains the class that represents the component of the object. " alt="" coords="916,125,1031,152"/>
+<area shape="rect" id="node6" href="$_material_8hpp.html" title="This file contains the class that represents the material of a MeshRenderer. " alt="" coords="1089,125,1183,152"/>
+<area shape="rect" id="node26" href="$_mesh_8hpp.html" title="This file contains the class that represents the mesh of a MeshRenderer. " alt="" coords="1510,125,1588,152"/>
+<area shape="rect" id="node8" href="$_d_s_f_logging_8h.html" title="Defines the logging system with boost::log. " alt="" coords="1225,200,1329,227"/>
 </map>
