@@ -120,7 +120,7 @@ void TestGameApp::Init()
 		blendDesc.BlendOpAlpha = D3D11_BLEND_OP_ADD;
 		blendDesc.RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 		material->SetBlendMode(blendDesc);
-		material->parameters.transparency = 0.49f;
+		material->parameters.transparency = 0.8f;
 		if (i == 0) parentObj = obj;
 	}
 
