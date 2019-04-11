@@ -197,6 +197,7 @@
     <ClInclude Include="MeshRenderer.hpp" />
     <ClInclude Include="Object.hpp" />
     <ClInclude Include="PBRMaterial.hpp" />
+    <ClInclude Include="PostProcessingMaterial.hpp" />
     <ClInclude Include="Scene.hpp" />
     <ClInclude Include="SimpleShader.hpp" />
     <ClInclude Include="Skybox.hpp" />

@@ -14,6 +14,7 @@
 #pragma once
 #pragma warning(disable:4251)
 #include "SimpleShader.hpp"
+#include "DSFLogging.h"
 
 /**
  * @brief The material of a MeshRenderer
@@ -22,6 +23,7 @@
 class Material
 {
 public:
+	friend class DSSRendering;
 	/**
 	 * @brief Construct a new Material object
 	 * 
@@ -83,6 +85,21 @@ public:
 	 */
 	void SetMaterialData();
 
+	/**
+	 * Set the blend mode of the material
+	 * 
+	 * Have no effect when transparent is false (Set the transparent variable first!)
+	 */
+	void SetBlendMode(D3D11_RENDER_TARGET_BLEND_DESC blendDesc);
+
+	/**
+	 * @brief Indicates if the material is transparent
+	 * 
+	 * This will have effect on the order of the mesh being rendered
+	 * Set this first before setting the blend mode
+	 */
+	bool transparent;
+
 protected:
 	/**
 	 * @brief Set other data needed by the shaders
@@ -107,12 +124,20 @@ protected:
 	 * 
 	 */
 	SimplePixelShader* pixelShader;
+	/**
+	 * @brief Indicates the blend mode
+	 *
+	 * Will be ignored if the transparent is false
+	 */
+	ID3D11BlendState* blendState;
 };
 
 inline Material::Material(ID3D11Device* d = nullptr)
 {
 	vertexShader = nullptr;
 	pixelShader = nullptr;
+	blendState = nullptr;
+	transparent = false;
 
 	device = d;
 }
@@ -122,13 +147,16 @@ inline Material::Material(SimpleVertexShader* vtxShader, SimplePixelShader* pxlS
 {
 	vertexShader = vtxShader;
 	pixelShader = pxlShader;
+	blendState = nullptr;
+	transparent = false;
 
 	device = d;
 }
 
 inline Material::~Material()
 {
-
+	if (blendState != nullptr)
+		blendState->Release();
 }
 
 inline SimpleVertexShader* Material::GetVertexShaderPtr() const
@@ -153,15 +181,30 @@ inline void Material::SetPixelShaderPtr(SimplePixelShader* pShader)
 
 inline void Material::SetMaterialData()
 {
-	void* materialData;
+	void* materialData = nullptr;
 	const size_t materialSize = GetMaterialStruct(&materialData);
 	// Material Data
-	pixelShader->SetData(
-		"material",
-		materialData,
-		int(materialSize)
-	);
+	if (materialData != nullptr)
+		pixelShader->SetData(
+			"material",
+			materialData,
+			int(materialSize)
+		);
 
 	SetShaderData();
 }
+
+inline void Material::SetBlendMode(D3D11_RENDER_TARGET_BLEND_DESC blendDesc)
+{
+	if (!transparent)
+	{
+		LOG_WARNING << "Setting blend mode on a non-transparent material will have no effect!";
+		return;
+	}
+	D3D11_BLEND_DESC blendStateDesc;
+	blendStateDesc.RenderTarget[0] = blendDesc;
+	blendStateDesc.RenderTarget[1] = blendDesc;
+	device->CreateBlendState(&blendStateDesc, &blendState);
+}
+
 ///@endcond

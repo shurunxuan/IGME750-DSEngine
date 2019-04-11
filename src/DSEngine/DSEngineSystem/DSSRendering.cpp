@@ -15,12 +15,18 @@ DSSRendering::DSSRendering()
 	perfCounterSeconds = 1.0 / double(perfFreq);
 
 	shadowVertexShader = nullptr;
+	postProcessingVS = nullptr;
+	postProcessingCopyPS = nullptr;
+	copyToScreenMaterial = nullptr;
 }
 
 
 DSSRendering::~DSSRendering()
 {
 	delete shadowVertexShader;
+	delete postProcessingVS;
+	delete postProcessingCopyPS;
+	delete copyToScreenMaterial;
 }
 
 HRESULT DSSRendering::Init(HWND hWnd, unsigned int screenWidth, unsigned int screenHeight)
@@ -38,7 +44,11 @@ HRESULT DSSRendering::Init(HWND hWnd, unsigned int screenWidth, unsigned int scr
 
 	shadowVertexShader = new SimpleVertexShader(direct3D.GetDevice(), direct3D.GetDeviceContext());
 	shadowVertexShader->LoadShaderFile(L"ShadowVS.cso");
-
+	postProcessingVS = new SimpleVertexShader(direct3D.GetDevice(), direct3D.GetDeviceContext());
+	postProcessingVS->LoadShaderFile(L"PostProcessingVS.cso");
+	postProcessingCopyPS = new SimplePixelShader(direct3D.GetDevice(), direct3D.GetDeviceContext());
+	postProcessingCopyPS->LoadShaderFile(L"PPCopyPS.cso");
+	copyToScreenMaterial = new PostProcessingMaterial(1, { 0 }, 1, { -1 }, postProcessingVS, postProcessingCopyPS, direct3D.GetDevice());
 	return hr;
 }
 
@@ -53,9 +63,11 @@ void DSSRendering::Update(const float deltaTime, const float totalTime)
 {
 	// #66CCFF
 	direct3D.ClearRenderTarget(0.4f, 0.8f, 1.0f, 1.0f);
+	// Restore the blend state
+	direct3D.GetDeviceContext()->OMSetBlendState(nullptr, nullptr, 0xFFFFFF);
 
 	std::list<MeshRenderer*> meshRenderersInScene;
-
+	std::list<MeshRenderer*> transparentMeshRenderers;
 	// Get All MeshRenderers
 	for (Object* object : App->CurrentActiveScene()->allObjects)
 	{
@@ -80,6 +92,11 @@ void DSSRendering::Update(const float deltaTime, const float totalTime)
 	for (MeshRenderer* meshRenderer : meshRenderersInScene)
 	{
 		// TODO: if (cull(camera, meshRenderer->mesh)) 
+		if (meshRenderer->GetMaterial()->transparent)
+		{
+			transparentMeshRenderers.push_back(meshRenderer);
+			continue;
+		}
 		direct3D.Render(camera, meshRenderer);
 	}
 
@@ -88,7 +105,55 @@ void DSSRendering::Update(const float deltaTime, const float totalTime)
 	if (camera->GetSkybox() != nullptr)
 		direct3D.RenderSkybox(camera);
 
+	// Sort the list first
+	transparentMeshRenderers.sort(
+		[camera](MeshRenderer * a, MeshRenderer * b)
+		{
+			DirectX::XMVECTOR aBoxCenter = DirectX::XMLoadFloat3(&(a->GetMesh()->aabb.Center));
+			DirectX::XMVECTOR bBoxCenter = DirectX::XMLoadFloat3(&(b->GetMesh()->aabb.Center));
+
+			const DirectX::XMMATRIX wvA = DirectX::XMMatrixMultiply(XMMatrixTranspose(a->object->transform->GetGlobalWorldMatrix()), DirectX::XMMatrixTranspose(camera->GetViewMatrix()));
+			const DirectX::XMMATRIX wvB = DirectX::XMMatrixMultiply(XMMatrixTranspose(b->object->transform->GetGlobalWorldMatrix()), DirectX::XMMatrixTranspose(camera->GetViewMatrix()));
+
+			aBoxCenter = DirectX::XMVector3TransformCoord(aBoxCenter, wvA);
+			bBoxCenter = DirectX::XMVector3TransformCoord(bBoxCenter, wvB);
+
+			DirectX::XMFLOAT3 ac{};
+			DirectX::XMFLOAT3 bc{};
+
+			DirectX::XMStoreFloat3(&ac, aBoxCenter);
+			DirectX::XMStoreFloat3(&bc, bBoxCenter);
+
+			return ac.z > bc.z;
+		}
+	);
+
+	for (MeshRenderer* meshRenderer : transparentMeshRenderers)
+	{
+		// Set blend state
+		direct3D.GetDeviceContext()->OMSetBlendState(meshRenderer->GetMaterial()->blendState, nullptr, 0xFFFFFF);
+		// Render
+		direct3D.Render(camera, meshRenderer);
+	}
+
+	// Post Processing
+	for (PostProcessingMaterial* material : postProcessingMaterials)
+	{
+		direct3D.PostProcessing(material);
+	}
+	direct3D.PostProcessing(copyToScreenMaterial);
+
 	direct3D.Present();
+}
+
+void DSSRendering::RegisterPostProcessing(PostProcessingMaterial* postProcessingMaterial)
+{
+	postProcessingMaterials.push_back(postProcessingMaterial);
+}
+
+SimpleVertexShader* DSSRendering::GetDefaultPostProcessingVertexShader() const
+{
+	return postProcessingVS;
 }
 
 

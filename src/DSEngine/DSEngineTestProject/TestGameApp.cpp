@@ -17,6 +17,14 @@
 
 TestGameApp::~TestGameApp()
 {
+	delete ppDarkCornerPS;
+	delete ppGaussianBlurUPS;
+	delete ppGaussianBlurVPS;
+	delete ppAddPS;
+	delete darkCornerMaterial;
+	delete blurUMaterial;
+	delete blurVMaterial;
+	delete applyBloomMaterial;
 }
 
 void TestGameApp::Init()
@@ -32,6 +40,8 @@ void TestGameApp::Init()
 	SInput->RegisterInput("CameraHorizontal", "", "", "", "", 10.0f, 0.1f, 10.0f, false, Movement, MouseX, -1);
 	SInput->RegisterInput("CameraVertical", "", "", "", "", 10.0f, 0.1f, 10.0f, false, Axis, JoystickRY, -1);
 	SInput->RegisterInput("CameraVertical", "", "", "", "", 10.0f, 0.1f, 10.0f, true, Movement, MouseY, -1);
+	SInput->RegisterInput("CameraHorizontal", "h", "f", "", "", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
+	SInput->RegisterInput("CameraVertical", "t", "g", "", "", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
 	SInput->RegisterInput("ArrowHorizontal", "joystick right", "joystick left", "right", "left", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
 	SInput->RegisterInput("ArrowVertical", "joystick up", "joystick down", "up", "down", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
 	SInput->RegisterInput("PlayAudio1", "z", "", "", "", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
@@ -46,6 +56,31 @@ void TestGameApp::Init()
 	SInput->RegisterInput("Audio1PitchDown", "2", "", "", "", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
 	SInput->RegisterInput("Audio1VolumeUp", "3", "", "", "", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
 	SInput->RegisterInput("Audio1VolumeDown", "4", "", "", "", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
+
+	// Register post processing effects
+	ppGaussianBlurUPS = new SimplePixelShader(device, context);
+	ppGaussianBlurVPS = new SimplePixelShader(device, context);
+	ppGaussianBlurUPS->LoadShaderFile(L"PPGaussianBlurUPS.cso");
+	ppGaussianBlurVPS->LoadShaderFile(L"PPGaussianBlurVPS.cso");
+	blurUMaterial = new PPGaussianBlurMaterial(1, { 1 }, 1, { 2 }, SRendering->GetDefaultPostProcessingVertexShader(), ppGaussianBlurUPS, device);
+	blurVMaterial = new PPGaussianBlurMaterial(1, { 2 }, 1, { 1 }, SRendering->GetDefaultPostProcessingVertexShader(), ppGaussianBlurVPS, device);
+	blurUMaterial->SetScreenSizePtr(&width, &height);
+	blurVMaterial->SetScreenSizePtr(&width, &height);
+	SRendering->RegisterPostProcessing(blurUMaterial);
+	SRendering->RegisterPostProcessing(blurVMaterial);	
+	SRendering->RegisterPostProcessing(blurUMaterial);
+	SRendering->RegisterPostProcessing(blurVMaterial);
+
+	ppAddPS = new SimplePixelShader(device, context);
+	ppAddPS->LoadShaderFile(L"PPAddPS.cso");
+	applyBloomMaterial = new PostProcessingMaterial(2, { 0, 1 }, 1, { 2 }, SRendering->GetDefaultPostProcessingVertexShader(), ppAddPS, device);
+	SRendering->RegisterPostProcessing(applyBloomMaterial);
+
+	ppDarkCornerPS = new SimplePixelShader(device, context);
+	ppDarkCornerPS->LoadShaderFile(L"PPDarkCornerPS.cso");
+	darkCornerMaterial = new PPDarkCornerMaterial(1, { 2 }, 1, { 0 }, SRendering->GetDefaultPostProcessingVertexShader(), ppDarkCornerPS, device);
+	darkCornerMaterial->parameters.intensity = 1.0f;
+	SRendering->RegisterPostProcessing(darkCornerMaterial);
 
 	// Set Camera
 	CurrentActiveScene()->mainCamera->UpdateProjectionMatrix(float(width), float(height), DirectX::XM_PIDIV4);
@@ -66,18 +101,25 @@ void TestGameApp::Init()
 	auto rotation = parentObj->transform->GetLocalRotation();
 	rotation = DirectX::XMQuaternionMultiply(rotation, DirectX::XMQuaternionRotationAxis(DirectX::XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f), DirectX::XM_PIDIV2));
 	parentObj->transform->SetLocalRotation(rotation);
+	//Object* parentObj = nullptr;
+	//for (int i = 0; i < 5; ++i)
+	//{
+	//	Object* obj = CurrentActiveScene()->LoadModelFile("Assets/Models/Rock/sphere.obj");
+	//	obj->transform->SetLocalTranslation((i - 2) * 2.0f, 1.0f, 5.0f);
+	//	if (i == 0) parentObj = obj;
+	//}
 
 	// Add Components
 	PressSpaceToPlayAudio * playAudioComponent = parentObj->AddComponent<PressSpaceToPlayAudio>();
 	MoveParentObject * moveParentComponent = parentObj->AddComponent<MoveParentObject>();
 
-	AudioSource* audioSource1 = parentObj->AddComponent<AudioSource>();
+	AudioSource * audioSource1 = parentObj->AddComponent<AudioSource>();
 	audioSource1->Is3D = true;
 	audioSource1->Loop = true;
 
 	//audioSource1->SetDopplerScaler(10.0f);
 	//audioSource1->SetCurveDistanceScaler(100.0f);
-	AudioSource* audioSource2 = parentObj->AddComponent<AudioSource>();
+	AudioSource * audioSource2 = parentObj->AddComponent<AudioSource>();
 
 	playAudioComponent->source1 = audioSource1;
 	playAudioComponent->source2 = audioSource2;

@@ -21,6 +21,7 @@
 #include "MeshRenderer.hpp"
 #include "Light.hpp"
 #include "Camera.hpp"
+#include "PostProcessingMaterial.hpp"
 
 #ifndef SAFE_RELEASE
 #define SAFE_RELEASE(x) \
@@ -36,6 +37,7 @@
 #else
 #define DSENGINEFRAMEWORK_API __declspec(dllimport)
 #endif
+
 
 /**
  * @brief The Direct3D Framework of the DS Engine
@@ -157,6 +159,17 @@ public:
     void RenderSkybox(Camera* camera);
 
     /**
+     * @brief Post Processing
+     * 
+     * @param sourceIndex The source render target of the post processing part, valid number 0 ~ D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT - 1
+     * @param targetIndex The target render target of the post processing part, valid number -1 ~ D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT - 1, a negative number means render to the back buffer (screen)
+     * @param postProcessingVS The vertex shader that will be used for post processing
+     * @param postProcessingPS The pixel shader that will be used for post processing
+     * @param 
+     */
+    void PostProcessing(PostProcessingMaterial* postProcessingMaterial);
+
+    /**
      * @brief Present the render target to the screen
      * 
      */
@@ -238,6 +251,14 @@ private:
      */
     ID3D11RenderTargetView* backBufferRTV;
     /**
+     * @brief The render target views that we'll render to
+     */
+    ID3D11RenderTargetView* renderTargetView[D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT];
+    /**
+     * @brief The shader resource views of the render targets
+     */
+    ID3D11ShaderResourceView* renderResourceView[D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT];
+    /**
      * @brief The depth stencil view
      */
     ID3D11DepthStencilView* depthStencilView;
@@ -259,14 +280,23 @@ private:
     ID3D11RasterizerState* shadowRenderState;
 
     /**
+     * @brief The point sampler state which is used for sampling the render target textures
+     */
+    ID3D11SamplerState* pointSamplerState;
+    /**
+     * @brief The linear sampler state which is used for sampling the render target textures
+     */
+    ID3D11SamplerState* linearSamplerState;
+
+    /**
      * @brief The comparison sampler which is used when rendering the shadow
      * 
      */
     ID3D11SamplerState* comparisonSampler;
-	/**
-	 * @brief The color that is used for clearing the render target
-	 */
-	DirectX::XMFLOAT4 clearColor;
+    /**
+     * @brief The color that is used for clearing the render target
+     */
+    DirectX::XMFLOAT4 clearColor;
 
     /**
      * @brief Create a Device And Swap Buffer object

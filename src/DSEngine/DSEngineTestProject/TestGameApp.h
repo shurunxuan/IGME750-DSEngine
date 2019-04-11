@@ -12,6 +12,8 @@
  */
 #pragma once
 #include "DSEngineApp.h"
+#include "PPDarkCornerMaterial.h"
+#include "PPGaussianBlurMaterial.h"
 
 /**
  * @class TestGameApp
@@ -35,5 +37,13 @@ public:
 	void Init() override;
 
 private:
+	SimplePixelShader* ppDarkCornerPS = nullptr;
+	SimplePixelShader* ppGaussianBlurUPS = nullptr;
+	SimplePixelShader* ppGaussianBlurVPS = nullptr;
+	SimplePixelShader* ppAddPS = nullptr;
+	PPDarkCornerMaterial* darkCornerMaterial = nullptr;
+	PPGaussianBlurMaterial* blurUMaterial = nullptr;
+	PPGaussianBlurMaterial* blurVMaterial = nullptr;
+	PostProcessingMaterial* applyBloomMaterial = nullptr;
 };
 
