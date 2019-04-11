@@ -570,7 +570,7 @@ PixelOutput main(VertexToPixel input)
 	}
 
 	result = surfaceColor * diffuse + specular + float4(IBL(n, v, l, surfaceColor.rgb), 0.0f);
-	result.a = surfaceColor.a * (1.0f - material.transparency);
+	result.a = saturate(surfaceColor.a * (1.0f - material.transparency));
 
 	output.Target0 = saturate(result);
 	output.Target1 = saturate(result - float4(1.0f, 1.0f, 1.0f, 0.0f) * 0.5f);

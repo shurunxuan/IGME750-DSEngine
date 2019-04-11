@@ -202,6 +202,8 @@ inline void Material::SetBlendMode(D3D11_RENDER_TARGET_BLEND_DESC blendDesc)
 		return;
 	}
 	D3D11_BLEND_DESC blendStateDesc;
+	blendStateDesc.AlphaToCoverageEnable = false;
+	blendStateDesc.IndependentBlendEnable = false;
 	for (int i = 0; i < D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT; ++i)
 		blendStateDesc.RenderTarget[i] = blendDesc;
 	device->CreateBlendState(&blendStateDesc, &blendState);

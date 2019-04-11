@@ -64,11 +64,11 @@ void MoveParentObject::Update(float deltaTime, float totalTime)
 			material->parameters.metalness = 0.0f;
 
 
-		material->parameters.roughness -= 0.3f * deltaTime * arrowHorizontal;
-		if (material->parameters.roughness > 1.0f)
-			material->parameters.roughness = 1.0f;
-		if (material->parameters.roughness < 0.0f)
-			material->parameters.roughness = 0.0f;
+		material->parameters.transparency -= 0.3f * deltaTime * arrowHorizontal;
+		if (material->parameters.transparency > 1.0f)
+			material->parameters.transparency = 1.0f;
+		if (material->parameters.transparency < 0.0f)
+			material->parameters.transparency = 0.0f;
 	}
 
 	float horizontal = SInput->GetAxis("MoveHorizontal");
