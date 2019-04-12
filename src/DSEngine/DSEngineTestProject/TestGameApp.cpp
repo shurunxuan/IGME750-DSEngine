@@ -62,8 +62,8 @@ void TestGameApp::Init()
 	ppGaussianBlurVPS = new SimplePixelShader(device, context);
 	ppGaussianBlurUPS->LoadShaderFile(L"PPGaussianBlurUPS.cso");
 	ppGaussianBlurVPS->LoadShaderFile(L"PPGaussianBlurVPS.cso");
-	blurUMaterial = new PPGaussianBlurMaterial(1, { 1 }, 1, { 2 }, SRendering->GetDefaultPostProcessingVertexShader(), ppGaussianBlurUPS, device);
-	blurVMaterial = new PPGaussianBlurMaterial(1, { 2 }, 1, { 1 }, SRendering->GetDefaultPostProcessingVertexShader(), ppGaussianBlurVPS, device);
+	blurUMaterial = new PPGaussianBlurMaterial(1, { 1 }, 1, { 4 }, SRendering->GetDefaultPostProcessingVertexShader(), ppGaussianBlurUPS, device);
+	blurVMaterial = new PPGaussianBlurMaterial(1, { 4 }, 1, { 1 }, SRendering->GetDefaultPostProcessingVertexShader(), ppGaussianBlurVPS, device);
 	blurUMaterial->SetScreenSizePtr(&width, &height);
 	blurVMaterial->SetScreenSizePtr(&width, &height);
 	SRendering->RegisterPostProcessing(blurUMaterial);
@@ -73,12 +73,12 @@ void TestGameApp::Init()
 
 	ppAddPS = new SimplePixelShader(device, context);
 	ppAddPS->LoadShaderFile(L"PPAddPS.cso");
-	applyBloomMaterial = new PostProcessingMaterial(2, { 0, 1 }, 1, { 2 }, SRendering->GetDefaultPostProcessingVertexShader(), ppAddPS, device);
+	applyBloomMaterial = new PostProcessingMaterial(2, { 0, 1 }, 1, { 4 }, SRendering->GetDefaultPostProcessingVertexShader(), ppAddPS, device);
 	SRendering->RegisterPostProcessing(applyBloomMaterial);
 
 	ppDarkCornerPS = new SimplePixelShader(device, context);
 	ppDarkCornerPS->LoadShaderFile(L"PPDarkCornerPS.cso");
-	darkCornerMaterial = new PPDarkCornerMaterial(1, { 2 }, 1, { 0 }, SRendering->GetDefaultPostProcessingVertexShader(), ppDarkCornerPS, device);
+	darkCornerMaterial = new PPDarkCornerMaterial(1, { 4 }, 1, { 0 }, SRendering->GetDefaultPostProcessingVertexShader(), ppDarkCornerPS, device);
 	darkCornerMaterial->parameters.intensity = 1.0f;
 	SRendering->RegisterPostProcessing(darkCornerMaterial);
 
@@ -93,36 +93,36 @@ void TestGameApp::Init()
 	CurrentActiveScene()->AddLight(light);
 
 	// Add parent object
-	//Object * parentObj = CurrentActiveScene()->LoadModelFile("Assets/Models/Fennekin/a653.dae");
-	//parentObj->name = "Fennekin";
-	//parentObj->transform->SetLocalScale(0.05f, 0.05f, 0.05f);
-	//parentObj->transform->SetLocalTranslation(-1.0f, 0.0f, 5.0f);
+	Object * parentObj = CurrentActiveScene()->LoadModelFile("Assets/Models/Fennekin/a653.dae");
+	parentObj->name = "Fennekin";
+	parentObj->transform->SetLocalScale(0.05f, 0.05f, 0.05f);
+	parentObj->transform->SetLocalTranslation(-1.0f, 0.0f, 5.0f);
 
-	//auto rotation = parentObj->transform->GetLocalRotation();
-	//rotation = DirectX::XMQuaternionMultiply(rotation, DirectX::XMQuaternionRotationAxis(DirectX::XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f), DirectX::XM_PIDIV2));
-	//parentObj->transform->SetLocalRotation(rotation);
-	Object* parentObj = nullptr;
-	for (int i = 0; i < 5; ++i)
-	{
-		Object* obj = CurrentActiveScene()->LoadModelFile("Assets/Models/Rock/sphere.obj");
-		obj->transform->SetLocalTranslation((i - 2) * 2.0f, 1.0f, 5.0f);
-		MeshRenderer* renderer = obj->transform->GetChildAt(0)->object->GetComponent<MeshRenderer>();
-		PBRMaterial* material = static_cast<PBRMaterial*>(renderer->GetMaterial());
-		material->transparent = true;
-		D3D11_RENDER_TARGET_BLEND_DESC blendDesc;
-		ZeroMemory(&blendDesc, sizeof(D3D11_RENDER_TARGET_BLEND_DESC));
-		blendDesc.BlendEnable = TRUE;
-		blendDesc.SrcBlend = D3D11_BLEND_SRC_ALPHA;
-		blendDesc.DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
-		blendDesc.BlendOp = D3D11_BLEND_OP_ADD;
-		blendDesc.SrcBlendAlpha = D3D11_BLEND_ONE;
-		blendDesc.DestBlendAlpha = D3D11_BLEND_ZERO;
-		blendDesc.BlendOpAlpha = D3D11_BLEND_OP_ADD;
-		blendDesc.RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
-		material->SetBlendMode(blendDesc);
-		material->parameters.transparency = 0.8f;
-		if (i == 0) parentObj = obj;
-	}
+	auto rotation = parentObj->transform->GetLocalRotation();
+	rotation = DirectX::XMQuaternionMultiply(rotation, DirectX::XMQuaternionRotationAxis(DirectX::XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f), DirectX::XM_PIDIV2));
+	parentObj->transform->SetLocalRotation(rotation);
+	//Object* parentObj = nullptr;
+	//for (int i = 0; i < 5; ++i)
+	//{
+	//	Object* obj = CurrentActiveScene()->LoadModelFile("Assets/Models/Rock/sphere.obj");
+	//	obj->transform->SetLocalTranslation((i - 2) * 2.0f, 1.0f, 5.0f);
+	//	MeshRenderer* renderer = obj->transform->GetChildAt(0)->object->GetComponent<MeshRenderer>();
+	//	PBRMaterial* material = static_cast<PBRMaterial*>(renderer->GetMaterial());
+	//	material->transparent = true;
+	//	D3D11_RENDER_TARGET_BLEND_DESC blendDesc;
+	//	ZeroMemory(&blendDesc, sizeof(D3D11_RENDER_TARGET_BLEND_DESC));
+	//	blendDesc.BlendEnable = TRUE;
+	//	blendDesc.SrcBlend = D3D11_BLEND_SRC_ALPHA;
+	//	blendDesc.DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+	//	blendDesc.BlendOp = D3D11_BLEND_OP_ADD;
+	//	blendDesc.SrcBlendAlpha = D3D11_BLEND_ONE;
+	//	blendDesc.DestBlendAlpha = D3D11_BLEND_ZERO;
+	//	blendDesc.BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	//	blendDesc.RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+	//	material->SetBlendMode(blendDesc);
+	//	material->parameters.transparency = 0.8f;
+	//	if (i == 0) parentObj = obj;
+	//}
 
 	// Add Components
 	PressSpaceToPlayAudio * playAudioComponent = parentObj->AddComponent<PressSpaceToPlayAudio>();
@@ -145,7 +145,7 @@ void TestGameApp::Init()
 	// Add a ground
 	Object * ground = CurrentActiveScene()->LoadModelFile("Assets/Models/Rock/quad.obj");
 	ground->name = "Ground";
-	//ground->transform->SetLocalScale(DirectX::XMVectorSet(2.0f, 2.0f, 2.0f, 0.0f));
+	ground->transform->SetLocalScale(DirectX::XMVectorSet(2.0f, 2.0f, 2.0f, 0.0f));
 	ground->transform->SetLocalTranslation(DirectX::XMVectorSet(0.0f, -0.01f, 5.0f, 0.0f));
 	const DirectX::XMVECTOR rq = DirectX::XMQuaternionRotationAxis(DirectX::XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f), DirectX::XM_PIDIV2);
 	ground->transform->SetLocalRotation(rq);

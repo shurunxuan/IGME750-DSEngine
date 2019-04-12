@@ -5,6 +5,38 @@
 
 DSFDirect3D* FDirect3D = nullptr;
 
+#if defined(_DEBUG) || defined(PROFILE)
+template<UINT TNameLength>
+void SetDebugName(_In_ ID3D11DeviceChild* resource, _In_z_ const char(&name)[TNameLength])
+{
+	HRESULT nameSet = resource->SetPrivateData(WKPDID_D3DDebugObjectName, TNameLength - 1, name);
+}
+
+template<UINT TNameLength>
+void SetDebugName(_In_ IDXGIObject* resource, _In_z_ const char(&name)[TNameLength])
+{
+	HRESULT nameSet = resource->SetPrivateData(WKPDID_D3DDebugObjectName, TNameLength - 1, name);
+}
+
+void SetDebugName(_In_  ID3D11DeviceChild* resource, _In_z_ std::string debugName)
+{
+	HRESULT nameSet = resource->SetPrivateData(WKPDID_D3DDebugObjectName, debugName.size(), debugName.c_str());
+}
+
+void SetDebugName(_In_  IDXGIObject* resource, _In_z_ std::string debugName)
+{
+	HRESULT nameSet = resource->SetPrivateData(WKPDID_D3DDebugObjectName, debugName.size(), debugName.c_str());
+}
+
+void SetDebugName(_In_  ID3D11Device* resource, _In_z_ std::string debugName)
+{
+	HRESULT nameSet = resource->SetPrivateData(WKPDID_D3DDebugObjectName, debugName.size(), debugName.c_str());
+}
+#else
+#define SetDebugName(resource, name)
+#endif
+
+
 DSFDirect3D::DSFDirect3D()
 {
 	FDirect3D = this;
@@ -102,6 +134,12 @@ HRESULT DSFDirect3D::OnResize(unsigned int screenWidth, unsigned int screenHeigh
 	if (depthStencilView) { depthStencilView->Release(); }
 	if (backBufferRTV) { backBufferRTV->Release(); }
 
+	for (int i = 0; i < D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT; ++i)
+	{
+		if (renderTargetView[i]) { renderTargetView[i]->Release(); }
+		if (renderResourceView[i]) { renderResourceView[i]->Release(); }
+	}
+
 	HRESULT hr = ResizeSwapBuffers();
 	if (FAILED(hr)) return hr;
 
@@ -109,12 +147,6 @@ HRESULT DSFDirect3D::OnResize(unsigned int screenWidth, unsigned int screenHeigh
 	if (FAILED(hr)) return hr;
 
 	hr = CreateDepthStencilView();
-	if (FAILED(hr)) return hr;
-
-	hr = CreateDepthStencilState();
-	if (FAILED(hr)) return hr;
-
-	hr = CreateShadowAndDrawingRenderState();
 	if (FAILED(hr)) return hr;
 
 	SetDefaultRenderTarget();
@@ -455,14 +487,9 @@ void DSFDirect3D::PostProcessing(PostProcessingMaterial * postProcessingMaterial
 		}
 	}
 
-	// TODO: Change this to individual depth stencil view if needed
-	context->ClearDepthStencilView(
-		depthStencilView,
-		D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL,
-		1.0f,
-		0);
 	// Render to target
-	context->OMSetRenderTargets(targetCount, &*targetViews.begin(), depthStencilView);
+	// We don't need a depth buffer for this
+	context->OMSetRenderTargets(targetCount, &*targetViews.begin(), nullptr);
 
 	// Set data
 	postProcessingMaterial->SetMaterialData();
@@ -583,6 +610,9 @@ HRESULT DSFDirect3D::CreateDeviceAndSwapBuffer()
 		&device,					// Pointer to our Device pointer
 		&dxFeatureLevel,			// This will hold the actual feature level the app will use
 		&context);					// Pointer to our Device Context pointer
+	SetDebugName(swapChain, "DSFDirect3D::swapChain");
+	SetDebugName(device, "DSFDirect3D::device");
+	SetDebugName(context, "DSFDirect3D::context");
 
 	return hr;
 }
@@ -612,6 +642,8 @@ HRESULT DSFDirect3D::CreateRenderTargetView()
 		&backBufferRTV);
 	backBufferTexture->Release();
 
+	SetDebugName(backBufferRTV, "DSFDirect3D::backBufferRTV");
+
 	// Get the description of backBufferTexture and apply it to the renderTexture
 	D3D11_TEXTURE2D_DESC renderTexDesc;
 	ID3D11Texture2D* renderTexture[D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT] = { nullptr };
@@ -623,11 +655,16 @@ HRESULT DSFDirect3D::CreateRenderTargetView()
 
 	// Create Render Target View with the renderTexture
 	for (int i = 0; i < D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT; ++i)
+	{
 		device->CreateRenderTargetView(
 			renderTexture[i],
 			nullptr,
 			renderTargetView + i
 		);
+
+		SetDebugName(renderTargetView[i], std::string("DSFDirect3D::renderTargetView[") + std::to_string(i) + std::string("]"));
+
+	}
 
 	// Create Shader Resource View with the renderTexture
 	D3D11_SHADER_RESOURCE_VIEW_DESC renderSRVDesc;
@@ -637,11 +674,14 @@ HRESULT DSFDirect3D::CreateRenderTargetView()
 	renderSRVDesc.Texture2D.MipLevels = 1;
 
 	for (int i = 0; i < D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT; ++i)
+	{
 		device->CreateShaderResourceView(
 			renderTexture[i],
 			&renderSRVDesc,
 			renderResourceView + i
 		);
+		SetDebugName(renderResourceView[i], std::string("DSFDirect3D::renderResourceView[") + std::to_string(i) + std::string("]"));
+	}
 
 	// Release the render target texture because we don't need it anymore
 	for (auto& i : renderTexture)
@@ -673,6 +713,9 @@ HRESULT DSFDirect3D::CreateDepthStencilView()
 	HRESULT hr = device->CreateTexture2D(&depthStencilDesc, nullptr, &depthBufferTexture);
 	if (FAILED(hr)) return hr;
 	hr = device->CreateDepthStencilView(depthBufferTexture, nullptr, &depthStencilView);
+
+	SetDebugName(depthBufferTexture, "DSFDirect3D::depthBufferTexture");
+
 	depthBufferTexture->Release();
 	return hr;
 }
@@ -706,6 +749,7 @@ HRESULT DSFDirect3D::CreateDepthStencilState()
 
 	// Create depth stencil state
 	HRESULT hr = device->CreateDepthStencilState(&dsDesc, &depthStencilState);
+	SetDebugName(depthStencilState, "DSFDirect3D::depthStencilState");
 	if (FAILED(hr)) return hr;
 	context->OMSetDepthStencilState(depthStencilState, 0);
 	return hr;
@@ -722,6 +766,7 @@ HRESULT DSFDirect3D::CreateShadowAndDrawingRenderState()
 		&drawingRenderStateDesc,
 		&drawingRenderState
 	);
+	SetDebugName(drawingRenderState, "DSFDirect3D::drawingRenderState");
 	if (FAILED(hr)) return hr;
 	D3D11_RASTERIZER_DESC shadowRenderStateDesc;
 	ZeroMemory(&shadowRenderStateDesc, sizeof(D3D11_RASTERIZER_DESC));
@@ -736,6 +781,7 @@ HRESULT DSFDirect3D::CreateShadowAndDrawingRenderState()
 		&shadowRenderStateDesc,
 		&shadowRenderState
 	);
+	SetDebugName(shadowRenderState, "DSFDirect3D::shadowRenderState");
 	if (FAILED(hr)) return hr;
 
 	D3D11_SAMPLER_DESC comparisonSamplerDesc;
@@ -760,6 +806,7 @@ HRESULT DSFDirect3D::CreateShadowAndDrawingRenderState()
 		&comparisonSampler
 	);
 
+	SetDebugName(comparisonSampler, "DSFDirect3D::comparisonSampler");
 	return hr;
 }
 

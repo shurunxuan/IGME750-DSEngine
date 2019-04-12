@@ -574,8 +574,8 @@ PixelOutput main(VertexToPixel input)
 
 	output.Target0 = saturate(result);
 	output.Target1 = saturate(result - float4(1.0f, 1.0f, 1.0f, 0.0f) * 0.5f);
-	output.Target2 = float4(0, 0, 0, 1);
-	output.Target3 = float4(0, 0, 0, 1);
+	output.Target2 = float4(input.worldPos.xyz, 1);
+	output.Target3 = float4(n.xyz, 1);
 	output.Target4 = float4(0, 0, 0, 1);
 	output.Target5 = float4(0, 0, 0, 1);
 	output.Target6 = float4(0, 0, 0, 1);
