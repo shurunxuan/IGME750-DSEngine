@@ -33,6 +33,12 @@
     <ClCompile Include="TestGameApp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="PPDarkCornerMaterial.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PPGaussianBlurMaterial.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PressSpaceToPlayAudio.h">
@@ -47,5 +53,25 @@
     <ClInclude Include="TestGameApp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="PPDarkCornerMaterial.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PPGaussianBlurMaterial.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="PPDarkCornerPS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="PPGaussianBlurUPS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="PPGaussianBlurVPS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="PPAddPS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

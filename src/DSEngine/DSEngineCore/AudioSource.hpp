@@ -383,6 +383,7 @@ inline void AudioSource::PlaySync()
 
 inline void AudioSource::UpdateX3DAudioSettings()
 {
+	if (channels <= 0) return;
 	x3dEmitter.ChannelCount = channels;
 	channelAzimuths.resize(x3dEmitter.ChannelCount);
 	for (float& channelAzimuth : channelAzimuths)
