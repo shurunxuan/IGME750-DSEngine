@@ -21,10 +21,16 @@ TestGameApp::~TestGameApp()
 	delete ppGaussianBlurUPS;
 	delete ppGaussianBlurVPS;
 	delete ppAddPS;
+	delete ppMultiplyPS;
+	delete ppSSAOPS;
 	delete darkCornerMaterial;
 	delete blurUMaterial;
 	delete blurVMaterial;
+	delete blurSSAOUMaterial;
+	delete blurSSAOVMaterial;
 	delete applyBloomMaterial;
+	delete applySSAOMaterial;
+	delete ssaoMaterial;
 }
 
 void TestGameApp::Init()
@@ -63,24 +69,40 @@ void TestGameApp::Init()
 	ppGaussianBlurUPS->LoadShaderFile(L"PPGaussianBlurUPS.cso");
 	ppGaussianBlurVPS->LoadShaderFile(L"PPGaussianBlurVPS.cso");
 	blurUMaterial = new PPGaussianBlurMaterial(1, { 1 }, 1, { 4 }, SRendering->GetDefaultPostProcessingVertexShader(), ppGaussianBlurUPS, device);
-	blurVMaterial = new PPGaussianBlurMaterial(1, { 4 }, 1, { 1 }, SRendering->GetDefaultPostProcessingVertexShader(), ppGaussianBlurVPS, device);
+	blurVMaterial = new PPGaussianBlurMaterial(1, { 4 }, 1, { 5 }, SRendering->GetDefaultPostProcessingVertexShader(), ppGaussianBlurVPS, device);
 	blurUMaterial->SetScreenSizePtr(&width, &height);
 	blurVMaterial->SetScreenSizePtr(&width, &height);
-	SRendering->RegisterPostProcessing(blurUMaterial);
-	SRendering->RegisterPostProcessing(blurVMaterial);	
-	//SRendering->RegisterPostProcessing(blurUMaterial);
-	//SRendering->RegisterPostProcessing(blurVMaterial);
+	SRendering->RegisterPostProcessing(blurUMaterial); // 1 -> 4
+	SRendering->RegisterPostProcessing(blurVMaterial); // 4 -> 5	
 
 	ppAddPS = new SimplePixelShader(device, context);
 	ppAddPS->LoadShaderFile(L"PPAddPS.cso");
-	applyBloomMaterial = new PostProcessingMaterial(2, { 0, 1 }, 1, { 4 }, SRendering->GetDefaultPostProcessingVertexShader(), ppAddPS, device);
-	SRendering->RegisterPostProcessing(applyBloomMaterial);
+	applyBloomMaterial = new PostProcessingMaterial(2, { 0, 5 }, 1, { 6 }, SRendering->GetDefaultPostProcessingVertexShader(), ppAddPS, device);
+	SRendering->RegisterPostProcessing(applyBloomMaterial); // 0 + 5 -> 6
+
+	ppSSAOPS = new SimplePixelShader(device, context);
+	ppSSAOPS->LoadShaderFile(L"PPSSAOPS.cso");
+	ssaoMaterial = new PostProcessingMaterial(2, { -1, 3 }, 1, { 7 }, SRendering->GetDefaultPostProcessingVertexShader(), ppSSAOPS, device);
+	SRendering->RegisterPostProcessing(ssaoMaterial); // -1 & 3 -> 7
+
+	blurSSAOUMaterial = new PPGaussianBlurMaterial(1, { 7 }, 1, { 4 }, SRendering->GetDefaultPostProcessingVertexShader(), ppGaussianBlurUPS, device);
+	blurSSAOVMaterial = new PPGaussianBlurMaterial(1, { 4 }, 1, { 5 }, SRendering->GetDefaultPostProcessingVertexShader(), ppGaussianBlurVPS, device);
+	blurSSAOUMaterial->SetScreenSizePtr(&width, &height);
+	blurSSAOVMaterial->SetScreenSizePtr(&width, &height);
+	SRendering->RegisterPostProcessing(blurSSAOUMaterial); // 7 -> 4
+	SRendering->RegisterPostProcessing(blurSSAOVMaterial); // 4 -> 5
+
+	ppMultiplyPS = new SimplePixelShader(device, context);
+	ppMultiplyPS->LoadShaderFile(L"PPMultiplyPS.cso");
+	applySSAOMaterial = new PostProcessingMaterial(2, { 6, 5 }, 1, { 7 }, SRendering->GetDefaultPostProcessingVertexShader(), ppMultiplyPS, device);
+	SRendering->RegisterPostProcessing(applySSAOMaterial); // 6 * 5 -> 7
 
 	ppDarkCornerPS = new SimplePixelShader(device, context);
 	ppDarkCornerPS->LoadShaderFile(L"PPDarkCornerPS.cso");
-	darkCornerMaterial = new PPDarkCornerMaterial(1, { 4 }, 1, { 0 }, SRendering->GetDefaultPostProcessingVertexShader(), ppDarkCornerPS, device);
+	darkCornerMaterial = new PPDarkCornerMaterial(1, { 7 }, 1, { 0 }, SRendering->GetDefaultPostProcessingVertexShader(), ppDarkCornerPS, device);
 	darkCornerMaterial->parameters.intensity = 1.0f;
-	SRendering->RegisterPostProcessing(darkCornerMaterial);
+	SRendering->RegisterPostProcessing(darkCornerMaterial); // 7 -> 0
+	// 0 -> screen
 
 	// Set Camera
 	CurrentActiveScene()->mainCamera->UpdateProjectionMatrix(float(width), float(height), DirectX::XM_PIDIV4);

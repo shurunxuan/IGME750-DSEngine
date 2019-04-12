@@ -41,9 +41,15 @@ private:
 	SimplePixelShader* ppGaussianBlurUPS = nullptr;
 	SimplePixelShader* ppGaussianBlurVPS = nullptr;
 	SimplePixelShader* ppAddPS = nullptr;
+	SimplePixelShader* ppMultiplyPS = nullptr;
+	SimplePixelShader* ppSSAOPS = nullptr;
 	PPDarkCornerMaterial* darkCornerMaterial = nullptr;
 	PPGaussianBlurMaterial* blurUMaterial = nullptr;
 	PPGaussianBlurMaterial* blurVMaterial = nullptr;
+	PPGaussianBlurMaterial* blurSSAOUMaterial = nullptr;
+	PPGaussianBlurMaterial* blurSSAOVMaterial = nullptr;
 	PostProcessingMaterial* applyBloomMaterial = nullptr;
+	PostProcessingMaterial* applySSAOMaterial = nullptr;
+	PostProcessingMaterial* ssaoMaterial = nullptr;
 };
 

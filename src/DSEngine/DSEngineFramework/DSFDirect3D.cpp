@@ -51,6 +51,8 @@ DSFDirect3D::DSFDirect3D()
 	drawingRenderState = nullptr;
 	pointSamplerState = nullptr;
 	linearSamplerState = nullptr;
+	pointComparisonSamplerState = nullptr;
+	linearComparisonSamplerState = nullptr;
 	shadowMapSampler = nullptr;
 
 	for (int i = 0; i < D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT; ++i)
@@ -65,6 +67,8 @@ DSFDirect3D::DSFDirect3D()
 
 DSFDirect3D::~DSFDirect3D()
 {
+	SAFE_RELEASE(linearComparisonSamplerState);
+	SAFE_RELEASE(pointComparisonSamplerState);
 	SAFE_RELEASE(linearSamplerState);
 	SAFE_RELEASE(pointSamplerState);
 	SAFE_RELEASE(shadowMapSampler);
@@ -509,6 +513,8 @@ void DSFDirect3D::PostProcessing(PostProcessingMaterial * postProcessingMaterial
 	// Set texture
 	postProcessingMaterial->GetPixelShaderPtr()->SetSamplerState("pointSampler", pointSamplerState);
 	postProcessingMaterial->GetPixelShaderPtr()->SetSamplerState("linearSampler", linearSamplerState);
+	postProcessingMaterial->GetPixelShaderPtr()->SetSamplerState("pointComparisonSampler", pointComparisonSamplerState);
+	postProcessingMaterial->GetPixelShaderPtr()->SetSamplerState("linearComparisonSampler", linearComparisonSamplerState);
 	for (int i = 0; i < sourceCount; ++i)
 	{
 		char name[16];
