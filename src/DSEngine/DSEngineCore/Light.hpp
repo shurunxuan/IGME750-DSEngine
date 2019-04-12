@@ -22,7 +22,7 @@
 #define LIGHT_TYPE_POINT 1
 #define LIGHT_TYPE_SPOT 2
 
-#define PCF_BLUR_COUNT 1
+#define PCF_BLUR_COUNT 0
 
 /**
  * @brief The data of a light, will be sent to the shader
@@ -286,7 +286,7 @@ private:
 	 * @brief The max value of the shadow map partitions
 	 * 
 	 */
-	int cascadePartitionsMax = 500;
+	int cascadePartitionsMax = 100;
 	/**
 	 * @brief The values between near and far plane of a cascade
 	 * 
@@ -331,7 +331,7 @@ inline Light::Light(LightData* data, ID3D11Device* d, ID3D11DeviceContext* c, Ca
 
 	cascadePartitionsZeroToOne[0] = 3;
 	cascadePartitionsZeroToOne[1] = 6;
-	cascadePartitionsZeroToOne[2] = 15;
+	cascadePartitionsZeroToOne[2] = 20;
 
 	this->sceneAABB = sceneAABB;
 

@@ -125,7 +125,7 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 		width = LOWORD(lParam);
 		height = HIWORD(lParam);
 
-		// Maximizing/Restoring the window won't get the WM_EXITSIZEMOVE message.
+		// Maximizing/Restoring the window won't get the WM_ENTERSIZEMOVE/WM_EXITSIZEMOVE message.
 		if ((wParam == SIZE_MAXIMIZED || wParam == SIZE_RESTORED) && !sizing)
 			SRendering->OnResize(width, height);
 

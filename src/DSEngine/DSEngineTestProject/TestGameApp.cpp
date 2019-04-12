@@ -145,7 +145,7 @@ void TestGameApp::Init()
 	// Add a ground
 	Object * ground = CurrentActiveScene()->LoadModelFile("Assets/Models/Rock/quad.obj");
 	ground->name = "Ground";
-	ground->transform->SetLocalScale(DirectX::XMVectorSet(2.0f, 2.0f, 2.0f, 0.0f));
+	ground->transform->SetLocalScale(DirectX::XMVectorSet(20.0f, 20.0f, 20.0f, 0.0f));
 	ground->transform->SetLocalTranslation(DirectX::XMVectorSet(0.0f, -0.01f, 5.0f, 0.0f));
 	const DirectX::XMVECTOR rq = DirectX::XMQuaternionRotationAxis(DirectX::XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f), DirectX::XM_PIDIV2);
 	ground->transform->SetLocalRotation(rq);
