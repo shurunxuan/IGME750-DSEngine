@@ -68,8 +68,8 @@ void TestGameApp::Init()
 	blurVMaterial->SetScreenSizePtr(&width, &height);
 	SRendering->RegisterPostProcessing(blurUMaterial);
 	SRendering->RegisterPostProcessing(blurVMaterial);	
-	SRendering->RegisterPostProcessing(blurUMaterial);
-	SRendering->RegisterPostProcessing(blurVMaterial);
+	//SRendering->RegisterPostProcessing(blurUMaterial);
+	//SRendering->RegisterPostProcessing(blurVMaterial);
 
 	ppAddPS = new SimplePixelShader(device, context);
 	ppAddPS->LoadShaderFile(L"PPAddPS.cso");

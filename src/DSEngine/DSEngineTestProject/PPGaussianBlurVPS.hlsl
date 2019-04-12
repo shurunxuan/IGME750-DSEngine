@@ -8,11 +8,11 @@ Texture2D renderTexture0 : register(t2);
 SamplerState pointSampler : register(s0);
 SamplerState linearSampler : register(s1);
 
-#define KERNEL_SIZE 11
+#define KERNEL_SIZE 5
 
 static const float kernel[KERNEL_SIZE] =
 {
-	0.084264, 0.088139, 0.091276, 0.093585, 0.094998, 0.095474, 0.094998, 0.093585, 0.091276, 0.088139, 0.084264
+	0.198005, 0.200995, 0.202001, 0.200995, 0.198005
 };
 
 cbuffer GaussianBlurConstantBuffer : register(b0)
@@ -36,7 +36,7 @@ Output main(VertexToPixel input)
 	{
 		//float2 p = float2((x - center) * w, (y - center) * h);
 		//float4 c = tex2D(input, saturate(uv.xy + p));
-		float4 c = renderTexture0.Sample(linearSampler, saturate(input.uv + float2(0, y * h)));
+		float4 c = renderTexture0.Sample(pointSampler, saturate(input.uv + float2(0, y * h)));
 		float g = kernel[y + center];
 		color += c * g;
 	}

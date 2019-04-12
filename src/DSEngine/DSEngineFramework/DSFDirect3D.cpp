@@ -46,11 +46,12 @@ DSFDirect3D::DSFDirect3D()
 	swapChain = nullptr;
 	backBufferRTV = nullptr;
 	depthStencilView = nullptr;
+	depthResourceView = nullptr;
 	shadowRenderState = nullptr;
 	drawingRenderState = nullptr;
 	pointSamplerState = nullptr;
 	linearSamplerState = nullptr;
-	comparisonSampler = nullptr;
+	shadowMapSampler = nullptr;
 
 	for (int i = 0; i < D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT; ++i)
 	{
@@ -66,9 +67,10 @@ DSFDirect3D::~DSFDirect3D()
 {
 	SAFE_RELEASE(linearSamplerState);
 	SAFE_RELEASE(pointSamplerState);
-	SAFE_RELEASE(comparisonSampler);
+	SAFE_RELEASE(shadowMapSampler);
 	SAFE_RELEASE(drawingRenderState);
 	SAFE_RELEASE(shadowRenderState);
+	SAFE_RELEASE(depthResourceView);
 	SAFE_RELEASE(depthStencilState);
 	SAFE_RELEASE(depthStencilView);
 
@@ -110,6 +112,9 @@ HRESULT DSFDirect3D::Init(HWND hWnd, unsigned int screenWidth, unsigned int scre
 	if (FAILED(hr)) return hr;
 
 	hr = CreateShadowAndDrawingRenderState();
+	if (FAILED(hr)) return hr;
+
+	hr = CreateSamplerStates();
 	if (FAILED(hr)) return hr;
 
 	SetDefaultRenderTarget();
@@ -330,7 +335,7 @@ void DSFDirect3D::Render(Camera * camera, MeshRenderer * meshRenderer)
 
 	if (lights != nullptr && lightCount > 0)
 	{
-		material->GetPixelShaderPtr()->SetSamplerState("shadowSampler", comparisonSampler);
+		material->GetPixelShaderPtr()->SetSamplerState("shadowSampler", shadowMapSampler);
 
 		for (Light* light : meshRenderer->object->GetScene()->lights)
 		{
@@ -473,7 +478,14 @@ void DSFDirect3D::PostProcessing(PostProcessingMaterial * postProcessingMaterial
 	targetViews.reserve(targetCount);
 	for (int i = 0; i < sourceCount; ++i)
 	{
-		resourceViews.push_back(renderResourceView[sourceIndices[i]]);
+		if (sourceIndices[i] < 0)
+		{
+			resourceViews.push_back(depthResourceView);
+		}
+		else
+		{
+			resourceViews.push_back(renderResourceView[sourceIndices[i]]);
+		}
 	}
 	for (int i = 0; i < targetCount; ++i)
 	{
@@ -694,27 +706,47 @@ HRESULT DSFDirect3D::CreateRenderTargetView()
 HRESULT DSFDirect3D::CreateDepthStencilView()
 {
 	// Set up the description of the texture to use for the depth buffer
-	D3D11_TEXTURE2D_DESC depthStencilDesc = {};
+	D3D11_TEXTURE2D_DESC depthStencilDesc;
+	ZeroMemory(&depthStencilDesc, sizeof(D3D11_TEXTURE2D_DESC));
 	depthStencilDesc.Width = width;
 	depthStencilDesc.Height = height;
+	depthStencilDesc.Format = DXGI_FORMAT_R24G8_TYPELESS;
 	depthStencilDesc.MipLevels = 1;
 	depthStencilDesc.ArraySize = 1;
-	depthStencilDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
-	depthStencilDesc.Usage = D3D11_USAGE_DEFAULT;
-	depthStencilDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
-	depthStencilDesc.CPUAccessFlags = 0;
-	depthStencilDesc.MiscFlags = 0;
 	depthStencilDesc.SampleDesc.Count = 1;
-	depthStencilDesc.SampleDesc.Quality = 0;
+	depthStencilDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_DEPTH_STENCIL;
 
 	// Create the depth buffer and its view, then 
 	// release our reference to the texture
-	ID3D11Texture2D* depthBufferTexture;
+	ID3D11Texture2D* depthBufferTexture = nullptr;
 	HRESULT hr = device->CreateTexture2D(&depthStencilDesc, nullptr, &depthBufferTexture);
 	if (FAILED(hr)) return hr;
-	hr = device->CreateDepthStencilView(depthBufferTexture, nullptr, &depthStencilView);
 
-	SetDebugName(depthBufferTexture, "DSFDirect3D::depthBufferTexture");
+	D3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc;
+	ZeroMemory(&depthStencilViewDesc, sizeof(D3D11_DEPTH_STENCIL_VIEW_DESC));
+	depthStencilViewDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+	depthStencilViewDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+	depthStencilViewDesc.Texture2D.MipSlice = 0;
+
+	hr = device->CreateDepthStencilView(depthBufferTexture, &depthStencilViewDesc, &depthStencilView);
+
+	if (FAILED(hr)) return hr;
+	SetDebugName(depthStencilView, "DSFDirect3D::depthStencilView");
+
+	D3D11_SHADER_RESOURCE_VIEW_DESC shaderResourceViewDesc;
+	ZeroMemory(&shaderResourceViewDesc, sizeof(D3D11_SHADER_RESOURCE_VIEW_DESC));
+	shaderResourceViewDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+	shaderResourceViewDesc.Format = DXGI_FORMAT_R24_UNORM_X8_TYPELESS;
+	shaderResourceViewDesc.Texture2D.MipLevels = 1;
+
+	hr = device->CreateShaderResourceView(
+		depthBufferTexture,
+		&shaderResourceViewDesc,
+		&depthResourceView
+	);
+
+	if (FAILED(hr)) return hr;
+	SetDebugName(depthResourceView, "DSFDirect3D::depthResourceView");
 
 	depthBufferTexture->Release();
 	return hr;
@@ -749,8 +781,8 @@ HRESULT DSFDirect3D::CreateDepthStencilState()
 
 	// Create depth stencil state
 	HRESULT hr = device->CreateDepthStencilState(&dsDesc, &depthStencilState);
-	SetDebugName(depthStencilState, "DSFDirect3D::depthStencilState");
 	if (FAILED(hr)) return hr;
+	SetDebugName(depthStencilState, "DSFDirect3D::depthStencilState");
 	context->OMSetDepthStencilState(depthStencilState, 0);
 	return hr;
 }
@@ -766,8 +798,8 @@ HRESULT DSFDirect3D::CreateShadowAndDrawingRenderState()
 		&drawingRenderStateDesc,
 		&drawingRenderState
 	);
-	SetDebugName(drawingRenderState, "DSFDirect3D::drawingRenderState");
 	if (FAILED(hr)) return hr;
+	SetDebugName(drawingRenderState, "DSFDirect3D::drawingRenderState");
 	D3D11_RASTERIZER_DESC shadowRenderStateDesc;
 	ZeroMemory(&shadowRenderStateDesc, sizeof(D3D11_RASTERIZER_DESC));
 	shadowRenderStateDesc.CullMode = D3D11_CULL_FRONT;
@@ -781,32 +813,113 @@ HRESULT DSFDirect3D::CreateShadowAndDrawingRenderState()
 		&shadowRenderStateDesc,
 		&shadowRenderState
 	);
-	SetDebugName(shadowRenderState, "DSFDirect3D::shadowRenderState");
 	if (FAILED(hr)) return hr;
+	SetDebugName(shadowRenderState, "DSFDirect3D::shadowRenderState");
 
-	D3D11_SAMPLER_DESC comparisonSamplerDesc;
-	ZeroMemory(&comparisonSamplerDesc, sizeof(D3D11_SAMPLER_DESC));
-	comparisonSamplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_BORDER;
-	comparisonSamplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_BORDER;
-	comparisonSamplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_BORDER;
-	comparisonSamplerDesc.BorderColor[0] = 1.0f;
-	comparisonSamplerDesc.BorderColor[1] = 1.0f;
-	comparisonSamplerDesc.BorderColor[2] = 1.0f;
-	comparisonSamplerDesc.BorderColor[3] = 1.0f;
-	comparisonSamplerDesc.MinLOD = 0.f;
-	comparisonSamplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
-	comparisonSamplerDesc.MipLODBias = 0.f;
-	comparisonSamplerDesc.MaxAnisotropy = 0;
-	comparisonSamplerDesc.ComparisonFunc = D3D11_COMPARISON_LESS_EQUAL;
-	comparisonSamplerDesc.Filter = D3D11_FILTER_COMPARISON_MIN_MAG_MIP_LINEAR;
+	return hr;
+}
+
+HRESULT DSFDirect3D::CreateSamplerStates()
+{
+	D3D11_SAMPLER_DESC samplerDesc;
+	ZeroMemory(&samplerDesc, sizeof(D3D11_SAMPLER_DESC));
+	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_BORDER;
+	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_BORDER;
+	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_BORDER;
+	samplerDesc.BorderColor[0] = 1.0f;
+	samplerDesc.BorderColor[1] = 1.0f;
+	samplerDesc.BorderColor[2] = 1.0f;
+	samplerDesc.BorderColor[3] = 1.0f;
+	samplerDesc.MinLOD = 0.f;
+	samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
+	samplerDesc.MipLODBias = 0.f;
+	samplerDesc.MaxAnisotropy = 0;
+	samplerDesc.ComparisonFunc = D3D11_COMPARISON_LESS_EQUAL;
+	samplerDesc.Filter = D3D11_FILTER_COMPARISON_MIN_MAG_MIP_LINEAR;
+	//comparisonSamplerDesc.MaxAnisotropy = 16;
+
+	HRESULT hr = device->CreateSamplerState(
+		&samplerDesc,
+		&shadowMapSampler
+	);
+
+	if (FAILED(hr)) return hr;
+	SetDebugName(shadowMapSampler, "DSFDirect3D::shadowMapSampler");
+
+	ZeroMemory(&samplerDesc, sizeof(D3D11_SAMPLER_DESC));
+	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
+	samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
+	hr = device->CreateSamplerState(
+		&samplerDesc,
+		&pointSamplerState
+	);
+	if (FAILED(hr)) return hr;
+	SetDebugName(pointSamplerState, "DSFDirect3D::pointSamplerState");
+
+	ZeroMemory(&samplerDesc, sizeof(D3D11_SAMPLER_DESC));
+	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+	samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
+	hr = device->CreateSamplerState(
+		&samplerDesc,
+		&linearSamplerState
+	);
+	if (FAILED(hr)) return hr;
+	SetDebugName(linearSamplerState, "DSFDirect3D::linearSamplerState");
+
+	ZeroMemory(&samplerDesc, sizeof(D3D11_SAMPLER_DESC));
+	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.BorderColor[0] = 1.0f;
+	samplerDesc.BorderColor[1] = 1.0f;
+	samplerDesc.BorderColor[2] = 1.0f;
+	samplerDesc.BorderColor[3] = 1.0f;
+	samplerDesc.MinLOD = 0.f;
+	samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
+	samplerDesc.MipLODBias = 0.f;
+	samplerDesc.MaxAnisotropy = 0;
+	samplerDesc.ComparisonFunc = D3D11_COMPARISON_LESS_EQUAL;
+	samplerDesc.Filter = D3D11_FILTER_COMPARISON_MIN_MAG_MIP_POINT;
 	//comparisonSamplerDesc.MaxAnisotropy = 16;
 
 	hr = device->CreateSamplerState(
-		&comparisonSamplerDesc,
-		&comparisonSampler
+		&samplerDesc,
+		&pointComparisonSamplerState
 	);
 
-	SetDebugName(comparisonSampler, "DSFDirect3D::comparisonSampler");
+	if (FAILED(hr)) return hr;
+	SetDebugName(pointComparisonSamplerState, "DSFDirect3D::pointComparisonSamplerState");
+
+	ZeroMemory(&samplerDesc, sizeof(D3D11_SAMPLER_DESC));
+	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.BorderColor[0] = 1.0f;
+	samplerDesc.BorderColor[1] = 1.0f;
+	samplerDesc.BorderColor[2] = 1.0f;
+	samplerDesc.BorderColor[3] = 1.0f;
+	samplerDesc.MinLOD = 0.f;
+	samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
+	samplerDesc.MipLODBias = 0.f;
+	samplerDesc.MaxAnisotropy = 0;
+	samplerDesc.ComparisonFunc = D3D11_COMPARISON_LESS_EQUAL;
+	samplerDesc.Filter = D3D11_FILTER_COMPARISON_MIN_MAG_MIP_LINEAR;
+	//comparisonSamplerDesc.MaxAnisotropy = 16;
+
+	hr = device->CreateSamplerState(
+		&samplerDesc,
+		&linearComparisonSamplerState
+	);
+
+	if (FAILED(hr)) return hr;
+	SetDebugName(linearComparisonSamplerState, "DSFDirect3D::linearComparisonSamplerState");
+
 	return hr;
 }
 
