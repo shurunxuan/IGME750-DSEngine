@@ -6,7 +6,6 @@
 #include <queue>
 #include "DSSInput.h"
 
-
 MoveParentObject::MoveParentObject(Object* owner)
 	: Component(owner)
 {
@@ -43,6 +42,8 @@ void MoveParentObject::Start()
 			meshRenderers.push_back(meshRenderer);
 		}
 	}
+
+
 }
 
 void MoveParentObject::Update(float deltaTime, float totalTime)
@@ -50,39 +51,35 @@ void MoveParentObject::Update(float deltaTime, float totalTime)
 	// Use Arrows/DPad to adjust the material
 	float arrowHorizontal = SInput->GetAxis("ArrowHorizontal");
 	float arrowVertical = SInput->GetAxis("ArrowVertical");
-
+	
 
 	// Use arrow keys to move object
 	if (FRawInput->GetKey(VK_UP))
 	{
-		/*DirectX::XMVECTOR position = object->transform->GetLocalTranslation();
+		DirectX::XMVECTOR position = object->transform->GetLocalTranslation();
 		position = DirectX::XMVectorAdd(position, DirectX::XMVectorSet(0.0f, deltaTime, 0.0f, 0.0f));
-		object->transform->SetLocalTranslation(position);*/
-		object->GetComponent<RigidBody>()->AddForce(0.0f, 0.0f, 2.0f);
+		object->transform->SetLocalTranslation(position);
 	}
 
 	if (FRawInput->GetKey(VK_DOWN))
 	{
-		/*DirectX::XMVECTOR position = object->transform->GetLocalTranslation();
+		DirectX::XMVECTOR position = object->transform->GetLocalTranslation();
 		position = DirectX::XMVectorAdd(position, DirectX::XMVectorSet(0.0f, -deltaTime, 0.0f, 0.0f));
-		object->transform->SetLocalTranslation(position);*/
-		object->GetComponent<RigidBody>()->AddForce(0.0f, 0.0f, -2.0f);
+		object->transform->SetLocalTranslation(position);
 	}
 
 	if (FRawInput->GetKey(VK_LEFT))
 	{
-		/*DirectX::XMVECTOR position = object->transform->GetLocalTranslation();
+		DirectX::XMVECTOR position = object->transform->GetLocalTranslation();
 		position = DirectX::XMVectorAdd(position, DirectX::XMVectorSet(-deltaTime, 0.0f, 0.0f, 0.0f));
-		object->transform->SetLocalTranslation(position);*/
-		object->GetComponent<RigidBody>()->AddForce(-2.0f, 0.0f, 0.0f);
+		object->transform->SetLocalTranslation(position);
 	}
 
 	if (FRawInput->GetKey(VK_RIGHT))
 	{
-		/*DirectX::XMVECTOR position = object->transform->GetLocalTranslation();
+		DirectX::XMVECTOR position = object->transform->GetLocalTranslation();
 		position = DirectX::XMVectorAdd(position, DirectX::XMVectorSet(deltaTime, 0.0f, 0.0f, 0.0f));
-		object->transform->SetLocalTranslation(position);*/
-		object->GetComponent<RigidBody>()->AddForce(2.0f, 0.0f, 0.0f);
+		object->transform->SetLocalTranslation(position);
 	}
 
 	// Use numpad numbers to rotate object

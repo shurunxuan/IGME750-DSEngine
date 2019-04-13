@@ -226,12 +226,14 @@
     <ClCompile Include="MoveParentObject.cpp" />
     <ClCompile Include="PressSpaceToPlayAudio.cpp" />
     <ClCompile Include="TestGameApp.cpp" />
+    <ClCompile Include="WheelController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CameraController.h" />
     <ClInclude Include="MoveParentObject.h" />
     <ClInclude Include="PressSpaceToPlayAudio.h" />
     <ClInclude Include="TestGameApp.h" />
+    <ClInclude Include="WheelController.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>

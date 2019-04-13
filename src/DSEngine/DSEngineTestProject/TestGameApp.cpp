@@ -13,6 +13,7 @@
 #include "PressSpaceToPlayAudio.h"
 #include "MoveParentObject.h"
 #include "CameraController.h"
+#include "WheelController.h"
 
 TestGameApp::~TestGameApp()
 {
@@ -40,7 +41,7 @@ void TestGameApp::Init()
 	// Set Camera
 	CurrentActiveScene()->mainCamera->UpdateProjectionMatrix(float(width), float(height), DirectX::XM_PIDIV4);
 	CurrentActiveScene()->mainCamera->SetSkybox(device, context, L"Assets/Skybox/1/Environment1HiDef.cubemap.dds", L"Assets/Skybox/1/Environment1Light.cubemap.dds");
-	CurrentActiveScene()->mainCamera->transform->SetLocalTranslation(0.0f, 2.0f, -3.0f);
+	CurrentActiveScene()->mainCamera->transform->SetLocalTranslation(0.0f, 4.0f, -8.0f);
 	CameraController * cameraController = CurrentActiveScene()->mainCamera->AddComponent<CameraController>();
 
 	// Add a light
@@ -50,42 +51,66 @@ void TestGameApp::Init()
 	
 
 
-	// Add parent object
-
-	Object * parentObj = CurrentActiveScene()->LoadModelFile("Assets/Models/Rock/sphere.obj");
-	parentObj->name = "Fennekin";
-	//parentObj->transform->SetLocalScale(0.05f, 0.05f, 0.05f);
-	parentObj->transform->SetLocalTranslation(-4.0f, 3.0f, 5.0f);
-	Collider* parentCollider = parentObj->AddComponent<Collider>();
-	RigidBody* parentRigidBody = parentObj->AddComponent<RigidBody>();
-	parentCollider->GetCollider()->Transform(*(parentCollider)->GetCollider(),0.5f, DirectX::XMQuaternionIdentity(), DirectX::XMVectorSet(-4.0f, 3.0f, 5.0f,0.0f));
-	parentRigidBody->SetPosition(-4.0f, 3.0f, 5.0f);
-	parentRigidBody->AddForce(2.0f, 0.0f, 0.0f);
-
-	auto rotation = parentObj->transform->GetLocalRotation();
-	rotation = DirectX::XMQuaternionMultiply(rotation, DirectX::XMQuaternionRotationAxis(DirectX::XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f), DirectX::XM_PIDIV2));
-	parentObj->transform->SetLocalRotation(rotation);
-
-	// Add parent object
-
-	Object * anotherObj = CurrentActiveScene()->LoadModelFile("Assets/Models/Rock/sphere.obj");
-	anotherObj->name = "Fennekin";
-	//parentObj->transform->SetLocalScale(0.05f, 0.05f, 0.05f);
-	anotherObj->transform->SetLocalTranslation(4.0f, 3.0f, 5.0f);
-	Collider* anotherCollider = anotherObj->AddComponent<Collider>();
-	RigidBody* anotherRigidBody = anotherObj->AddComponent<RigidBody>();
-	anotherCollider->GetCollider()->Transform(*(anotherCollider)->GetCollider(), 0.5f, DirectX::XMQuaternionIdentity(), DirectX::XMVectorSet(4.0f, 3.0f, 5.0f, 0.0f));
-	anotherRigidBody->SetPosition(4.0f, 3.0f, 5.0f);
-	anotherRigidBody->AddForce(-2.0f, 0.0f, 0.0f);
+	//-----------------Car Object Structure---------------------
+	//  Parent Object     Car(Empty Object) ------> Add RigidBody Component
+	//                      /      \
+	//                     /        \
+	//                    /          \
+	//  Children       Wheels        Frame
+	//                  /              \
+	//     (Add WheelController)      (No Componnent)
 
 
-	auto rotation1 = anotherObj->transform->GetLocalRotation();
-	rotation1 = DirectX::XMQuaternionMultiply(rotation1, DirectX::XMQuaternionRotationAxis(DirectX::XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f), DirectX::XM_PIDIV2));
-	anotherObj->transform->SetLocalRotation(rotation1);
+	Object * car = CurrentActiveScene()->AddObject("Car");
+	car->transform->SetLocalTranslation(0.0f, 0.0f, 1.8f);
+	RigidBody * rigidbody = car->AddComponent<RigidBody>();
+	rigidbody->SetPosition(0.0f, 0.0f, 4.75f);
+
+	Object * frame = CurrentActiveScene()->LoadModelFile("Assets/Models/cgtrader/car.obj");
+	frame->transform->SetLocalTranslation(0.0f, 0.0f, 4.75f);
+	frame->transform->SetParent(car->transform);
+	
+	Object * wheel_1 = CurrentActiveScene()->LoadModelFile("Assets/Models/18-tire/tire_1.obj");
+	wheel_1->transform->SetLocalTranslation(-1.4f, 1.0f, 7.0f);
+	wheel_1->transform->SetLocalScale(0.05f, 0.05f, 0.05f);
+	WheelCollider* wheelCollider_1 = wheel_1->AddComponent<WheelCollider>();
+	wheelCollider_1->SetMaxSteeringAngle(25.0f);
+	wheelCollider_1->SetRadius(1.0f);
+	wheel_1->transform->SetParent(car->transform);
+
+	Object * wheel_2 = CurrentActiveScene()->LoadModelFile("Assets/Models/18-tire/tire_1.obj");
+	wheel_2->transform->SetLocalTranslation(1.4f, 1.0f, 7.0f);
+	wheel_2->transform->SetLocalScale(0.05f, 0.05f, 0.05f);
+	WheelCollider* wheelCollider_2 = wheel_2->AddComponent<WheelCollider>();
+	wheelCollider_2->SetRadius(1.0f);
+	wheelCollider_2->SetMaxSteeringAngle(25.0f);
+	wheel_2->transform->SetParent(car->transform);
+
+	Object * wheel_3 = CurrentActiveScene()->LoadModelFile("Assets/Models/18-tire/tire_1.obj");
+	wheel_3->transform->SetLocalTranslation(-1.4f, 1.0f, 1.8f);
+	wheel_3->transform->SetLocalScale(0.05f, 0.05f, 0.05f);
+	WheelCollider* wheelCollider_3 = wheel_3->AddComponent<WheelCollider>();
+	wheelCollider_3->SetRadius(1.0f);
+	wheelCollider_3->SetMaxSteeringAngle(0.0f);
+	wheel_3->transform->SetParent(car->transform);
+
+	Object * wheel_4 = CurrentActiveScene()->LoadModelFile("Assets/Models/18-tire/tire_1.obj");
+	wheel_4->transform->SetLocalTranslation(1.4f, 1.0f, 1.8f);
+	wheel_4->transform->SetLocalScale(0.05f, 0.05f, 0.05f);
+	WheelCollider* wheelCollider_4 = wheel_4->AddComponent<WheelCollider>();
+	wheelCollider_4->SetRadius(1.0f);
+	wheelCollider_4->SetMaxSteeringAngle(0.0f);
+	wheel_4->transform->SetParent(car->transform);
+	
+	// Set Camera parent
+	CurrentActiveScene()->mainCamera->transform->SetParent(car->transform);
+
 
 	// Add Components
-	PressSpaceToPlayAudio * playAudioComponent = parentObj->AddComponent<PressSpaceToPlayAudio>();
-	MoveParentObject * moveParentComponent = parentObj->AddComponent<MoveParentObject>();
+	WheelController * wheelController_1 = wheel_1->AddComponent<WheelController>();
+	WheelController * wheelController_2 = wheel_2->AddComponent<WheelController>();
+	WheelController * wheelController_3 = wheel_3->AddComponent<WheelController>();
+	WheelController * wheelController_4 = wheel_4->AddComponent<WheelController>();
 
 
 	// Add a ground

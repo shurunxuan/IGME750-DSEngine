@@ -195,10 +195,6 @@
     <ClInclude Include="DSSInput.h" />
     <ClInclude Include="DSSPhysics.h" />
     <ClInclude Include="DSSRendering.h" />
-    <ClInclude Include="Event.h" />
-    <ClInclude Include="DSSEventManager.h" />
-    <ClInclude Include="HandlerFunctionBase.h" />
-    <ClInclude Include="MemberFunctionHandler.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -208,8 +204,6 @@
     <ClCompile Include="DSSInput.cpp" />
     <ClCompile Include="DSSPhysics.cpp" />
     <ClCompile Include="DSSRendering.cpp" />
-    <ClCompile Include="DSSEventManager.cpp" />
-    <ClCompile Include="MemberFunctionHandler.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>

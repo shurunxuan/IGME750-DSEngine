@@ -1,7 +1,7 @@
 #pragma once
 #pragma warning(disable:4251)
 #include <DirectXMath.h>
-#include "Collider.hpp"
+#include "BoxCollider.hpp"
 
 class RaycastHit
 {

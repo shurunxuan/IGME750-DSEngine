@@ -30,8 +30,7 @@
 #include "SimpleShader.hpp"
 #include "MeshRenderer.hpp"
 #include "PBRMaterial.hpp"
-#include "Collider.hpp"
-#include "RigidBody.hpp"
+
 
 /**
  * @brief The class represents the scene graph

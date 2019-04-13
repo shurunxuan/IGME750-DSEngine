@@ -480,7 +480,7 @@ inline DirectX::XMVECTOR Transform::Forward()
 {
 	const DirectX::XMVECTOR forward = DirectX::XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f);
 	const DirectX::XMVECTOR result = DirectX::XMVector4Transform(forward, XMMatrixTranspose(GetGlobalWorldMatrix()));
-
+	
 	return result;
 }
 
@@ -488,7 +488,7 @@ inline DirectX::XMVECTOR Transform::Right()
 {
 	const DirectX::XMVECTOR right = DirectX::XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f);
 	const DirectX::XMVECTOR result = DirectX::XMVector4Transform(right, XMMatrixTranspose(GetGlobalWorldMatrix()));
-
+	
 	return result;
 }
 
@@ -496,7 +496,7 @@ inline DirectX::XMVECTOR Transform::Up()
 {
 	const DirectX::XMVECTOR up = DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
 	const DirectX::XMVECTOR result = DirectX::XMVector4Transform(up, XMMatrixTranspose(GetGlobalWorldMatrix()));
-
+	
 	return result;
 }
 

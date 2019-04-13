@@ -18,12 +18,14 @@ public:
 	void Update(float deltaTime, float totalTime);
 	void HandleCollision(float deltaTime, float totalTime);
 	void Simulate(float deltaTime, float totalTime);
+	void CarSimulate(float deltaTime, float totalTime);
 	bool Raycast(Ray ray, RaycastHit &mHit);
 	
 private:
-	std::vector<Collider*> colliders;
+	std::vector<SphereCollider*> colliders;
 	std::vector<RigidBody*> rigidBodies;
 	std::vector<BoxCollider*> boxColliders;
+	std::vector<WheelCollider*> wheelColliders;
 };
 
 extern DSENGINESYSTEM_API DSSPhysics* SPhysics;

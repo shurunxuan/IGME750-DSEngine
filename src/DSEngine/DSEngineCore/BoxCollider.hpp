@@ -3,7 +3,6 @@
 #include <DirectXCollision.h>
 #include "Component.hpp"
 
-using namespace DirectX;
 
 class BoxCollider : public Component
 {
@@ -13,16 +12,16 @@ public:
 
 	void Start() override;
 	void Update(float deltaTime, float totalTime) override;
-	BoundingBox* GetCollider();
+	DirectX::BoundingBox* GetCollider();
 
 private:
-	BoundingBox collider;
+	DirectX::BoundingBox collider;
 };
 
 inline BoxCollider::BoxCollider(Object* owner)
 	:Component(owner)
 {
-	collider = BoundingBox();
+	collider = DirectX::BoundingBox();
 }
 
 inline BoxCollider::~BoxCollider()
@@ -37,7 +36,7 @@ inline void BoxCollider::Update(float deltaTime, float totalTime)
 {
 }
 
-inline BoundingBox* BoxCollider::GetCollider()
+inline DirectX::BoundingBox* BoxCollider::GetCollider()
 {
 	return &collider;
 }
