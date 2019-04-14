@@ -28,12 +28,25 @@ struct Light
 	float3 AmbientColor;// 64 bytes
 };
 
+struct PixelOutput
+{
+	float4 Target0 : SV_TARGET0;
+	float4 Target1 : SV_TARGET1;
+	float4 Target2 : SV_TARGET2;
+	float4 Target3 : SV_TARGET3;
+	float4 Target4 : SV_TARGET4;
+	float4 Target5 : SV_TARGET5;
+	float4 Target6 : SV_TARGET6;
+	float4 Target7 : SV_TARGET7;
+};
+
 struct Material
 {
 	// Material Data
 	float3 albedo;
 	float roughness;
 	float metalness;
+	float transparency;
 	int hasNormalMap;
 	int hasDiffuseTexture;
 };
@@ -52,6 +65,9 @@ cbuffer materialData : register(b1)
 cbuffer cameraData : register(b2)
 {
 	float3 CameraPosition;
+	float4 ClearColor;
+	int HasSkybox;
+	int HasIrradianceMap;
 };
 
 cbuffer shadowData : register(b3)
@@ -77,13 +93,14 @@ cbuffer shadowData : register(b3)
 	float           paddingForCB3; // Padding variables exist because CBs must be a multiple of 16 bytes.
 }
 
-Texture2D diffuseTexture  : register(t0);
-Texture2D normalTexture  : register(t1);
-TextureCube cubemap : register(t2);
-TextureCube irradianceMap : register(t3);
-Texture2D shadowMap : register(t4);
+TextureCube cubemap : register(t0);
+TextureCube irradianceMap : register(t1);
+Texture2D shadowMap : register(t2);
+
+Texture2D diffuseTexture  : register(t3);
+Texture2D normalTexture  : register(t4);
 SamplerState basicSampler : register(s0);
-SamplerComparisonState shadowSampler : register(s1);
+SamplerComparisonState shadowSampler : register(s2);
 
 // https://www.knaldtech.com/docs/doku.php?id=specular_lys
 static const int mipOffset = 0;
@@ -143,9 +160,26 @@ float3 IBL(float3 n, float3 v, float3 l, float3 surfaceColor)
 	int mipLevels, width, height;
 	cubemap.GetDimensions(0, width, height, mipLevels);
 
-	float3 diffuseImageLighting = irradianceMap.Sample(basicSampler, n).rgb;
-	//float3 diffuseImageLighting = cubemap.SampleLevel(basicSampler, r, BurleyToMip(1, mipLevels, NdR)).rgb;
-	float3 specularImageLighting = cubemap.SampleLevel(basicSampler, r, BurleyToMip(pow(material.roughness, 0.5), mipLevels, NdR)).rgb;
+	float3 specularImageLighting;
+	float3 diffuseImageLighting;
+
+	if (HasSkybox)
+	{
+		specularImageLighting = cubemap.SampleLevel(basicSampler, r, BurleyToMip(pow(material.roughness, 0.5), mipLevels, NdR)).rgb;
+		if (HasIrradianceMap)
+		{
+			diffuseImageLighting = irradianceMap.Sample(basicSampler, n).rgb;
+		}
+		else
+		{
+			diffuseImageLighting = cubemap.SampleLevel(basicSampler, r, BurleyToMip(2, mipLevels, NdR)).rgb;
+		}
+	}
+	else
+	{
+		specularImageLighting = ClearColor.xyz;
+		diffuseImageLighting = ClearColor.xyz;
+	}
 
 	float4 specularColor = float4(lerp(0.04f.rrr, material.albedo, material.metalness), 1.0f);
 
@@ -306,8 +340,9 @@ void CalculatePCFPercentLit(in float4 shadowTexCoord,
 	percentLit /= (float)blurRowSize;
 }
 
-float4 main(VertexToPixel input) : SV_TARGET
+PixelOutput main(VertexToPixel input)
 {
+	PixelOutput output;
 	float3 v = normalize(float4(CameraPosition, 1.0f) - input.worldPos).xyz;
 	float3 n = normalize(input.normal);
 	float3 t = normalize(input.tangent - dot(input.tangent, n) * n);
@@ -521,7 +556,7 @@ float4 main(VertexToPixel input) : SV_TARGET
 		}
 
 		float4 lightColor = float4(lights[i].Color.xyz, 0.0);
-		intensity = saturate(intensity * spotAmount) * lighting	;
+		intensity = saturate(intensity * spotAmount) * lighting;
 		//intensity = saturate(intensity * spotAmount);
 
 		float diffuseFactor = NdL;
@@ -535,9 +570,15 @@ float4 main(VertexToPixel input) : SV_TARGET
 	}
 
 	result = surfaceColor * diffuse + specular + float4(IBL(n, v, l, surfaceColor.rgb), 0.0f);
-	result.w = surfaceColor.w;
+	result.a = saturate(surfaceColor.a * (1.0f - material.transparency));
 
-	return saturate(result);
-
-	//return diffuse;
+	output.Target0 = saturate(result);
+	output.Target1 = saturate(result - float4(1.0f, 1.0f, 1.0f, 0.0f) * 0.5f);
+	output.Target2 = float4(0, 0, 0, 1);
+	output.Target3 = float4(0, 0, 0, 1);
+	output.Target4 = float4(0, 0, 0, 1);
+	output.Target5 = float4(0, 0, 0, 1);
+	output.Target6 = float4(0, 0, 0, 1);
+	output.Target7 = float4(0, 0, 0, 1);
+	return output;
 }

@@ -26,7 +26,7 @@
  * @brief The default physically based rendering material
  * 
  */
-class PBRMaterial :
+class PBRMaterial final :
 	public Material
 {
 public:
@@ -74,6 +74,12 @@ public:
 		 * 
 		 */
 		float metalness = 0.5f;
+		/**
+		 * @brief Transparency
+		 * 
+		 * Will be ignored if the material is not set as a transparent material
+		 */
+		float transparency = 0.0f;
 		/**
 		 * @brief Indicates if the material includes a normal map
 		 * 

@@ -16,22 +16,48 @@ DSFDirect3D::DSFDirect3D()
 	depthStencilView = nullptr;
 	shadowRenderState = nullptr;
 	drawingRenderState = nullptr;
+	pointSamplerState = nullptr;
+	linearSamplerState = nullptr;
 	comparisonSampler = nullptr;
+
+	for (int i = 0; i < D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT; ++i)
+	{
+		renderTargetView[i] = nullptr;
+		renderResourceView[i] = nullptr;
+	}
+
 	dxFeatureLevel = {};
 }
 
 
 DSFDirect3D::~DSFDirect3D()
 {
-	SAFE_RELEASE(device);
-	SAFE_RELEASE(context);
-	SAFE_RELEASE(swapChain);
-	SAFE_RELEASE(backBufferRTV);
-	SAFE_RELEASE(depthStencilView);
-	SAFE_RELEASE(depthStencilState);
-	SAFE_RELEASE(shadowRenderState);
-	SAFE_RELEASE(drawingRenderState);
+	SAFE_RELEASE(linearSamplerState);
+	SAFE_RELEASE(pointSamplerState);
 	SAFE_RELEASE(comparisonSampler);
+	SAFE_RELEASE(drawingRenderState);
+	SAFE_RELEASE(shadowRenderState);
+	SAFE_RELEASE(depthStencilState);
+	SAFE_RELEASE(depthStencilView);
+
+	for (int i = 0; i < D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT; ++i)
+	{
+		SAFE_RELEASE(renderTargetView[i]);
+		SAFE_RELEASE(renderResourceView[i]);
+	}
+
+	SAFE_RELEASE(backBufferRTV);
+	SAFE_RELEASE(swapChain);
+	SAFE_RELEASE(context);
+
+#if defined(DEBUG) || defined(_DEBUG)
+	ID3D11Debug * debugDevice;
+	device->QueryInterface(__uuidof(ID3D11Debug), reinterpret_cast<void**>(&debugDevice));
+	debugDevice->ReportLiveDeviceObjects(D3D11_RLDO_DETAIL);
+	SAFE_RELEASE(debugDevice);
+#endif
+	SAFE_RELEASE(device);
+
 }
 
 HRESULT DSFDirect3D::Init(HWND hWnd, unsigned int screenWidth, unsigned int screenHeight)
@@ -107,11 +133,14 @@ void DSFDirect3D::ClearRenderTarget(float r, float g, float b, float a)
 
 	// Background color (Cornflower Blue in this case) for clearing
 	const float color[4] = { r, g, b, a };
+	clearColor = DirectX::XMFLOAT4(r, g, b, a);
 
 	// Clear the render target and depth buffer (erases what's on the screen)
 	//  - Do this ONCE PER FRAME
 	//  - At the beginning of Draw (before drawing *anything*)
 	context->ClearRenderTargetView(backBufferRTV, color);
+	for (auto& i : renderTargetView)
+		context->ClearRenderTargetView(i, color);
 	context->ClearDepthStencilView(
 		depthStencilView,
 		D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL,
@@ -123,8 +152,10 @@ void DSFDirect3D::SetDefaultRenderTarget() const
 {
 	// Bind the views to the pipeline, so rendering properly 
 	// uses their underlying textures
-	context->OMSetRenderTargets(1, &backBufferRTV, depthStencilView);
+	//context->OMSetRenderTargets(1, &backBufferRTV, depthStencilView);
 
+	// The last buffer is reserved as an texture for refraction effects
+	context->OMSetRenderTargets(D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT, renderTargetView, depthStencilView);
 	// Lastly, set up a viewport so we render into
 	// to correct portion of the window
 	D3D11_VIEWPORT viewport = {};
@@ -137,7 +168,7 @@ void DSFDirect3D::SetDefaultRenderTarget() const
 	context->RSSetViewports(1, &viewport);
 }
 
-void DSFDirect3D::ClearAndSetShadowRenderTarget(Light* light) const
+void DSFDirect3D::ClearAndSetShadowRenderTarget(Light * light) const
 {
 	// Clear depth stencil view
 	context->ClearDepthStencilView(light->GetShadowDepthView(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
@@ -151,7 +182,7 @@ void DSFDirect3D::ClearAndSetShadowRenderTarget(Light* light) const
 	);
 }
 
-void DSFDirect3D::PreProcess(Light* light, MeshRenderer* meshRenderer, SimpleVertexShader* shadowVertexShader) const
+void DSFDirect3D::PreProcess(Light * light, MeshRenderer * meshRenderer, SimpleVertexShader * shadowVertexShader) const
 {
 	// Note that starting with the second frame, the previous call will display
 	// warnings in VS debug output about forcing an unbind of the pixel shader
@@ -202,7 +233,7 @@ void DSFDirect3D::PreProcess(Light* light, MeshRenderer* meshRenderer, SimpleVer
 	}
 }
 
-void DSFDirect3D::Render(Camera* camera, MeshRenderer* meshRenderer)
+void DSFDirect3D::Render(Camera * camera, MeshRenderer * meshRenderer)
 {
 	SetDefaultRenderTarget();
 
@@ -241,14 +272,29 @@ void DSFDirect3D::Render(Camera* camera, MeshRenderer* meshRenderer)
 	DirectX::XMFLOAT3 cameraPosition;
 	DirectX::XMStoreFloat3(&cameraPosition, camera->transform->GetGlobalTranslation());
 	material->GetPixelShaderPtr()->SetFloat3("CameraPosition", cameraPosition);
+	material->GetPixelShaderPtr()->SetFloat4("ClearColor", clearColor);
 
 	material->SetMaterialData();
 	if (camera->GetSkybox() != nullptr)
 	{
 		material->GetPixelShaderPtr()->SetShaderResourceView("cubemap", camera->GetSkybox()->GetCubeMapSRV());
-		material->GetPixelShaderPtr()->SetShaderResourceView("irradianceMap", camera->GetSkybox()->GetIrradianceMapSRV());
+		material->GetPixelShaderPtr()->SetInt("HasSkybox", 1);
+		if (camera->GetSkybox()->GetIrradianceMapSRV() == nullptr)
+		{
+			material->GetPixelShaderPtr()->SetInt("HasIrradianceMap", 0);
+		}
+		else
+		{
+			material->GetPixelShaderPtr()->SetInt("HasIrradianceMap", 1);
+			material->GetPixelShaderPtr()->SetShaderResourceView("irradianceMap", camera->GetSkybox()->GetIrradianceMapSRV());
+		}
 	}
-
+	else
+	{
+		material->GetPixelShaderPtr()->SetInt("HasSkybox", 0);
+		material->GetPixelShaderPtr()->SetInt("HasIrradianceMap", 0);
+	}
+	material->GetPixelShaderPtr()->SetShaderResourceView("lastDrawBuffer", renderResourceView[D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT - 1]);
 
 	if (lights != nullptr && lightCount > 0)
 	{
@@ -337,15 +383,16 @@ void DSFDirect3D::Render(Camera* camera, MeshRenderer* meshRenderer)
 		0,     // Offset to the first index we want to use
 		0);    // Offset to add to each index when looking up vertices
 
-	// Unbind shadowMap
+	// Unbind resources
 	material->GetPixelShaderPtr()->SetShaderResourceView("shadowMap", nullptr);
+	material->GetPixelShaderPtr()->SetShaderResourceView("lastDrawBuffer", nullptr);
 }
 
 void DSFDirect3D::RenderSkybox(Camera * camera)
 {
 	// Render Skybox
 	Skybox* skybox = camera->GetSkybox();
-
+	if (skybox == nullptr) return;
 	DirectX::XMFLOAT4X4 worldMat{};
 	DirectX::XMFLOAT4X4 viewMat{};
 	DirectX::XMFLOAT4X4 projMat{};
@@ -362,7 +409,6 @@ void DSFDirect3D::RenderSkybox(Camera * camera)
 	// Sampler and Texture
 	skybox->GetPixelShader()->SetSamplerState("basicSampler", skybox->GetSamplerState());
 	skybox->GetPixelShader()->SetShaderResourceView("cubemapTexture", skybox->GetCubeMapSRV());
-	skybox->GetPixelShader()->SetShaderResourceView("irradianceMap", skybox->GetIrradianceMapSRV());
 
 
 	skybox->GetVertexShader()->CopyAllBufferData();
@@ -371,8 +417,8 @@ void DSFDirect3D::RenderSkybox(Camera * camera)
 	skybox->GetVertexShader()->SetShader();
 	skybox->GetPixelShader()->SetShader();
 
-	ID3D11Buffer* vertexBuffer = skybox->GetVertexBuffer();
-	ID3D11Buffer* indexBuffer = skybox->GetIndexBuffer();
+	ID3D11Buffer * vertexBuffer = skybox->GetVertexBuffer();
+	ID3D11Buffer * indexBuffer = skybox->GetIndexBuffer();
 
 	UINT stride = sizeof(Vertex);
 	UINT offset = 0;
@@ -380,6 +426,74 @@ void DSFDirect3D::RenderSkybox(Camera * camera)
 	context->IASetIndexBuffer(indexBuffer, DXGI_FORMAT_R32_UINT, 0);
 
 	context->DrawIndexed(36, 0, 0);
+}
+
+void DSFDirect3D::PostProcessing(PostProcessingMaterial * postProcessingMaterial)
+{
+	int* sourceIndices;
+	int* targetIndices;
+	const int sourceCount = int(postProcessingMaterial->GetSourceIndices(&sourceIndices));
+	const int targetCount = int(postProcessingMaterial->GetTargetIndices(&targetIndices));
+
+	std::vector<ID3D11ShaderResourceView*> resourceViews;
+	std::vector<ID3D11RenderTargetView*> targetViews;
+	resourceViews.reserve(sourceCount);
+	targetViews.reserve(targetCount);
+	for (int i = 0; i < sourceCount; ++i)
+	{
+		resourceViews.push_back(renderResourceView[sourceIndices[i]]);
+	}
+	for (int i = 0; i < targetCount; ++i)
+	{
+		if (targetIndices[i] < 0)
+		{
+			targetViews.push_back(backBufferRTV);
+		}
+		else
+		{
+			targetViews.push_back(renderTargetView[targetIndices[i]]);
+		}
+	}
+
+	// TODO: Change this to individual depth stencil view if needed
+	context->ClearDepthStencilView(
+		depthStencilView,
+		D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL,
+		1.0f,
+		0);
+	// Render to target
+	context->OMSetRenderTargets(targetCount, &*targetViews.begin(), depthStencilView);
+
+	// Set data
+	postProcessingMaterial->SetMaterialData();
+
+	// Set texture
+	postProcessingMaterial->GetPixelShaderPtr()->SetSamplerState("pointSampler", pointSamplerState);
+	postProcessingMaterial->GetPixelShaderPtr()->SetSamplerState("linearSampler", linearSamplerState);
+	for (int i = 0; i < sourceCount; ++i)
+	{
+		char name[16];
+		sprintf_s(name, "renderTexture%d", i);
+		postProcessingMaterial->GetPixelShaderPtr()->SetShaderResourceView(name, resourceViews[i]);
+	}
+
+	// Copy all buffer data
+	postProcessingMaterial->GetPixelShaderPtr()->CopyAllBufferData();
+	postProcessingMaterial->GetVertexShaderPtr()->CopyAllBufferData();
+
+	// Set shader
+	postProcessingMaterial->GetVertexShaderPtr()->SetShader();
+	postProcessingMaterial->GetPixelShaderPtr()->SetShader();
+
+	// Draw
+	context->Draw(3, 0);
+
+	for (int i = 0; i < sourceCount; ++i)
+	{
+		char name[16];
+		sprintf_s(name, "renderTexture%d", i);
+		postProcessingMaterial->GetPixelShaderPtr()->SetShaderResourceView(name, nullptr);
+	}
 }
 
 void DSFDirect3D::Present()
@@ -456,7 +570,7 @@ HRESULT DSFDirect3D::CreateDeviceAndSwapBuffer()
 	swapDesc.Windowed = true;
 
 	// Attempt to initialize DirectX
-	return D3D11CreateDeviceAndSwapChain(
+	HRESULT hr = D3D11CreateDeviceAndSwapChain(
 		nullptr,				// Video adapter (physical GPU) to use, or null for default
 		D3D_DRIVER_TYPE_HARDWARE,	// We want to use the hardware (GPU)
 		nullptr,				// Used when doing software rendering
@@ -469,6 +583,8 @@ HRESULT DSFDirect3D::CreateDeviceAndSwapBuffer()
 		&device,					// Pointer to our Device pointer
 		&dxFeatureLevel,			// This will hold the actual feature level the app will use
 		&context);					// Pointer to our Device Context pointer
+
+	return hr;
 }
 
 HRESULT DSFDirect3D::CreateRenderTargetView()
@@ -495,6 +611,43 @@ HRESULT DSFDirect3D::CreateRenderTargetView()
 		&rtvDesc,
 		&backBufferRTV);
 	backBufferTexture->Release();
+
+	// Get the description of backBufferTexture and apply it to the renderTexture
+	D3D11_TEXTURE2D_DESC renderTexDesc;
+	ID3D11Texture2D* renderTexture[D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT] = { nullptr };
+	ZeroMemory(&renderTexDesc, sizeof(D3D11_TEXTURE2D_DESC));
+	backBufferTexture->GetDesc(&renderTexDesc);
+	renderTexDesc.BindFlags |= D3D11_BIND_SHADER_RESOURCE;
+	for (int i = 0; i < D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT; ++i)
+		device->CreateTexture2D(&renderTexDesc, nullptr, renderTexture + i);
+
+	// Create Render Target View with the renderTexture
+	for (int i = 0; i < D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT; ++i)
+		device->CreateRenderTargetView(
+			renderTexture[i],
+			nullptr,
+			renderTargetView + i
+		);
+
+	// Create Shader Resource View with the renderTexture
+	D3D11_SHADER_RESOURCE_VIEW_DESC renderSRVDesc;
+	ZeroMemory(&renderSRVDesc, sizeof(D3D11_SHADER_RESOURCE_VIEW_DESC));
+	renderSRVDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+	renderSRVDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+	renderSRVDesc.Texture2D.MipLevels = 1;
+
+	for (int i = 0; i < D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT; ++i)
+		device->CreateShaderResourceView(
+			renderTexture[i],
+			&renderSRVDesc,
+			renderResourceView + i
+		);
+
+	// Release the render target texture because we don't need it anymore
+	for (auto& i : renderTexture)
+		i->Release();
+
+
 	return hr;
 }
 

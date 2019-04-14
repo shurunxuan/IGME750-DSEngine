@@ -52,7 +52,6 @@ void MoveParentObject::Update(float deltaTime, float totalTime)
 	float arrowHorizontal = SInput->GetAxis("ArrowHorizontal");
 	float arrowVertical = SInput->GetAxis("ArrowVertical");
 	
-
 	// Use arrow keys to move object
 	if (FRawInput->GetKey(VK_UP))
 	{
@@ -129,6 +128,7 @@ void MoveParentObject::Update(float deltaTime, float totalTime)
 		scale = DirectX::XMVectorScale(scale, 1 / (1 + deltaTime));
 		object->transform->SetLocalScale(scale);
 	}
+
 
 	// Use DPad to adjust the material
 

@@ -79,40 +79,16 @@ public:
      */
     void Init();
 
-    /**
-     * @brief Non-block version of playing an audio file
-     * 
-     * Creates a thread of PlayAudioFile function
-     * 
-     * @param filename Audio file name
-     * @param playbackThread The audio playback thread
-     */
-    void PlayAudioFileNonBlock(const char* filename, boost::thread& playbackThread);
-
-    /**
-     * @brief Play an audio file
-     * 
-     * This function will block the thread. 
-     * If you want a non-block version,
-     * consider calling PlayAudioFileNonBlock.
-     * 
-     * @param filename Audio file name
-     */
-    void PlayAudioFile(const char* filename);
-
+	/**
+	 * @brief Calculate the 3D audio effects
+	 */
+	void Update();
 private:
     /**
      * @brief The XAudio2 Framework reference
      * 
      */
     DSFXAudio2 xAudio2;
-    /**
-     * @brief The FFmpeg Framework reference
-     * 
-     * Can only play/decode one file at a time
-     * 
-     */
-    DSFFFmpeg ffmpeg;
 };
 
 /**

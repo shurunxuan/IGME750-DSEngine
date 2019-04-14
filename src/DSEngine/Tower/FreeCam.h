@@ -1,16 +1,13 @@
 #pragma once
 #include "Component.hpp"
 
-
-class RaycastTest :
+class FreeCam :
 	public Component
 {
 public:
-	explicit RaycastTest(Object* owner);
-	~RaycastTest();
+	explicit FreeCam(Object* owner);
+	~FreeCam();
 
 	void Start() override;
 	void Update(float deltaTime, float totalTime) override;
-
 };
-

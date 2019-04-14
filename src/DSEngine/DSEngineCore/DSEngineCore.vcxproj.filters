@@ -52,18 +52,13 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="RigidBody.hpp">
+    <ClInclude Include="AudioSource.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Plane.hpp">
+    <ClInclude Include="AudioListener.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Ray.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RaycastHit.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BoxCollider.hpp">
+    <ClInclude Include="PostProcessingMaterial.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="WheelCollider.hpp">

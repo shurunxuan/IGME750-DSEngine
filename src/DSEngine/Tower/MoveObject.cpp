@@ -36,7 +36,6 @@ void MoveObject::Update(float deltaTime, float totalTime)
 		float y;
 		SInput->GetMousePosition(&x, &y);
 		DirectX::XMVECTOR worldPos = object->GetScene()->mainCamera->ScreenToWorldPoint(x, y);
-		DirectX::XMFLOAT3 test;
 		DirectX::XMVECTOR cameraPos = object->GetScene()->mainCamera->transform->GetLocalTranslation();
 		DirectX::XMVECTOR diff = DirectX::XMVectorSubtract(worldPos, cameraPos);
 		diff = DirectX::XMVectorScale(diff, 100.0f);

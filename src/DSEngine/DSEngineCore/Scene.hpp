@@ -31,7 +31,6 @@
 #include "MeshRenderer.hpp"
 #include "PBRMaterial.hpp"
 
-
 /**
  * @brief The class represents the scene graph
  * 
@@ -42,6 +41,7 @@ public:
 	friend class DSSRendering;
 	friend class DSFDirect3D;
 	friend class DSSPhysics;
+	friend class DSSAudio;
 
 	/**
 	 * @brief Construct a new Scene
@@ -231,6 +231,11 @@ inline Scene::~Scene()
 		delete object;
 	}
 	allObjects.clear();
+	for (Light* light : lights)
+	{
+		delete light;
+	}
+	lights.clear();
 }
 
 inline void Scene::SetD3D11Device(ID3D11Device* d, ID3D11DeviceContext* c)
@@ -261,6 +266,7 @@ inline Object* Scene::Instantiate(Object* obj)
 inline void Scene::DestroyObject(Object* obj)
 {
 	const auto result = std::find(allObjects.begin(), allObjects.end(), obj);
+	LOG_DEBUG << "Destroied object: " << obj->name;
 	if (result == allObjects.end()) return;
 	allObjects.erase(result);
 	delete obj;

@@ -122,6 +122,22 @@ public:
 	 */
 	void Update(float deltaTime, float totalTime);
 
+	/**
+	 * @brief Register a new post processing effect
+	 * 
+	 * Registered post processing effect will be applied by order
+	 * 
+	 * @param postProcessingMaterial The post processing material
+	 */
+	void RegisterPostProcessing(PostProcessingMaterial* postProcessingMaterial);
+
+	/**
+	 * @brief Get the default vertex shader for post processing
+	 * 
+	 * @return SimpleVertexShader* The pointer of the desired vertex shader
+	 */
+	SimpleVertexShader* GetDefaultPostProcessingVertexShader() const;
+
 private:
 	/**
 	 * @brief The Direct3D Framework reference 
@@ -167,6 +183,26 @@ private:
 	 * 
 	 */
 	SimpleVertexShader* shadowVertexShader;
+
+	/**
+	 * @brief The vertex shader used in post-processing screen triangle
+	 */
+	SimpleVertexShader* postProcessingVS;
+
+	/**
+	 * @brief The pixel shader used in post-processing to copy a texture to screen
+	 */
+	SimplePixelShader* postProcessingCopyPS;
+
+	/**
+	 * @brief The post processing material that copies the render target 0 to screen
+	 */
+	PostProcessingMaterial* copyToScreenMaterial;
+
+	/**
+	 * @brief All post processing materials
+	 */
+	std::list<PostProcessingMaterial*> postProcessingMaterials;
 };
 
 /**
