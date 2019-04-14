@@ -25,7 +25,7 @@ void WheelController::Update(float deltaTime, float totalTime)
 	// Use arrow keys to move object
 	if (FRawInput->GetKey(VK_UP))
 	{
-		object->GetComponent<WheelCollider>()->SetMotorTorque(20.0f);
+		object->GetComponent<WheelCollider>()->SetMotorTorque(40.0f);
 	}
 
 	if (FRawInput->GetKey(VK_DOWN))
