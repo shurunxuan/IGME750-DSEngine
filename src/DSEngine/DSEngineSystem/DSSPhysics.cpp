@@ -6,7 +6,7 @@
 
 using namespace DirectX;
 
-DSSPhysics* SPhysics;
+DSSPhysics* SPhysics = nullptr;
 
 DSSPhysics::DSSPhysics()
 {
@@ -144,8 +144,8 @@ void DSSPhysics::CarSimulate(float deltaTime, float totalTime)
 
 			//--------------Tranlation----------------
 			totalTorque = (motorTorque + brakeTorque) * (DirectX::XMVector3Normalize(wheelColliders[i]->object->transform->GetParent()->Forward()));
-			dragTorque = (-Cdrag) * velMagnitude * DirectX::XMVector3Normalize(DirectX::XMLoadFloat3(&rigidbody->GetVelocity()));
-			rrTorque = (-Crr) * DirectX::XMVector3Normalize(DirectX::XMLoadFloat3(&rigidbody->GetVelocity()));
+			dragTorque = (-Cdrag) * velMagnitude * DirectX::XMLoadFloat3(&rigidbody->GetVelocity());
+			rrTorque = (-Crr) * DirectX::XMLoadFloat3(&rigidbody->GetVelocity());
 			totalTorque = totalTorque + dragTorque + rrTorque;
 			accleration = totalTorque / wheelColliders[i]->GetMass();
 			velocity = DirectX::XMLoadFloat3(&vel);

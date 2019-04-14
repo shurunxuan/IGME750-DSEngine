@@ -190,6 +190,7 @@
     <ClInclude Include="AudioListener.hpp" />
     <ClInclude Include="AudioSource.hpp" />
     <ClInclude Include="Camera.hpp" />
+    <ClInclude Include="Ray.hpp" />
     <ClInclude Include="SphereCollider.hpp" />
     <ClInclude Include="Component.hpp" />
     <ClInclude Include="Light.hpp" />

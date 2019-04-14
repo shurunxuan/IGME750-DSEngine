@@ -118,6 +118,7 @@ void TestGameApp::Init()
 	WheelCollider* wheelCollider_1 = wheel_1->AddComponent<WheelCollider>();
 	wheelCollider_1->SetMaxSteeringAngle(25.0f);
 	wheelCollider_1->SetRadius(1.0f);
+	//wheelCollider_1->SetMass(500.0f);
 	wheel_1->transform->SetParent(car->transform);
 
 	Object * wheel_2 = CurrentActiveScene()->LoadModelFile("Assets/Models/18-tire/tire_1.obj");
@@ -126,6 +127,7 @@ void TestGameApp::Init()
 	WheelCollider* wheelCollider_2 = wheel_2->AddComponent<WheelCollider>();
 	wheelCollider_2->SetRadius(1.0f);
 	wheelCollider_2->SetMaxSteeringAngle(25.0f);
+	//wheelCollider_2->SetMass(500.0f);
 	wheel_2->transform->SetParent(car->transform);
 
 	Object * wheel_3 = CurrentActiveScene()->LoadModelFile("Assets/Models/18-tire/tire_1.obj");
@@ -134,6 +136,7 @@ void TestGameApp::Init()
 	WheelCollider* wheelCollider_3 = wheel_3->AddComponent<WheelCollider>();
 	wheelCollider_3->SetRadius(1.0f);
 	wheelCollider_3->SetMaxSteeringAngle(0.0f);
+	//wheelCollider_3->SetMass(500.0f);
 	wheel_3->transform->SetParent(car->transform);
 
 	Object * wheel_4 = CurrentActiveScene()->LoadModelFile("Assets/Models/18-tire/tire_1.obj");
@@ -142,6 +145,7 @@ void TestGameApp::Init()
 	WheelCollider* wheelCollider_4 = wheel_4->AddComponent<WheelCollider>();
 	wheelCollider_4->SetRadius(1.0f);
 	wheelCollider_4->SetMaxSteeringAngle(0.0f);
+	//wheelCollider_4->SetMass(500.0f);
 	wheel_4->transform->SetParent(car->transform);
 	
 	// Set Camera parent
@@ -182,6 +186,8 @@ void TestGameApp::Init()
 
 
 	// Add Components
+	PressSpaceToPlayAudio * playAudioComponent = parentObj->AddComponent<PressSpaceToPlayAudio>();
+	MoveParentObject * moveParentComponent = parentObj->AddComponent<MoveParentObject>();
 	WheelController * wheelController_1 = wheel_1->AddComponent<WheelController>();
 	WheelController * wheelController_2 = wheel_2->AddComponent<WheelController>();
 	WheelController * wheelController_3 = wheel_3->AddComponent<WheelController>();
@@ -208,6 +214,7 @@ void TestGameApp::Init()
 	ground->transform->SetLocalTranslation(DirectX::XMVectorSet(0.0f, -0.01f, 5.0f, 0.0f));
 	const DirectX::XMVECTOR rq = DirectX::XMQuaternionRotationAxis(DirectX::XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f), DirectX::XM_PIDIV2);
 	ground->transform->SetLocalRotation(rq);
+	ground->transform->SetLocalScale(5.0f, 5.0f, 5.0f);
 
 	Object * groundModelObject = (*ground->transform->GetChildren().begin())->object;
 	MeshRenderer * groundMeshRenderer = groundModelObject->GetComponent<MeshRenderer>();
