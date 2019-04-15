@@ -116,9 +116,9 @@ void TestGameApp::Init()
 	wheel_1->transform->SetLocalTranslation(-1.4f, 1.0f, 7.0f);
 	wheel_1->transform->SetLocalScale(0.05f, 0.05f, 0.05f);
 	WheelCollider* wheelCollider_1 = wheel_1->AddComponent<WheelCollider>();
-	wheelCollider_1->SetMaxSteeringAngle(25.0f);
 	wheelCollider_1->SetRadius(1.0f);
-	//wheelCollider_1->SetMass(500.0f);
+	wheelCollider_1->SetMaxSteeringAngle(25.0f);
+	wheelCollider_1->SetWheelDistance(5.2f);
 	wheel_1->transform->SetParent(car->transform);
 
 	Object * wheel_2 = CurrentActiveScene()->LoadModelFile("Assets/Models/18-tire/tire_1.obj");
@@ -127,7 +127,7 @@ void TestGameApp::Init()
 	WheelCollider* wheelCollider_2 = wheel_2->AddComponent<WheelCollider>();
 	wheelCollider_2->SetRadius(1.0f);
 	wheelCollider_2->SetMaxSteeringAngle(25.0f);
-	//wheelCollider_2->SetMass(500.0f);
+	wheelCollider_2->SetWheelDistance(5.2f);
 	wheel_2->transform->SetParent(car->transform);
 
 	Object * wheel_3 = CurrentActiveScene()->LoadModelFile("Assets/Models/18-tire/tire_1.obj");
@@ -136,7 +136,7 @@ void TestGameApp::Init()
 	WheelCollider* wheelCollider_3 = wheel_3->AddComponent<WheelCollider>();
 	wheelCollider_3->SetRadius(1.0f);
 	wheelCollider_3->SetMaxSteeringAngle(0.0f);
-	//wheelCollider_3->SetMass(500.0f);
+	wheelCollider_3->SetWheelDistance(5.2f);
 	wheel_3->transform->SetParent(car->transform);
 
 	Object * wheel_4 = CurrentActiveScene()->LoadModelFile("Assets/Models/18-tire/tire_1.obj");
@@ -145,7 +145,7 @@ void TestGameApp::Init()
 	WheelCollider* wheelCollider_4 = wheel_4->AddComponent<WheelCollider>();
 	wheelCollider_4->SetRadius(1.0f);
 	wheelCollider_4->SetMaxSteeringAngle(0.0f);
-	//wheelCollider_4->SetMass(500.0f);
+	wheelCollider_4->SetWheelDistance(5.2f);
 	wheel_4->transform->SetParent(car->transform);
 	
 	// Set Camera parent
