@@ -17,6 +17,7 @@ public:
 	void SetRotation(float x, float y, float z);
 	void SetRadius(float r);
 	void SetMass(float m);
+	void SetWheelDistance(float distance);
 	void SetSteerFactor(float factor);
 	void SetMotorTorque(float mTorque);
 	void SetBrakeTorque(float bTorque);
@@ -30,6 +31,7 @@ public:
 	DirectX::XMFLOAT3 GetRotation();
 	float GetRadius();
 	float GetMass();
+	float GetWheelDistance();
 	float GetSteerFactor();
 	float GetMotorTorque();
 	float GetBrakeTorque();
@@ -45,6 +47,7 @@ private:
 	DirectX::XMFLOAT3 rotation;
 	float radius;
 	float mass;
+	float wheelDistance;
 	float steerFactor;
 	float motorTorque;
 	float brakeTorque;
@@ -63,6 +66,7 @@ inline WheelCollider::WheelCollider(Object * owner)
 	rotation = DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f);
 	radius = 1.0f;
 	mass = 50.0f;
+	wheelDistance = 1.0f;
 	steerFactor = 0.0f;
 	motorTorque = 0.0f;
 	brakeTorque = 0.0f;
@@ -116,6 +120,11 @@ inline void WheelCollider::SetRadius(float r)
 inline void WheelCollider::SetMass(float m)
 {
 	mass = m;
+}
+
+inline void WheelCollider::SetWheelDistance(float distance)
+{
+	wheelDistance = distance;
 }
 
 inline void WheelCollider::SetSteerFactor(float factor)
@@ -176,6 +185,11 @@ inline float WheelCollider::GetRadius()
 inline float WheelCollider::GetMass()
 {
 	return mass;
+}
+
+inline float WheelCollider::GetWheelDistance()
+{
+	return wheelDistance;
 }
 
 inline float WheelCollider::GetSteerFactor()

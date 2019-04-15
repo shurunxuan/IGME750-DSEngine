@@ -152,6 +152,7 @@ void DSSPhysics::CarSimulate(float deltaTime, float totalTime)
 			velocity += (accleration * deltaTime);
 			DirectX::XMStoreFloat3(&vel, velocity);
 			rigidbody->SetVelocity(vel);
+			LOG_DEBUG << velMagnitude;
 
 			if (DirectX::XMVector3NearEqual(DirectX::XMVector3Normalize(wheelColliders[i]->object->transform->GetParent()->Forward()), DirectX::XMVector3Normalize(velocity), DirectX::XMVectorSet(1.0f, 1.0f, 1.0f, 1.0f))) {
 				direction = 1.0f;
@@ -164,20 +165,20 @@ void DSSPhysics::CarSimulate(float deltaTime, float totalTime)
 			wheelColliders[i]->SetCurrentAngle((wheelColliders[i]->GetSteerFactor() * wheelColliders[i]->GetMaxSteeringAngle()));
 			float deltaAngle = wheelColliders[i]->GetCurrentAngle() - wheelColliders[i]->GetPreviousAngle();
 			rotation = wheelColliders[i]->object->transform->GetLocalRotation();
-			rotationRightAxis = DirectX::XMQuaternionRotationAxis(DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f), deltaAngle / 57.1f );
+			rotationRightAxis = DirectX::XMQuaternionRotationAxis(DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f), deltaAngle / 57.3f );
 			rotation = DirectX::XMQuaternionMultiply(rotation, rotationRightAxis);
 			wheelColliders[i]->object->transform->SetLocalRotation(rotation);
 
 			//------------WheelRolling------------------------
-			right = DirectX::XMVector4Transform(right, XMMatrixTranspose(wheelColliders[i]->object->transform->GetLocalWorldMatrix()));
+			right = DirectX::XMVector3Normalize(DirectX::XMVector4Transform(right, XMMatrixTranspose(wheelColliders[i]->object->transform->GetLocalWorldMatrix())));
 			rotation = wheelColliders[i]->object->transform->GetLocalRotation();
-			rotationRightAxis = DirectX::XMQuaternionRotationAxis(right, direction * deltaTime * velMagnitude / (2.0f * 3.1415926f * wheelColliders[i]->GetRadius()) * 360.0f);
+			rotationRightAxis = DirectX::XMQuaternionRotationAxis(right, direction * deltaTime * velMagnitude / (2.0f * 3.1415926f * wheelColliders[i]->GetRadius()) * 360.0f / 57.3f);
 			rotation = DirectX::XMQuaternionMultiply(rotation, rotationRightAxis);
 			wheelColliders[i]->object->transform->SetLocalRotation(rotation);
 
 			//------------CarRotation-------------------------
 			rotation = rigidbody->object->transform->GetLocalRotation();
-			rotationRightAxis = DirectX::XMQuaternionRotationAxis(DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f), direction * deltaTime * velMagnitude * wheelColliders[i]->GetCurrentAngle() / 57.1f / 2.0f);
+			rotationRightAxis = DirectX::XMQuaternionRotationAxis(DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f), direction * deltaTime * velMagnitude * wheelColliders[i]->GetCurrentAngle() / 57.3f / (wheelColliders[i]->GetWheelDistance() * 2.0f) );
 			rotation = DirectX::XMQuaternionMultiply(rotation, rotationRightAxis);
 			rigidbody->object->transform->SetLocalRotation(rotation);
 		}

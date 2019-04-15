@@ -21,16 +21,18 @@ void WheelController::Update(float deltaTime, float totalTime)
 	float arrowHorizontal = SInput->GetAxis("ArrowHorizontal");
 	float arrowVertical = SInput->GetAxis("ArrowVertical");
 	object->GetComponent<WheelCollider>()->SetSteerFactor(arrowHorizontal);
+	object->GetComponent<WheelCollider>()->SetMotorTorque(arrowVertical * 100.0f);
 
-	// Use arrow keys to move object
-	if (FRawInput->GetKey(VK_UP))
-	{
-		object->GetComponent<WheelCollider>()->SetMotorTorque(40.0f);
-	}
 
-	if (FRawInput->GetKey(VK_DOWN))
-	{
-		object->GetComponent<WheelCollider>()->SetBrakeTorque(-20.0f);
-	}
+	//// Use arrow keys to move object
+	//if (FRawInput->GetKey(VK_UP))
+	//{
+	//	object->GetComponent<WheelCollider>()->SetMotorTorque(40.0f);
+	//}
+
+	//if (FRawInput->GetKey(VK_DOWN))
+	//{
+	//	object->GetComponent<WheelCollider>()->SetBrakeTorque(-20.0f);
+	//}
 
 }
