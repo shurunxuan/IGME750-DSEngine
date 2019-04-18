@@ -5,6 +5,7 @@
 
 DSEngineApp* App = nullptr;
 
+bool simulatePhysics = false;
 
 DSEngineApp::DSEngineApp()
 {
@@ -96,8 +97,6 @@ void DSEngineApp::Loop()
 	const float totalTime = renderingSystem.GetTotalTime();
 
 	inputSystem.SyncUpdate(deltaTime);
-	
-	physicsSystem.Update(deltaTime, totalTime);
 
 	// This contains the actual game logic
 	currentScene.Update(deltaTime, totalTime);

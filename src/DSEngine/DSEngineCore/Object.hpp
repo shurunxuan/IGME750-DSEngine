@@ -24,10 +24,6 @@
 
 #include "Component.hpp"
 #include "Transform.hpp"
-#include "SphereCollider.hpp"
-#include "RigidBody.hpp"
-#include "BoxCollider.hpp"
-#include "WheelCollider.hpp"
 
 class Scene;
 

@@ -2,7 +2,6 @@
 #include <list>
 #include "Component.hpp"
 #include "MeshRenderer.hpp"
-#include "WheelCollider.hpp"
 
 /**
  * @brief Move an object with arrow keys, rotate with numpad, change material property with DPad
