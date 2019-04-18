@@ -1,7 +1,8 @@
 <map id="Material" name="Material">
-<area shape="rect" id="node2" href="$class_p_b_r_material.html" title="The default physically based rendering material. " alt="" coords="5,80,101,107"/>
-<area shape="rect" id="node3" href="$class_post_processing_material.html" title="The default post processing material that does not set any material/texture data. ..." alt="" coords="125,80,284,107"/>
-<area shape="rect" id="node6" href="$class_unlit_material.html" title="UnlitMaterial" alt="" coords="310,80,404,107"/>
-<area shape="rect" id="node4" href="$class_p_p_dark_corner_material.html" title="PPDarkCornerMaterial" alt="" coords="38,155,191,181"/>
-<area shape="rect" id="node5" href="$class_p_p_gaussian_blur_material.html" title="PPGaussianBlurMaterial" alt="" coords="215,155,379,181"/>
+<area shape="rect" id="node2" href="$class_p_b_r_material.html" title="The default physically based rendering material. " alt="" coords="64,80,160,107"/>
+<area shape="rect" id="node3" href="$class_post_processing_material.html" title="The default post processing material that does not set any material/texture data. ..." alt="" coords="184,80,343,107"/>
+<area shape="rect" id="node7" href="$class_unlit_material.html" title="UnlitMaterial" alt="" coords="369,80,463,107"/>
+<area shape="rect" id="node4" href="$class_p_p_dark_corner_material.html" title="PPDarkCornerMaterial" alt="" coords="5,155,157,181"/>
+<area shape="rect" id="node5" href="$class_p_p_gaussian_blur_material.html" title="PPGaussianBlurMaterial" alt="" coords="182,155,345,181"/>
+<area shape="rect" id="node6" href="$class_s_s_a_o_material.html" title="SSAOMaterial" alt="" coords="370,155,475,181"/>
 </map>

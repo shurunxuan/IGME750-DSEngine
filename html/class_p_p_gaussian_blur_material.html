@@ -124,6 +124,22 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:abde273746e088902a9c46e09b027b5f2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abde273746e088902a9c46e09b027b5f2"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>SetScreenSizePtr</b> (int *width, int *height)</td></tr>
 <tr class="separator:abde273746e088902a9c46e09b027b5f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c15b9635297a57ad744bdc9ab57662a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4c15b9635297a57ad744bdc9ab57662a"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>PPGaussianBlurMaterial</b> (int sourceCount, std::vector&lt; int &gt; <a class="el" href="class_post_processing_material.html#a350965bf2424544ff33e4b5a0b52625f">sourceIndices</a>, int targetCount, std::vector&lt; int &gt; <a class="el" href="class_post_processing_material.html#aaf91260bf0078dec89b6bcc5f46457f9">targetIndices</a>, ID3D11Device *d)</td></tr>
+<tr class="separator:a4c15b9635297a57ad744bdc9ab57662a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d20c47baf0075a262968f8b6ae20d86"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1d20c47baf0075a262968f8b6ae20d86"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>PPGaussianBlurMaterial</b> (int sourceCount, std::vector&lt; int &gt; <a class="el" href="class_post_processing_material.html#a350965bf2424544ff33e4b5a0b52625f">sourceIndices</a>, int targetCount, std::vector&lt; int &gt; <a class="el" href="class_post_processing_material.html#aaf91260bf0078dec89b6bcc5f46457f9">targetIndices</a>, SimpleVertexShader *vtxShader, SimplePixelShader *pxlShader, ID3D11Device *d)</td></tr>
+<tr class="separator:a1d20c47baf0075a262968f8b6ae20d86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a94b442067b93cb3b318b005d7b0b4e88"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a94b442067b93cb3b318b005d7b0b4e88"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_p_p_gaussian_blur_material.html#a94b442067b93cb3b318b005d7b0b4e88">SetShaderData</a> () override</td></tr>
+<tr class="memdesc:a94b442067b93cb3b318b005d7b0b4e88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Does nothing for a default post processing material. <br/></td></tr>
+<tr class="separator:a94b442067b93cb3b318b005d7b0b4e88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3340cbbc35cd48d446885e111fec0f80"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_p_p_gaussian_blur_material.html#a3340cbbc35cd48d446885e111fec0f80">GetMaterialStruct</a> (void **mtlPtr) override</td></tr>
+<tr class="memdesc:a3340cbbc35cd48d446885e111fec0f80"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="class_material.html" title="The material of a MeshRenderer. ">Material</a> Struct, which does nothing for a default post processing material.  <a href="#a3340cbbc35cd48d446885e111fec0f80">More...</a><br/></td></tr>
+<tr class="separator:a3340cbbc35cd48d446885e111fec0f80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abde273746e088902a9c46e09b027b5f2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abde273746e088902a9c46e09b027b5f2"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>SetScreenSizePtr</b> (int *width, int *height)</td></tr>
+<tr class="separator:abde273746e088902a9c46e09b027b5f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_post_processing_material"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_post_processing_material')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_post_processing_material.html">PostProcessingMaterial</a></td></tr>
 <tr class="memitem:a1055f765c2e4fb841bd7bfecf717e536 inherit pub_methods_class_post_processing_material"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_post_processing_material.html#a1055f765c2e4fb841bd7bfecf717e536">PostProcessingMaterial</a> (int sourceCount, std::vector&lt; int &gt; <a class="el" href="class_post_processing_material.html#a350965bf2424544ff33e4b5a0b52625f">sourceIndices</a>, int targetCount, std::vector&lt; int &gt; <a class="el" href="class_post_processing_material.html#aaf91260bf0078dec89b6bcc5f46457f9">targetIndices</a>, ID3D11Device *d)</td></tr>
 <tr class="memdesc:a1055f765c2e4fb841bd7bfecf717e536 inherit pub_methods_class_post_processing_material"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="class_post_processing_material.html" title="The default post processing material that does not set any material/texture data. ...">PostProcessingMaterial</a>.  <a href="#a1055f765c2e4fb841bd7bfecf717e536">More...</a><br/></td></tr>
@@ -204,6 +220,41 @@ SimplePixelShader *&#160;</td><td class="memItemRight" valign="bottom"><a class=
 <tr class="separator:a14ec7391013bd7e0b37f72acb70c5c8a inherit pro_attribs_class_material"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a3340cbbc35cd48d446885e111fec0f80"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t PPGaussianBlurMaterial::GetMaterialStruct </td>
+          <td>(</td>
+          <td class="paramtype">void **&#160;</td>
+          <td class="paramname"><em>mtlPtr</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the <a class="el" href="class_material.html" title="The material of a MeshRenderer. ">Material</a> Struct, which does nothing for a default post processing material. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mtlPtr</td><td>Output the nullptr </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>size_t 0 </dd></dl>
+
+<p>Reimplemented from <a class="el" href="class_post_processing_material.html#a92c57422cb2dcca28de1f13e58f0f50d">PostProcessingMaterial</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a3340cbbc35cd48d446885e111fec0f80"></a>
 <div class="memitem">
 <div class="memproto">

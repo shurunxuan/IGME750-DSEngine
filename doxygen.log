@@ -109,6 +109,8 @@ Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngi
 Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineTestProject/PPGaussianBlurMaterial.h...
 Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineTestProject/PressSpaceToPlayAudio.h...
 Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineTestProject/PressSpaceToPlayAudio.h...
+Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineTestProject/SSAOMaterial.h...
+Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineTestProject/SSAOMaterial.h...
 Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineTestProject/TestGameApp.h...
 Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineTestProject/TestGameApp.h...
 Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/RacingGame/RacingGameApp.h...
@@ -135,10 +137,55 @@ Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/
 Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/MoveObject.h...
 Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/PlayerManager.h...
 Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/PlayerManager.h...
+Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/PPDarkCornerMaterial.h...
+Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/PPDarkCornerMaterial.h...
+Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/PPGaussianBlurMaterial.h...
+Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/PPGaussianBlurMaterial.h...
+Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/SSAOMaterial.h...
+Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/SSAOMaterial.h...
 Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TaskCard.h...
 Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TaskCard.h...
 Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TaskCardGenerator.h...
-Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TaskCardGenerator.h...
+Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/T/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/BoardColum.h:7: warning: Compound BoardColum is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TaskDeck.h:5: warning: Compound TaskDeck is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/PPDarkCornerMaterial.h:6: warning: Compound PPDarkCornerMaterial is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineTestProject/PPDarkCornerMaterial.h:6: warning: Compound PPDarkCornerMaterial is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/PPDarkCornerMaterial.h:13: warning: Compound PPDarkCornerMaterial::DarkCornerParameters is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineTestProject/PPDarkCornerMaterial.h:13: warning: Compound PPDarkCornerMaterial::DarkCornerParameters is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/BrickDeck.h:7: warning: Compound BrickDeck is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/ChangeBrickMaterial.h:8: warning: Compound ChangeBrickMaterial is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/CSVReader.h:26: warning: Compound CSVReader is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/RacingGame/RacingGameApp.h:6: warning: Compound RacingGameApp is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TaskCardGenerator.h:8: warning: Compound TaskCardGenerator is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/PPGaussianBlurMaterial.h:6: warning: Compound PPGaussianBlurMaterial is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineTestProject/PPGaussianBlurMaterial.h:6: warning: Compound PPGaussianBlurMaterial is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TowerGameApp.h:12: warning: Compound TowerGameApp is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/InputManager.h:6: warning: Compound InputManager is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/FreeCam.h:6: warning: Compound FreeCam is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/BoardManager.h:11: warning: Compound BoardManager is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/UnlitMaterial.h:13: warning: Compound UnlitMaterial::UnlitMaterialStruct is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TaskCard.h:5: warning: Compound TaskCard is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/GameManager.h:16: warning: Compound GameManager is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/MoveObject.h:6: warning: Compound MoveObject is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/CSVReader.h:19: warning: Compound TaskCardData is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/SSAOMaterial.h:16: warning: Compound SSAOMaterial::SSAOParameters is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineTestProject/SSAOMaterial.h:16: warning: Compound SSAOMaterial::SSAOParameters is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/PlayerManager.h:9: warning: Compound PlayerManager is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/BoardManager.h:6: warning: Compound BrickMatrix is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/Brick.h:14: warning: Compound Brick is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/UnlitMaterial.h:6: warning: Compound UnlitMaterial is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/SSAOMaterial.h:8: warning: Compound SSAOMaterial is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineTestProject/SSAOMaterial.h:8: warning: Compound SSAOMaterial is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineCore/Light.hpp:21: warning: Member LIGHT_TYPE_DIR (macro definition) of file Light.hpp is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineCore/Light.hpp:22: warning: Member LIGHT_TYPE_POINT (macro definition) of file Light.hpp is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineCore/Light.hpp:23: warning: Member LIGHT_TYPE_SPOT (macro definition) of file Light.hpp is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineCore/Light.hpp:25: warning: Member PCF_BLUR_COUNT (macro definition) of file Light.hpp is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineCore/Light.hpp:683: warning: Member DirectionalLight(DirectX::XMFLOAT3 color, DirectX::XMFLOAT3 direction, float intensity, DirectX::XMFLOAT3 ambientColor) (function) of file Light.hpp is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineCore/Light.hpp:694: warning: Member PointLight(DirectX::XMFLOAT3 color, DirectX::XMFLOAT3 position, float range, float intensity) (function) of file Light.hpp is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineCore/Light.hpp:705: warning: Member SpotLight(DirectX::XMFLOAT3 color, DirectX::XMFLOAT3 position, DirectX::XMFLOAT3 direction, float range, float spotFalloff, float intensity) (function) of file Light.hpp is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFDirect3D.h:27: warning: Member SAFE_RELEASE(x) (macro definition) of file DSFDirect3D.h is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFDirect3D.h:36: warning: Member DSENGINEFRAMEWORK_API (macro definition) of file DSFDirect3D.h is not documented.
+ower/TaskCardGenerator.h...
 Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TaskDeck.h...
 Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TaskDeck.h...
 Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TowerGameApp.h...
@@ -153,55 +200,7 @@ Building class list...
 Associating documentation with classes...
 Computing nesting relations for classes...
 Building example list...
-Searc/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/BoardColum.h:7: warning: Compound BoardColum is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TaskDeck.h:5: warning: Compound TaskDeck is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineTestProject/PPDarkCornerMaterial.h:6: warning: Compound PPDarkCornerMaterial is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineTestProject/PPDarkCornerMaterial.h:13: warning: Compound PPDarkCornerMaterial::DarkCornerParameters is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/BrickDeck.h:7: warning: Compound BrickDeck is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/ChangeBrickMaterial.h:8: warning: Compound ChangeBrickMaterial is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/CSVReader.h:26: warning: Compound CSVReader is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/RacingGame/RacingGameApp.h:6: warning: Compound RacingGameApp is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TaskCardGenerator.h:8: warning: Compound TaskCardGenerator is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineTestProject/PPGaussianBlurMaterial.h:6: warning: Compound PPGaussianBlurMaterial is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TowerGameApp.h:12: warning: Compound TowerGameApp is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/InputManager.h:6: warning: Compound InputManager is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/FreeCam.h:6: warning: Compound FreeCam is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/BoardManager.h:11: warning: Compound BoardManager is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/UnlitMaterial.h:13: warning: Compound UnlitMaterial::UnlitMaterialStruct is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TaskCard.h:5: warning: Compound TaskCard is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/GameManager.h:16: warning: Compound GameManager is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/MoveObject.h:6: warning: Compound MoveObject is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/CSVReader.h:19: warning: Compound TaskCardData is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/PlayerManager.h:9: warning: Compound PlayerManager is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/BoardManager.h:6: warning: Compound BrickMatrix is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/Brick.h:14: warning: Compound Brick is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/UnlitMaterial.h:6: warning: Compound UnlitMaterial is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineCore/Light.hpp:21: warning: Member LIGHT_TYPE_DIR (macro definition) of file Light.hpp is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineCore/Light.hpp:22: warning: Member LIGHT_TYPE_POINT (macro definition) of file Light.hpp is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineCore/Light.hpp:23: warning: Member LIGHT_TYPE_SPOT (macro definition) of file Light.hpp is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineCore/Light.hpp:25: warning: Member PCF_BLUR_COUNT (macro definition) of file Light.hpp is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineCore/Light.hpp:683: warning: Member DirectionalLight(DirectX::XMFLOAT3 color, DirectX::XMFLOAT3 direction, float intensity, DirectX::XMFLOAT3 ambientColor) (function) of file Light.hpp is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineCore/Light.hpp:694: warning: Member PointLight(DirectX::XMFLOAT3 color, DirectX::XMFLOAT3 position, float range, float intensity) (function) of file Light.hpp is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineCore/Light.hpp:705: warning: Member SpotLight(DirectX::XMFLOAT3 color, DirectX::XMFLOAT3 position, DirectX::XMFLOAT3 direction, float range, float spotFalloff, float intensity) (function) of file Light.hpp is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFDirect3D.h:27: warning: Member SAFE_RELEASE(x) (macro definition) of file DSFDirect3D.h is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFDirect3D.h:36: warning: Member DSENGINEFRAMEWORK_API (macro definition) of file DSFDirect3D.h is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFFFmpeg.h:24: warning: Member DSENGINEFRAMEWORK_API (macro definition) of file DSFFFmpeg.h is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFLogging.h:34: warning: Member DSENGINEFRAMEWORK_API (macro definition) of file DSFLogging.h is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFLogging.h:39: warning: Member LOG_LOGGER(logger, sev) (macro definition) of file DSFLogging.h is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFLogging.h:44: warning: Member LOG(sev) (macro definition) of file DSFLogging.h is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFLogging.h:46: warning: Member LOG_TRACE (macro definition) of file DSFLogging.h is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFLogging.h:47: warning: Member LOG_DEBUG (macro definition) of file DSFLogging.h is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFLogging.h:48: warning: Member LOG_INFO (macro definition) of file DSFLogging.h is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFLogging.h:49: warning: Member LOG_WARNING (macro definition) of file DSFLogging.h is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFLogging.h:50: warning: Member LOG_ERROR (macro definition) of file DSFLogging.h is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFLogging.h:51: warning: Member LOG_FATAL (macro definition) of file DSFLogging.h is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFRawInput.h:21: warning: Member DSENGINEFRAMEWORK_API (macro definition) of file DSFRawInput.h is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFXAudio2.h:23: warning: Member SAFE_RELEASE(x) (macro definition) of file DSFXAudio2.h is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFXAudio2.h:32: warning: Member DSENGINEFRAMEWORK_API (macro definition) of file DSFXAudio2.h is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFXInput.h:25: warning: Member DSENGINEFRAMEWORK_API (macro definition) of file DSFXInput.h is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineSystem/DSEngine.h:20: warning: Member DSENGINESYSTEM_API (macro definition) of file DSEngine.h is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineSystem/DSEngineApp.h:15: warning: Member DSENGINESYSTEM_API (macro definition) of file DSEngineApp.h is not documented.
-hing for enumerations...
+Searching for enumerations...
 Searching for documented typedefs...
 Searching for members imported via using declarations...
 Searching for included using directives...
@@ -261,14 +260,23 @@ Generating docs for file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEn
 Generating docs for file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineCore/Skybox.hpp...
 Generating docs for file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineCore/Transform.hpp...
 Generating docs for file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFDirect3D.h...
-Generating docs for file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFFFmpeg.h...
-Generating docs for file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFLogging.h...
-Generating docs for file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFRawInput.h...
-Generating docs for file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFXAudio2.h...
-Generating docs for file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFXInput.h...
-Generating docs for file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineSystem/DSEngine.h...
-Generating docs for file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineSystem/DSEngineApp.h...
-Generating docs for file /home/travis/build/shur/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineSystem/DSSAudio.h:19: warning: Member DSENGINESYSTEM_API (macro definition) of file DSSAudio.h is not documented.
+Generating docs for file /hom/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFFFmpeg.h:24: warning: Member DSENGINEFRAMEWORK_API (macro definition) of file DSFFFmpeg.h is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFLogging.h:34: warning: Member DSENGINEFRAMEWORK_API (macro definition) of file DSFLogging.h is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFLogging.h:39: warning: Member LOG_LOGGER(logger, sev) (macro definition) of file DSFLogging.h is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFLogging.h:44: warning: Member LOG(sev) (macro definition) of file DSFLogging.h is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFLogging.h:46: warning: Member LOG_TRACE (macro definition) of file DSFLogging.h is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFLogging.h:47: warning: Member LOG_DEBUG (macro definition) of file DSFLogging.h is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFLogging.h:48: warning: Member LOG_INFO (macro definition) of file DSFLogging.h is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFLogging.h:49: warning: Member LOG_WARNING (macro definition) of file DSFLogging.h is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFLogging.h:50: warning: Member LOG_ERROR (macro definition) of file DSFLogging.h is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFLogging.h:51: warning: Member LOG_FATAL (macro definition) of file DSFLogging.h is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFRawInput.h:21: warning: Member DSENGINEFRAMEWORK_API (macro definition) of file DSFRawInput.h is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFXAudio2.h:23: warning: Member SAFE_RELEASE(x) (macro definition) of file DSFXAudio2.h is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFXAudio2.h:32: warning: Member DSENGINEFRAMEWORK_API (macro definition) of file DSFXAudio2.h is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFXInput.h:25: warning: Member DSENGINEFRAMEWORK_API (macro definition) of file DSFXInput.h is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineSystem/DSEngine.h:20: warning: Member DSENGINESYSTEM_API (macro definition) of file DSEngine.h is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineSystem/DSEngineApp.h:15: warning: Member DSENGINESYSTEM_API (macro definition) of file DSEngineApp.h is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineSystem/DSSAudio.h:19: warning: Member DSENGINESYSTEM_API (macro definition) of file DSSAudio.h is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineSystem/DSSInput.h:19: warning: Member DSENGINESYSTEM_API (macro definition) of file DSSInput.h is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineSystem/DSSInput.h:30: warning: Member Button (variable) of file DSSInput.h is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineSystem/DSSInput.h:31: warning: Member Movement (variable) of file DSSInput.h is not documented.
@@ -350,15 +358,31 @@ Generating docs for file /home/travis/build/shur/home/travis/build/shurunxuan/IG
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/PlayerManager.h:27: warning: Member taskCount (variable) of class PlayerManager is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineTestProject/PPDarkCornerMaterial.h:8: warning: Member PPDarkCornerMaterial(int sourceCount, std::vector< int > sourceIndices, int targetCount, std::vector< int > targetIndices, ID3D11Device *d) (function) of class PPDarkCornerMaterial is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineTestProject/PPDarkCornerMaterial.h:9: warning: Member PPDarkCornerMaterial(int sourceCount, std::vector< int > sourceIndices, int targetCount, std::vector< int > targetIndices, SimpleVertexShader *vtxShader, SimplePixelShader *pxlShader, ID3D11Device *d) (function) of class PPDarkCornerMaterial is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/PPDarkCornerMaterial.h:8: warning: Member PPDarkCornerMaterial(int sourceCount, std::vector< int > sourceIndices, int targetCount, std::vector< int > targetIndices, ID3D11Device *d) (function) of class PPDarkCornerMaterial is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/PPDarkCornerMaterial.h:9: warning: Member PPDarkCornerMaterial(int sourceCount, std::vector< int > sourceIndices, int targetCount, std::vector< int > targetIndices, SimpleVertexShader *vtxShader, SimplePixelShader *pxlShader, ID3D11Device *d) (function) of class PPDarkCornerMaterial is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineTestProject/PPDarkCornerMaterial.h:16: warning: Member parameters (variable) of class PPDarkCornerMaterial is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineTestProject/PPDarkCornerMaterial.h:14: warning: Member intensity (variable) of class PPDarkCornerMaterial::DarkCornerParameters is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineTestProject/PPDarkCornerMaterial.h:15: warning: Member padding (variable) of class PPDarkCornerMaterial::DarkCornerParameters is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineTestProject/PPGaussianBlurMaterial.h:8: warning: Member PPGaussianBlurMaterial(int sourceCount, std::vector< int > sourceIndices, int targetCount, std::vector< int > targetIndices, ID3D11Device *d) (function) of class PPGaussianBlurMaterial is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineTestProject/PPGaussianBlurMaterial.h:9: warning: Member PPGaussianBlurMaterial(int sourceCount, std::vector< int > sourceIndices, int targetCount, std::vector< int > targetIndices, SimpleVertexShader *vtxShader, SimplePixelShader *pxlShader, ID3D11Device *d) (function) of class PPGaussianBlurMaterial is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineTestProject/PPGaussianBlurMaterial.h:15: warning: Member SetScreenSizePtr(int *width, int *height) (function) of class PPGaussianBlurMaterial is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/PPGaussianBlurMaterial.h:8: warning: Member PPGaussianBlurMaterial(int sourceCount, std::vector< int > sourceIndices, int targetCount, std::vector< int > targetIndices, ID3D11Device *d) (function) of class PPGaussianBlurMaterial is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/PPGaussianBlurMaterial.h:9: warning: Member PPGaussianBlurMaterial(int sourceCount, std::vector< int > sourceIndices, int targetCount, std::vector< int > targetIndices, SimpleVertexShader *vtxShader, SimplePixelShader *pxlShader, ID3D11Device *d) (function) of class PPGaussianBlurMaterial is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/PPGaussianBlurMaterial.h:15: warning: Member SetScreenSizePtr(int *width, int *height) (function) of class PPGaussianBlurMaterial is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineTestProject/PressSpaceToPlayAudio.h:16: warning: Member PressSpaceToPlayAudio(Object *owner) (function) of class PressSpaceToPlayAudio is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineTestProject/PressSpaceToPlayAudio.h:22: warning: Member source1 (variable) of class PressSpaceToPlayAudio is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineTestProject/PressSpaceToPlayAudio.h:23: warning: Member source2 (variable) of class PressSpaceToPlayAudio is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineTestProject/SSAOMaterial.h:10: warning: Member SSAOMaterial(int sourceCount, std::vector< int > sourceIndices, int targetCount, std::vector< int > targetIndices, ID3D11Device *d) (function) of class SSAOMaterial is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineTestProject/SSAOMaterial.h:11: warning: Member SSAOMaterial(int sourceCount, std::vector< int > sourceIndices, int targetCount, std::vector< int > targetIndices, SimpleVertexShader *vtxShader, SimplePixelShader *pxlShader, ID3D11Device *d) (function) of class SSAOMaterial is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineTestProject/SSAOMaterial.h:14: warning: Member SetCamera(Camera *camera) (function) of class SSAOMaterial is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/SSAOMaterial.h:10: warning: Member SSAOMaterial(int sourceCount, std::vector< int > sourceIndices, int targetCount, std::vector< int > targetIndices, ID3D11Device *d) (function) of class SSAOMaterial is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/SSAOMaterial.h:11: warning: Member SSAOMaterial(int sourceCount, std::vector< int > sourceIndices, int targetCount, std::vector< int > targetIndices, SimpleVertexShader *vtxShader, SimplePixelShader *pxlShader, ID3D11Device *d) (function) of class SSAOMaterial is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/SSAOMaterial.h:14: warning: Member SetCamera(Camera *camera) (function) of class SSAOMaterial is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineTestProject/SSAOMaterial.h:21: warning: Member ssaoCB (variable) of class SSAOMaterial is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineTestProject/SSAOMaterial.h:17: warning: Member OcclusionRadius (variable) of class SSAOMaterial::SSAOParameters is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineTestProject/SSAOMaterial.h:18: warning: Member OcclusionFadeStart (variable) of class SSAOMaterial::SSAOParameters is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineTestProject/SSAOMaterial.h:19: warning: Member OcclusionFadeEnd (variable) of class SSAOMaterial::SSAOParameters is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineTestProject/SSAOMaterial.h:20: warning: Member SurfaceEpsilon (variable) of class SSAOMaterial::SSAOParameters is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TaskCard.h:7: warning: Member TaskCard(TaskCardData) (function) of class TaskCard is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TaskCard.h:8: warning: Member GetColorValue() (function) of class TaskCard is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TaskCard.h:9: warning: Member GetTaskData() (function) of class TaskCard is not documented.
@@ -384,7 +408,14 @@ Generating docs for file /home/travis/build/shur/home/travis/build/shurunxuan/IG
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/UnlitMaterial.h:9: warning: Member UnlitMaterial(SimpleVertexShader *vtxShader, SimplePixelShader *pxlShader, ID3D11Device *d) (function) of class UnlitMaterial is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/UnlitMaterial.h:15: warning: Member parameters (variable) of class UnlitMaterial is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/UnlitMaterial.h:14: warning: Member Color (variable) of class UnlitMaterial::UnlitMaterialStruct is not documented.
-unxuan/IGME750-DSEngine/src/DSEngine/DSEngineSystem/DSSAudio.h...
+e/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFFFmpeg.h...
+Generating docs for file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFLogging.h...
+Generating docs for file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFRawInput.h...
+Generating docs for file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFXAudio2.h...
+Generating docs for file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFXInput.h...
+Generating docs for file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineSystem/DSEngine.h...
+Generating docs for file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineSystem/DSEngineApp.h...
+Generating docs for file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineSystem/DSSAudio.h...
 Generating docs for file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineSystem/DSSInput.h...
 Generating docs for file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineSystem/DSSRendering.h...
 Generating docs for file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineTestProject/TestGameApp.h...
@@ -439,6 +470,8 @@ Generating docs for compound PressSpaceToPlayAudio...
 Generating docs for compound RacingGameApp...
 Generating docs for compound Scene...
 Generating docs for compound Skybox...
+Generating docs for compound SSAOMaterial...
+Generating docs for nested compound SSAOMaterial::SSAOParameters...
 Generating docs for compound TaskCard...
 Generating docs for compound TaskCardData...
 Generating docs for compound TaskCardGenerator...
@@ -476,246 +509,252 @@ Generating example index...
 finalizing index lists...
 Running dot...
 Generating dot graphs using 3 parallel threads...
-Running dot for graph 1/163
-Running dot for graph 2/163
-Running dot for graph 3/163
-Running dot for graph 4/163
-Running dot for graph 5/163
-Running dot for graph 6/163
-Running dot for graph 7/163
-Running dot for graph 8/163
-Running dot for graph 9/163
-Running dot for graph 10/163
-Running dot for graph 11/163
-Running dot for graph 12/163
-Running dot for graph 13/163
-Running dot for graph 14/163
-Running dot for graph 15/163
-Running dot for graph 16/163
-Running dot for graph 17/163
-Running dot for graph 18/163
-Running dot for graph 19/163
-Running dot for graph 20/163
-Running dot for graph 21/163
-Running dot for graph 22/163
-Running dot for graph 23/163
-Running dot for graph 24/163
-Running dot for graph 25/163
-Running dot for graph 26/163
-Running dot for graph 27/163
-Running dot for graph 28/163
-Running dot for graph 29/163
-Running dot for graph 30/163
-Running dot for graph 31/163
-Running dot for graph 32/163
-Running dot for graph 33/163
-Running dot for graph 34/163
-Running dot for graph 35/163
-Running dot for graph 36/163
-Running dot for graph 37/163
-Running dot for graph 38/163
-Running dot for graph 39/163
-Running dot for graph 40/163
-Running dot for graph 41/163
-Running dot for graph 42/163
-Running dot for graph 43/163
-Running dot for graph 44/163
-Running dot for graph 45/163
-Running dot for graph 46/163
-Running dot for graph 47/163
-Running dot for graph 48/163
-Running dot for graph 49/163
-Running dot for graph 50/163
-Running dot for graph 51/163
-Running dot for graph 52/163
-Running dot for graph 53/163
-Running dot for graph 54/163
-Running dot for graph 55/163
-Running dot for graph 56/163
-Running dot for graph 57/163
-Running dot for graph 58/163
-Running dot for graph 59/163
-Running dot for graph 60/163
-Running dot for graph 61/163
-Running dot for graph 62/163
-Running dot for graph 63/163
-Running dot for graph 64/163
-Running dot for graph 65/163
-Running dot for graph 66/163
-Running dot for graph 67/163
-Running dot for graph 68/163
-Running dot for graph 69/163
-Running dot for graph 70/163
-Running dot for graph 71/163
-Running dot for graph 72/163
-Running dot for graph 73/163
-Running dot for graph 74/163
-Running dot for graph 75/163
-Running dot for graph 76/163
-Running dot for graph 77/163
-Running dot for graph 78/163
-Running dot for graph 79/163
-Running dot for graph 80/163
-Running dot for graph 81/163
-Running dot for graph 82/163
-Running dot for graph 83/163
-Running dot for graph 84/163
-Running dot for graph 85/163
-Running dot for graph 86/163
-Running dot for graph 87/163
-Running dot for graph 88/163
-Running dot for graph 89/163
-Running dot for graph 90/163
-Running dot for graph 91/163
-Running dot for graph 92/163
-Running dot for graph 93/163
-Running dot for graph 94/163
-Running dot for graph 95/163
-Running dot for graph 96/163
-Running dot for graph 97/163
-Running dot for graph 98/163
-Running dot for graph 99/163
-Running dot for graph 100/163
-Running dot for graph 101/163
-Running dot for graph 102/163
-Running dot for graph 103/163
-Running dot for graph 104/163
-Running dot for graph 105/163
-Running dot for graph 106/163
-Running dot for graph 107/163
-Running dot for graph 108/163
-Running dot for graph 109/163
-Running dot for graph 110/163
-Running dot for graph 111/163
-Running dot for graph 112/163
-Running dot for graph 113/163
-Running dot for graph 114/163
-Running dot for graph 115/163
-Running dot for graph 116/163
-Running dot for graph 117/163
-Running dot for graph 118/163
-Running dot for graph 119/163
-Running dot for graph 120/163
-Running dot for graph 121/163
-Running dot for graph 122/163
-Running dot for graph 123/163
-Running dot for graph 124/163
-Running dot for graph 125/163
-Running dot for graph 126/163
-Running dot for graph 127/163
-Running dot for graph 128/163
-Running dot for graph 129/163
-Running dot for graph 130/163
-Running dot for graph 131/163
-Running dot for graph 132/163
-Running dot for graph 133/163
-Running dot for graph 134/163
-Running dot for graph 135/163
-Running dot for graph 136/163
-Running dot for graph 137/163
-Running dot for graph 138/163
-Running dot for graph 139/163
-Running dot for graph 140/163
-Running dot for graph 141/163
-Running dot for graph 142/163
-Running dot for graph 143/163
-Running dot for graph 144/163
-Running dot for graph 145/163
-Running dot for graph 146/163
-Running dot for graph 147/163
-Running dot for graph 148/163
-Running dot for graph 149/163
-Running dot for graph 150/163
-Running dot for graph 151/163
-Running dot for graph 152/163
-Running dot for graph 153/163
-Running dot for graph 154/163
-Running dot for graph 155/163
-Running dot for graph 156/163
-Running dot for graph 157/163
-Running dot for graph 158/163
-Running dot for graph 159/163
-Running dot for graph 160/163
-Running dot for graph 161/163
-Running dot for graph 162/163
-Running dot for graph 163/163
-Patching output file 1/78
-Patching output file 2/78
-Patching output file 3/78
-Patching output file 4/78
-Patching output file 5/78
-Patching output file 6/78
-Patching output file 7/78
-Patching output file 8/78
-Patching output file 9/78
-Patching output file 10/78
-Patching output file 11/78
-Patching output file 12/78
-Patching output file 13/78
-Patching output file 14/78
-Patching output file 15/78
-Patching output file 16/78
-Patching output file 17/78
-Patching output file 18/78
-Patching output file 19/78
-Patching output file 20/78
-Patching output file 21/78
-Patching output file 22/78
-Patching output file 23/78
-Patching output file 24/78
-Patching output file 25/78
-Patching output file 26/78
-Patching output file 27/78
-Patching output file 28/78
-Patching output file 29/78
-Patching output file 30/78
-Patching output file 31/78
-Patching output file 32/78
-Patching output file 33/78
-Patching output file 34/78
-Patching output file 35/78
-Patching output file 36/78
-Patching output file 37/78
-Patching output file 38/78
-Patching output file 39/78
-Patching output file 40/78
-Patching output file 41/78
-Patching output file 42/78
-Patching output file 43/78
-Patching output file 44/78
-Patching output file 45/78
-Patching output file 46/78
-Patching output file 47/78
-Patching output file 48/78
-Patching output file 49/78
-Patching output file 50/78
-Patching output file 51/78
-Patching output file 52/78
-Patching output file 53/78
-Patching output file 54/78
-Patching output file 55/78
-Patching output file 56/78
-Patching output file 57/78
-Patching output file 58/78
-Patching output file 59/78
-Patching output file 60/78
-Patching output file 61/78
-Patching output file 62/78
-Patching output file 63/78
-Patching output file 64/78
-Patching output file 65/78
-Patching output file 66/78
-Patching output file 67/78
-Patching output file 68/78
-Patching output file 69/78
-Patching output file 70/78
-Patching output file 71/78
-Patching output file 72/78
-Patching output file 73/78
-Patching output file 74/78
-Patching output file 75/78
-Patching output file 76/78
-Patching output file 77/78
-Patching output file 78/78
-lookup cache used 672/65536 hits=3271 misses=766
+Running dot for graph 1/167
+Running dot for graph 2/167
+Running dot for graph 3/167
+Running dot for graph 4/167
+Running dot for graph 5/167
+Running dot for graph 6/167
+Running dot for graph 7/167
+Running dot for graph 8/167
+Running dot for graph 9/167
+Running dot for graph 10/167
+Running dot for graph 11/167
+Running dot for graph 12/167
+Running dot for graph 13/167
+Running dot for graph 14/167
+Running dot for graph 15/167
+Running dot for graph 16/167
+Running dot for graph 17/167
+Running dot for graph 18/167
+Running dot for graph 19/167
+Running dot for graph 20/167
+Running dot for graph 21/167
+Running dot for graph 22/167
+Running dot for graph 23/167
+Running dot for graph 24/167
+Running dot for graph 25/167
+Running dot for graph 26/167
+Running dot for graph 27/167
+Running dot for graph 28/167
+Running dot for graph 29/167
+Running dot for graph 30/167
+Running dot for graph 31/167
+Running dot for graph 32/167
+Running dot for graph 33/167
+Running dot for graph 34/167
+Running dot for graph 35/167
+Running dot for graph 36/167
+Running dot for graph 37/167
+Running dot for graph 38/167
+Running dot for graph 39/167
+Running dot for graph 40/167
+Running dot for graph 41/167
+Running dot for graph 42/167
+Running dot for graph 43/167
+Running dot for graph 44/167
+Running dot for graph 45/167
+Running dot for graph 46/167
+Running dot for graph 47/167
+Running dot for graph 48/167
+Running dot for graph 49/167
+Running dot for graph 50/167
+Running dot for graph 51/167
+Running dot for graph 52/167
+Running dot for graph 53/167
+Running dot for graph 54/167
+Running dot for graph 55/167
+Running dot for graph 56/167
+Running dot for graph 57/167
+Running dot for graph 58/167
+Running dot for graph 59/167
+Running dot for graph 60/167
+Running dot for graph 61/167
+Running dot for graph 62/167
+Running dot for graph 63/167
+Running dot for graph 64/167
+Running dot for graph 65/167
+Running dot for graph 66/167
+Running dot for graph 67/167
+Running dot for graph 68/167
+Running dot for graph 69/167
+Running dot for graph 70/167
+Running dot for graph 71/167
+Running dot for graph 72/167
+Running dot for graph 73/167
+Running dot for graph 74/167
+Running dot for graph 75/167
+Running dot for graph 76/167
+Running dot for graph 77/167
+Running dot for graph 78/167
+Running dot for graph 79/167
+Running dot for graph 80/167
+Running dot for graph 81/167
+Running dot for graph 82/167
+Running dot for graph 83/167
+Running dot for graph 84/167
+Running dot for graph 85/167
+Running dot for graph 86/167
+Running dot for graph 87/167
+Running dot for graph 88/167
+Running dot for graph 89/167
+Running dot for graph 90/167
+Running dot for graph 91/167
+Running dot for graph 92/167
+Running dot for graph 93/167
+Running dot for graph 94/167
+Running dot for graph 95/167
+Running dot for graph 96/167
+Running dot for graph 97/167
+Running dot for graph 98/167
+Running dot for graph 99/167
+Running dot for graph 100/167
+Running dot for graph 101/167
+Running dot for graph 102/167
+Running dot for graph 103/167
+Running dot for graph 104/167
+Running dot for graph 105/167
+Running dot for graph 106/167
+Running dot for graph 107/167
+Running dot for graph 108/167
+Running dot for graph 109/167
+Running dot for graph 110/167
+Running dot for graph 111/167
+Running dot for graph 112/167
+Running dot for graph 113/167
+Running dot for graph 114/167
+Running dot for graph 115/167
+Running dot for graph 116/167
+Running dot for graph 117/167
+Running dot for graph 118/167
+Running dot for graph 119/167
+Running dot for graph 120/167
+Running dot for graph 121/167
+Running dot for graph 122/167
+Running dot for graph 123/167
+Running dot for graph 124/167
+Running dot for graph 125/167
+Running dot for graph 126/167
+Running dot for graph 127/167
+Running dot for graph 128/167
+Running dot for graph 129/167
+Running dot for graph 130/167
+Running dot for graph 131/167
+Running dot for graph 132/167
+Running dot for graph 133/167
+Running dot for graph 134/167
+Running dot for graph 135/167
+Running dot for graph 136/167
+Running dot for graph 137/167
+Running dot for graph 138/167
+Running dot for graph 139/167
+Running dot for graph 140/167
+Running dot for graph 141/167
+Running dot for graph 142/167
+Running dot for graph 143/167
+Running dot for graph 144/167
+Running dot for graph 145/167
+Running dot for graph 146/167
+Running dot for graph 147/167
+Running dot for graph 148/167
+Running dot for graph 149/167
+Running dot for graph 150/167
+Running dot for graph 151/167
+Running dot for graph 152/167
+Running dot for graph 153/167
+Running dot for graph 154/167
+Running dot for graph 155/167
+Running dot for graph 156/167
+Running dot for graph 157/167
+Running dot for graph 158/167
+Running dot for graph 159/167
+Running dot for graph 160/167
+Running dot for graph 161/167
+Running dot for graph 162/167
+Running dot for graph 163/167
+Running dot for graph 164/167
+Running dot for graph 165/167
+Running dot for graph 166/167
+Running dot for graph 167/167
+Patching output file 1/80
+Patching output file 2/80
+Patching output file 3/80
+Patching output file 4/80
+Patching output file 5/80
+Patching output file 6/80
+Patching output file 7/80
+Patching output file 8/80
+Patching output file 9/80
+Patching output file 10/80
+Patching output file 11/80
+Patching output file 12/80
+Patching output file 13/80
+Patching output file 14/80
+Patching output file 15/80
+Patching output file 16/80
+Patching output file 17/80
+Patching output file 18/80
+Patching output file 19/80
+Patching output file 20/80
+Patching output file 21/80
+Patching output file 22/80
+Patching output file 23/80
+Patching output file 24/80
+Patching output file 25/80
+Patching output file 26/80
+Patching output file 27/80
+Patching output file 28/80
+Patching output file 29/80
+Patching output file 30/80
+Patching output file 31/80
+Patching output file 32/80
+Patching output file 33/80
+Patching output file 34/80
+Patching output file 35/80
+Patching output file 36/80
+Patching output file 37/80
+Patching output file 38/80
+Patching output file 39/80
+Patching output file 40/80
+Patching output file 41/80
+Patching output file 42/80
+Patching output file 43/80
+Patching output file 44/80
+Patching output file 45/80
+Patching output file 46/80
+Patching output file 47/80
+Patching output file 48/80
+Patching output file 49/80
+Patching output file 50/80
+Patching output file 51/80
+Patching output file 52/80
+Patching output file 53/80
+Patching output file 54/80
+Patching output file 55/80
+Patching output file 56/80
+Patching output file 57/80
+Patching output file 58/80
+Patching output file 59/80
+Patching output file 60/80
+Patching output file 61/80
+Patching output file 62/80
+Patching output file 63/80
+Patching output file 64/80
+Patching output file 65/80
+Patching output file 66/80
+Patching output file 67/80
+Patching output file 68/80
+Patching output file 69/80
+Patching output file 70/80
+Patching output file 71/80
+Patching output file 72/80
+Patching output file 73/80
+Patching output file 74/80
+Patching output file 75/80
+Patching output file 76/80
+Patching output file 77/80
+Patching output file 78/80
+Patching output file 79/80
+Patching output file 80/80
+lookup cache used 685/65536 hits=3543 misses=786
 finished...
