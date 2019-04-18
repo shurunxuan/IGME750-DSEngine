@@ -1,5 +1,0 @@
-<map id="SphereCollider" name="SphereCollider">
-<area shape="rect" id="node2" href="$class_component.html" title="The component class that will be attached to an object. " alt="" coords="189,96,277,123"/>
-<area shape="rect" id="node6" href="$class_transform.html" title="The transform of the object. " alt="" coords="137,187,217,213"/>
-<area shape="rect" id="node4" href="$class_object.html" title="A game object. " alt="" coords="275,277,335,304"/>
-</map>

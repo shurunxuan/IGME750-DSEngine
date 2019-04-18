@@ -1,6 +1,0 @@
-<map id="EngineAudioManager" name="EngineAudioManager">
-<area shape="rect" id="node2" href="$class_component.html" title="The component class that will be attached to an object. " alt="" coords="223,97,312,124"/>
-<area shape="rect" id="node6" href="$class_transform.html" title="The transform of the object. " alt="" coords="106,189,187,216"/>
-<area shape="rect" id="node7" href="$class_audio_source.html" title="The Audio Source. " alt="" coords="351,189,447,216"/>
-<area shape="rect" id="node4" href="$class_object.html" title="A game object. " alt="" coords="65,352,124,379"/>
-</map>

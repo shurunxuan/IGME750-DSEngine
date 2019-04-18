@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['freecam',['FreeCam',['../class_free_cam.html',1,'']]]
+  ['gamemanager',['GameManager',['../class_game_manager.html',1,'']]]
 ];
