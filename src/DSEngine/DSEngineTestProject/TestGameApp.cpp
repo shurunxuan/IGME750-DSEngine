@@ -14,6 +14,7 @@
 #include "PressSpaceToPlayAudio.h"
 #include "MoveParentObject.h"
 #include "CameraController.h"
+#include "SSAOMaterial.h"
 #include "WheelController.h"
 #include "EngineAudioManager.h"
 
@@ -23,10 +24,17 @@ TestGameApp::~TestGameApp()
 	delete ppGaussianBlurUPS;
 	delete ppGaussianBlurVPS;
 	delete ppAddPS;
+	delete ppMultiplyPS;
+	delete ppSSAOPS;
+	delete ppSSAOVS;
 	delete darkCornerMaterial;
 	delete blurUMaterial;
 	delete blurVMaterial;
+	delete blurSSAOUMaterial;
+	delete blurSSAOVMaterial;
 	delete applyBloomMaterial;
+	delete applySSAOMaterial;
+	delete ssaoMaterial;
 }
 
 void TestGameApp::Init()
@@ -65,25 +73,44 @@ void TestGameApp::Init()
 	ppGaussianBlurVPS = new SimplePixelShader(device, context);
 	ppGaussianBlurUPS->LoadShaderFile(L"PPGaussianBlurUPS.cso");
 	ppGaussianBlurVPS->LoadShaderFile(L"PPGaussianBlurVPS.cso");
-	blurUMaterial = new PPGaussianBlurMaterial(1, { 1 }, 1, { 2 }, SRendering->GetDefaultPostProcessingVertexShader(), ppGaussianBlurUPS, device);
-	blurVMaterial = new PPGaussianBlurMaterial(1, { 2 }, 1, { 1 }, SRendering->GetDefaultPostProcessingVertexShader(), ppGaussianBlurVPS, device);
+	blurUMaterial = new PPGaussianBlurMaterial(1, { 1 }, 1, { 4 }, SRendering->GetDefaultPostProcessingVertexShader(), ppGaussianBlurUPS, device);
+	blurVMaterial = new PPGaussianBlurMaterial(1, { 4 }, 1, { 5 }, SRendering->GetDefaultPostProcessingVertexShader(), ppGaussianBlurVPS, device);
 	blurUMaterial->SetScreenSizePtr(&width, &height);
 	blurVMaterial->SetScreenSizePtr(&width, &height);
-	SRendering->RegisterPostProcessing(blurUMaterial);
-	SRendering->RegisterPostProcessing(blurVMaterial);	
-	SRendering->RegisterPostProcessing(blurUMaterial);
-	SRendering->RegisterPostProcessing(blurVMaterial);
+	SRendering->RegisterPostProcessing(blurUMaterial); // 1 -> 4
+	SRendering->RegisterPostProcessing(blurVMaterial); // 4 -> 5	
 
 	ppAddPS = new SimplePixelShader(device, context);
 	ppAddPS->LoadShaderFile(L"PPAddPS.cso");
-	applyBloomMaterial = new PostProcessingMaterial(2, { 0, 1 }, 1, { 2 }, SRendering->GetDefaultPostProcessingVertexShader(), ppAddPS, device);
-	SRendering->RegisterPostProcessing(applyBloomMaterial);
+	applyBloomMaterial = new PostProcessingMaterial(2, { 0, 5 }, 1, { 6 }, SRendering->GetDefaultPostProcessingVertexShader(), ppAddPS, device);
+	SRendering->RegisterPostProcessing(applyBloomMaterial); // 0 + 5 -> 6
+
+	ppSSAOPS = new SimplePixelShader(device, context);
+	ppSSAOPS->LoadShaderFile(L"PPSSAOPS.cso");
+	ppSSAOVS = new SimpleVertexShader(device, context);
+	ppSSAOVS->LoadShaderFile(L"PPSSAOVS.cso");
+	ssaoMaterial = new SSAOMaterial(2, { 3, -1 }, 1, { 7 }, ppSSAOVS, ppSSAOPS, device);
+	ssaoMaterial->SetCamera(CurrentActiveScene()->mainCamera);
+	SRendering->RegisterPostProcessing(ssaoMaterial); // -1 & 3 -> 7
+
+	blurSSAOUMaterial = new PPGaussianBlurMaterial(1, { 7 }, 1, { 4 }, SRendering->GetDefaultPostProcessingVertexShader(), ppGaussianBlurUPS, device);
+	blurSSAOVMaterial = new PPGaussianBlurMaterial(1, { 4 }, 1, { 5 }, SRendering->GetDefaultPostProcessingVertexShader(), ppGaussianBlurVPS, device);
+	blurSSAOUMaterial->SetScreenSizePtr(&width, &height);
+	blurSSAOVMaterial->SetScreenSizePtr(&width, &height);
+	SRendering->RegisterPostProcessing(blurSSAOUMaterial); // 7 -> 4
+	SRendering->RegisterPostProcessing(blurSSAOVMaterial); // 4 -> 5
+
+	ppMultiplyPS = new SimplePixelShader(device, context);
+	ppMultiplyPS->LoadShaderFile(L"PPMultiplyPS.cso");
+	applySSAOMaterial = new PostProcessingMaterial(2, { 6, 5 }, 1, { 7 }, SRendering->GetDefaultPostProcessingVertexShader(), ppMultiplyPS, device);
+	SRendering->RegisterPostProcessing(applySSAOMaterial); // 6 * 5 -> 7
 
 	ppDarkCornerPS = new SimplePixelShader(device, context);
 	ppDarkCornerPS->LoadShaderFile(L"PPDarkCornerPS.cso");
-	darkCornerMaterial = new PPDarkCornerMaterial(1, { 2 }, 1, { 0 }, SRendering->GetDefaultPostProcessingVertexShader(), ppDarkCornerPS, device);
+	darkCornerMaterial = new PPDarkCornerMaterial(1, { 7 }, 1, { 0 }, SRendering->GetDefaultPostProcessingVertexShader(), ppDarkCornerPS, device);
 	darkCornerMaterial->parameters.intensity = 1.0f;
-	SRendering->RegisterPostProcessing(darkCornerMaterial);
+	SRendering->RegisterPostProcessing(darkCornerMaterial); // 7 -> 0
+	// 0 -> screen
 
 	// Set Camera
 	CurrentActiveScene()->mainCamera->UpdateProjectionMatrix(float(width), float(height), DirectX::XM_PIDIV4);
@@ -156,36 +183,36 @@ void TestGameApp::Init()
 
 	
 	// Add parent object
-	//Object * parentObj = CurrentActiveScene()->LoadModelFile("Assets/Models/Fennekin/a653.dae");
-	//parentObj->name = "Fennekin";
-	//parentObj->transform->SetLocalScale(0.05f, 0.05f, 0.05f);
-	//parentObj->transform->SetLocalTranslation(-1.0f, 0.0f, 5.0f);
+	Object * parentObj = CurrentActiveScene()->LoadModelFile("Assets/Models/Fennekin/a653.dae");
+	parentObj->name = "Fennekin";
+	parentObj->transform->SetLocalScale(0.05f, 0.05f, 0.05f);
+	parentObj->transform->SetLocalTranslation(-1.0f, 0.0f, 5.0f);
 
-	//auto rotation = parentObj->transform->GetLocalRotation();
-	//rotation = DirectX::XMQuaternionMultiply(rotation, DirectX::XMQuaternionRotationAxis(DirectX::XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f), DirectX::XM_PIDIV2));
-	//parentObj->transform->SetLocalRotation(rotation);
-	Object* parentObj = nullptr;
-	for (int i = 0; i < 5; ++i)
-	{
-		Object* obj = CurrentActiveScene()->LoadModelFile("Assets/Models/Rock/sphere.obj");
-		obj->transform->SetLocalTranslation((i - 2) * 2.0f, 1.0f, 5.0f);
-		MeshRenderer* renderer = obj->transform->GetChildAt(0)->object->GetComponent<MeshRenderer>();
-		PBRMaterial* material = static_cast<PBRMaterial*>(renderer->GetMaterial());
-		material->transparent = true;
-		D3D11_RENDER_TARGET_BLEND_DESC blendDesc;
-		ZeroMemory(&blendDesc, sizeof(D3D11_RENDER_TARGET_BLEND_DESC));
-		blendDesc.BlendEnable = TRUE;
-		blendDesc.SrcBlend = D3D11_BLEND_SRC_ALPHA;
-		blendDesc.DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
-		blendDesc.BlendOp = D3D11_BLEND_OP_ADD;
-		blendDesc.SrcBlendAlpha = D3D11_BLEND_ONE;
-		blendDesc.DestBlendAlpha = D3D11_BLEND_ZERO;
-		blendDesc.BlendOpAlpha = D3D11_BLEND_OP_ADD;
-		blendDesc.RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
-		material->SetBlendMode(blendDesc);
-		material->parameters.transparency = 0.8f;
-		if (i == 0) parentObj = obj;
-	}
+	auto rotation = parentObj->transform->GetLocalRotation();
+	rotation = DirectX::XMQuaternionMultiply(rotation, DirectX::XMQuaternionRotationAxis(DirectX::XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f), DirectX::XM_PIDIV2));
+	parentObj->transform->SetLocalRotation(rotation);
+	//Object* parentObj = nullptr;
+	//for (int i = 0; i < 5; ++i)
+	//{
+	//	Object* obj = CurrentActiveScene()->LoadModelFile("Assets/Models/Rock/sphere.obj");
+	//	obj->transform->SetLocalTranslation((i - 2) * 2.0f, 1.0f, 5.0f);
+	//	MeshRenderer* renderer = obj->transform->GetChildAt(0)->object->GetComponent<MeshRenderer>();
+	//	PBRMaterial* material = static_cast<PBRMaterial*>(renderer->GetMaterial());
+	//	material->transparent = true;
+	//	D3D11_RENDER_TARGET_BLEND_DESC blendDesc;
+	//	ZeroMemory(&blendDesc, sizeof(D3D11_RENDER_TARGET_BLEND_DESC));
+	//	blendDesc.BlendEnable = TRUE;
+	//	blendDesc.SrcBlend = D3D11_BLEND_SRC_ALPHA;
+	//	blendDesc.DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+	//	blendDesc.BlendOp = D3D11_BLEND_OP_ADD;
+	//	blendDesc.SrcBlendAlpha = D3D11_BLEND_ONE;
+	//	blendDesc.DestBlendAlpha = D3D11_BLEND_ZERO;
+	//	blendDesc.BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	//	blendDesc.RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+	//	material->SetBlendMode(blendDesc);
+	//	material->parameters.transparency = 0.8f;
+	//	if (i == 0) parentObj = obj;
+	//}
 
 
 	// Add Components
@@ -243,7 +270,7 @@ void TestGameApp::Init()
 	// Add a ground
 	Object * ground = CurrentActiveScene()->LoadModelFile("Assets/Models/Rock/quad.obj");
 	ground->name = "Ground";
-	//ground->transform->SetLocalScale(DirectX::XMVectorSet(2.0f, 2.0f, 2.0f, 0.0f));
+	ground->transform->SetLocalScale(DirectX::XMVectorSet(20.0f, 20.0f, 20.0f, 0.0f));
 	ground->transform->SetLocalTranslation(DirectX::XMVectorSet(0.0f, -0.01f, 5.0f, 0.0f));
 	const DirectX::XMVECTOR rq = DirectX::XMQuaternionRotationAxis(DirectX::XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f), DirectX::XM_PIDIV2);
 	ground->transform->SetLocalRotation(rq);

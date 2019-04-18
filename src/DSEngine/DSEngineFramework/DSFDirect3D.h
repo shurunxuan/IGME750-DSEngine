@@ -161,11 +161,7 @@ public:
     /**
      * @brief Post Processing
      * 
-     * @param sourceIndex The source render target of the post processing part, valid number 0 ~ D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT - 1
-     * @param targetIndex The target render target of the post processing part, valid number -1 ~ D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT - 1, a negative number means render to the back buffer (screen)
-     * @param postProcessingVS The vertex shader that will be used for post processing
-     * @param postProcessingPS The pixel shader that will be used for post processing
-     * @param 
+     * @param postProcessingMaterial The post processing material that will be used
      */
     void PostProcessing(PostProcessingMaterial* postProcessingMaterial);
 
@@ -262,6 +258,11 @@ private:
      * @brief The depth stencil view
      */
     ID3D11DepthStencilView* depthStencilView;
+
+    /**
+     * @brief The shader resource view of the depth buffer
+     */
+    ID3D11ShaderResourceView* depthResourceView;
     /**
      * @brief The depth stencil state
      */
@@ -289,10 +290,19 @@ private:
     ID3D11SamplerState* linearSamplerState;
 
     /**
+     * @brief The point sampler state which is used for sampling the render target textures
+     */
+    ID3D11SamplerState* pointComparisonSamplerState;
+    /**
+     * @brief The linear sampler state which is used for sampling the render target textures
+     */
+    ID3D11SamplerState* linearComparisonSamplerState;
+
+    /**
      * @brief The comparison sampler which is used when rendering the shadow
      * 
      */
-    ID3D11SamplerState* comparisonSampler;
+    ID3D11SamplerState* shadowMapSampler;
     /**
      * @brief The color that is used for clearing the render target
      */
@@ -330,6 +340,13 @@ private:
      * @return HRESULT S_OK if succeed, or other
      */
     HRESULT CreateShadowAndDrawingRenderState();
+
+    /**
+     * @brief Create sampler states
+     * 
+     * @return HRESULT S_OK if succeed, or other
+     */
+    HRESULT CreateSamplerStates();
     /**
      * @brief Resize the Swap Buffer object
      *
