@@ -197,6 +197,7 @@
     <ClInclude Include="DSEngineApp.h" />
     <ClInclude Include="DSSAudio.h" />
     <ClInclude Include="DSSInput.h" />
+    <ClInclude Include="DSSPhysics.h" />
     <ClInclude Include="DSSRendering.h" />
   </ItemGroup>
   <ItemGroup>
@@ -205,6 +206,7 @@
     <ClCompile Include="DSEngineApp.cpp" />
     <ClCompile Include="DSSAudio.cpp" />
     <ClCompile Include="DSSInput.cpp" />
+    <ClCompile Include="DSSPhysics.cpp" />
     <ClCompile Include="DSSRendering.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

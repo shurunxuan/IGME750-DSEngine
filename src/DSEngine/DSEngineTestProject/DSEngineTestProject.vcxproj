@@ -226,6 +226,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CameraController.cpp" />
+    <ClCompile Include="EngineAudioManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MoveParentObject.cpp" />
     <ClCompile Include="PPDarkCornerMaterial.cpp" />
@@ -233,15 +234,18 @@
     <ClCompile Include="PressSpaceToPlayAudio.cpp" />
     <ClCompile Include="SSAOMaterial.cpp" />
     <ClCompile Include="TestGameApp.cpp" />
+    <ClCompile Include="WheelController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CameraController.h" />
+    <ClInclude Include="EngineAudioManager.h" />
     <ClInclude Include="MoveParentObject.h" />
     <ClInclude Include="PPDarkCornerMaterial.h" />
     <ClInclude Include="PPGaussianBlurMaterial.h" />
     <ClInclude Include="PressSpaceToPlayAudio.h" />
     <ClInclude Include="SSAOMaterial.h" />
     <ClInclude Include="TestGameApp.h" />
+    <ClInclude Include="WheelController.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PPAddPS.hlsl">

@@ -15,6 +15,8 @@
 #include "MoveParentObject.h"
 #include "CameraController.h"
 #include "SSAOMaterial.h"
+#include "WheelController.h"
+#include "EngineAudioManager.h"
 
 TestGameApp::~TestGameApp()
 {
@@ -64,6 +66,7 @@ void TestGameApp::Init()
 	SInput->RegisterInput("Audio1PitchDown", "2", "", "", "", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
 	SInput->RegisterInput("Audio1VolumeUp", "3", "", "", "", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
 	SInput->RegisterInput("Audio1VolumeDown", "4", "", "", "", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
+	SInput->RegisterInput("Brake", "space", "", "", "", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
 
 	// Register post processing effects
 	ppGaussianBlurUPS = new SimplePixelShader(device, context);
@@ -112,13 +115,73 @@ void TestGameApp::Init()
 	// Set Camera
 	CurrentActiveScene()->mainCamera->UpdateProjectionMatrix(float(width), float(height), DirectX::XM_PIDIV4);
 	CurrentActiveScene()->mainCamera->SetSkybox(device, context, L"Assets/Skybox/1/Environment1HiDef.cubemap.dds", L"Assets/Skybox/1/Environment1Light.cubemap.dds");
+	CurrentActiveScene()->mainCamera->transform->SetLocalTranslation(0.0f, 4.0f, -8.0f);
 	CameraController * cameraController = CurrentActiveScene()->mainCamera->AddComponent<CameraController>();
-	CurrentActiveScene()->mainCamera->transform->SetLocalTranslation(0.0f, 0.0f, -10.0f);
 
 	// Add a light
 	LightData light = DirectionalLight(DirectX::XMFLOAT3(1.0f, 1.0f, 1.0f), DirectX::XMFLOAT3(-1.0f, -1.0f, 1.0f), 0.8f, DirectX::XMFLOAT3(1.0f, 1.0f, 1.0f));;
 	CurrentActiveScene()->AddLight(light);
 
+	//-----------------Car Object Structure---------------------
+	//  Parent Object     Car(Empty Object) ------> Add RigidBody Component
+	//                      /      \
+	//                     /        \
+	//                    /          \
+	//  Children       Wheels        Frame
+	//                  /              \
+	//     (Add WheelController)      (No Componnent)
+
+
+	Object * car = CurrentActiveScene()->AddObject("Car");
+	car->transform->SetLocalTranslation(0.0f, 0.0f, 1.8f);
+	RigidBody * rigidbody = car->AddComponent<RigidBody>();
+	rigidbody->SetPosition(0.0f, 0.0f, 4.75f);
+	rigidbody->SetMass(50.0f);
+
+	Object * frame = CurrentActiveScene()->LoadModelFile("Assets/Models/cgtrader/car.obj");
+	frame->transform->SetLocalTranslation(0.0f, 0.0f, 4.75f);
+	frame->transform->SetParent(car->transform);
+	
+	Object * wheel_1 = CurrentActiveScene()->LoadModelFile("Assets/Models/18-tire/tire_1.obj");
+	wheel_1->transform->SetLocalTranslation(-1.4f, 1.0f, 7.0f);
+	wheel_1->transform->SetLocalScale(0.05f, 0.05f, 0.05f);
+	WheelCollider* wheelCollider_1 = wheel_1->AddComponent<WheelCollider>();
+	wheelCollider_1->SetRadius(1.0f);
+	wheelCollider_1->SetMaxSteeringAngle(25.0f);
+	wheelCollider_1->SetWheelDistance(5.2f);
+	wheel_1->transform->SetParent(car->transform);
+
+	Object * wheel_2 = CurrentActiveScene()->LoadModelFile("Assets/Models/18-tire/tire_1.obj");
+	wheel_2->transform->SetLocalTranslation(1.4f, 1.0f, 7.0f);
+	wheel_2->transform->SetLocalScale(0.05f, 0.05f, 0.05f);
+	WheelCollider* wheelCollider_2 = wheel_2->AddComponent<WheelCollider>();
+	wheelCollider_2->SetRadius(1.0f);
+	wheelCollider_2->SetMaxSteeringAngle(25.0f);
+	wheelCollider_2->SetWheelDistance(5.2f);
+	wheel_2->transform->SetParent(car->transform);
+
+	Object * wheel_3 = CurrentActiveScene()->LoadModelFile("Assets/Models/18-tire/tire_1.obj");
+	wheel_3->transform->SetLocalTranslation(-1.4f, 1.0f, 1.8f);
+	wheel_3->transform->SetLocalScale(0.05f, 0.05f, 0.05f);
+	WheelCollider* wheelCollider_3 = wheel_3->AddComponent<WheelCollider>();
+	wheelCollider_3->SetRadius(1.0f);
+	wheelCollider_3->SetMaxSteeringAngle(0.0f);
+	wheelCollider_3->SetWheelDistance(5.2f);
+	wheel_3->transform->SetParent(car->transform);
+
+	Object * wheel_4 = CurrentActiveScene()->LoadModelFile("Assets/Models/18-tire/tire_1.obj");
+	wheel_4->transform->SetLocalTranslation(1.4f, 1.0f, 1.8f);
+	wheel_4->transform->SetLocalScale(0.05f, 0.05f, 0.05f);
+	WheelCollider* wheelCollider_4 = wheel_4->AddComponent<WheelCollider>();
+	wheelCollider_4->SetRadius(1.0f);
+	wheelCollider_4->SetMaxSteeringAngle(0.0f);
+	wheelCollider_4->SetWheelDistance(5.2f);
+	wheel_4->transform->SetParent(car->transform);
+	
+	// Set Camera parent
+	CurrentActiveScene()->mainCamera->transform->SetParent(car->transform);
+
+	
 	// Add parent object
 	Object * parentObj = CurrentActiveScene()->LoadModelFile("Assets/Models/Fennekin/a653.dae");
 	parentObj->name = "Fennekin";
@@ -151,9 +214,14 @@ void TestGameApp::Init()
 	//	if (i == 0) parentObj = obj;
 	//}
 
+
 	// Add Components
 	PressSpaceToPlayAudio * playAudioComponent = parentObj->AddComponent<PressSpaceToPlayAudio>();
 	MoveParentObject * moveParentComponent = parentObj->AddComponent<MoveParentObject>();
+	WheelController * wheelController_1 = wheel_1->AddComponent<WheelController>();
+	WheelController * wheelController_2 = wheel_2->AddComponent<WheelController>();
+	WheelController * wheelController_3 = wheel_3->AddComponent<WheelController>();
+	WheelController * wheelController_4 = wheel_4->AddComponent<WheelController>();
 
 	AudioSource * audioSource1 = parentObj->AddComponent<AudioSource>();
 	audioSource1->Is3D = true;
@@ -166,8 +234,38 @@ void TestGameApp::Init()
 	playAudioComponent->source1 = audioSource1;
 	playAudioComponent->source2 = audioSource2;
 
-	audioSource1->LoadAudioFile("Assets/heli.wav");
+	audioSource1->LoadAudioFile("Assets/Audio/idle.wav");
 	audioSource2->LoadAudioFile("Assets/test2.flac");
+	//Add different Engine sounds
+	AudioSource* idleAudio = car->AddComponent<AudioSource>();
+	idleAudio->Is3D = true;
+	idleAudio->Loop = true;
+	idleAudio->LoadAudioFile("Assets/Audio/idle.wav");
+	AudioSource* startupAudio = car->AddComponent<AudioSource>();
+	startupAudio->Is3D = true;
+	startupAudio->Loop = false;
+	startupAudio->LoadAudioFile("Assets/Audio/startup.wav");
+	AudioSource* highOnAudio = car->AddComponent<AudioSource>();
+	highOnAudio->Is3D = true;
+	highOnAudio->LoadAudioFile("Assets/Audio/high_on.wav");
+	AudioSource* midOnAudio = car->AddComponent<AudioSource>();
+	midOnAudio->Is3D = true;
+	midOnAudio->LoadAudioFile("Assets/Audio/med_on.wav");
+	AudioSource* lowOnAudio = car->AddComponent<AudioSource>();
+	lowOnAudio->Is3D = true;
+	lowOnAudio->LoadAudioFile("Assets/Audio/low_on.wav");
+	AudioSource* maxRPMAudio = car->AddComponent<AudioSource>();
+	maxRPMAudio->Is3D = true;
+	maxRPMAudio->LoadAudioFile("Assets/Audio/maxRPM.wav");
+	EngineAudioManager* audioManager = car->AddComponent<EngineAudioManager>();
+	audioManager->idle = idleAudio;
+	audioManager->startup = startupAudio;
+	audioManager->highOn = highOnAudio;
+	audioManager->midOn = midOnAudio;
+	audioManager->lowOn = lowOnAudio;
+	audioManager->maxRPM = maxRPMAudio;
+
+	//Audio Manager:component, and 
 
 	// Add a ground
 	Object * ground = CurrentActiveScene()->LoadModelFile("Assets/Models/Rock/quad.obj");
@@ -176,6 +274,7 @@ void TestGameApp::Init()
 	ground->transform->SetLocalTranslation(DirectX::XMVectorSet(0.0f, -0.01f, 5.0f, 0.0f));
 	const DirectX::XMVECTOR rq = DirectX::XMQuaternionRotationAxis(DirectX::XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f), DirectX::XM_PIDIV2);
 	ground->transform->SetLocalRotation(rq);
+	ground->transform->SetLocalScale(10.0f, 10.0f, 10.0f);
 
 	Object * groundModelObject = (*ground->transform->GetChildren().begin())->object;
 	MeshRenderer * groundMeshRenderer = groundModelObject->GetComponent<MeshRenderer>();

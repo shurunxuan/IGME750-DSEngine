@@ -534,6 +534,8 @@ inline void AudioSource::SetFrequencyRatio(float frequencyRatio)
 	this->frequencyRatio = frequencyRatio;
 	if (!Is3D)
 		sourceVoice->SetFrequencyRatio(this->frequencyRatio);
+	else
+		sourceVoice->SetFrequencyRatio(dspSettings.DopplerFactor * this->frequencyRatio);
 }
 
 inline void AudioSource::SetVolume(float volume)

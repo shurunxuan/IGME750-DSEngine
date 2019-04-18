@@ -190,6 +190,8 @@
     <ClInclude Include="AudioListener.hpp" />
     <ClInclude Include="AudioSource.hpp" />
     <ClInclude Include="Camera.hpp" />
+    <ClInclude Include="Ray.hpp" />
+    <ClInclude Include="SphereCollider.hpp" />
     <ClInclude Include="Component.hpp" />
     <ClInclude Include="Light.hpp" />
     <ClInclude Include="Material.hpp" />
@@ -202,6 +204,7 @@
     <ClInclude Include="SimpleShader.hpp" />
     <ClInclude Include="Skybox.hpp" />
     <ClInclude Include="Transform.hpp" />
+    <ClInclude Include="WheelCollider.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
