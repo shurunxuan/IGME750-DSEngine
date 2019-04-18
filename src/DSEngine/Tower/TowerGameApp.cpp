@@ -99,18 +99,6 @@ void TowerGameApp::Init()
 	darkCornerMaterial->parameters.intensity = 1.0f;
 	SRendering->RegisterPostProcessing(darkCornerMaterial); // 7 -> 0
 
-	//ppMultiplyPS = new SimplePixelShader(device, context);
-	//ppMultiplyPS->LoadShaderFile(L"PPMultiplyPS.cso");
-	//applySSAOMaterial = new PostProcessingMaterial(2, { 6, 7 }, 1, { 5 }, SRendering->GetDefaultPostProcessingVertexShader(), ppMultiplyPS, device);
-	//SRendering->RegisterPostProcessing(applySSAOMaterial); // 6 * 7 -> 5
-
-	//ppDarkCornerPS = new SimplePixelShader(device, context);
-	//ppDarkCornerPS->LoadShaderFile(L"PPDarkCornerPS.cso");
-	//darkCornerMaterial = new PPDarkCornerMaterial(1, { 5 }, 1, { 0 }, SRendering->GetDefaultPostProcessingVertexShader(), ppDarkCornerPS, device);
-	//darkCornerMaterial->parameters.intensity = 1.0f;
-	//SRendering->RegisterPostProcessing(darkCornerMaterial); // 5 -> 0
-	// 0 -> screen
-
 	CurrentActiveScene()->mainCamera->UpdateProjectionMatrix(float(width), float(height), DirectX::XM_PI / 3.0f);
 	//CurrentActiveScene()->mainCamera->transform->SetLocalTranslation(0.0f, 0.0f, 0.0f);
 	CurrentActiveScene()->mainCamera->transform->SetLocalTranslation(-0.005003646f, 3.973835f, -9.406748f);
