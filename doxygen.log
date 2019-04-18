@@ -159,7 +159,7 @@ Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/T/home/
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TaskCardGenerator.h:8: warning: Compound TaskCardGenerator is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/PPGaussianBlurMaterial.h:6: warning: Compound PPGaussianBlurMaterial is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineTestProject/PPGaussianBlurMaterial.h:6: warning: Compound PPGaussianBlurMaterial is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TowerGameApp.h:12: warning: Compound TowerGameApp is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TowerGameApp.h:15: warning: Compound TowerGameApp is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/InputManager.h:6: warning: Compound InputManager is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/FreeCam.h:6: warning: Compound FreeCam is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/BoardManager.h:11: warning: Compound BoardManager is not documented.
@@ -316,13 +316,6 @@ Generating docs for file /hom/home/travis/build/shurunxuan/IGME750-DSEngine/src/
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineTestProject/CameraController.h:12: warning: Member CameraController(Object *owner) (function) of class CameraController is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/ChangeBrickMaterial.h:10: warning: Member ChangeBrickMaterial(Object *owner) (function) of class ChangeBrickMaterial is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/CSVReader.h:28: warning: Member ReadFromFile(std::string _file) (function) of class CSVReader is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFDirect3D.h:162: warning: argument 'sourceIndex' of command @param is not found in the argument list of DSFDirect3D::PostProcessing(PostProcessingMaterial *postProcessingMaterial)
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFDirect3D.h:162: warning: argument 'targetIndex' of command @param is not found in the argument list of DSFDirect3D::PostProcessing(PostProcessingMaterial *postProcessingMaterial)
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFDirect3D.h:162: warning: argument 'postProcessingVS' of command @param is not found in the argument list of DSFDirect3D::PostProcessing(PostProcessingMaterial *postProcessingMaterial)
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFDirect3D.h:162: warning: argument 'postProcessingPS' of command @param is not found in the argument list of DSFDirect3D::PostProcessing(PostProcessingMaterial *postProcessingMaterial)
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFDirect3D.h:167: warning: unexpected end of comment block while parsing the argument of command param
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFDirect3D.h:162: warning: The following parameters of DSFDirect3D::PostProcessing(PostProcessingMaterial *postProcessingMaterial) are not documented:
-  parameter 'postProcessingMaterial'
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/FreeCam.h:8: warning: Member FreeCam(Object *owner) (function) of class FreeCam is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/GameManager.h:24: warning: Member Update(GameState) (function) of class GameManager is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/GameManager.h:25: warning: Member CheckTaskCompletion() (function) of class GameManager is not documented.
@@ -399,11 +392,11 @@ Generating docs for file /hom/home/travis/build/shurunxuan/IGME750-DSEngine/src/
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TaskDeck.h:10: warning: Member getInstance() (function) of class TaskDeck is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TaskDeck.h:11: warning: Member tasks (variable) of class TaskDeck is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TaskDeck.h:14: warning: Member scene (variable) of class TaskDeck is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TowerGameApp.h:23: warning: Member taskDeck (variable) of class TowerGameApp is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TowerGameApp.h:24: warning: Member brickDeck (variable) of class TowerGameApp is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TowerGameApp.h:25: warning: Member gameManager (variable) of class TowerGameApp is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TowerGameApp.h:26: warning: Member playerManager (variable) of class TowerGameApp is not documented.
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TowerGameApp.h:27: warning: Member boardManager (variable) of class TowerGameApp is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TowerGameApp.h:26: warning: Member taskDeck (variable) of class TowerGameApp is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TowerGameApp.h:27: warning: Member brickDeck (variable) of class TowerGameApp is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TowerGameApp.h:28: warning: Member gameManager (variable) of class TowerGameApp is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TowerGameApp.h:29: warning: Member playerManager (variable) of class TowerGameApp is not documented.
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TowerGameApp.h:30: warning: Member boardManager (variable) of class TowerGameApp is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/UnlitMaterial.h:8: warning: Member UnlitMaterial(ID3D11Device *d) (function) of class UnlitMaterial is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/UnlitMaterial.h:9: warning: Member UnlitMaterial(SimpleVertexShader *vtxShader, SimplePixelShader *pxlShader, ID3D11Device *d) (function) of class UnlitMaterial is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/UnlitMaterial.h:15: warning: Member parameters (variable) of class UnlitMaterial is not documented.
@@ -756,5 +749,5 @@ Patching output file 77/80
 Patching output file 78/80
 Patching output file 79/80
 Patching output file 80/80
-lookup cache used 685/65536 hits=3543 misses=786
+lookup cache used 687/65536 hits=3567 misses=790
 finished...
