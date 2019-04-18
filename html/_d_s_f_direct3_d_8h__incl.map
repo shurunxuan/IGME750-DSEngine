@@ -1,15 +1,14 @@
 <map id="/home/travis/build/shurunxuan/IGME750&#45;DSEngine/src/DSEngine/DSEngineFramework/DSFDirect3D.h" name="/home/travis/build/shurunxuan/IGME750&#45;DSEngine/src/DSEngine/DSEngineFramework/DSFDirect3D.h">
-<area shape="rect" id="node4" href="$_mesh_renderer_8hpp.html" title="This file contains the class that represents the MeshRenderer component. " alt="" coords="2999,200,3131,227"/>
-<area shape="rect" id="node33" href="$_light_8hpp.html" title="This file contains the class that represents the light. " alt="" coords="3111,125,3184,152"/>
-<area shape="rect" id="node34" href="$_camera_8hpp.html" title="This file contains the class that represents the camera object. " alt="" coords="2507,200,2600,227"/>
-<area shape="rect" id="node49" href="$_post_processing_material_8hpp.html" title="This file contains the class that represents the material for post processing. " alt="" coords="2247,125,2432,152"/>
-<area shape="rect" id="node6" href="$_component_8hpp.html" title="This file contains the class that represents the component of the object. " alt="" coords="2908,499,3023,525"/>
-<area shape="rect" id="node9" href="$_material_8hpp.html" title="This file contains the class that represents the material of a MeshRenderer. " alt="" coords="2036,275,2129,301"/>
-<area shape="rect" id="node29" href="$_mesh_8hpp.html" title="This file contains the class that represents the mesh of a MeshRenderer. " alt="" coords="3154,349,3232,376"/>
-<area shape="rect" id="node11" href="$_d_s_f_logging_8h.html" title="Defines the logging system with boost::log. " alt="" coords="1650,499,1755,525"/>
-<area shape="rect" id="node36" href="$_object_8hpp.html" title="This file contains the class that represents the game object. " alt="" coords="2513,349,2599,376"/>
-<area shape="rect" id="node41" href="$_skybox_8hpp.html" title="This file contains the class that represents the skybox. " alt="" coords="2675,275,2765,301"/>
-<area shape="rect" id="node44" href="$_audio_listener_8hpp.html" title="This file contains the class that represents the audio x3dListener. " alt="" coords="2210,275,2336,301"/>
-<area shape="rect" id="node40" href="$_transform_8hpp.html" title="This file contains the class that represents the transform component of an object. " alt="" coords="2457,424,2564,451"/>
-<area shape="rect" id="node46" href="$_d_s_f_x_audio2_8h.html" title="This file declares the framework class for XAudio2. " alt="" coords="1831,349,1940,376"/>
+<area shape="rect" id="node4" href="$_mesh_renderer_8hpp.html" title="This file contains the class that represents the MeshRenderer component. " alt="" coords="1095,275,1227,301"/>
+<area shape="rect" id="node33" href="$_light_8hpp.html" title="This file contains the class that represents the light. " alt="" coords="1713,125,1787,152"/>
+<area shape="rect" id="node34" href="$_camera_8hpp.html" title="This file contains the class that represents the camera object. " alt="" coords="1751,200,1844,227"/>
+<area shape="rect" id="node50" href="$_post_processing_material_8hpp.html" title="This file contains the class that represents the material for post processing. " alt="" coords="1186,200,1371,227"/>
+<area shape="rect" id="node6" href="$_component_8hpp.html" title="This file contains the class that represents the component of the object. " alt="" coords="2789,499,2904,525"/>
+<area shape="rect" id="node9" href="$_material_8hpp.html" title="This file contains the class that represents the material of a MeshRenderer. " alt="" coords="1561,349,1655,376"/>
+<area shape="rect" id="node29" href="$_mesh_8hpp.html" title="This file contains the class that represents the mesh of a MeshRenderer. " alt="" coords="1126,424,1204,451"/>
+<area shape="rect" id="node11" href="$_d_s_f_logging_8h.html" title="Defines the logging system with boost::log. " alt="" coords="1770,499,1875,525"/>
+<area shape="rect" id="node36" href="$_object_8hpp.html" title="This file contains the class that represents the game object. " alt="" coords="2375,349,2460,376"/>
+<area shape="rect" id="node45" href="$_skybox_8hpp.html" title="This file contains the class that represents the skybox. " alt="" coords="1432,349,1523,376"/>
+<area shape="rect" id="node48" href="$_audio_listener_8hpp.html" title="This file contains the class that represents the audio x3dListener. " alt="" coords="1945,275,2071,301"/>
+<area shape="rect" id="node40" href="$_transform_8hpp.html" title="This file contains the class that represents the transform component of an object. " alt="" coords="2041,424,2148,451"/>
 </map>
