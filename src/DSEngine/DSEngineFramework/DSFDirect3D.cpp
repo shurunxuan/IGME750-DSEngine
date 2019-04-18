@@ -658,7 +658,6 @@ HRESULT DSFDirect3D::CreateRenderTargetView()
 		backBufferTexture,
 		&rtvDesc,
 		&backBufferRTV);
-	backBufferTexture->Release();
 
 	SetDebugName(backBufferRTV, "DSFDirect3D::backBufferRTV");
 
@@ -667,6 +666,8 @@ HRESULT DSFDirect3D::CreateRenderTargetView()
 	ID3D11Texture2D* renderTexture[D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT] = { nullptr };
 	ZeroMemory(&renderTexDesc, sizeof(D3D11_TEXTURE2D_DESC));
 	backBufferTexture->GetDesc(&renderTexDesc);
+	backBufferTexture->Release();
+	renderTexDesc.Format = DXGI_FORMAT_R16G16B16A16_FLOAT;
 	renderTexDesc.BindFlags |= D3D11_BIND_SHADER_RESOURCE;
 	for (int i = 0; i < D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT; ++i)
 		device->CreateTexture2D(&renderTexDesc, nullptr, renderTexture + i);
@@ -688,7 +689,7 @@ HRESULT DSFDirect3D::CreateRenderTargetView()
 	D3D11_SHADER_RESOURCE_VIEW_DESC renderSRVDesc;
 	ZeroMemory(&renderSRVDesc, sizeof(D3D11_SHADER_RESOURCE_VIEW_DESC));
 	renderSRVDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
-	renderSRVDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+	renderSRVDesc.Format = DXGI_FORMAT_R16G16B16A16_FLOAT;
 	renderSRVDesc.Texture2D.MipLevels = 1;
 
 	for (int i = 0; i < D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT; ++i)

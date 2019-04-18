@@ -22,7 +22,7 @@
 #define LIGHT_TYPE_POINT 1
 #define LIGHT_TYPE_SPOT 2
 
-#define PCF_BLUR_COUNT 0
+#define PCF_BLUR_COUNT 2
 
 /**
  * @brief The data of a light, will be sent to the shader
@@ -286,7 +286,7 @@ private:
 	 * @brief The max value of the shadow map partitions
 	 * 
 	 */
-	int cascadePartitionsMax = 100;
+	int cascadePartitionsMax = 500;
 	/**
 	 * @brief The values between near and far plane of a cascade
 	 * 

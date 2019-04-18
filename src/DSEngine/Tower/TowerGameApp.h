@@ -5,6 +5,9 @@
 #include "BrickDeck.h"
 #include "GameManager.h"
 #include "PlayerManager.h"
+#include "PPGaussianBlurMaterial.h"
+#include "PPDarkCornerMaterial.h"
+#include "SSAOMaterial.h"
 
 
 class TowerGameApp :
@@ -30,6 +33,23 @@ private:
 	SimplePixelShader* unlitShader;
 
 	void CreateScene();
+
+	// Post-Processing
+	SimplePixelShader* ppDarkCornerPS = nullptr;
+	SimplePixelShader* ppGaussianBlurUPS = nullptr;
+	SimplePixelShader* ppGaussianBlurVPS = nullptr;
+	SimplePixelShader* ppAddPS = nullptr;
+	SimplePixelShader* ppMultiplyPS = nullptr;
+	SimplePixelShader* ppSSAOPS = nullptr;
+	SimpleVertexShader* ppSSAOVS = nullptr;
+	PPDarkCornerMaterial* darkCornerMaterial = nullptr;
+	PPGaussianBlurMaterial* blurUMaterial = nullptr;
+	PPGaussianBlurMaterial* blurVMaterial = nullptr;
+	PPGaussianBlurMaterial* blurSSAOUMaterial = nullptr;
+	PPGaussianBlurMaterial* blurSSAOVMaterial = nullptr;
+	PostProcessingMaterial* applyBloomMaterial = nullptr;
+	PostProcessingMaterial* applySSAOMaterial = nullptr;
+	SSAOMaterial* ssaoMaterial = nullptr;
 	
 };
 

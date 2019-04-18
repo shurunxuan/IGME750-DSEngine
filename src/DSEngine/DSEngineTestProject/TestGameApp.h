@@ -14,7 +14,7 @@
 #include "DSEngineApp.h"
 #include "PPDarkCornerMaterial.h"
 #include "PPGaussianBlurMaterial.h"
-
+#include "SSAOMaterial.h"
 /**
  * @class TestGameApp
  * 
@@ -43,6 +43,7 @@ private:
 	SimplePixelShader* ppAddPS = nullptr;
 	SimplePixelShader* ppMultiplyPS = nullptr;
 	SimplePixelShader* ppSSAOPS = nullptr;
+	SimpleVertexShader* ppSSAOVS = nullptr;
 	PPDarkCornerMaterial* darkCornerMaterial = nullptr;
 	PPGaussianBlurMaterial* blurUMaterial = nullptr;
 	PPGaussianBlurMaterial* blurVMaterial = nullptr;
@@ -50,6 +51,6 @@ private:
 	PPGaussianBlurMaterial* blurSSAOVMaterial = nullptr;
 	PostProcessingMaterial* applyBloomMaterial = nullptr;
 	PostProcessingMaterial* applySSAOMaterial = nullptr;
-	PostProcessingMaterial* ssaoMaterial = nullptr;
+	SSAOMaterial* ssaoMaterial = nullptr;
 };
 

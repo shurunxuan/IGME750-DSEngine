@@ -14,6 +14,7 @@
 #include "PressSpaceToPlayAudio.h"
 #include "MoveParentObject.h"
 #include "CameraController.h"
+#include "SSAOMaterial.h"
 
 TestGameApp::~TestGameApp()
 {
@@ -23,6 +24,7 @@ TestGameApp::~TestGameApp()
 	delete ppAddPS;
 	delete ppMultiplyPS;
 	delete ppSSAOPS;
+	delete ppSSAOVS;
 	delete darkCornerMaterial;
 	delete blurUMaterial;
 	delete blurVMaterial;
@@ -82,7 +84,10 @@ void TestGameApp::Init()
 
 	ppSSAOPS = new SimplePixelShader(device, context);
 	ppSSAOPS->LoadShaderFile(L"PPSSAOPS.cso");
-	ssaoMaterial = new PostProcessingMaterial(2, { -1, 3 }, 1, { 7 }, SRendering->GetDefaultPostProcessingVertexShader(), ppSSAOPS, device);
+	ppSSAOVS = new SimpleVertexShader(device, context);
+	ppSSAOVS->LoadShaderFile(L"PPSSAOVS.cso");
+	ssaoMaterial = new SSAOMaterial(2, { 3, -1 }, 1, { 7 }, ppSSAOVS, ppSSAOPS, device);
+	ssaoMaterial->SetCamera(CurrentActiveScene()->mainCamera);
 	SRendering->RegisterPostProcessing(ssaoMaterial); // -1 & 3 -> 7
 
 	blurSSAOUMaterial = new PPGaussianBlurMaterial(1, { 7 }, 1, { 4 }, SRendering->GetDefaultPostProcessingVertexShader(), ppGaussianBlurUPS, device);

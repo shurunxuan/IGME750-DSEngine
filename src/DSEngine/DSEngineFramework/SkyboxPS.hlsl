@@ -24,7 +24,7 @@ PixelOutput main(VertexToPixel input)
 	PixelOutput output;
 	float4 sampleColor = cubemapTexture.Sample(basicSampler, input.direction);
 	output.Target0 = sampleColor;
-	output.Target1 = saturate(sampleColor - float4(1.0f, 1.0f, 1.0f, 0.0f) * 0.5f);
+	output.Target1 = saturate(sampleColor - float4(1.0f, 1.0f, 1.0f, 0.0f));
 	output.Target2 = float4(0, 0, 0, 1);
 	output.Target3 = float4(0, 0, 0, 1);
 	output.Target4 = float4(0, 0, 0, 1);
