@@ -15,6 +15,7 @@
 #include "MoveParentObject.h"
 #include "CameraController.h"
 #include "WheelController.h"
+#include "EngineAudioManager.h"
 
 TestGameApp::~TestGameApp()
 {
@@ -151,7 +152,7 @@ void TestGameApp::Init()
 	// Set Camera parent
 	CurrentActiveScene()->mainCamera->transform->SetParent(car->transform);
 
-
+	
 	// Add parent object
 	//Object * parentObj = CurrentActiveScene()->LoadModelFile("Assets/Models/Fennekin/a653.dae");
 	//parentObj->name = "Fennekin";
@@ -204,8 +205,38 @@ void TestGameApp::Init()
 	playAudioComponent->source1 = audioSource1;
 	playAudioComponent->source2 = audioSource2;
 
-	audioSource1->LoadAudioFile("Assets/heli.wav");
+	audioSource1->LoadAudioFile("Assets/Audio/idle.wav");
 	audioSource2->LoadAudioFile("Assets/test2.flac");
+	//Add different Engine sounds
+	AudioSource* idleAudio = car->AddComponent<AudioSource>();
+	idleAudio->Is3D = true;
+	idleAudio->Loop = true;
+	idleAudio->LoadAudioFile("Assets/Audio/idle.wav");
+	AudioSource* startupAudio = car->AddComponent<AudioSource>();
+	startupAudio->Is3D = true;
+	startupAudio->Loop = false;
+	startupAudio->LoadAudioFile("Assets/Audio/startup.wav");
+	AudioSource* highOnAudio = car->AddComponent<AudioSource>();
+	highOnAudio->Is3D = true;
+	highOnAudio->LoadAudioFile("Assets/Audio/high_on.wav");
+	AudioSource* midOnAudio = car->AddComponent<AudioSource>();
+	midOnAudio->Is3D = true;
+	midOnAudio->LoadAudioFile("Assets/Audio/med_on.wav");
+	AudioSource* lowOnAudio = car->AddComponent<AudioSource>();
+	lowOnAudio->Is3D = true;
+	lowOnAudio->LoadAudioFile("Assets/Audio/low_on.wav");
+	AudioSource* maxRPMAudio = car->AddComponent<AudioSource>();
+	maxRPMAudio->Is3D = true;
+	maxRPMAudio->LoadAudioFile("Assets/Audio/maxRPM.wav");
+	EngineAudioManager* audioManager = car->AddComponent<EngineAudioManager>();
+	audioManager->idle = idleAudio;
+	audioManager->startup = startupAudio;
+	audioManager->highOn = highOnAudio;
+	audioManager->midOn = midOnAudio;
+	audioManager->lowOn = lowOnAudio;
+	audioManager->maxRPM = maxRPMAudio;
+
+	//Audio Manager:component, and 
 
 	// Add a ground
 	Object * ground = CurrentActiveScene()->LoadModelFile("Assets/Models/Rock/quad.obj");
