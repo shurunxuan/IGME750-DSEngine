@@ -389,7 +389,7 @@ void DSSInputAxis::BindCallbackFunctions()
 
 		getRawAxis = [this, joystickAxisCode]() {
 			return inputSystem->xInput.GetRawAxis(joystickAxisCode, joyNum) * (invert ? -1 : 1);
-		}; \
+		};
 	}
 	else if (type == Movement)
 	{

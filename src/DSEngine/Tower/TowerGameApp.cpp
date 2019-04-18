@@ -13,6 +13,8 @@
 #include <boost/uuid/uuid_io.hpp>
 #include <boost/range/adaptor/reversed.hpp>
 #include "TaskCardGenerator.h"
+#include "PPGaussianBlurMaterial.h"
+#include "PPDarkCornerMaterial.h"
 
 DirectX::XMVECTOR baseRotation = DirectX::XMVectorSet(0.000000f, 0.233445f, 0.000000f, 0.972370f);
 
@@ -20,6 +22,22 @@ DirectX::XMVECTOR baseRotation = DirectX::XMVectorSet(0.000000f, 0.233445f, 0.00
 TowerGameApp::~TowerGameApp()
 {
 	delete unlitShader;
+
+	delete ppDarkCornerPS;
+	delete ppGaussianBlurUPS;
+	delete ppGaussianBlurVPS;
+	delete ppAddPS;
+	delete ppMultiplyPS;
+	delete ppSSAOPS;
+	delete ppSSAOVS;
+	delete darkCornerMaterial;
+	delete blurUMaterial;
+	delete blurVMaterial;
+	delete blurSSAOUMaterial;
+	delete blurSSAOVMaterial;
+	delete applyBloomMaterial;
+	delete applySSAOMaterial;
+	delete ssaoMaterial;
 }
 
 void TowerGameApp::Init()
@@ -37,6 +55,49 @@ void TowerGameApp::Init()
 	SInput->RegisterInput("3", "3", "", "", "", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
 	SInput->RegisterInput("ESC", "escape", "", "", "", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
 	SInput->RegisterInput("DrawCard", "space", "", "", "", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
+
+	// Register post processing effects
+	ppGaussianBlurUPS = new SimplePixelShader(device, context);
+	ppGaussianBlurVPS = new SimplePixelShader(device, context);
+	ppGaussianBlurUPS->LoadShaderFile(L"PPGaussianBlurUPS.cso");
+	ppGaussianBlurVPS->LoadShaderFile(L"PPGaussianBlurVPS.cso");
+	blurUMaterial = new PPGaussianBlurMaterial(1, { 1 }, 1, { 4 }, SRendering->GetDefaultPostProcessingVertexShader(), ppGaussianBlurUPS, device);
+	blurVMaterial = new PPGaussianBlurMaterial(1, { 4 }, 1, { 5 }, SRendering->GetDefaultPostProcessingVertexShader(), ppGaussianBlurVPS, device);
+	blurUMaterial->SetScreenSizePtr(&width, &height);
+	blurVMaterial->SetScreenSizePtr(&width, &height);
+	SRendering->RegisterPostProcessing(blurUMaterial); // 1 -> 4
+	SRendering->RegisterPostProcessing(blurVMaterial); // 4 -> 5	
+
+	ppAddPS = new SimplePixelShader(device, context);
+	ppAddPS->LoadShaderFile(L"PPAddPS.cso");
+	applyBloomMaterial = new PostProcessingMaterial(2, { 0, 5 }, 1, { 6 }, SRendering->GetDefaultPostProcessingVertexShader(), ppAddPS, device);
+	SRendering->RegisterPostProcessing(applyBloomMaterial); // 0 + 5 -> 6
+
+	ppSSAOPS = new SimplePixelShader(device, context);
+	ppSSAOPS->LoadShaderFile(L"PPSSAOPS.cso");
+	ppSSAOVS = new SimpleVertexShader(device, context);
+	ppSSAOVS->LoadShaderFile(L"PPSSAOVS.cso");
+	ssaoMaterial = new SSAOMaterial(2, { 3, -1 }, 1, { 7 }, ppSSAOVS, ppSSAOPS, device);
+	ssaoMaterial->SetCamera(CurrentActiveScene()->mainCamera);
+	SRendering->RegisterPostProcessing(ssaoMaterial); // -1 & 3 -> 7
+
+	blurSSAOUMaterial = new PPGaussianBlurMaterial(1, { 7 }, 1, { 4 }, SRendering->GetDefaultPostProcessingVertexShader(), ppGaussianBlurUPS, device);
+	blurSSAOVMaterial = new PPGaussianBlurMaterial(1, { 4 }, 1, { 5 }, SRendering->GetDefaultPostProcessingVertexShader(), ppGaussianBlurVPS, device);
+	blurSSAOUMaterial->SetScreenSizePtr(&width, &height);
+	blurSSAOVMaterial->SetScreenSizePtr(&width, &height);
+	SRendering->RegisterPostProcessing(blurSSAOUMaterial); // 7 -> 4
+	SRendering->RegisterPostProcessing(blurSSAOVMaterial); // 4 -> 5
+
+	ppMultiplyPS = new SimplePixelShader(device, context);
+	ppMultiplyPS->LoadShaderFile(L"PPMultiplyPS.cso");
+	applySSAOMaterial = new PostProcessingMaterial(2, { 6, 5 }, 1, { 7 }, SRendering->GetDefaultPostProcessingVertexShader(), ppMultiplyPS, device);
+	SRendering->RegisterPostProcessing(applySSAOMaterial); // 6 * 5 -> 7
+
+	ppDarkCornerPS = new SimplePixelShader(device, context);
+	ppDarkCornerPS->LoadShaderFile(L"PPDarkCornerPS.cso");
+	darkCornerMaterial = new PPDarkCornerMaterial(1, { 7 }, 1, { 0 }, SRendering->GetDefaultPostProcessingVertexShader(), ppDarkCornerPS, device);
+	darkCornerMaterial->parameters.intensity = 1.0f;
+	SRendering->RegisterPostProcessing(darkCornerMaterial); // 7 -> 0
 
 	CurrentActiveScene()->mainCamera->UpdateProjectionMatrix(float(width), float(height), DirectX::XM_PI / 3.0f);
 	//CurrentActiveScene()->mainCamera->transform->SetLocalTranslation(0.0f, 0.0f, 0.0f);

@@ -49,10 +49,12 @@ struct VertexToPixel
 	//  v    v                v
 	float4 position				: SV_POSITION;	// XYZW position (System Value Position)
 	float4 worldPos				: POSITION0;
-	float3 normal				: NORMAL;
+	float4 viewPos				: POSITION1;
+	float3 normal				: NORMAL0;
+	float3 viewNormal			: NORMAL1;
 	float2 uv					: TEXCOORD;
 	float3 tangent				: TANGENT0;
-	float4 lViewSpacePos		: POSITION1;
+	float4 lViewSpacePos		: POSITION2;
 };
 
 // --------------------------------------------------------
@@ -74,7 +76,6 @@ VertexToPixel main(VertexShaderInput input)
 	//
 	// First we multiply them together to get a single matrix which represents
 	// all of those transformations (world to view to projection space)
-	matrix worldViewProj = mul(mul(world, view), projection);
 	matrix lWorldView = mul(world, lView);
 
 	// Then we convert our 3-component position vector to a 4-component vector
@@ -82,15 +83,16 @@ VertexToPixel main(VertexShaderInput input)
 	//
 	// The result is essentially the position (XY) of the vertex on our 2D 
 	// screen and the distance (Z) from the camera (the "depth" of the pixel)
-	output.position = mul(float4(input.position, 1.0f), worldViewProj);
 	output.worldPos = mul(float4(input.position, 1.0f), world);
+	output.viewPos = mul(output.worldPos, view);
+	output.position = mul(output.viewPos, projection);
 
 	output.lViewSpacePos = mul(float4(input.position, 1.0f), lWorldView);
 
 	// Update the normal
 	output.normal = mul(input.normal, (float3x3)itworld);
 	output.tangent = mul(input.tangent, (float3x3)itworld);
-
+	output.viewNormal = mul(output.normal, (float3x3)view);
 	output.uv = input.uv;
 
 	// Whatever we return will make its way through the pipeline to the

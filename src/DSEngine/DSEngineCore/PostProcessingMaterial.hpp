@@ -27,7 +27,7 @@ public:
 	 * @brief Construct a new PostProcessingMaterial
 	 *
 	 * @param sourceCount The number of source render targets
-	 * @param sourceIndices The source render target indices
+	 * @param sourceIndices The source render target indices, negative value means depth buffer
 	 * @param targetCount The number of target render targets
 	 * @param targetIndices The target render target indices, negative value means back buffer (screen)
 	 * @param d Direct3D 11 device
@@ -37,7 +37,7 @@ public:
 	 * @brief Construct a new PostProcessingMaterial with shaders
 	 *
 	 * @param sourceCount The number of source render targets
-	 * @param sourceIndices The source render target indices
+	 * @param sourceIndices The source render target indices, negative value means depth buffer
 	 * @param targetCount The number of target render targets
 	 * @param targetIndices The target render target indices, negative value means back buffer (screen)
 	 * @param vtxShader The vertex shader

@@ -7,8 +7,9 @@ LRESULT CALLBACK WindowProc(HWND hWnd,
 	WPARAM wParam,
 	LPARAM lParam);
 
-const unsigned int initialWidth = 1366;
-const unsigned int initialHeight = 768;
+unsigned int width = 1366;
+unsigned int height = 768;
+bool sizing = false;
 
 INT WINAPI DSEngine(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
 {
@@ -37,7 +38,7 @@ INT WINAPI DSEngine(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLi
 	RegisterClassEx(&wc);
 
 	RECT wr;
-	SetRect(&wr, 0, 0, initialWidth, initialHeight);
+	SetRect(&wr, 0, 0, width, height);
 	AdjustWindowRect(&wr, WS_OVERLAPPEDWINDOW, FALSE);    // adjust the size
 
 	// Center the window to the screen
@@ -64,7 +65,7 @@ INT WINAPI DSEngine(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLi
 	ShowWindow(hWnd, nCmdShow);
 
 	// TODO: Initialize DSEngineApp Here.
-	App->Initialize(hInstance, lpCmdLine, hWnd, initialWidth, initialHeight);
+	App->Initialize(hInstance, lpCmdLine, hWnd, width, height);
 
 
 	// enter the main loop:
@@ -107,6 +108,11 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 	// sort through and find what code to run for the message given
 	switch (message)
 	{
+	case WM_ENTERSIZEMOVE:
+	{
+		sizing = true;
+		return 0;
+	}
 	case WM_SIZE:
 	{
 		// Don't adjust anything when minimizing,
@@ -116,13 +122,21 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 			return 0;
 
 		// Save the new client area dimensions.
-		const unsigned width = LOWORD(lParam);
-		const unsigned height = HIWORD(lParam);
+		width = LOWORD(lParam);
+		height = HIWORD(lParam);
 
+		// Maximizing/Restoring the window won't get the WM_ENTERSIZEMOVE/WM_EXITSIZEMOVE message.
+		if ((wParam == SIZE_MAXIMIZED || wParam == SIZE_RESTORED) && !sizing)
+			SRendering->OnResize(width, height);
+
+		return 0;
+	}
+	case WM_EXITSIZEMOVE:
+	{
 		// If DX is initialized, resize 
 		// our required buffers
 		SRendering->OnResize(width, height);
-
+		sizing = false;
 		return 0;
 	}
 	// Raw Input Message

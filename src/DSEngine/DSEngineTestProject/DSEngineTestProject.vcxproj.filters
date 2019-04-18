@@ -39,6 +39,9 @@
     <ClCompile Include="PPGaussianBlurMaterial.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SSAOMaterial.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PressSpaceToPlayAudio.h">
@@ -59,6 +62,9 @@
     <ClInclude Include="PPGaussianBlurMaterial.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SSAOMaterial.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PPDarkCornerPS.hlsl">
@@ -71,6 +77,15 @@
       <Filter>Shaders</Filter>
     </FxCompile>
     <FxCompile Include="PPAddPS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="PPSSAOPS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="PPMultiplyPS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="PPSSAOVS.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
   </ItemGroup>
