@@ -13,7 +13,7 @@ EngineAudioManager::~EngineAudioManager()
 void EngineAudioManager::Start()
 {
 	isStart = false;
-	maxRPMValue = 6.0f;
+	maxRPMValue = 8.0f;
 	optVolume = 0.01f;
 	
 }
@@ -23,7 +23,8 @@ void EngineAudioManager::Update(float deltaTime, float totalTime)
 	RPM = sqrt((object->GetComponent<RigidBody>()->GetVelocity().x)*(object->GetComponent<RigidBody>()->GetVelocity().x) +
 		(object->GetComponent<RigidBody>()->GetVelocity().y)*(object->GetComponent<RigidBody>()->GetVelocity().y) +
 		(object->GetComponent<RigidBody>()->GetVelocity().z)*(object->GetComponent<RigidBody>()->GetVelocity().z));
-	LOG_DEBUG << IdleVolumeCurve(clipValue);
+	LOG_DEBUG << RPM;
+	//LOG_DEBUG << IdleVolumeCurve(clipValue);
 
 	clipValue = RPM / maxRPMValue;
 	if (!isStart) {

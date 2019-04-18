@@ -58,6 +58,7 @@ void TestGameApp::Init()
 	SInput->RegisterInput("Audio1PitchDown", "2", "", "", "", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
 	SInput->RegisterInput("Audio1VolumeUp", "3", "", "", "", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
 	SInput->RegisterInput("Audio1VolumeDown", "4", "", "", "", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
+	SInput->RegisterInput("Brake", "space", "", "", "", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
 
 	// Register post processing effects
 	ppGaussianBlurUPS = new SimplePixelShader(device, context);
@@ -108,6 +109,7 @@ void TestGameApp::Init()
 	car->transform->SetLocalTranslation(0.0f, 0.0f, 1.8f);
 	RigidBody * rigidbody = car->AddComponent<RigidBody>();
 	rigidbody->SetPosition(0.0f, 0.0f, 4.75f);
+	rigidbody->SetMass(50.0f);
 
 	Object * frame = CurrentActiveScene()->LoadModelFile("Assets/Models/cgtrader/car.obj");
 	frame->transform->SetLocalTranslation(0.0f, 0.0f, 4.75f);
@@ -245,7 +247,7 @@ void TestGameApp::Init()
 	ground->transform->SetLocalTranslation(DirectX::XMVectorSet(0.0f, -0.01f, 5.0f, 0.0f));
 	const DirectX::XMVECTOR rq = DirectX::XMQuaternionRotationAxis(DirectX::XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f), DirectX::XM_PIDIV2);
 	ground->transform->SetLocalRotation(rq);
-	ground->transform->SetLocalScale(5.0f, 5.0f, 5.0f);
+	ground->transform->SetLocalScale(10.0f, 10.0f, 10.0f);
 
 	Object * groundModelObject = (*ground->transform->GetChildren().begin())->object;
 	MeshRenderer * groundMeshRenderer = groundModelObject->GetComponent<MeshRenderer>();

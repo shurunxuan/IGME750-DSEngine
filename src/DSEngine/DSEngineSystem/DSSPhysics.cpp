@@ -142,12 +142,19 @@ void DSSPhysics::CarSimulate(float deltaTime, float totalTime)
 			float velMagnitude = sqrt((vel.x * vel.x) + (vel.y * vel.y) + (vel.z * vel.z));
 			float direction = 1.0f;
 
+			//-----------------Direction------------------
+			velocity = DirectX::XMLoadFloat3(&vel);
+			if (DirectX::XMVector3NearEqual(DirectX::XMVector3Normalize(wheelColliders[i]->object->transform->GetParent()->Forward()), DirectX::XMVector3Normalize(velocity), DirectX::XMVectorSet(1.0f, 1.0f, 1.0f, 1.0f))) {
+				direction = 1.0f;
+			}
+			else direction = -1.0f;
+
 			//--------------Tranlation----------------
-			totalTorque = (motorTorque + brakeTorque) * (DirectX::XMVector3Normalize(wheelColliders[i]->object->transform->GetParent()->Forward()));
+			totalTorque = (motorTorque + (-direction * brakeTorque)) * (DirectX::XMVector3Normalize(wheelColliders[i]->object->transform->GetParent()->Forward()));
 			dragTorque = (-Cdrag) * velMagnitude * DirectX::XMLoadFloat3(&rigidbody->GetVelocity());
 			rrTorque = (-Crr) * DirectX::XMLoadFloat3(&rigidbody->GetVelocity());
 			totalTorque = totalTorque + dragTorque + rrTorque;
-			accleration = totalTorque / wheelColliders[i]->GetMass();
+			accleration = totalTorque / rigidbody->GetMass();
 			velocity = DirectX::XMLoadFloat3(&vel);
 			velocity += (accleration * deltaTime);
 			DirectX::XMStoreFloat3(&vel, velocity);
@@ -157,7 +164,6 @@ void DSSPhysics::CarSimulate(float deltaTime, float totalTime)
 				direction = 1.0f;
 			}
 			else direction = -1.0f;
-
 
 			//------------WheelSteeringAngle------------------
 			wheelColliders[i]->SetPreviousAngle(wheelColliders[i]->GetCurrentAngle());
