@@ -16,5 +16,6 @@ public:
 
 private:
 	RigidBody* carRigidBody;
+	bool reversing;
 };
 
