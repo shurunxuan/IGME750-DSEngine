@@ -5,26 +5,55 @@
     <FxCompile Include="PPDarkCornerPS.hlsl" />
     <FxCompile Include="PPGaussianBlurUPS.hlsl" />
     <FxCompile Include="PPGaussianBlurVPS.hlsl" />
-    <FxCompile Include="PPMultiplyPS.hlsl" />
-    <FxCompile Include="PPSSAOPS.hlsl" />
-    <FxCompile Include="PPSSAOVS.hlsl" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CameraController.cpp" />
-    <ClCompile Include="EngineAudioManager.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="PPDarkCornerMaterial.cpp" />
-    <ClCompile Include="PPGaussianBlurMaterial.cpp" />
-    <ClCompile Include="SSAOMaterial.cpp" />
-    <ClCompile Include="TestGameApp.cpp" />
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PressSpaceToPlayAudio.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveParentObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestGameApp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PPDarkCornerMaterial.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PPGaussianBlurMaterial.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SSAOMaterial.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CameraController.h" />
-    <ClInclude Include="EngineAudioManager.h" />
-    <ClInclude Include="PPDarkCornerMaterial.h" />
-    <ClInclude Include="PPGaussianBlurMaterial.h" />
-    <ClInclude Include="SSAOMaterial.h" />
-    <ClInclude Include="TestGameApp.h" />
+    <ClInclude Include="PressSpaceToPlayAudio.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveParentObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TestGameApp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PPDarkCornerMaterial.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PPGaussianBlurMaterial.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SSAOMaterial.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PPDarkCornerPS.hlsl">
@@ -37,6 +66,15 @@
       <Filter>Shaders</Filter>
     </FxCompile>
     <FxCompile Include="PPAddPS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="PPSSAOPS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="PPMultiplyPS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="PPSSAOVS.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
   </ItemGroup>

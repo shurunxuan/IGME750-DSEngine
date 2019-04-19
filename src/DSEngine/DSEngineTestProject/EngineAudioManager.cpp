@@ -81,7 +81,7 @@ void EngineAudioManager::Update(float deltaTime, float totalTime)
 float EngineAudioManager::IdleVolumeCurve(float clipValue)
 {
 
-	return 1.0f;
+	return -4.875f*clipValue*clipValue + 0.9625f*clipValue + 0.5640f;
 }
 
 float EngineAudioManager::IdlePitchCurve(float clipValue)

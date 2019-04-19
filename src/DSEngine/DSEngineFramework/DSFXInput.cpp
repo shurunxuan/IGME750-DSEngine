@@ -246,23 +246,6 @@ float DSFXInput::GetRawAxis(DSJoystickAxisCode axisCode, int player) const
 	return -1;
 }
 
-void DSFXInput::SetControllerRumble(int controllerNum, float leftMotorSpeed, float rightMotorSpeed)
-{
-	XINPUT_VIBRATION vibration;
-	ZeroMemory(&vibration, sizeof(XINPUT_VIBRATION));
-	vibration.wLeftMotorSpeed = WORD(leftMotorSpeed * 65535); // use any value between 0-65535 here
-	vibration.wRightMotorSpeed = WORD(rightMotorSpeed * 65535); // use any value between 0-65535 here
-	if (controllerNum < 0)
-	{
-		for (int i = 0; i < XUSER_MAX_COUNT; ++i)
-			XInputSetState(i, &vibration);
-	}
-	else
-	{
-		XInputSetState(controllerNum, &vibration);
-	}
-}
-
 DSJoystickButtonCode DSFXInput::GetButtonCode(unsigned code)
 {
 	switch (code)

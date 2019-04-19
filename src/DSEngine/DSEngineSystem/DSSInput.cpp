@@ -101,11 +101,6 @@ void DSSInput::GetMousePosition(float* x, float* y) const
 	*y = float(rawInput.GetMousePosY());
 }
 
-void DSSInput::SetControllerRumble(int controllerNum, float leftMotorSpeed, float rightMotorSpeed)
-{
-	xInput.SetControllerRumble(controllerNum, leftMotorSpeed, rightMotorSpeed);
-}
-
 void DSSInput::RegisterInput(std::string name, std::string posButton, std::string negButton, std::string altPosButton,
 	std::string altNegButton, float gravity, float dead, float sensitivity, bool invert, InputType type,
 	DSAxisCode axis, int joyNum)
