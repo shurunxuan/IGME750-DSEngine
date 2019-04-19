@@ -182,11 +182,23 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CameraController.cpp" />
+    <ClCompile Include="EngineAudioManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="PPDarkCornerMaterial.cpp" />
+    <ClCompile Include="PPGaussianBlurMaterial.cpp" />
     <ClCompile Include="RacingGameApp.cpp" />
+    <ClCompile Include="SSAOMaterial.cpp" />
+    <ClCompile Include="WheelController.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CameraController.h" />
+    <ClInclude Include="EngineAudioManager.h" />
+    <ClInclude Include="PPDarkCornerMaterial.h" />
+    <ClInclude Include="PPGaussianBlurMaterial.h" />
     <ClInclude Include="RacingGameApp.h" />
+    <ClInclude Include="SSAOMaterial.h" />
+    <ClInclude Include="WheelController.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

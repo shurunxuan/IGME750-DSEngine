@@ -16,6 +16,8 @@ public:
 	void Start() override;
 	void Update(float deltaTime, float totalTime) override;
 
+	Transform* following;
 private:
+	DirectX::XMVECTOR offset;
 };
 

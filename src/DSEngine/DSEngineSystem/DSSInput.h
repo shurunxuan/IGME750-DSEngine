@@ -320,6 +320,15 @@ public:
 	void GetMousePosition(float* x, float* y) const;
 
 	/**
+	 * @brief Set the controller vibration
+	 *
+	 * @param controllerNum The number of the controller, -1 means all
+	 * @param leftMotorSpeed The left motor speed (low-frequency), 0.0f ~ 1.0f
+	 * @param rightMotorSpeed The right motor speed (high-frequency), 0.0f ~ 1.0f
+	 */
+	void SetControllerRumble(int controllerNum, float leftMotorSpeed, float rightMotorSpeed);
+
+	/**
 	 * @brief Register a new input into the input system
 	 * 
 	 * @param name The name of the input
