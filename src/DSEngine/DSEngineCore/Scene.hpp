@@ -30,6 +30,7 @@
 #include "SimpleShader.hpp"
 #include "MeshRenderer.hpp"
 #include "PBRMaterial.hpp"
+#include <boost/filesystem/path.hpp>
 
 /**
  * @brief The class represents the scene graph
@@ -152,6 +153,25 @@ public:
 	 * @param totalTime The total time from the beginning of the application
 	 */
 	void Update(float deltaTime, float totalTime);
+
+	/**
+	 * @brief Find an object in the scene by name
+	 * 
+	 * @param name The name of desired object
+	 * 
+	 * @return Object* A pointer of the found object, or nullptr
+	 */
+	Object* FindObjectByName(std::string name);
+
+	/**
+	 * @brief Find all objects in the scene with the name
+	 *
+	 * @param name The name of desired object
+	 *
+	 * @return std::list<Object*> The list of the pointers of the found objects
+	 */
+	std::list<Object*> FindObjectsByName(std::string name);
+
 
 	/**
 	 * @brief The main camera of the scene
@@ -381,6 +401,27 @@ inline void Scene::Update(float deltaTime, float totalTime)
 	}
 }
 
+inline Object* Scene::FindObjectByName(std::string name)
+{
+	for (Object* obj : allObjects)
+	{
+		if (obj->name == name)
+			return obj;
+	}
+	return nullptr;
+}
+
+inline std::list<Object*> Scene::FindObjectsByName(std::string name)
+{
+	std::list<Object*> result;
+	for (Object* obj : allObjects)
+	{
+		if (obj->name == name)
+			result.push_back(obj);
+	}
+	return result;
+}
+
 inline Object* Scene::AddObjectWithNode(const std::string& modelFileName, const aiScene * scene, aiNode * node, Object * parent)
 {
 	Object* newObj = AddObject(node->mName.C_Str());
@@ -479,7 +520,17 @@ inline Object* Scene::AddObjectWithNode(const std::string& modelFileName, const 
 				}
 			}
 		}
+		aiColor3D color(0.f, 0.f, 0.f);
+		aMaterial->Get(AI_MATKEY_COLOR_DIFFUSE, color);
+		pbrMaterial->parameters.albedo = DirectX::XMFLOAT3(color.r, color.g, color.b);
 
+		float opacity = 1.0f;
+		aMaterial->Get(AI_MATKEY_OPACITY, opacity);
+		if (opacity < 1.0f)
+		{
+			pbrMaterial->transparent = true;
+			pbrMaterial->parameters.transparency = 1 - opacity;
+		}
 		meshRendererComponent->SetMaterial(pbrMaterial);
 
 		// Mesh

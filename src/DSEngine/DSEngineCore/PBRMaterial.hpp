@@ -68,12 +68,12 @@ public:
 		 * @brief Roughness
 		 * 
 		 */
-		float roughness = 0.5f;
+		float roughness = 0.1f;
 		/**
 		 * @brief Metalness
 		 * 
 		 */
-		float metalness = 0.5f;
+		float metalness = 1.0f;
 		/**
 		 * @brief Transparency
 		 * 

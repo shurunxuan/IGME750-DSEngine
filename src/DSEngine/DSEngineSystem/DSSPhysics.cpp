@@ -1,8 +1,8 @@
 #include "DSSPhysics.h"
 #include "DSEngineApp.h"
 
-#define Cdrag 0.4257f
-#define Crr 12.8f
+#define Cdrag 0.8f
+#define Crr (Cdrag*3)
 
 using namespace DirectX;
 
@@ -135,32 +135,39 @@ void DSSPhysics::CarSimulate(float deltaTime, float totalTime)
 			DirectX::XMVECTOR velocity;
 			DirectX::XMVECTOR rotation;
 			DirectX::XMVECTOR rotationRightAxis;
-			DirectX::XMVECTOR accleration;
+			DirectX::XMVECTOR acceleration;
+			DirectX::XMVECTOR forward = DirectX::XMVector3Normalize(wheelColliders[i]->object->transform->GetParent()->Forward());
 			DirectX::XMVECTOR right = DirectX::XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f);
 			RigidBody* rigidbody = wheelColliders[i]->object->transform->GetParent()->object->GetComponent<RigidBody>();
 			DirectX::XMFLOAT3 vel = rigidbody->GetVelocity();
-			float velMagnitude = sqrt((vel.x * vel.x) + (vel.y * vel.y) + (vel.z * vel.z));
+			float velMagnitude = sqrtf((vel.x * vel.x) + (vel.y * vel.y) + (vel.z * vel.z));
 			float direction = 1.0f;
 
 			//-----------------Direction------------------
 			velocity = DirectX::XMLoadFloat3(&vel);
-			if (DirectX::XMVector3NearEqual(DirectX::XMVector3Normalize(wheelColliders[i]->object->transform->GetParent()->Forward()), DirectX::XMVector3Normalize(velocity), DirectX::XMVectorSet(1.0f, 1.0f, 1.0f, 1.0f))) {
+			if (DirectX::XMVector3NearEqual(forward, DirectX::XMVector3Normalize(velocity), DirectX::XMVectorSet(1.0f, 1.0f, 1.0f, 1.0f))) {
 				direction = 1.0f;
 			}
 			else direction = -1.0f;
 
-			//--------------Tranlation----------------
-			totalTorque = (motorTorque + (-direction * brakeTorque)) * (DirectX::XMVector3Normalize(wheelColliders[i]->object->transform->GetParent()->Forward()));
-			dragTorque = (-Cdrag) * velMagnitude * DirectX::XMLoadFloat3(&rigidbody->GetVelocity());
-			rrTorque = (-Crr) * DirectX::XMLoadFloat3(&rigidbody->GetVelocity());
+			//--------------Translation----------------
+			totalTorque = (motorTorque + (-direction * brakeTorque)) * forward;
+			dragTorque = (-Cdrag) * velMagnitude * DirectX::XMLoadFloat3(&vel);
+			rrTorque = (-Crr) * DirectX::XMLoadFloat3(&vel);
 			totalTorque = totalTorque + dragTorque + rrTorque;
-			accleration = totalTorque / rigidbody->GetMass();
+			acceleration = totalTorque / rigidbody->GetMass();
 			velocity = DirectX::XMLoadFloat3(&vel);
-			velocity += (accleration * deltaTime);
+			velocity += (acceleration * deltaTime);
+
+			DirectX::XMVECTOR dotProduct = DirectX::XMVector3Dot(velocity, forward);
+			DirectX::XMFLOAT3 dot;
+			DirectX::XMStoreFloat3(&dot, dotProduct);
+			velocity = DirectX::XMVectorScale(forward, dot.x);
+
 			DirectX::XMStoreFloat3(&vel, velocity);
 			rigidbody->SetVelocity(vel);
 
-			if (DirectX::XMVector3NearEqual(DirectX::XMVector3Normalize(wheelColliders[i]->object->transform->GetParent()->Forward()), DirectX::XMVector3Normalize(velocity), DirectX::XMVectorSet(1.0f, 1.0f, 1.0f, 1.0f))) {
+			if (DirectX::XMVector3NearEqual(forward, DirectX::XMVector3Normalize(velocity), DirectX::XMVectorSet(1.0f, 1.0f, 1.0f, 1.0f))) {
 				direction = 1.0f;
 			}
 			else direction = -1.0f;
@@ -201,12 +208,12 @@ bool DSSPhysics::Raycast(Ray ray, RaycastHit &mHit)
 	DirectX::XMFLOAT3 direction = ray.GetTarget();
 	for (int i = 0; i < boxColliders.size(); i++) {
 		DirectX::XMFLOAT3 center = boxColliders[i]->GetCollider()->Center;
-		float distanceToSide = sqrt(pow(boxColliders[i]->GetCollider()->Extents.x, 2.0f) + pow(boxColliders[i]->GetCollider()->Extents.y, 2.0f) + pow(boxColliders[i]->GetCollider()->Extents.z, 2.0f));
-		float originToDiretion = sqrt(pow((origin.x - direction.x), 2.0) + pow((origin.y - direction.y), 2.0) + pow((origin.z - direction.z), 2.0));
-		float originToCenter = sqrt(pow((origin.x - center.x), 2.0) + pow((origin.y - center.y), 2.0) + pow((origin.z - center.z), 2.0));
-		float DirectionToCenter = sqrt(pow((direction.x - center.x), 2.0) + pow((direction.y - center.y), 2.0) + pow((direction.z - center.z), 2.0));
-		float cos_A = (pow(originToCenter, 2.0) + pow(originToDiretion, 2.0) - pow(DirectionToCenter, 2.0)) / (2 * originToCenter*originToDiretion);
-		float sin_A = sqrt(1 - pow(cos_A, 2.0));
+		float distanceToSide = sqrtf(powf(boxColliders[i]->GetCollider()->Extents.x, 2.0f) + powf(boxColliders[i]->GetCollider()->Extents.y, 2.0f) + powf(boxColliders[i]->GetCollider()->Extents.z, 2.0f));
+		float originToDiretion = sqrtf(powf((origin.x - direction.x), 2.0f) + powf((origin.y - direction.y), 2.0f) + powf((origin.z - direction.z), 2.0f));
+		float originToCenter = sqrtf(powf((origin.x - center.x), 2.0f) + powf((origin.y - center.y), 2.0f) + powf((origin.z - center.z), 2.0f));
+		float DirectionToCenter = sqrtf(powf((direction.x - center.x), 2.0f) + powf((direction.y - center.y), 2.0f) + powf((direction.z - center.z), 2.0f));
+		float cos_A = powf(originToCenter, 2.0f + powf(originToDiretion, 2.0f) - powf(DirectionToCenter, 2.0f)) / (2 * originToCenter*originToDiretion);
+		float sin_A = sqrtf(1 - powf(cos_A, 2.0f));
 		float distanceTocenter = originToCenter * sin_A;
 		if (distanceTocenter <= distanceToSide) {
 			mHit.SetCollider(boxColliders[i]->object->GetComponent<BoxCollider>());

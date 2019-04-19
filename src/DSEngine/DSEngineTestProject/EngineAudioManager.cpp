@@ -3,7 +3,7 @@
 EngineAudioManager::EngineAudioManager(Object * owner)
 	: Component(owner)
 {
-	
+
 }
 
 EngineAudioManager::~EngineAudioManager()
@@ -13,17 +13,16 @@ EngineAudioManager::~EngineAudioManager()
 void EngineAudioManager::Start()
 {
 	isStart = false;
-	maxRPMValue = 8.0f;
+	maxRPMValue = 85.0f;
 	optVolume = 0.01f;
-	
+
 }
 
 void EngineAudioManager::Update(float deltaTime, float totalTime)
 {
-	RPM = sqrt((object->GetComponent<RigidBody>()->GetVelocity().x)*(object->GetComponent<RigidBody>()->GetVelocity().x) +
-		(object->GetComponent<RigidBody>()->GetVelocity().y)*(object->GetComponent<RigidBody>()->GetVelocity().y) +
-		(object->GetComponent<RigidBody>()->GetVelocity().z)*(object->GetComponent<RigidBody>()->GetVelocity().z));
-	LOG_DEBUG << RPM;
+	DirectX::XMFLOAT3 velocity = object->GetComponent<RigidBody>()->GetVelocity();
+	RPM = sqrt(velocity.x * velocity.x + velocity.y * velocity.y + velocity.z * velocity.z);
+	//LOG_DEBUG << RPM;
 	//LOG_DEBUG << IdleVolumeCurve(clipValue);
 
 	clipValue = RPM / maxRPMValue;
@@ -31,10 +30,10 @@ void EngineAudioManager::Update(float deltaTime, float totalTime)
 		startup->Play();
 		isStart = true;
 	}
-	
+
 	//
-	if (isStart&&(!startup->Playing())) {
-		
+	if (isStart/* && (!startup->Playing())*/) {
+
 		idle->SetVolume(IdleVolumeCurve(clipValue));
 		idle->SetFrequencyRatio(IdlePitchCurve(clipValue));
 		lowOn->SetVolume(LowVolumeCurve(clipValue));
@@ -43,7 +42,7 @@ void EngineAudioManager::Update(float deltaTime, float totalTime)
 		midOn->SetFrequencyRatio(midPitchCurve(clipValue));
 		highOn->SetVolume(highVolumeCurve(clipValue));
 		highOn->SetFrequencyRatio(highPitchCurve(clipValue));
-		
+
 		if (idle->GetVolume() > optVolume) {
 			idle->Play();
 		}
@@ -70,24 +69,24 @@ void EngineAudioManager::Update(float deltaTime, float totalTime)
 		}
 
 
-		
-			
-			
-		
+
+
+
+
 	}
-		
-	
+
+
 }
 
 float EngineAudioManager::IdleVolumeCurve(float clipValue)
 {
-	
-	return -4.875*clipValue*clipValue + 0.9625*clipValue + 0.5640625;
+
+	return -4.875f*clipValue*clipValue + 0.9625f*clipValue + 0.5640f;
 }
 
 float EngineAudioManager::IdlePitchCurve(float clipValue)
 {
-	return 4.0f*clipValue+0.45f;
+	return 4.0f*clipValue + 0.45f;
 }
 
 float EngineAudioManager::LowVolumeCurve(float clipValue)
@@ -102,7 +101,7 @@ float EngineAudioManager::LowPItchCurve(float clipValue)
 
 float EngineAudioManager::midVolumeCurve(float clipValue)
 {
-	return -7.905982905983102*clipValue*clipValue + 4.03205128205136*clipValue - 0.029529914529915293;
+	return -7.905982905983102f*clipValue*clipValue + 4.03205128205136f*clipValue - 0.029529914529915293f;
 }
 
 float EngineAudioManager::midPitchCurve(float clipValue)

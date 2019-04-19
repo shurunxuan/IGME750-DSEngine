@@ -319,7 +319,7 @@ inline void Transform::SetParent(Transform* newParent)
 
 	if (parent != nullptr)
 	{
-		parent->children.remove(newParent);
+		parent->children.remove(this);
 	}
 
 	DirectX::XMMatrixDecompose(&localScale, &localRotation, &localTranslation, XMMatrixTranspose(GetGlobalWorldMatrix()));

@@ -114,10 +114,10 @@ void TestGameApp::Init()
 
 	// Set Camera
 	CurrentActiveScene()->mainCamera->UpdateProjectionMatrix(float(width), float(height), DirectX::XM_PIDIV4);
+	//CurrentActiveScene()->mainCamera->SetSkybox(device, context, L"Assets/Skybox/mp_cupertin/mp_cupertin.dds", L"Assets/Skybox/mp_cupertin/mp_cupertin_irr.dds");
 	CurrentActiveScene()->mainCamera->SetSkybox(device, context, L"Assets/Skybox/1/Environment1HiDef.cubemap.dds", L"Assets/Skybox/1/Environment1Light.cubemap.dds");
-	CurrentActiveScene()->mainCamera->transform->SetLocalTranslation(0.0f, 4.0f, -8.0f);
-	CameraController * cameraController = CurrentActiveScene()->mainCamera->AddComponent<CameraController>();
-
+	CurrentActiveScene()->mainCamera->transform->SetLocalTranslation(0.0f, 2.0f, -6.25f);
+	//CurrentActiveScene()->mainCamera->AddComponent<CameraController>();
 	// Add a light
 	LightData light = DirectionalLight(DirectX::XMFLOAT3(1.0f, 1.0f, 1.0f), DirectX::XMFLOAT3(-1.0f, -1.0f, 1.0f), 0.8f, DirectX::XMFLOAT3(1.0f, 1.0f, 1.0f));;
 	CurrentActiveScene()->AddLight(light);
@@ -131,66 +131,153 @@ void TestGameApp::Init()
 	//                  /              \
 	//     (Add WheelController)      (No Componnent)
 
+	Object* car = CurrentActiveScene()->AddObject("AventHolder");
+	Object* avent = CurrentActiveScene()->LoadModelFile("Assets/Models/Aventador/Avent.obj");
+	avent->transform->SetParent(car->transform);
+	avent->transform->SetLocalRotation(DirectX::XMQuaternionRotationAxis(DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f), DirectX::XM_PIDIV2));
 
-	Object * car = CurrentActiveScene()->AddObject("Car");
-	car->transform->SetLocalTranslation(0.0f, 0.0f, 1.8f);
+	//Object * car = CurrentActiveScene()->AddObject("Car");
+	//car->transform->SetLocalTranslation(0.0f, 0.0f, 0.0f);
 	RigidBody * rigidbody = car->AddComponent<RigidBody>();
-	rigidbody->SetPosition(0.0f, 0.0f, 4.75f);
-	rigidbody->SetMass(50.0f);
+	rigidbody->SetPosition(0.0f, 0.0f, 0.0f);
+	rigidbody->SetMass(2000.0f);
 
-	Object * frame = CurrentActiveScene()->LoadModelFile("Assets/Models/cgtrader/car.obj");
-	frame->transform->SetLocalTranslation(0.0f, 0.0f, 4.75f);
-	frame->transform->SetParent(car->transform);
-	
-	Object * wheel_1 = CurrentActiveScene()->LoadModelFile("Assets/Models/18-tire/tire_1.obj");
-	wheel_1->transform->SetLocalTranslation(-1.4f, 1.0f, 7.0f);
-	wheel_1->transform->SetLocalScale(0.05f, 0.05f, 0.05f);
+	//Object * frame = CurrentActiveScene()->LoadModelFile("Assets/Models/cgtrader/car.obj");
+	//frame->transform->SetLocalTranslation(0.0f, 0.0f, 0.0f);
+	//frame->transform->SetParent(car->transform);
+
+
+	Object* wheel_1 = CurrentActiveScene()->AddObject("wheel_1");
+
+
+	Object* wheel_1_mesh = CurrentActiveScene()->FindObjectByName("Mesh212_032wheel3_032Group1_032Lamborghini_Aventador1_032Model");
+	wheel_1->transform->SetLocalTranslation(-0.9698001f, 0.431005f, 1.554001f);
+	wheel_1->transform->SetParent(car->transform);
+	for (int i = 208; i <= 210; ++i)
+	{
+		std::string name = "Mesh" + std::to_string(i) + "_032Group12_032wheel3_032Group1_032Lamborghini_Aventador1_032Model";
+		std::list<Object*> objects = CurrentActiveScene()->FindObjectsByName(name);
+		for (Object* object : objects)
+			object->transform->SetParent(wheel_1->transform);
+	}
+	for (int i = 211; i <= 223; ++i)
+	{
+		std::string name = "Mesh" + std::to_string(i) + "_032wheel3_032Group1_032Lamborghini_Aventador1_032Model";
+		std::list<Object*> objects = CurrentActiveScene()->FindObjectsByName(name);
+		for (Object* object : objects)
+			object->transform->SetParent(wheel_1->transform);
+	}
+
+	Object* wheel_2 = CurrentActiveScene()->AddObject("wheel_2");
+	wheel_2->transform->SetLocalTranslation(0.9698001f, 0.431005f, 1.554001f);
+	wheel_2->transform->SetParent(car->transform);
+	for (int i = 161; i <= 163; ++i)
+	{
+		std::string name = "Mesh" + std::to_string(i) + "_032Group7_032wheel2_032Group1_032Lamborghini_Aventador1_032Model";
+		std::list<Object*> objects = CurrentActiveScene()->FindObjectsByName(name);
+		for (Object* object : objects)
+			object->transform->SetParent(wheel_2->transform);
+	}
+	for (int i = 164; i <= 176; ++i)
+	{
+		std::string name = "Mesh" + std::to_string(i) + "_032wheel2_032Group1_032Lamborghini_Aventador1_032Model";
+		std::list<Object*> objects = CurrentActiveScene()->FindObjectsByName(name);
+		for (Object* object : objects)
+			object->transform->SetParent(wheel_2->transform);
+	}
+
+	Object* wheel_3 = CurrentActiveScene()->AddObject("wheel_3");
+	wheel_3->transform->SetLocalTranslation(-0.9698001f, 0.431005f, -1.528f);
+	wheel_3->transform->SetParent(car->transform);
+	for (int i = 224; i <= 226; ++i)
+	{
+		std::string name = "Mesh" + std::to_string(i) + "_032Group13_032wheel4_032Group1_032Lamborghini_Aventador1_032Model";
+		std::list<Object*> objects = CurrentActiveScene()->FindObjectsByName(name);
+		for (Object* object : objects)
+			object->transform->SetParent(wheel_3->transform);
+	}
+	for (int i = 227; i <= 239; ++i)
+	{
+		std::string name = "Mesh" + std::to_string(i) + "_032wheel4_032Group1_032Lamborghini_Aventador1_032Model";
+		std::list<Object*> objects = CurrentActiveScene()->FindObjectsByName(name);
+		for (Object* object : objects)
+			object->transform->SetParent(wheel_3->transform);
+	}
+
+	Object* wheel_4 = CurrentActiveScene()->AddObject("wheel_4");
+	wheel_4->transform->SetLocalTranslation(0.9698001f, 0.431005f, -1.528f);
+	wheel_4->transform->SetParent(car->transform);
+	for (int i = 57; i <= 59; ++i)
+	{
+		std::string name = "Mesh" + std::to_string(i) + "_032Group5_032wheel1_032Group1_032Lamborghini_Aventador1_032Model";
+		std::list<Object*> objects = CurrentActiveScene()->FindObjectsByName(name);
+		for (Object* object : objects)
+			object->transform->SetParent(wheel_4->transform);
+	}
+	for (int i = 60; i <= 72; ++i)
+	{
+		std::string name = "Mesh" + std::to_string(i) + "_032wheel1_032Group1_032Lamborghini_Aventador1_032Model";
+		std::list<Object*> objects = CurrentActiveScene()->FindObjectsByName(name);
+		for (Object* object : objects)
+			object->transform->SetParent(wheel_4->transform);
+	}
+
+	//Object * wheel_1 = CurrentActiveScene()->LoadModelFile("Assets/Models/18-tire/tire_1.obj");
+	//wheel_1->transform->SetLocalTranslation(-1.4f, 1.0f, 2.5f);
+	//wheel_1->transform->SetLocalScale(0.05f, 0.05f, 0.05f);
 	WheelCollider* wheelCollider_1 = wheel_1->AddComponent<WheelCollider>();
 	wheelCollider_1->SetRadius(1.0f);
 	wheelCollider_1->SetMaxSteeringAngle(25.0f);
 	wheelCollider_1->SetWheelDistance(5.2f);
-	wheel_1->transform->SetParent(car->transform);
+	//wheel_1->transform->SetParent(car->transform);
 
-	Object * wheel_2 = CurrentActiveScene()->LoadModelFile("Assets/Models/18-tire/tire_1.obj");
-	wheel_2->transform->SetLocalTranslation(1.4f, 1.0f, 7.0f);
-	wheel_2->transform->SetLocalScale(0.05f, 0.05f, 0.05f);
+	//Object * wheel_2 = CurrentActiveScene()->LoadModelFile("Assets/Models/18-tire/tire_1.obj");
+	//wheel_2->transform->SetLocalTranslation(1.4f, 1.0f, 2.5f);
+	//wheel_2->transform->SetLocalScale(0.05f, 0.05f, 0.05f);
 	WheelCollider* wheelCollider_2 = wheel_2->AddComponent<WheelCollider>();
 	wheelCollider_2->SetRadius(1.0f);
 	wheelCollider_2->SetMaxSteeringAngle(25.0f);
 	wheelCollider_2->SetWheelDistance(5.2f);
-	wheel_2->transform->SetParent(car->transform);
+	//wheel_2->transform->SetParent(car->transform);
 
-	Object * wheel_3 = CurrentActiveScene()->LoadModelFile("Assets/Models/18-tire/tire_1.obj");
-	wheel_3->transform->SetLocalTranslation(-1.4f, 1.0f, 1.8f);
-	wheel_3->transform->SetLocalScale(0.05f, 0.05f, 0.05f);
+	//Object * wheel_3 = CurrentActiveScene()->LoadModelFile("Assets/Models/18-tire/tire_1.obj");
+	//wheel_3->transform->SetLocalTranslation(-1.4f, 1.0f, -2.7f);
+	//wheel_3->transform->SetLocalScale(0.05f, 0.05f, 0.05f);
 	WheelCollider* wheelCollider_3 = wheel_3->AddComponent<WheelCollider>();
 	wheelCollider_3->SetRadius(1.0f);
 	wheelCollider_3->SetMaxSteeringAngle(0.0f);
 	wheelCollider_3->SetWheelDistance(5.2f);
-	wheel_3->transform->SetParent(car->transform);
+	//wheel_3->transform->SetParent(car->transform);
 
-	Object * wheel_4 = CurrentActiveScene()->LoadModelFile("Assets/Models/18-tire/tire_1.obj");
-	wheel_4->transform->SetLocalTranslation(1.4f, 1.0f, 1.8f);
-	wheel_4->transform->SetLocalScale(0.05f, 0.05f, 0.05f);
+	//Object * wheel_4 = CurrentActiveScene()->LoadModelFile("Assets/Models/18-tire/tire_1.obj");
+	//wheel_4->transform->SetLocalTranslation(1.4f, 1.0f, -2.7f);
+	//wheel_4->transform->SetLocalScale(0.05f, 0.05f, 0.05f);
 	WheelCollider* wheelCollider_4 = wheel_4->AddComponent<WheelCollider>();
 	wheelCollider_4->SetRadius(1.0f);
 	wheelCollider_4->SetMaxSteeringAngle(0.0f);
 	wheelCollider_4->SetWheelDistance(5.2f);
-	wheel_4->transform->SetParent(car->transform);
-	
+	//wheel_4->transform->SetParent(car->transform);
+
+	//Object* cameraPosition = CurrentActiveScene()->AddObject("cameraPosition");
+	//cameraPosition->transform->SetLocalTranslation(0.0f, 2.0f, -6.25f);
+	//cameraPosition->transform->SetParent(car->transform);
+
+	CameraController* cameraController = CurrentActiveScene()->mainCamera->AddComponent<CameraController>();
+	cameraController->following = car->transform;
+
 	// Set Camera parent
-	CurrentActiveScene()->mainCamera->transform->SetParent(car->transform);
+	//CurrentActiveScene()->mainCamera->transform->SetParent(car->transform);
 
-	
+
 	// Add parent object
-	Object * parentObj = CurrentActiveScene()->LoadModelFile("Assets/Models/Fennekin/a653.dae");
-	parentObj->name = "Fennekin";
-	parentObj->transform->SetLocalScale(0.05f, 0.05f, 0.05f);
-	parentObj->transform->SetLocalTranslation(-1.0f, 0.0f, 5.0f);
+	//Object * parentObj = CurrentActiveScene()->LoadModelFile("Assets/Models/Fennekin/a653.dae");
+	//parentObj->name = "Fennekin";
+	//parentObj->transform->SetLocalScale(0.05f, 0.05f, 0.05f);
+	//parentObj->transform->SetLocalTranslation(-1.0f, 0.0f, 5.0f);
 
-	auto rotation = parentObj->transform->GetLocalRotation();
-	rotation = DirectX::XMQuaternionMultiply(rotation, DirectX::XMQuaternionRotationAxis(DirectX::XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f), DirectX::XM_PIDIV2));
-	parentObj->transform->SetLocalRotation(rotation);
+	//auto rotation = parentObj->transform->GetLocalRotation();
+	//rotation = DirectX::XMQuaternionMultiply(rotation, DirectX::XMQuaternionRotationAxis(DirectX::XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f), DirectX::XM_PIDIV2));
+	//parentObj->transform->SetLocalRotation(rotation);
 	//Object* parentObj = nullptr;
 	//for (int i = 0; i < 5; ++i)
 	//{
@@ -216,26 +303,24 @@ void TestGameApp::Init()
 
 
 	// Add Components
-	PressSpaceToPlayAudio * playAudioComponent = parentObj->AddComponent<PressSpaceToPlayAudio>();
-	MoveParentObject * moveParentComponent = parentObj->AddComponent<MoveParentObject>();
 	WheelController * wheelController_1 = wheel_1->AddComponent<WheelController>();
 	WheelController * wheelController_2 = wheel_2->AddComponent<WheelController>();
 	WheelController * wheelController_3 = wheel_3->AddComponent<WheelController>();
 	WheelController * wheelController_4 = wheel_4->AddComponent<WheelController>();
 
-	AudioSource * audioSource1 = parentObj->AddComponent<AudioSource>();
-	audioSource1->Is3D = true;
-	audioSource1->Loop = true;
+	//AudioSource * audioSource1 = parentObj->AddComponent<AudioSource>();
+	//audioSource1->Is3D = true;
+	//audioSource1->Loop = true;
 
-	//audioSource1->SetDopplerScaler(10.0f);
-	//audioSource1->SetCurveDistanceScaler(100.0f);
-	AudioSource * audioSource2 = parentObj->AddComponent<AudioSource>();
+	////audioSource1->SetDopplerScaler(10.0f);
+	////audioSource1->SetCurveDistanceScaler(100.0f);
+	//AudioSource * audioSource2 = parentObj->AddComponent<AudioSource>();
 
-	playAudioComponent->source1 = audioSource1;
-	playAudioComponent->source2 = audioSource2;
+	//playAudioComponent->source1 = audioSource1;
+	//playAudioComponent->source2 = audioSource2;
 
-	audioSource1->LoadAudioFile("Assets/Audio/idle.wav");
-	audioSource2->LoadAudioFile("Assets/test2.flac");
+	//audioSource1->LoadAudioFile("Assets/Audio/idle.wav");
+	//audioSource2->LoadAudioFile("Assets/test2.flac");
 	//Add different Engine sounds
 	AudioSource* idleAudio = car->AddComponent<AudioSource>();
 	idleAudio->Is3D = true;
@@ -243,19 +328,23 @@ void TestGameApp::Init()
 	idleAudio->LoadAudioFile("Assets/Audio/idle.wav");
 	AudioSource* startupAudio = car->AddComponent<AudioSource>();
 	startupAudio->Is3D = true;
-	startupAudio->Loop = false;
 	startupAudio->LoadAudioFile("Assets/Audio/startup.wav");
+	startupAudio->SetVolume(0.6f);
 	AudioSource* highOnAudio = car->AddComponent<AudioSource>();
 	highOnAudio->Is3D = true;
+	highOnAudio->Loop = true;
 	highOnAudio->LoadAudioFile("Assets/Audio/high_on.wav");
 	AudioSource* midOnAudio = car->AddComponent<AudioSource>();
 	midOnAudio->Is3D = true;
+	midOnAudio->Loop = true;
 	midOnAudio->LoadAudioFile("Assets/Audio/med_on.wav");
 	AudioSource* lowOnAudio = car->AddComponent<AudioSource>();
 	lowOnAudio->Is3D = true;
+	lowOnAudio->Loop = true;
 	lowOnAudio->LoadAudioFile("Assets/Audio/low_on.wav");
 	AudioSource* maxRPMAudio = car->AddComponent<AudioSource>();
 	maxRPMAudio->Is3D = true;
+	maxRPMAudio->Loop = true;
 	maxRPMAudio->LoadAudioFile("Assets/Audio/maxRPM.wav");
 	EngineAudioManager* audioManager = car->AddComponent<EngineAudioManager>();
 	audioManager->idle = idleAudio;
@@ -270,11 +359,10 @@ void TestGameApp::Init()
 	// Add a ground
 	Object * ground = CurrentActiveScene()->LoadModelFile("Assets/Models/Rock/quad.obj");
 	ground->name = "Ground";
-	ground->transform->SetLocalScale(DirectX::XMVectorSet(20.0f, 20.0f, 20.0f, 0.0f));
+	ground->transform->SetLocalScale(DirectX::XMVectorSet(200.0f, 200.0f, 200.0f, 0.0f));
 	ground->transform->SetLocalTranslation(DirectX::XMVectorSet(0.0f, -0.01f, 5.0f, 0.0f));
 	const DirectX::XMVECTOR rq = DirectX::XMQuaternionRotationAxis(DirectX::XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f), DirectX::XM_PIDIV2);
 	ground->transform->SetLocalRotation(rq);
-	ground->transform->SetLocalScale(10.0f, 10.0f, 10.0f);
 
 	Object * groundModelObject = (*ground->transform->GetChildren().begin())->object;
 	MeshRenderer * groundMeshRenderer = groundModelObject->GetComponent<MeshRenderer>();
@@ -317,7 +405,7 @@ void TestGameApp::Init()
 		std::string tabs = "\t";
 		for (int i = 0; i < currentLevel; ++i)
 			tabs += "\t";
-		LOG_INFO << tabs << currentObject->name;// << "\t{" << to_string(currentObject->GetInstanceID()) << "}";
+		LOG_INFO << tabs << currentObject->name << "\t{" << to_string(currentObject->GetInstanceID()) << "}";
 	}
 
 
