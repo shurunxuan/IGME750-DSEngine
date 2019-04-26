@@ -4,10 +4,6 @@
 #include "Component.hpp"
 #include "AudioSource.hpp"
 
-/**
- * @brief Move an object with arrow keys, rotate with numpad, change material property with DPad
- *
- */
 class EngineAudioManager :
 	public Component
 {

@@ -190,6 +190,7 @@
     <ClCompile Include="RacingGameApp.cpp" />
     <ClCompile Include="SSAOMaterial.cpp" />
     <ClCompile Include="WheelController.cpp" />
+    <ClCompile Include="WindAudio.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CameraController.h" />
@@ -199,6 +200,7 @@
     <ClInclude Include="RacingGameApp.h" />
     <ClInclude Include="SSAOMaterial.h" />
     <ClInclude Include="WheelController.h" />
+    <ClInclude Include="WindAudio.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
