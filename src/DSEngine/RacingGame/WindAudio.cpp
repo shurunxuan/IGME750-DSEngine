@@ -27,5 +27,5 @@ void WindAudio::Update(float deltaTime, float totalTime)
 	DirectX::XMVECTOR distanceM = DirectX::XMVector3Length(distance);
 	float dis = distanceM.m128_f32[0];
 
-	windAudioSource->SetVolume(listenerSpeed / dis / 4.0f);
+	windAudioSource->SetVolume(listenerSpeed / dis / dis * 5.0f);
 }

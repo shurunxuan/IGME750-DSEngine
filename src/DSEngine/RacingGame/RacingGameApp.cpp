@@ -369,26 +369,33 @@ void RacingGameApp::Init()
 	groundMaterial->parameters.albedo = DirectX::XMFLOAT3(0.5f, 0.5f, 0.5f);
 
 
+	std::vector<DirectX::XMVECTOR> pillarPositions =
+	{
+		DirectX::XMVectorSet(11.5f, 9.0f, 0.0f, 0.0f),
+		DirectX::XMVectorSet(-158.0f, 9.0f, -158.0f, 0.0f)
+	};
 
+	for (DirectX::XMVECTOR pillarPosition : pillarPositions)
+		// Add pillars
+	{
+		Object* pillar = CurrentActiveScene()->LoadModelFile("Assets/Models/Rock/cube.obj");
+		pillar->name = "Pillar";
+		pillar->transform->SetLocalScale(1.5f, 20.0f, 1.5f);
+		pillar->transform->SetLocalTranslation(pillarPosition);
 
+		AudioSource* audio = pillar->AddComponent<AudioSource>();
+		audio->LoadAudioFile("Assets/Audio/wind.wav");
+		audio->Is3D = true;
+		audio->Loop = true;
+		audio->SetVolume(0.0f);
+		audio->SetCurveDistanceScaler(10.0f);
+		audio->SetDopplerScaler(1.0f);
+		audio->Play();
 
-	// Add pillars
-	Object* pillar = CurrentActiveScene()->LoadModelFile("Assets/Models/Rock/cube.obj");
-	pillar->name = "Pillar";
-	pillar->transform->SetLocalScale(1.5f, 20.0f, 1.5f);
-	pillar->transform->SetLocalTranslation(11.5f, 9.0f, 0.0f);
-
-	AudioSource* audio = pillar->AddComponent<AudioSource>();
-	audio->LoadAudioFile("Assets/Audio/wind.wav");
-	audio->Is3D = true;
-	audio->Loop = true;
-	audio->SetVolume(0.0f);
-	audio->SetCurveDistanceScaler(10.0f);
-	audio->Play();
-
-	WindAudio* windAudio = pillar->AddComponent<WindAudio>();
-	windAudio->windAudioSource = audio;
-	windAudio->listener = CurrentActiveScene()->mainCamera->GetComponent<AudioListener>();
+		WindAudio* windAudio = pillar->AddComponent<WindAudio>();
+		windAudio->windAudioSource = audio;
+		windAudio->listener = CurrentActiveScene()->mainCamera->GetComponent<AudioListener>();
+	}
 
 
 

@@ -5,6 +5,15 @@
 
 DSFDirect3D* FDirect3D = nullptr;
 
+// Use discrete GPU by default.
+extern "C" {
+	// http://developer.download.nvidia.com/devzone/devcenter/gamegraphics/files/OptimusRenderingPolicies.pdf
+	__declspec(dllexport) DWORD NvOptimusEnablement = 0x00000001;
+
+	// http://developer.amd.com/community/blog/2015/10/02/amd-enduro-system-for-developers/
+	__declspec(dllexport) int AmdPowerXpressRequestHighPerformance = 1;
+}
+
 #if defined(_DEBUG) || defined(PROFILE)
 template<UINT TNameLength>
 void SetDebugName(_In_ ID3D11DeviceChild* resource, _In_z_ const char(&name)[TNameLength])
@@ -546,7 +555,7 @@ void DSFDirect3D::Present()
 	// Present the back buffer to the user
 	//  - Puts the final frame we're drawing into the window so the user can see it
 	//  - Do this exactly ONCE PER FRAME (always at the very end of the frame)
-	swapChain->Present(0, 0);
+	swapChain->Present(1, 0);
 
 	// Bind the views to the pipeline
 	context->OMSetRenderTargets(1, &backBufferRTV, depthStencilView);
