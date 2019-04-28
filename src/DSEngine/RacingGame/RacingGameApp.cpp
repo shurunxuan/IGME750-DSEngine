@@ -123,6 +123,16 @@ void RacingGameApp::Init()
 	avent->transform->SetParent(car->transform);
 	avent->transform->SetLocalRotation(DirectX::XMQuaternionRotationAxis(DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f), DirectX::XM_PIDIV2));
 
+	car->AddComponent<BoxCollider>();
+	Object* cube = CurrentActiveScene()->LoadModelFile("Assets/Models/Rock/cube.obj");
+	cube->transform->SetLocalTranslation(0.0f, 0.0f, 10.0f);
+	BoxCollider* boxCollider = cube->AddComponent<BoxCollider>();
+	boxCollider->GetCollider()->Transform(*(boxCollider->GetCollider()),1.0f,DirectX::XMQuaternionIdentity(), DirectX::XMVectorSet(0.0f,0.0f,10.0f,0.0f));
+	//Object* cube1 = CurrentActiveScene()->LoadModelFile("Assets/Models/Rock/cube.obj");
+	//cube1->transform->SetLocalTranslation(20.0f, 0.0f, 0.0f);
+	//BoxCollider* boxCollider1 = cube1->AddComponent<BoxCollider>();
+	//boxCollider1->GetCollider()->Transform(*(boxCollider1->GetCollider()), 1.0f, DirectX::XMQuaternionIdentity(), DirectX::XMVectorSet(20.0f, 0.0f, 0.0f, 0.0f));
+
 	RigidBody * rigidbody = car->AddComponent<RigidBody>();
 	rigidbody->SetPosition(0.0f, 0.0f, 0.0f);
 	rigidbody->SetMass(2000.0f);
