@@ -41,7 +41,7 @@ void DSSPhysics::Update(float deltaTime, float totalTime)
 
 void DSSPhysics::HandleCollision(float deltaTime, float totalTime)
 {
-	for (int i = 0; i < colliders.size(); i++) {
+	for (size_t i = 0; i < colliders.size(); i++) {
 		if (colliders[i]->object->GetComponent<RigidBody>()) {
 			RigidBody* rigidBody = colliders[i]->object->GetComponent<RigidBody>();
 			if (colliders[i]->GetCollider()->Center.y <= colliders[i]->GetCollider()->Radius - 0.01f) {
@@ -60,7 +60,7 @@ void DSSPhysics::HandleCollision(float deltaTime, float totalTime)
 			}
 		}
 
-		for (int j = i + 1; j < colliders.size(); j++) {
+		for (size_t j = i + 1; j < colliders.size(); j++) {
 			if (colliders[i]->GetCollider()->Intersects(*colliders[j]->GetCollider())) {
 				if (colliders[i]->object->GetComponent<RigidBody>() && colliders[j]->object->GetComponent<RigidBody>()) {
 					RigidBody* rigidBody_i = colliders[i]->object->GetComponent<RigidBody>();
@@ -86,7 +86,7 @@ void DSSPhysics::HandleCollision(float deltaTime, float totalTime)
 
 void DSSPhysics::Simulate(float deltaTime, float totalTime)
 {
-	for (int i = 0; i < rigidBodies.size(); i++) {
+	for (size_t i = 0; i < rigidBodies.size(); i++) {
 		rigidBodies[i]->CalculateWorldMatrix(deltaTime, totalTime);
 		
 		DirectX::XMVECTOR tempPos = rigidBodies[i]->object->transform->GetLocalTranslation();
@@ -104,7 +104,7 @@ void DSSPhysics::Simulate(float deltaTime, float totalTime)
 		}
 	}
 
-	for (int i = 0; i < colliders.size(); i++) {
+	for (size_t i = 0; i < colliders.size(); i++) {
 		if (colliders[i]->object->GetComponent<RigidBody>()) {
 			RigidBody* rigidBody = colliders[i]->object->GetComponent<RigidBody>();
 			DirectX::BoundingSphere newCollider;
@@ -125,7 +125,7 @@ void DSSPhysics::Simulate(float deltaTime, float totalTime)
 
 void DSSPhysics::CarSimulate(float deltaTime, float totalTime)
 {
-	for (int i = 0; i < wheelColliders.size(); i++) {
+	for (size_t i = 0; i < wheelColliders.size(); i++) {
 		float motorTorque = wheelColliders[i]->GetMotorTorque();
 		float brakeTorque = wheelColliders[i]->GetBrakeTorque();
 		if (wheelColliders[i]->object->transform->GetParent()) {
@@ -206,7 +206,7 @@ bool DSSPhysics::Raycast(Ray ray, RaycastHit &mHit)
 {
 	DirectX::XMFLOAT3 origin = ray.GetOrigin();
 	DirectX::XMFLOAT3 direction = ray.GetTarget();
-	for (int i = 0; i < boxColliders.size(); i++) {
+	for (size_t i = 0; i < boxColliders.size(); i++) {
 		DirectX::XMFLOAT3 center = boxColliders[i]->GetCollider()->Center;
 		float distanceToSide = sqrtf(powf(boxColliders[i]->GetCollider()->Extents.x, 2.0f) + powf(boxColliders[i]->GetCollider()->Extents.y, 2.0f) + powf(boxColliders[i]->GetCollider()->Extents.z, 2.0f));
 		float originToDiretion = sqrtf(powf((origin.x - direction.x), 2.0f) + powf((origin.y - direction.y), 2.0f) + powf((origin.z - direction.z), 2.0f));

@@ -24,7 +24,7 @@ void TaskDeck::InitDeck(Scene* s)
 	scene = s;
 	CSVReader reader;
 	std::vector<TaskCardData> data = reader.ReadFromFile("Assets/TaskCardData.csv");
-	for (int i = 0; i < data.size(); i++)
+	for (size_t i = 0; i < data.size(); i++)
 	{
 		TaskCard c(data[i]);
 		tasks.push_back(c);

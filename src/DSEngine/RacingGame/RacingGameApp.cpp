@@ -375,8 +375,8 @@ void RacingGameApp::Init()
 		DirectX::XMVectorSet(-158.0f, 9.0f, -158.0f, 0.0f)
 	};
 
+	// Add pillars
 	for (DirectX::XMVECTOR pillarPosition : pillarPositions)
-		// Add pillars
 	{
 		Object* pillar = CurrentActiveScene()->LoadModelFile("Assets/Models/Rock/cube.obj");
 		pillar->name = "Pillar";
