@@ -17,6 +17,7 @@
     <ClCompile Include="PPGaussianBlurMaterial.cpp" />
     <ClCompile Include="SSAOMaterial.cpp" />
     <ClCompile Include="TestGameApp.cpp" />
+    <ClCompile Include="WindAudio.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CameraController.h" />
@@ -25,6 +26,7 @@
     <ClInclude Include="PPGaussianBlurMaterial.h" />
     <ClInclude Include="SSAOMaterial.h" />
     <ClInclude Include="TestGameApp.h" />
+    <ClInclude Include="WindAudio.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PPDarkCornerPS.hlsl">

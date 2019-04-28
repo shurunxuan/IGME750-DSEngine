@@ -39,6 +39,9 @@
     <ClCompile Include="CameraController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="WindAudio.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RacingGameApp.h">
@@ -60,6 +63,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="WheelController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WindAudio.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

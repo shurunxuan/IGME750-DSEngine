@@ -36,11 +36,11 @@ void EngineAudioManager::Update(float deltaTime, float totalTime)
 
 		idle->SetVolume(IdleVolumeCurve(clipValue));
 		idle->SetFrequencyRatio(IdlePitchCurve(clipValue));
-		lowOn->SetVolume(LowVolumeCurve(clipValue));
+		lowOn->SetVolume(LowVolumeCurve(clipValue) / 2.0f);
 		lowOn->SetFrequencyRatio(LowPItchCurve(clipValue));
-		midOn->SetVolume(midVolumeCurve(clipValue));
+		midOn->SetVolume(midVolumeCurve(clipValue) / 2.0f);
 		midOn->SetFrequencyRatio(midPitchCurve(clipValue));
-		highOn->SetVolume(highVolumeCurve(clipValue));
+		highOn->SetVolume(highVolumeCurve(clipValue) / 2.0f);
 		highOn->SetFrequencyRatio(highPitchCurve(clipValue));
 
 		if (idle->GetVolume() > optVolume) {

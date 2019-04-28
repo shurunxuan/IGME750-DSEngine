@@ -67,6 +67,13 @@ public:
 	 * @param totalTime The total time from the beginning of the application
 	 */
 	void Update(float deltaTime, float totalTime) override;
+
+	/**
+	 * @brief Get the speed of the listener
+	 * 
+	 * @return DirectX::XMFLOAT3 The speed of the listener
+	 */
+	DirectX::XMFLOAT3 GetSpeed();
 };
 
 inline AudioListener::AudioListener(Object* owner)
@@ -94,4 +101,9 @@ inline void AudioListener::Update(float deltaTime, float totalTime)
 	DirectX::XMStoreFloat3(&x3dListener.OrientTop, object->transform->Up());
 	DirectX::XMStoreFloat3(&x3dListener.Position, currentPosition);
 	DirectX::XMStoreFloat3(&x3dListener.Velocity, audioVelocityVec);
+}
+
+inline DirectX::XMFLOAT3 AudioListener::GetSpeed()
+{
+	return x3dListener.Velocity;
 }

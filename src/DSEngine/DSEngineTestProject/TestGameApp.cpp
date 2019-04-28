@@ -14,6 +14,7 @@
 #include "CameraController.h"
 #include "SSAOMaterial.h"
 #include "EngineAudioManager.h"
+#include "WindAudio.h"
 
 TestGameApp::~TestGameApp()
 {
@@ -119,7 +120,7 @@ void TestGameApp::Init()
 	avent->transform->SetParent(car->transform);
 	avent->transform->SetLocalRotation(DirectX::XMQuaternionRotationAxis(DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f), DirectX::XM_PIDIV2));
 
-	RigidBody * rigidbody = car->AddComponent<RigidBody>();
+	RigidBody* rigidbody = car->AddComponent<RigidBody>();
 	rigidbody->SetPosition(0.0f, 0.0f, 0.0f);
 	rigidbody->SetMass(2000.0f);
 
@@ -293,19 +294,40 @@ void TestGameApp::Init()
 	//Audio Manager:component, and 
 
 	// Add a ground
-	Object * ground = CurrentActiveScene()->LoadModelFile("Assets/Models/Rock/quad.obj");
+	Object* ground = CurrentActiveScene()->LoadModelFile("Assets/Models/GroundTrack.fbx");
 	ground->name = "Ground";
-	ground->transform->SetLocalScale(DirectX::XMVectorSet(200.0f, 200.0f, 200.0f, 0.0f));
-	ground->transform->SetLocalTranslation(DirectX::XMVectorSet(0.0f, -0.01f, 5.0f, 0.0f));
-	const DirectX::XMVECTOR rq = DirectX::XMQuaternionRotationAxis(DirectX::XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f), DirectX::XM_PIDIV2);
-	ground->transform->SetLocalRotation(rq);
+	ground->transform->SetLocalScale(DirectX::XMVectorSet(0.01f, 0.01f, 0.01f, 0.0f));
+	//ground->transform->SetLocalTranslation(DirectX::XMVectorSet(0.0f, -0.01f, 5.0f, 0.0f));
+	//const DirectX::XMVECTOR rq = DirectX::XMQuaternionRotationAxis(DirectX::XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f), DirectX::XM_PIDIV2);
+	//ground->transform->SetLocalRotation(rq);
 
-	Object * groundModelObject = (*ground->transform->GetChildren().begin())->object;
-	MeshRenderer * groundMeshRenderer = groundModelObject->GetComponent<MeshRenderer>();
-	PBRMaterial * groundMaterial = static_cast<PBRMaterial*>(groundMeshRenderer->GetMaterial());
+	Object* groundModelObject = CurrentActiveScene()->FindObjectByName("GroundTrack");
+	MeshRenderer* groundMeshRenderer = groundModelObject->GetComponent<MeshRenderer>();
+	PBRMaterial* groundMaterial = static_cast<PBRMaterial*>(groundMeshRenderer->GetMaterial());
 	groundMaterial->parameters.metalness = 0.0f;
 	groundMaterial->parameters.roughness = 1.0f;
 	groundMaterial->parameters.albedo = DirectX::XMFLOAT3(0.5f, 0.5f, 0.5f);
+
+
+
+
+
+	// Add pillars
+	Object* pillar = CurrentActiveScene()->LoadModelFile("Assets/Models/Rock/cube.obj");
+	pillar->name = "Pillar";
+	pillar->transform->SetLocalScale(1.5f, 20.0f, 1.5f);
+	pillar->transform->SetLocalTranslation(11.5f, 9.0f, 0.0f);
+
+	AudioSource* audio = pillar->AddComponent<AudioSource>();
+	audio->LoadAudioFile("Assets/Audio/wind.wav");
+	audio->Is3D = true;
+	audio->Loop = true;
+
+	WindAudio* windAudio = pillar->AddComponent<WindAudio>();
+	windAudio->windAudioSource = audio;
+	windAudio->listener = CurrentActiveScene()->mainCamera->GetComponent<AudioListener>();
+
+
 
 	LOG_INFO << "Scene Structure:";
 	std::list<Object*> allObjects = CurrentActiveScene()->GetAllObjects();
