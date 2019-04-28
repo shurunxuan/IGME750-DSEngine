@@ -122,7 +122,6 @@ void DSSPhysics::Simulate(float deltaTime, float totalTime)
 		DirectX::XMVECTOR qz = DirectX::XMQuaternionRotationAxis(DirectX::XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f), rigidBodies[i]->GetColliderRotation().z);
 		DirectX::XMVECTOR temp = DirectX::XMQuaternionMultiply(rigidBodies[i]->object->transform->GetLocalRotation(), DirectX::XMQuaternionMultiply(DirectX::XMQuaternionMultiply(qz, qy), qx));
 		rigidBodies[i]->object->transform->SetLocalRotation(temp);
-
 		if (rigidBodies[i]->object->GetComponent<SphereCollider>()) {
 			rigidBodies[i]->SetForce(0.0f, -2.0f, 0.0f);
 		}
