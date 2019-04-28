@@ -26,6 +26,7 @@ private:
 	std::vector<RigidBody*> rigidBodies;
 	std::vector<BoxCollider*> boxColliders;
 	std::vector<WheelCollider*> wheelColliders;
+	std::vector<int> checkForBoxColliders;
 };
 
 extern DSENGINESYSTEM_API DSSPhysics* SPhysics;

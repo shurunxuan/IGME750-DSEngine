@@ -124,6 +124,7 @@ void RacingGameApp::Init()
 	avent->transform->SetParent(car->transform);
 	avent->transform->SetLocalRotation(DirectX::XMQuaternionRotationAxis(DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f), DirectX::XM_PIDIV2));
 
+	car->AddComponent<BoxCollider>();
 	RigidBody * rigidbody = car->AddComponent<RigidBody>();
 	rigidbody->SetPosition(0.0f, 0.0f, 0.0f);
 	rigidbody->SetMass(2000.0f);
@@ -383,6 +384,10 @@ void RacingGameApp::Init()
 		pillar->transform->SetLocalScale(1.5f, 20.0f, 1.5f);
 		pillar->transform->SetLocalTranslation(pillarPosition);
 
+		BoxCollider* boxCollider = pillar->AddComponent<BoxCollider>();
+		boxCollider->GetCollider()->Extents = { 1.0f,10.0,1.0f };
+		boxCollider->GetCollider()->Transform(*(boxCollider->GetCollider()), 1.0f, DirectX::XMQuaternionIdentity(), pillarPosition);
+
 		AudioSource* audio = pillar->AddComponent<AudioSource>();
 		audio->LoadAudioFile("Assets/Audio/wind.wav");
 		audio->Is3D = true;
@@ -397,9 +402,38 @@ void RacingGameApp::Init()
 		windAudio->listener = CurrentActiveScene()->mainCamera->GetComponent<AudioListener>();
 	}
 
+	//--------------Add Collider-----------------------
+	std::vector<DirectX::XMVECTOR> boundaryPositionsX =
+	{
+		DirectX::XMVectorSet(142.0f, 0.0f, -63.0f, 0.0f),
+		DirectX::XMVectorSet(-338.0f, 0.0f, -63.0f, 0.0f)
+	};
 
+	std::vector<DirectX::XMVECTOR> boundaryPositionsZ =
+	{
+		DirectX::XMVectorSet(-98.0f, 0.0f, 177.0f, 0.0f),
+		DirectX::XMVectorSet(-98.0f, 0.0f, -303.0f, 0.0f)
+	};
 
+	for (DirectX::XMVECTOR boundaryPosition : boundaryPositionsX) 
+	{
+		Object* boundary = CurrentActiveScene()->AddObject("boundary");
+		boundary->transform->SetLocalTranslation(boundaryPosition);
 
+		BoxCollider* boxCollider = boundary->AddComponent<BoxCollider>();
+		boxCollider->GetCollider()->Extents = { 1.0f, 1.0f, 250.0f };
+		boxCollider->GetCollider()->Transform(*(boxCollider->GetCollider()), 1.0f, DirectX::XMQuaternionIdentity(), boundaryPosition);
+	}
+
+	for (DirectX::XMVECTOR boundaryPosition : boundaryPositionsZ)
+	{
+		Object* boundary = CurrentActiveScene()->AddObject("boundary");
+		boundary->transform->SetLocalTranslation(boundaryPosition);
+
+		BoxCollider* boxCollider = boundary->AddComponent<BoxCollider>();
+		boxCollider->GetCollider()->Extents = { 250.0f, 1.0f, 1.0f };
+		boxCollider->GetCollider()->Transform(*(boxCollider->GetCollider()), 1.0f, DirectX::XMQuaternionIdentity(), boundaryPosition);
+	}
 
 	LOG_INFO << "Scene Structure:";
 	std::list<Object*> allObjects = CurrentActiveScene()->GetAllObjects();

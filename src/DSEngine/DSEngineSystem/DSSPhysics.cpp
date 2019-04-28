@@ -82,13 +82,37 @@ void DSSPhysics::HandleCollision(float deltaTime, float totalTime)
 		}
 	}
 
+
+	for (int i = 0; i < boxColliders.size(); i++) {
+		for (int j = i + 1; j < boxColliders.size(); j++) {
+			if (boxColliders[i]->GetCollider()->Intersects(*boxColliders[j]->GetCollider())) {
+				if (boxColliders[i]->object->GetComponent<RigidBody>()) {
+					DirectX::XMVECTOR velocity = -boxColliders[i]->object->transform->Forward();
+					DirectX::XMFLOAT3 vel;
+					DirectX::XMStoreFloat3(&vel, velocity);
+					boxColliders[i]->object->GetComponent<RigidBody>()->SetVelocity(vel);
+				}
+
+
+				if (boxColliders[j]->object->GetComponent<RigidBody>()) {
+					DirectX::XMVECTOR velocity = -boxColliders[j]->object->transform->Forward();
+					DirectX::XMFLOAT3 vel;
+					DirectX::XMStoreFloat3(&vel, velocity);
+					boxColliders[j]->object->GetComponent<RigidBody>()->SetVelocity(vel);
+				}
+			}
+		}
+	}
+
+
+
 }
 
 void DSSPhysics::Simulate(float deltaTime, float totalTime)
 {
 	for (size_t i = 0; i < rigidBodies.size(); i++) {
 		rigidBodies[i]->CalculateWorldMatrix(deltaTime, totalTime);
-		
+
 		DirectX::XMVECTOR tempPos = rigidBodies[i]->object->transform->GetLocalTranslation();
 		tempPos = DirectX::XMVectorAdd(tempPos, DirectX::XMLoadFloat3(&rigidBodies[i]->GetColliderPosition()));
 		rigidBodies[i]->object->transform->SetLocalTranslation(tempPos);
@@ -98,7 +122,6 @@ void DSSPhysics::Simulate(float deltaTime, float totalTime)
 		DirectX::XMVECTOR qz = DirectX::XMQuaternionRotationAxis(DirectX::XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f), rigidBodies[i]->GetColliderRotation().z);
 		DirectX::XMVECTOR temp = DirectX::XMQuaternionMultiply(rigidBodies[i]->object->transform->GetLocalRotation(), DirectX::XMQuaternionMultiply(DirectX::XMQuaternionMultiply(qz, qy), qx));
 		rigidBodies[i]->object->transform->SetLocalRotation(temp);
-
 		if (rigidBodies[i]->object->GetComponent<SphereCollider>()) {
 			rigidBodies[i]->SetForce(0.0f, -2.0f, 0.0f);
 		}
@@ -177,7 +200,7 @@ void DSSPhysics::CarSimulate(float deltaTime, float totalTime)
 			wheelColliders[i]->SetCurrentAngle((wheelColliders[i]->GetSteerFactor() * wheelColliders[i]->GetMaxSteeringAngle()));
 			float deltaAngle = wheelColliders[i]->GetCurrentAngle() - wheelColliders[i]->GetPreviousAngle();
 			rotation = wheelColliders[i]->object->transform->GetLocalRotation();
-			rotationRightAxis = DirectX::XMQuaternionRotationAxis(DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f), deltaAngle / 57.1f );
+			rotationRightAxis = DirectX::XMQuaternionRotationAxis(DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f), deltaAngle / 57.1f);
 			rotation = DirectX::XMQuaternionMultiply(rotation, rotationRightAxis);
 			wheelColliders[i]->object->transform->SetLocalRotation(rotation);
 
@@ -190,9 +213,18 @@ void DSSPhysics::CarSimulate(float deltaTime, float totalTime)
 
 			//------------CarRotation-------------------------
 			rotation = rigidbody->object->transform->GetLocalRotation();
-			rotationRightAxis = DirectX::XMQuaternionRotationAxis(DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f), direction * deltaTime * velMagnitude * wheelColliders[i]->GetCurrentAngle() / 57.3f / (wheelColliders[i]->GetWheelDistance() * 2.0f) );
+			rotationRightAxis = DirectX::XMQuaternionRotationAxis(DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f), direction * deltaTime * velMagnitude * wheelColliders[i]->GetCurrentAngle() / 57.3f / (wheelColliders[i]->GetWheelDistance() * 2.0f));
 			rotation = DirectX::XMQuaternionMultiply(rotation, rotationRightAxis);
 			rigidbody->object->transform->SetLocalRotation(rotation);
+
+
+			//-----------BoxCollider Transform-----------------
+			if (rigidbody->object->GetComponent<BoxCollider>()) {
+				DirectX::BoundingBox newBoxCollider;
+				newBoxCollider.Extents = rigidbody->object->GetComponent<BoxCollider>()->GetCollider()->Extents;
+				newBoxCollider.Transform(newBoxCollider, 1.0f, DirectX::XMQuaternionIdentity(), rigidbody->object->transform->GetLocalTranslation());
+				*rigidbody->object->GetComponent<BoxCollider>()->GetCollider() = newBoxCollider;
+			}
 		}
 		else {
 
