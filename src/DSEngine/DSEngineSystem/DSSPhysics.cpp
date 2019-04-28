@@ -83,8 +83,8 @@ void DSSPhysics::HandleCollision(float deltaTime, float totalTime)
 	}
 
 
-	for (int i = 0; i < boxColliders.size(); i++) {
-		for (int j = i + 1; j < boxColliders.size(); j++) {
+	for (size_t i = 0; i < boxColliders.size(); i++) {
+		for (size_t j = i + 1; j < boxColliders.size(); j++) {
 			if (boxColliders[i]->GetCollider()->Intersects(*boxColliders[j]->GetCollider())) {
 				if (boxColliders[i]->object->GetComponent<RigidBody>()) {
 					DirectX::XMVECTOR velocity = -boxColliders[i]->object->transform->Forward();
