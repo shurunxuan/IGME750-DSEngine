@@ -31,6 +31,9 @@ private:
 
 	ID3D11ShaderResourceView* randomVectorSRV;
 
+	ID3D11SamplerState* pointSamplerClamp;
+	ID3D11SamplerState* linearSamplerClamp;
+
 	void BuildOffsetVectors();
 };
 

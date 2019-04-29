@@ -27,7 +27,9 @@ Texture2D renderTexture0    : register(t2); // Normal
 Texture2D renderTexture1    : register(t3); // Depth
 Texture2D gRandomVecMap		: register(t4);
 SamplerState pointSampler : register(s0);
-SamplerState linearSampler : register(s2);
+SamplerState linearSampler : register(s1); 
+SamplerState pointSamplerClamp : register(s0);
+SamplerState linearSamplerClamp : register(s1);
 
 static const int gSampleCount = 14;
 
@@ -99,8 +101,8 @@ float4 main(VertexOut pin) : SV_Target0
 	// r -- a potential occluder that might occlude p.
 
 	// Get viewspace normal and z-coord of this pixel.  
-	float3 n = normalize(renderTexture0.SampleLevel(pointSampler, pin.TexC, 0.0f).xyz);
-	float pz = renderTexture1.SampleLevel(linearSampler, pin.TexC, 0.0f).r;
+	float3 n = normalize(renderTexture0.SampleLevel(pointSamplerClamp, pin.TexC, 0.0f).xyz);
+	float pz = renderTexture1.SampleLevel(linearSamplerClamp, pin.TexC, 0.0f).r;
 	pz = NdcDepthToViewDepth(pz);
 
 	//
@@ -142,7 +144,7 @@ float4 main(VertexOut pin) : SV_Target0
 		// the depth of q, as q is just an arbitrary point near p and might
 		// occupy empty space).  To find the nearest depth we look it up in the depthmap.
 
-		float rz = renderTexture1.SampleLevel(linearSampler, projQ.xy, 0.0f).r;
+		float rz = renderTexture1.SampleLevel(linearSamplerClamp, projQ.xy, 0.0f).r;
 		rz = NdcDepthToViewDepth(rz);
 
 		// Reconstruct full view space position r = (rx,ry,rz).  We know r

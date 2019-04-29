@@ -184,6 +184,8 @@ void TowerGameApp::CreateScene()
 	PBRMaterial * TowerBase_Material = static_cast<PBRMaterial*>(TowerBase_meshRenderer->GetMaterial());
 	//std::shared_ptr<UnlitMaterial> TowerBase_Material = std::make_shared<UnlitMaterial>(vertexShader, unlitShader, device);
 	TowerBase_Material->parameters.albedo = DirectX::XMFLOAT3(1.0f, 1.0f, 1.0f);
+	TowerBase_Material->parameters.metalness = 0.0f;
+	TowerBase_Material->parameters.roughness = 1.0f;
 
 	Object* Decks = CurrentActiveScene()->LoadModelFile("Assets/Models/cube.obj");
 	Decks->name = "Decks";
@@ -198,6 +200,8 @@ void TowerGameApp::CreateScene()
 	MeshRenderer * Decks_meshRenderer = TaskDeck->GetComponent<MeshRenderer>();
 	PBRMaterial * Decks_Material = static_cast<PBRMaterial*>(Decks_meshRenderer->GetMaterial());
 	Decks_Material->parameters.albedo = DirectX::XMFLOAT3(0.5f, 0.5f, 0.5f);
+	Decks_Material->parameters.metalness = 0.0f;
+	Decks_Material->parameters.roughness = 1.0f;
 
 	Object* Board = CurrentActiveScene()->AddObject("Board");
 	Board->transform->SetParent(TowerBase->transform);

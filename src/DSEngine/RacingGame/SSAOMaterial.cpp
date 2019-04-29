@@ -6,6 +6,27 @@ SSAOMaterial::SSAOMaterial(int sourceCount, std::vector<int> sourceIndices, int 
 	: PostProcessingMaterial(sourceCount, sourceIndices, targetCount, targetIndices, d), dis(0.0f, 1.0f)
 {
 	BuildOffsetVectors();
+
+	D3D11_SAMPLER_DESC samplerDesc;
+	ZeroMemory(&samplerDesc, sizeof(D3D11_SAMPLER_DESC));
+	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
+	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
+	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
+	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
+	if (!device->CreateSamplerState(
+		&samplerDesc,
+		&pointSamplerClamp
+	))
+		pointSamplerClamp = nullptr;
+
+	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+	if (!device->CreateSamplerState(
+		&samplerDesc,
+		&linearSamplerClamp
+	))
+		linearSamplerClamp = nullptr;
+
+
 }
 
 SSAOMaterial::SSAOMaterial(int sourceCount, std::vector<int> sourceIndices, int targetCount,
@@ -19,6 +40,10 @@ SSAOMaterial::~SSAOMaterial()
 {
 	if (randomVectorSRV != nullptr)
 		randomVectorSRV->Release();
+	if (pointSamplerClamp != nullptr)
+		pointSamplerClamp->Release();
+	if (linearSamplerClamp != nullptr)
+		linearSamplerClamp->Release();
 }
 
 void SSAOMaterial::SetCamera(Camera* camera)
@@ -43,7 +68,7 @@ void SSAOMaterial::SetShaderData()
 	DirectX::XMStoreFloat4x4(&invProjMat, XMMatrixTranspose(XMMatrixInverse(nullptr, P)));
 
 	DirectX::XMFLOAT4X4 projTex{};
-	XMStoreFloat4x4(&projTex, XMMatrixTranspose(P*T));
+	XMStoreFloat4x4(&projTex, XMMatrixTranspose(P * T));
 
 	DirectX::XMFLOAT4 randomNumbers{ float(dis(e) + 1.0f), float(dis(e) + 1.0f), float(dis(e) + 1.0f), float(dis(e) + 1.0f) };
 
@@ -61,6 +86,9 @@ void SSAOMaterial::SetShaderData()
 	pixelShader->SetFloat("gOcclusionFadeEnd", ssaoCB.OcclusionFadeEnd);
 	pixelShader->SetFloat("gSurfaceEpsilon", ssaoCB.SurfaceEpsilon);
 	pixelShader->SetFloat4("randomNumbers", randomNumbers);
+
+	pixelShader->SetSamplerState("pointSamplerClamp", pointSamplerClamp);
+	pixelShader->SetSamplerState("linearSamplerClamp", linearSamplerClamp);
 
 }
 
