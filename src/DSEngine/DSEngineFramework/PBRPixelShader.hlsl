@@ -47,6 +47,7 @@ struct Material
     // Material Data
     float3 albedo;
     float roughness;
+    float4 emission;
     float metalness;
     float transparency;
     int hasNormalMap;
@@ -571,8 +572,9 @@ PixelOutput main(VertexToPixel input)
 
     }
 
-    result = surfaceColor * diffuse + specular + float4(IBL(n, v, l, surfaceColor.rgb), 0.0f);
+    result = surfaceColor * diffuse + specular + float4(IBL(n, v, l, surfaceColor.rgb), 0.0f) + float4(material.emission.xyz * material.emission.a, 0.0f);
     result.a = saturate(surfaceColor.a * (1.0f - material.transparency));
+
 
     output.Target0 = saturate(result);
     output.Target1 = saturate(result - float4(1.0f, 1.0f, 1.0f, 0.0f));

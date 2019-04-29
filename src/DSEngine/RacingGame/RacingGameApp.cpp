@@ -240,6 +240,10 @@ void RacingGameApp::Init()
 		}
 	}
 
+	Object* CarLight = *(++CurrentActiveScene()->FindObjectsByName("Mesh202_032Group11_032Gruppe_15_1_032Group1_032Lamborghini_Aventador1_032Model").begin());
+	MeshRenderer* CarLightRenderer = CarLight->GetComponent<MeshRenderer>();
+	PBRMaterial* CarLightMaterial = static_cast<PBRMaterial*>(CarLightRenderer->GetMaterial());
+
 	WheelCollider* wheelCollider_1 = wheel_1->AddComponent<WheelCollider>();
 	wheelCollider_1->SetRadius(1.0f);
 	wheelCollider_1->SetMaxSteeringAngle(25.0f);
@@ -305,7 +309,7 @@ void RacingGameApp::Init()
 	WheelController * wheelController_2 = wheel_2->AddComponent<WheelController>();
 	WheelController * wheelController_3 = wheel_3->AddComponent<WheelController>();
 	WheelController * wheelController_4 = wheel_4->AddComponent<WheelController>();
-
+	wheelController_1->carLightMaterial = CarLightMaterial;
 	//AudioSource * audioSource1 = parentObj->AddComponent<AudioSource>();
 	//audioSource1->Is3D = true;
 	//audioSource1->Loop = true;

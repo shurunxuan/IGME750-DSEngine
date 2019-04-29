@@ -70,6 +70,12 @@ public:
 		 */
 		float roughness = 0.1f;
 		/**
+		 * @brief Emission
+		 * 
+		 * Alpha channel means the emission factor
+		 */
+		DirectX::XMFLOAT4 emission = { 1.0f, 1.0f, 1.0f, 0.0f };
+		/**
 		 * @brief Metalness
 		 * 
 		 */
