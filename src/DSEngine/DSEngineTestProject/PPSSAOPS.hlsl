@@ -25,7 +25,8 @@ cbuffer cbSsao : register(b0)
 // Nonnumeric values cannot be added to a cbuffer.
 Texture2D renderTexture0    : register(t2); // Normal
 Texture2D renderTexture1    : register(t3); // Depth
-Texture2D gRandomVecMap		: register(t4);
+Texture2D renderTexture2    : register(t4); // Darkened Color
+Texture2D gRandomVecMap		: register(t5);
 SamplerState pointSampler : register(s0);
 SamplerState linearSampler : register(s1); 
 SamplerState pointSamplerClamp : register(s0);
@@ -118,7 +119,7 @@ float4 main(VertexOut pin) : SV_Target0
 	//float3 randVec = 2.0f*gRandomVecMap.SampleLevel(linearSampler, pin.TexC, 0.0f).rgb - 1.0f;
 
 	float occlusionSum = 0.0f;
-
+	float3 lightingSum = float3(0.0f, 0.0f, 0.0f);
 	// Sample neighboring points about p in the hemisphere oriented by n.
 	for (int i = 0; i < gSampleCount; ++i)
 	{
@@ -147,6 +148,8 @@ float4 main(VertexOut pin) : SV_Target0
 		float rz = renderTexture1.SampleLevel(linearSamplerClamp, projQ.xy, 0.0f).r;
 		rz = NdcDepthToViewDepth(rz);
 
+		float3 lightColor = renderTexture2.SampleLevel(linearSamplerClamp, projQ.xy, 0.0f).rgb;
+
 		// Reconstruct full view space position r = (rx,ry,rz).  We know r
 		// lies on the ray of q, so there exists a t such that r = t*q.
 		// r.z = t*q.z ==> t = r.z / q.z
@@ -171,13 +174,15 @@ float4 main(VertexOut pin) : SV_Target0
 		float occlusion = dp * OcclusionFunction(distZ);
 
 		occlusionSum += occlusion;
+		lightingSum += lightColor;
 	}
 
 	occlusionSum /= gSampleCount;
-
+	lightingSum /= gSampleCount;
+	lightingSum *= occlusionSum * 4;
 	float access = 1.0f - occlusionSum;
-
+	access = pow(access, 6.0f);
 	// Sharpen the contrast of the SSAO map to make the SSAO affect more dramatic.
-	return saturate(pow(access, 3.0f));
+	return saturate(float4(access + lightingSum.r, access + lightingSum.g, access + lightingSum.b, 1.0f));
 	//return saturate(access);
 }

@@ -77,9 +77,9 @@ void TowerGameApp::Init()
 	ppSSAOPS->LoadShaderFile(L"PPSSAOPS.cso");
 	ppSSAOVS = new SimpleVertexShader(device, context);
 	ppSSAOVS->LoadShaderFile(L"PPSSAOVS.cso");
-	ssaoMaterial = new SSAOMaterial(2, { 3, -1 }, 1, { 7 }, ppSSAOVS, ppSSAOPS, device);
+	ssaoMaterial = new SSAOMaterial(3, { 3, -1, 0 }, 1, { 7 }, ppSSAOVS, ppSSAOPS, device);
 	ssaoMaterial->SetCamera(CurrentActiveScene()->mainCamera);
-	SRendering->RegisterPostProcessing(ssaoMaterial); // -1 & 3 -> 7
+	SRendering->RegisterPostProcessing(ssaoMaterial); // -1 & 3 & 1 -> 7
 
 	blurSSAOUMaterial = new PPGaussianBlurMaterial(1, { 7 }, 1, { 4 }, SRendering->GetDefaultPostProcessingVertexShader(), ppGaussianBlurUPS, device);
 	blurSSAOVMaterial = new PPGaussianBlurMaterial(1, { 4 }, 1, { 5 }, SRendering->GetDefaultPostProcessingVertexShader(), ppGaussianBlurVPS, device);

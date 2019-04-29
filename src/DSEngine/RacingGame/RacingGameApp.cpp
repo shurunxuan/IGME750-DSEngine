@@ -77,7 +77,7 @@ void RacingGameApp::Init()
 	ppSSAOPS->LoadShaderFile(L"PPSSAOPS.cso");
 	ppSSAOVS = new SimpleVertexShader(device, context);
 	ppSSAOVS->LoadShaderFile(L"PPSSAOVS.cso");
-	ssaoMaterial = new SSAOMaterial(2, { 3, -1 }, 1, { 7 }, ppSSAOVS, ppSSAOPS, device);
+	ssaoMaterial = new SSAOMaterial(3, { 3, -1, 0 }, 1, { 7 }, ppSSAOVS, ppSSAOPS, device);
 	ssaoMaterial->SetCamera(CurrentActiveScene()->mainCamera);
 	SRendering->RegisterPostProcessing(ssaoMaterial); // -1 & 3 -> 7
 

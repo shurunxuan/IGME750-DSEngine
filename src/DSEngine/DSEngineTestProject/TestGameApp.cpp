@@ -72,21 +72,21 @@ void TestGameApp::Init()
 	ppSSAOPS->LoadShaderFile(L"PPSSAOPS.cso");
 	ppSSAOVS = new SimpleVertexShader(device, context);
 	ppSSAOVS->LoadShaderFile(L"PPSSAOVS.cso");
-	ssaoMaterial = new SSAOMaterial(2, { 3, -1 }, 1, { 7 }, ppSSAOVS, ppSSAOPS, device);
+	ssaoMaterial = new SSAOMaterial(3, { 3, -1, 0 }, 1, { 7 }, ppSSAOVS, ppSSAOPS, device);
 	ssaoMaterial->SetCamera(CurrentActiveScene()->mainCamera);
-	SRendering->RegisterPostProcessing(ssaoMaterial); // -1 & 3 -> 7
+	SRendering->RegisterPostProcessing(ssaoMaterial); // -1 & 3 & 1 -> 7
 
-	blurSSAOUMaterial = new PPGaussianBlurMaterial(1, { 7 }, 1, { 4 }, SRendering->GetDefaultPostProcessingVertexShader(), ppGaussianBlurUPS, device);
-	blurSSAOVMaterial = new PPGaussianBlurMaterial(1, { 4 }, 1, { 5 }, SRendering->GetDefaultPostProcessingVertexShader(), ppGaussianBlurVPS, device);
-	blurSSAOUMaterial->SetScreenSizePtr(&width, &height);
-	blurSSAOVMaterial->SetScreenSizePtr(&width, &height);
-	SRendering->RegisterPostProcessing(blurSSAOUMaterial); // 7 -> 4
-	SRendering->RegisterPostProcessing(blurSSAOVMaterial); // 4 -> 5
+	//blurSSAOUMaterial = new PPGaussianBlurMaterial(1, { 7 }, 1, { 4 }, SRendering->GetDefaultPostProcessingVertexShader(), ppGaussianBlurUPS, device);
+	//blurSSAOVMaterial = new PPGaussianBlurMaterial(1, { 4 }, 1, { 5 }, SRendering->GetDefaultPostProcessingVertexShader(), ppGaussianBlurVPS, device);
+	//blurSSAOUMaterial->SetScreenSizePtr(&width, &height);
+	//blurSSAOVMaterial->SetScreenSizePtr(&width, &height);
+	//SRendering->RegisterPostProcessing(blurSSAOUMaterial); // 7 -> 4
+	//SRendering->RegisterPostProcessing(blurSSAOVMaterial); // 4 -> 5
 
-	ppMultiplyPS = new SimplePixelShader(device, context);
-	ppMultiplyPS->LoadShaderFile(L"PPMultiplyPS.cso");
-	applySSAOMaterial = new PostProcessingMaterial(2, { 6, 5 }, 1, { 7 }, SRendering->GetDefaultPostProcessingVertexShader(), ppMultiplyPS, device);
-	SRendering->RegisterPostProcessing(applySSAOMaterial); // 6 * 5 -> 7
+	//ppMultiplyPS = new SimplePixelShader(device, context);
+	//ppMultiplyPS->LoadShaderFile(L"PPMultiplyPS.cso");
+	//applySSAOMaterial = new PostProcessingMaterial(2, { 6, 5 }, 1, { 7 }, SRendering->GetDefaultPostProcessingVertexShader(), ppMultiplyPS, device);
+	//SRendering->RegisterPostProcessing(applySSAOMaterial); // 6 * 5 -> 7
 
 	ppDarkCornerPS = new SimplePixelShader(device, context);
 	ppDarkCornerPS->LoadShaderFile(L"PPDarkCornerPS.cso");
