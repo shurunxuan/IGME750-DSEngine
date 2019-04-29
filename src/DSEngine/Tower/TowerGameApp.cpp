@@ -77,9 +77,9 @@ void TowerGameApp::Init()
 	ppSSAOPS->LoadShaderFile(L"PPSSAOPS.cso");
 	ppSSAOVS = new SimpleVertexShader(device, context);
 	ppSSAOVS->LoadShaderFile(L"PPSSAOVS.cso");
-	ssaoMaterial = new SSAOMaterial(2, { 3, -1 }, 1, { 7 }, ppSSAOVS, ppSSAOPS, device);
+	ssaoMaterial = new SSAOMaterial(3, { 3, -1, 0 }, 1, { 7 }, ppSSAOVS, ppSSAOPS, device);
 	ssaoMaterial->SetCamera(CurrentActiveScene()->mainCamera);
-	SRendering->RegisterPostProcessing(ssaoMaterial); // -1 & 3 -> 7
+	SRendering->RegisterPostProcessing(ssaoMaterial); // -1 & 3 & 1 -> 7
 
 	blurSSAOUMaterial = new PPGaussianBlurMaterial(1, { 7 }, 1, { 4 }, SRendering->GetDefaultPostProcessingVertexShader(), ppGaussianBlurUPS, device);
 	blurSSAOVMaterial = new PPGaussianBlurMaterial(1, { 4 }, 1, { 5 }, SRendering->GetDefaultPostProcessingVertexShader(), ppGaussianBlurVPS, device);
@@ -183,7 +183,7 @@ void TowerGameApp::CreateScene()
 	MeshRenderer * TowerBase_meshRenderer = TowerBase_Child->GetComponent<MeshRenderer>();
 	PBRMaterial * TowerBase_Material = static_cast<PBRMaterial*>(TowerBase_meshRenderer->GetMaterial());
 	//std::shared_ptr<UnlitMaterial> TowerBase_Material = std::make_shared<UnlitMaterial>(vertexShader, unlitShader, device);
-	TowerBase_Material->parameters.albedo = DirectX::XMFLOAT3(1.0f, 1.0f, 1.0f);
+	TowerBase_Material->parameters.albedo = DirectX::XMFLOAT3(0.7f, 0.7f, 0.7f);
 	TowerBase_Material->parameters.metalness = 0.0f;
 	TowerBase_Material->parameters.roughness = 1.0f;
 

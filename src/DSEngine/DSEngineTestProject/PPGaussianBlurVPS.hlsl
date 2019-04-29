@@ -8,11 +8,11 @@ Texture2D renderTexture0 : register(t2);
 SamplerState pointSampler : register(s0);
 SamplerState linearSampler : register(s1);
 
-#define KERNEL_SIZE 5
+#define KERNEL_SIZE 11
 
 static const float kernel[KERNEL_SIZE] =
 {
-	0.198005, 0.200995, 0.202001, 0.200995, 0.198005
+	0.077718, 0.08518, 0.091475, 0.096255, 0.099242, 0.100258, 0.099242, 0.096255, 0.091475, 0.08518, 0.077718
 };
 
 cbuffer GaussianBlurConstantBuffer : register(b0)

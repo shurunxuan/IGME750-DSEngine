@@ -77,7 +77,7 @@ void RacingGameApp::Init()
 	ppSSAOPS->LoadShaderFile(L"PPSSAOPS.cso");
 	ppSSAOVS = new SimpleVertexShader(device, context);
 	ppSSAOVS->LoadShaderFile(L"PPSSAOVS.cso");
-	ssaoMaterial = new SSAOMaterial(2, { 3, -1 }, 1, { 7 }, ppSSAOVS, ppSSAOPS, device);
+	ssaoMaterial = new SSAOMaterial(3, { 3, -1, 0 }, 1, { 7 }, ppSSAOVS, ppSSAOPS, device);
 	ssaoMaterial->SetCamera(CurrentActiveScene()->mainCamera);
 	SRendering->RegisterPostProcessing(ssaoMaterial); // -1 & 3 -> 7
 
@@ -240,6 +240,10 @@ void RacingGameApp::Init()
 		}
 	}
 
+	Object* CarLight = *(++CurrentActiveScene()->FindObjectsByName("Mesh202_032Group11_032Gruppe_15_1_032Group1_032Lamborghini_Aventador1_032Model").begin());
+	MeshRenderer* CarLightRenderer = CarLight->GetComponent<MeshRenderer>();
+	PBRMaterial* CarLightMaterial = static_cast<PBRMaterial*>(CarLightRenderer->GetMaterial());
+
 	WheelCollider* wheelCollider_1 = wheel_1->AddComponent<WheelCollider>();
 	wheelCollider_1->SetRadius(1.0f);
 	wheelCollider_1->SetMaxSteeringAngle(25.0f);
@@ -299,13 +303,13 @@ void RacingGameApp::Init()
 	//	if (i == 0) parentObj = obj;
 	//}
 
-
+	
 	// Add Components
 	WheelController * wheelController_1 = wheel_1->AddComponent<WheelController>();
 	WheelController * wheelController_2 = wheel_2->AddComponent<WheelController>();
 	WheelController * wheelController_3 = wheel_3->AddComponent<WheelController>();
 	WheelController * wheelController_4 = wheel_4->AddComponent<WheelController>();
-
+	wheelController_1->carLightMaterial = CarLightMaterial;
 	//AudioSource * audioSource1 = parentObj->AddComponent<AudioSource>();
 	//audioSource1->Is3D = true;
 	//audioSource1->Loop = true;

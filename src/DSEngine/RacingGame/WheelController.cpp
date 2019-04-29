@@ -8,6 +8,7 @@ WheelController::WheelController(Object * owner)
 	: Component(owner)
 {
 	carRigidBody = nullptr;
+	carLightMaterial = nullptr;
 }
 
 WheelController::~WheelController()
@@ -25,6 +26,7 @@ void WheelController::Update(float deltaTime, float totalTime)
 		Object* car = object->GetScene()->FindObjectByName("AventHolder");
 		carRigidBody = car->GetComponent<RigidBody>();
 	}
+
 	const DirectX::XMFLOAT3 velocity = carRigidBody->GetVelocity();
 	const float speed = sqrtf(velocity.x * velocity.x + velocity.y * velocity.y + velocity.z * velocity.z);
 	const float steerLimit = 1 - speed / 75.0f;
@@ -34,6 +36,17 @@ void WheelController::Update(float deltaTime, float totalTime)
 	//float arrowHorizontal = SInput->GetAxis("Horizontal");
 	float accel = SInput->GetAxis("Accelerate");
 	float brake = SInput->GetAxis("Brake");
+	if (carLightMaterial != nullptr)
+	{
+		if (brake > accel)
+		{
+			carLightMaterial->parameters.emission = { 1.0f, 0.0f, 0.0f, 10.0f };
+		}
+		else
+		{
+			carLightMaterial->parameters.emission = { 1.0f, 0.0f, 0.0f, 0.0f };
+		}
+	}
 	const float steer = SInput->GetAxis("Horizontal");
 	if (stopped)
 	{
@@ -53,4 +66,6 @@ void WheelController::Update(float deltaTime, float totalTime)
 	object->GetComponent<WheelCollider>()->SetSteerFactor(steer * steerLimit);
 	object->GetComponent<WheelCollider>()->SetMotorTorque(accel * 4000.0f);
 	object->GetComponent<WheelCollider>()->SetBrakeTorque(brake * 4000.0f);
+
+
 }
