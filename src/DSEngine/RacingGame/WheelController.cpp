@@ -40,7 +40,7 @@ void WheelController::Update(float deltaTime, float totalTime)
 	{
 		if (brake > accel)
 		{
-			carLightMaterial->parameters.emission = { 1.0f, 0.0f, 0.0f, 2.0f };
+			carLightMaterial->parameters.emission = { 1.0f, 0.0f, 0.0f, 10.0f };
 		}
 		else
 		{

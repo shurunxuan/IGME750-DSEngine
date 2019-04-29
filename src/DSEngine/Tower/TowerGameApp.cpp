@@ -183,7 +183,7 @@ void TowerGameApp::CreateScene()
 	MeshRenderer * TowerBase_meshRenderer = TowerBase_Child->GetComponent<MeshRenderer>();
 	PBRMaterial * TowerBase_Material = static_cast<PBRMaterial*>(TowerBase_meshRenderer->GetMaterial());
 	//std::shared_ptr<UnlitMaterial> TowerBase_Material = std::make_shared<UnlitMaterial>(vertexShader, unlitShader, device);
-	TowerBase_Material->parameters.albedo = DirectX::XMFLOAT3(1.0f, 1.0f, 1.0f);
+	TowerBase_Material->parameters.albedo = DirectX::XMFLOAT3(0.7f, 0.7f, 0.7f);
 	TowerBase_Material->parameters.metalness = 0.0f;
 	TowerBase_Material->parameters.roughness = 1.0f;
 

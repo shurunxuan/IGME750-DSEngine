@@ -303,7 +303,7 @@ void RacingGameApp::Init()
 	//	if (i == 0) parentObj = obj;
 	//}
 
-
+	
 	// Add Components
 	WheelController * wheelController_1 = wheel_1->AddComponent<WheelController>();
 	WheelController * wheelController_2 = wheel_2->AddComponent<WheelController>();
