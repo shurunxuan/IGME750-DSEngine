@@ -16,20 +16,25 @@ CameraController::~CameraController()
 
 void CameraController::Start()
 {
+
 }
 
 void CameraController::Update(float deltaTime, float totalTime)
-{	
+{
 	// Use left stick of joystick 0 to move camera
 	float horizontal = SInput->GetAxis("Horizontal");
 	float vertical = SInput->GetAxis("Vertical");
-
+	float speed = 4.0f;
+	if (SInput->GetButton("CameraSpeedModifier"))
+	{
+		speed = 40.0f;
+	}
 	DirectX::XMVECTOR position = object->transform->GetLocalTranslation();
-	position = DirectX::XMVectorAdd(position, DirectX::XMVectorScale(object->transform->Right(), deltaTime * horizontal * 4));
-	position = DirectX::XMVectorAdd(position, DirectX::XMVectorScale(object->transform->Forward(), deltaTime * vertical * 4));
+	position = DirectX::XMVectorAdd(position, DirectX::XMVectorScale(object->transform->Right(), deltaTime * horizontal * speed));
+	position = DirectX::XMVectorAdd(position, DirectX::XMVectorScale(object->transform->Forward(), deltaTime * vertical * speed));
 	object->transform->SetLocalTranslation(position);
 
-	// Use left stick of joystick 0 to rotate camera
+	// Use right stick of joystick 0 to rotate camera
 	float rightHorizontal = SInput->GetAxis("CameraHorizontal");
 	float rightVertical = SInput->GetAxis("CameraVertical");
 
@@ -39,4 +44,5 @@ void CameraController::Update(float deltaTime, float totalTime)
 	rotation = DirectX::XMQuaternionMultiply(rotation, rotationRightAxis);
 	rotation = DirectX::XMQuaternionMultiply(rotation, rotationUpAxis);
 	object->transform->SetLocalRotation(rotation);
+
 }

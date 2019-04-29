@@ -93,7 +93,8 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <PreprocessorDefinitions>NOMINMAX;BOOST_ALL_DYN_LINK;__SOLUTION_DIR__=R"($(SolutionDir))";__FILE_NAME__=R"(%(FullPath))";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NOMINMAX;BOOST_ALL_DYN_LINK;__SOLUTION_DIR__=R"($(SolutionDir))";__FILE_NAME__=R"(%(FullPath))";_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -116,7 +117,8 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <PreprocessorDefinitions>NOMINMAX;BOOST_ALL_DYN_LINK;__SOLUTION_DIR__=R"($(SolutionDir))";__FILE_NAME__=R"(%(FullPath))";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NOMINMAX;BOOST_ALL_DYN_LINK;__SOLUTION_DIR__=R"($(SolutionDir))";__FILE_NAME__=R"(%(FullPath))";_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -137,7 +139,8 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <PreprocessorDefinitions>NOMINMAX;BOOST_ALL_DYN_LINK;__SOLUTION_DIR__=R"($(SolutionDir))";__FILE_NAME__=R"(%(FullPath))";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NOMINMAX;BOOST_ALL_DYN_LINK;__SOLUTION_DIR__=R"($(SolutionDir))";__FILE_NAME__=R"(%(FullPath))";_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -160,7 +163,8 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <PreprocessorDefinitions>NOMINMAX;BOOST_ALL_DYN_LINK;__SOLUTION_DIR__=R"($(SolutionDir))";__FILE_NAME__=R"(%(FullPath))";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NOMINMAX;BOOST_ALL_DYN_LINK;__SOLUTION_DIR__=R"($(SolutionDir))";__FILE_NAME__=R"(%(FullPath))";_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -190,6 +194,9 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MoveObject.cpp" />
     <ClCompile Include="PlayerManager.cpp" />
+    <ClCompile Include="PPDarkCornerMaterial.cpp" />
+    <ClCompile Include="PPGaussianBlurMaterial.cpp" />
+    <ClCompile Include="SSAOMaterial.cpp" />
     <ClCompile Include="TaskCard.cpp" />
     <ClCompile Include="TaskCardGenerator.cpp" />
     <ClCompile Include="TaskDeck.cpp" />
@@ -208,6 +215,9 @@
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="MoveObject.h" />
     <ClInclude Include="PlayerManager.h" />
+    <ClInclude Include="PPDarkCornerMaterial.h" />
+    <ClInclude Include="PPGaussianBlurMaterial.h" />
+    <ClInclude Include="SSAOMaterial.h" />
     <ClInclude Include="TaskCard.h" />
     <ClInclude Include="TaskCardGenerator.h" />
     <ClInclude Include="TaskDeck.h" />

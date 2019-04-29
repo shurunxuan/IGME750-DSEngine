@@ -7,9 +7,9 @@ TaskCard::TaskCard(TaskCardData data)
 int TaskCard::GetColorValue()
 {
 	int colorValue = 0;
-	for (int i = 0; i < taskData.color.size(); i++)
+	for (auto& i : taskData.color)
 	{
-		colorValue += (int)taskData.color[i];
+		colorValue += static_cast<int>(i);
 	}
 	return colorValue;
 }

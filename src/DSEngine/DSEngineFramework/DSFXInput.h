@@ -197,6 +197,15 @@ public:
     float GetRawAxis(DSJoystickAxisCode axisCode, int player) const;
 
     /**
+     * @brief Set the controller vibration
+     * 
+     * @param controllerNum The number of the controller, -1 means all
+     * @param leftMotorSpeed The left motor speed (low-frequency), 0.0f ~ 1.0f
+     * @param rightMotorSpeed The right motor speed (high-frequency), 0.0f ~ 1.0f
+     */
+    void SetControllerRumble(int controllerNum, float leftMotorSpeed, float rightMotorSpeed);
+
+    /**
      * @brief Convert the integer button code to enum value
      * 
      * @param code Integer button code

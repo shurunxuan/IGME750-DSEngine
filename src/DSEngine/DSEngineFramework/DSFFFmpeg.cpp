@@ -32,9 +32,11 @@ DSFFFmpeg::~DSFFFmpeg()
 		swr_free(&swr);
 	av_packet_unref(&packet);
 	if (lastFrame != nullptr)
-		av_frame_free(&lastFrame);
+		if (lastFrame->format >= 0)
+			av_frame_free(&lastFrame);
 	if (frame != nullptr && !eof)
-		av_frame_free(&frame);
+		if (frame->format >= 0)
+			av_frame_free(&frame);
 
 	delete[] swrBuffer;
 
@@ -47,7 +49,6 @@ void DSFFFmpeg::Init()
 {
 	// Allocate the format context
 	formatContext = avformat_alloc_context();
-
 	LOG_TRACE << "DS Engine Framework for FFmpeg Initialized!";
 }
 
@@ -130,7 +131,6 @@ int DSFFFmpeg::ReadFrame()
 				swrBufferLength =
 					lastFrame->nb_samples * lastFrame->channels *
 					av_get_bytes_per_sample(av_get_packed_sample_fmt(AVSampleFormat(lastFrame->format)));
-				LOG_TRACE << "End of audio file";
 			}
 			else
 			{
@@ -285,4 +285,30 @@ int DSFFFmpeg::SendBuffer(IXAudio2SourceVoice * sourceVoice)
 		if (eof) return AVERROR_EOF;
 	}
 	return 0;
+}
+
+int DSFFFmpeg::Seek(int64_t timestamp, bool shouldFreeFrames)
+{
+
+	avcodec_flush_buffers(codecContext);
+
+
+	int res = avformat_seek_file(formatContext,
+		audioStream->index,
+		timestamp,
+		timestamp,
+		timestamp,
+		0
+	);
+	if (shouldFreeFrames)
+	{
+		av_packet_unref(&packet);
+		if (lastFrame != nullptr)
+			av_frame_free(&lastFrame);
+		if (frame != nullptr)
+			av_frame_free(&frame);
+	}
+	ReadFrame();
+	eof = false;
+	return res;
 }

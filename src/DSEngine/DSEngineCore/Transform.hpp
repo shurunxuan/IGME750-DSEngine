@@ -319,7 +319,7 @@ inline void Transform::SetParent(Transform* newParent)
 
 	if (parent != nullptr)
 	{
-		parent->children.remove(newParent);
+		parent->children.remove(this);
 	}
 
 	DirectX::XMMatrixDecompose(&localScale, &localRotation, &localTranslation, XMMatrixTranspose(GetGlobalWorldMatrix()));
@@ -348,7 +348,7 @@ inline std::list<Transform*> Transform::GetChildren() const
 
 inline Transform* Transform::GetChildAt(int index)
 {
-	if (index >= children.size()) return nullptr;
+	if (index >= int(children.size())) return nullptr;
 	auto it = children.begin();
 	for (int i = 0; i < index; ++i)
 		++it;
@@ -479,7 +479,8 @@ inline DirectX::XMMATRIX Transform::GetGlobalInverseTransposeWorldMatrix()
 inline DirectX::XMVECTOR Transform::Forward()
 {
 	const DirectX::XMVECTOR forward = DirectX::XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f);
-	const DirectX::XMVECTOR result = DirectX::XMVector4Transform(forward, XMMatrixTranspose(GetGlobalWorldMatrix()));
+	DirectX::XMVECTOR result = DirectX::XMVector4Transform(forward, XMMatrixTranspose(GetGlobalWorldMatrix()));
+	result = DirectX::XMVector3Normalize(result);
 
 	return result;
 }
@@ -487,7 +488,8 @@ inline DirectX::XMVECTOR Transform::Forward()
 inline DirectX::XMVECTOR Transform::Right()
 {
 	const DirectX::XMVECTOR right = DirectX::XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f);
-	const DirectX::XMVECTOR result = DirectX::XMVector4Transform(right, XMMatrixTranspose(GetGlobalWorldMatrix()));
+	DirectX::XMVECTOR result = DirectX::XMVector4Transform(right, XMMatrixTranspose(GetGlobalWorldMatrix()));
+	result = DirectX::XMVector3Normalize(result);
 
 	return result;
 }
@@ -495,7 +497,8 @@ inline DirectX::XMVECTOR Transform::Right()
 inline DirectX::XMVECTOR Transform::Up()
 {
 	const DirectX::XMVECTOR up = DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
-	const DirectX::XMVECTOR result = DirectX::XMVector4Transform(up, XMMatrixTranspose(GetGlobalWorldMatrix()));
+	DirectX::XMVECTOR result = DirectX::XMVector4Transform(up, XMMatrixTranspose(GetGlobalWorldMatrix()));
+	result = DirectX::XMVector3Normalize(result);
 
 	return result;
 }

@@ -5,6 +5,47 @@
 
 DSFDirect3D* FDirect3D = nullptr;
 
+// Use discrete GPU by default.
+extern "C" {
+	// http://developer.download.nvidia.com/devzone/devcenter/gamegraphics/files/OptimusRenderingPolicies.pdf
+	__declspec(dllexport) DWORD NvOptimusEnablement = 0x00000001;
+
+	// http://developer.amd.com/community/blog/2015/10/02/amd-enduro-system-for-developers/
+	__declspec(dllexport) int AmdPowerXpressRequestHighPerformance = 1;
+}
+
+#if defined(_DEBUG) || defined(PROFILE)
+template<UINT TNameLength>
+void SetDebugName(_In_ ID3D11DeviceChild* resource, _In_z_ const char(&name)[TNameLength])
+{
+	HRESULT nameSet = resource->SetPrivateData(WKPDID_D3DDebugObjectName, TNameLength - 1, name);
+}
+
+template<UINT TNameLength>
+void SetDebugName(_In_ IDXGIObject* resource, _In_z_ const char(&name)[TNameLength])
+{
+	HRESULT nameSet = resource->SetPrivateData(WKPDID_D3DDebugObjectName, TNameLength - 1, name);
+}
+
+void SetDebugName(_In_  ID3D11DeviceChild* resource, _In_z_ std::string debugName)
+{
+	HRESULT nameSet = resource->SetPrivateData(WKPDID_D3DDebugObjectName, debugName.size(), debugName.c_str());
+}
+
+void SetDebugName(_In_  IDXGIObject* resource, _In_z_ std::string debugName)
+{
+	HRESULT nameSet = resource->SetPrivateData(WKPDID_D3DDebugObjectName, debugName.size(), debugName.c_str());
+}
+
+void SetDebugName(_In_  ID3D11Device* resource, _In_z_ std::string debugName)
+{
+	HRESULT nameSet = resource->SetPrivateData(WKPDID_D3DDebugObjectName, debugName.size(), debugName.c_str());
+}
+#else
+#define SetDebugName(resource, name)
+#endif
+
+
 DSFDirect3D::DSFDirect3D()
 {
 	FDirect3D = this;
@@ -14,24 +55,56 @@ DSFDirect3D::DSFDirect3D()
 	swapChain = nullptr;
 	backBufferRTV = nullptr;
 	depthStencilView = nullptr;
+	depthResourceView = nullptr;
 	shadowRenderState = nullptr;
 	drawingRenderState = nullptr;
-	comparisonSampler = nullptr;
+	pointSamplerState = nullptr;
+	linearSamplerState = nullptr;
+	pointComparisonSamplerState = nullptr;
+	linearComparisonSamplerState = nullptr;
+	shadowMapSampler = nullptr;
+
+	for (int i = 0; i < D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT; ++i)
+	{
+		renderTargetView[i] = nullptr;
+		renderResourceView[i] = nullptr;
+	}
+
 	dxFeatureLevel = {};
 }
 
 
 DSFDirect3D::~DSFDirect3D()
 {
-	SAFE_RELEASE(device);
-	SAFE_RELEASE(context);
-	SAFE_RELEASE(swapChain);
-	SAFE_RELEASE(backBufferRTV);
-	SAFE_RELEASE(depthStencilView);
-	SAFE_RELEASE(depthStencilState);
-	SAFE_RELEASE(shadowRenderState);
+	SAFE_RELEASE(linearComparisonSamplerState);
+	SAFE_RELEASE(pointComparisonSamplerState);
+	SAFE_RELEASE(linearSamplerState);
+	SAFE_RELEASE(pointSamplerState);
+	SAFE_RELEASE(shadowMapSampler);
 	SAFE_RELEASE(drawingRenderState);
-	SAFE_RELEASE(comparisonSampler);
+	SAFE_RELEASE(shadowRenderState);
+	SAFE_RELEASE(depthResourceView);
+	SAFE_RELEASE(depthStencilState);
+	SAFE_RELEASE(depthStencilView);
+
+	for (int i = 0; i < D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT; ++i)
+	{
+		SAFE_RELEASE(renderTargetView[i]);
+		SAFE_RELEASE(renderResourceView[i]);
+	}
+
+	SAFE_RELEASE(backBufferRTV);
+	SAFE_RELEASE(swapChain);
+	SAFE_RELEASE(context);
+
+#if defined(DEBUG) || defined(_DEBUG)
+	ID3D11Debug * debugDevice;
+	device->QueryInterface(__uuidof(ID3D11Debug), reinterpret_cast<void**>(&debugDevice));
+	debugDevice->ReportLiveDeviceObjects(D3D11_RLDO_DETAIL);
+	SAFE_RELEASE(debugDevice);
+#endif
+	SAFE_RELEASE(device);
+
 }
 
 HRESULT DSFDirect3D::Init(HWND hWnd, unsigned int screenWidth, unsigned int screenHeight)
@@ -52,6 +125,9 @@ HRESULT DSFDirect3D::Init(HWND hWnd, unsigned int screenWidth, unsigned int scre
 	if (FAILED(hr)) return hr;
 
 	hr = CreateShadowAndDrawingRenderState();
+	if (FAILED(hr)) return hr;
+
+	hr = CreateSamplerStates();
 	if (FAILED(hr)) return hr;
 
 	SetDefaultRenderTarget();
@@ -76,6 +152,12 @@ HRESULT DSFDirect3D::OnResize(unsigned int screenWidth, unsigned int screenHeigh
 	if (depthStencilView) { depthStencilView->Release(); }
 	if (backBufferRTV) { backBufferRTV->Release(); }
 
+	for (int i = 0; i < D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT; ++i)
+	{
+		if (renderTargetView[i]) { renderTargetView[i]->Release(); }
+		if (renderResourceView[i]) { renderResourceView[i]->Release(); }
+	}
+
 	HRESULT hr = ResizeSwapBuffers();
 	if (FAILED(hr)) return hr;
 
@@ -83,12 +165,6 @@ HRESULT DSFDirect3D::OnResize(unsigned int screenWidth, unsigned int screenHeigh
 	if (FAILED(hr)) return hr;
 
 	hr = CreateDepthStencilView();
-	if (FAILED(hr)) return hr;
-
-	hr = CreateDepthStencilState();
-	if (FAILED(hr)) return hr;
-
-	hr = CreateShadowAndDrawingRenderState();
 	if (FAILED(hr)) return hr;
 
 	SetDefaultRenderTarget();
@@ -113,6 +189,8 @@ void DSFDirect3D::ClearRenderTarget(float r, float g, float b, float a)
 	//  - Do this ONCE PER FRAME
 	//  - At the beginning of Draw (before drawing *anything*)
 	context->ClearRenderTargetView(backBufferRTV, color);
+	for (auto& i : renderTargetView)
+		context->ClearRenderTargetView(i, color);
 	context->ClearDepthStencilView(
 		depthStencilView,
 		D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL,
@@ -124,8 +202,10 @@ void DSFDirect3D::SetDefaultRenderTarget() const
 {
 	// Bind the views to the pipeline, so rendering properly 
 	// uses their underlying textures
-	context->OMSetRenderTargets(1, &backBufferRTV, depthStencilView);
+	//context->OMSetRenderTargets(1, &backBufferRTV, depthStencilView);
 
+	// The last buffer is reserved as an texture for refraction effects
+	context->OMSetRenderTargets(D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT, renderTargetView, depthStencilView);
 	// Lastly, set up a viewport so we render into
 	// to correct portion of the window
 	D3D11_VIEWPORT viewport = {};
@@ -138,7 +218,7 @@ void DSFDirect3D::SetDefaultRenderTarget() const
 	context->RSSetViewports(1, &viewport);
 }
 
-void DSFDirect3D::ClearAndSetShadowRenderTarget(Light* light) const
+void DSFDirect3D::ClearAndSetShadowRenderTarget(Light * light) const
 {
 	// Clear depth stencil view
 	context->ClearDepthStencilView(light->GetShadowDepthView(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
@@ -152,7 +232,7 @@ void DSFDirect3D::ClearAndSetShadowRenderTarget(Light* light) const
 	);
 }
 
-void DSFDirect3D::PreProcess(Light* light, MeshRenderer* meshRenderer, SimpleVertexShader* shadowVertexShader) const
+void DSFDirect3D::PreProcess(Light * light, MeshRenderer * meshRenderer, SimpleVertexShader * shadowVertexShader) const
 {
 	// Note that starting with the second frame, the previous call will display
 	// warnings in VS debug output about forcing an unbind of the pixel shader
@@ -203,7 +283,7 @@ void DSFDirect3D::PreProcess(Light* light, MeshRenderer* meshRenderer, SimpleVer
 	}
 }
 
-void DSFDirect3D::Render(Camera* camera, MeshRenderer* meshRenderer)
+void DSFDirect3D::Render(Camera * camera, MeshRenderer * meshRenderer)
 {
 	SetDefaultRenderTarget();
 
@@ -264,11 +344,11 @@ void DSFDirect3D::Render(Camera* camera, MeshRenderer* meshRenderer)
 		material->GetPixelShaderPtr()->SetInt("HasSkybox", 0);
 		material->GetPixelShaderPtr()->SetInt("HasIrradianceMap", 0);
 	}
-
+	material->GetPixelShaderPtr()->SetShaderResourceView("lastDrawBuffer", renderResourceView[D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT - 1]);
 
 	if (lights != nullptr && lightCount > 0)
 	{
-		material->GetPixelShaderPtr()->SetSamplerState("shadowSampler", comparisonSampler);
+		material->GetPixelShaderPtr()->SetSamplerState("shadowSampler", shadowMapSampler);
 
 		for (Light* light : meshRenderer->object->GetScene()->lights)
 		{
@@ -353,8 +433,9 @@ void DSFDirect3D::Render(Camera* camera, MeshRenderer* meshRenderer)
 		0,     // Offset to the first index we want to use
 		0);    // Offset to add to each index when looking up vertices
 
-	// Unbind shadowMap
+	// Unbind resources
 	material->GetPixelShaderPtr()->SetShaderResourceView("shadowMap", nullptr);
+	material->GetPixelShaderPtr()->SetShaderResourceView("lastDrawBuffer", nullptr);
 }
 
 void DSFDirect3D::RenderSkybox(Camera * camera)
@@ -386,8 +467,8 @@ void DSFDirect3D::RenderSkybox(Camera * camera)
 	skybox->GetVertexShader()->SetShader();
 	skybox->GetPixelShader()->SetShader();
 
-	ID3D11Buffer* vertexBuffer = skybox->GetVertexBuffer();
-	ID3D11Buffer* indexBuffer = skybox->GetIndexBuffer();
+	ID3D11Buffer * vertexBuffer = skybox->GetVertexBuffer();
+	ID3D11Buffer * indexBuffer = skybox->GetIndexBuffer();
 
 	UINT stride = sizeof(Vertex);
 	UINT offset = 0;
@@ -397,12 +478,84 @@ void DSFDirect3D::RenderSkybox(Camera * camera)
 	context->DrawIndexed(36, 0, 0);
 }
 
+void DSFDirect3D::PostProcessing(PostProcessingMaterial * postProcessingMaterial)
+{
+	int* sourceIndices;
+	int* targetIndices;
+	const int sourceCount = int(postProcessingMaterial->GetSourceIndices(&sourceIndices));
+	const int targetCount = int(postProcessingMaterial->GetTargetIndices(&targetIndices));
+
+	std::vector<ID3D11ShaderResourceView*> resourceViews;
+	std::vector<ID3D11RenderTargetView*> targetViews;
+	resourceViews.reserve(sourceCount);
+	targetViews.reserve(targetCount);
+	for (int i = 0; i < sourceCount; ++i)
+	{
+		if (sourceIndices[i] < 0)
+		{
+			resourceViews.push_back(depthResourceView);
+		}
+		else
+		{
+			resourceViews.push_back(renderResourceView[sourceIndices[i]]);
+		}
+	}
+	for (int i = 0; i < targetCount; ++i)
+	{
+		if (targetIndices[i] < 0)
+		{
+			targetViews.push_back(backBufferRTV);
+		}
+		else
+		{
+			targetViews.push_back(renderTargetView[targetIndices[i]]);
+		}
+	}
+
+	// Render to target
+	// We don't need a depth buffer for this
+	context->OMSetRenderTargets(targetCount, &*targetViews.begin(), nullptr);
+
+	// Set data
+	postProcessingMaterial->SetMaterialData();
+
+	// Set texture
+	postProcessingMaterial->GetPixelShaderPtr()->SetSamplerState("pointSampler", pointSamplerState);
+	postProcessingMaterial->GetPixelShaderPtr()->SetSamplerState("linearSampler", linearSamplerState);
+	postProcessingMaterial->GetPixelShaderPtr()->SetSamplerState("pointComparisonSampler", pointComparisonSamplerState);
+	postProcessingMaterial->GetPixelShaderPtr()->SetSamplerState("linearComparisonSampler", linearComparisonSamplerState);
+	for (int i = 0; i < sourceCount; ++i)
+	{
+		char name[16];
+		sprintf_s(name, "renderTexture%d", i);
+		postProcessingMaterial->GetPixelShaderPtr()->SetShaderResourceView(name, resourceViews[i]);
+	}
+
+	// Copy all buffer data
+	postProcessingMaterial->GetPixelShaderPtr()->CopyAllBufferData();
+	postProcessingMaterial->GetVertexShaderPtr()->CopyAllBufferData();
+
+	// Set shader
+	postProcessingMaterial->GetVertexShaderPtr()->SetShader();
+	postProcessingMaterial->GetPixelShaderPtr()->SetShader();
+
+	// Draw
+	context->Draw(3, 0);
+
+	for (int i = 0; i < sourceCount; ++i)
+	{
+		char name[16];
+		sprintf_s(name, "renderTexture%d", i);
+		postProcessingMaterial->GetPixelShaderPtr()->SetShaderResourceView(name, nullptr);
+	}
+}
+
 void DSFDirect3D::Present()
 {
 	// Present the back buffer to the user
 	//  - Puts the final frame we're drawing into the window so the user can see it
 	//  - Do this exactly ONCE PER FRAME (always at the very end of the frame)
-	swapChain->Present(0, 0);
+	swapChain->Present(1, 0);
 
 	// Bind the views to the pipeline
 	context->OMSetRenderTargets(1, &backBufferRTV, depthStencilView);
@@ -471,7 +624,7 @@ HRESULT DSFDirect3D::CreateDeviceAndSwapBuffer()
 	swapDesc.Windowed = true;
 
 	// Attempt to initialize DirectX
-	return D3D11CreateDeviceAndSwapChain(
+	HRESULT hr = D3D11CreateDeviceAndSwapChain(
 		nullptr,				// Video adapter (physical GPU) to use, or null for default
 		D3D_DRIVER_TYPE_HARDWARE,	// We want to use the hardware (GPU)
 		nullptr,				// Used when doing software rendering
@@ -484,6 +637,11 @@ HRESULT DSFDirect3D::CreateDeviceAndSwapBuffer()
 		&device,					// Pointer to our Device pointer
 		&dxFeatureLevel,			// This will hold the actual feature level the app will use
 		&context);					// Pointer to our Device Context pointer
+	SetDebugName(swapChain, "DSFDirect3D::swapChain");
+	SetDebugName(device, "DSFDirect3D::device");
+	SetDebugName(context, "DSFDirect3D::context");
+
+	return hr;
 }
 
 HRESULT DSFDirect3D::CreateRenderTargetView()
@@ -509,32 +667,103 @@ HRESULT DSFDirect3D::CreateRenderTargetView()
 		backBufferTexture,
 		&rtvDesc,
 		&backBufferRTV);
+
+	SetDebugName(backBufferRTV, "DSFDirect3D::backBufferRTV");
+
+	// Get the description of backBufferTexture and apply it to the renderTexture
+	D3D11_TEXTURE2D_DESC renderTexDesc;
+	ID3D11Texture2D* renderTexture[D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT] = { nullptr };
+	ZeroMemory(&renderTexDesc, sizeof(D3D11_TEXTURE2D_DESC));
+	backBufferTexture->GetDesc(&renderTexDesc);
 	backBufferTexture->Release();
+	renderTexDesc.Format = DXGI_FORMAT_R16G16B16A16_FLOAT;
+	renderTexDesc.BindFlags |= D3D11_BIND_SHADER_RESOURCE;
+	for (int i = 0; i < D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT; ++i)
+		device->CreateTexture2D(&renderTexDesc, nullptr, renderTexture + i);
+
+	// Create Render Target View with the renderTexture
+	for (int i = 0; i < D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT; ++i)
+	{
+		device->CreateRenderTargetView(
+			renderTexture[i],
+			nullptr,
+			renderTargetView + i
+		);
+
+		SetDebugName(renderTargetView[i], std::string("DSFDirect3D::renderTargetView[") + std::to_string(i) + std::string("]"));
+
+	}
+
+	// Create Shader Resource View with the renderTexture
+	D3D11_SHADER_RESOURCE_VIEW_DESC renderSRVDesc;
+	ZeroMemory(&renderSRVDesc, sizeof(D3D11_SHADER_RESOURCE_VIEW_DESC));
+	renderSRVDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+	renderSRVDesc.Format = DXGI_FORMAT_R16G16B16A16_FLOAT;
+	renderSRVDesc.Texture2D.MipLevels = 1;
+
+	for (int i = 0; i < D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT; ++i)
+	{
+		device->CreateShaderResourceView(
+			renderTexture[i],
+			&renderSRVDesc,
+			renderResourceView + i
+		);
+		SetDebugName(renderResourceView[i], std::string("DSFDirect3D::renderResourceView[") + std::to_string(i) + std::string("]"));
+	}
+
+	// Release the render target texture because we don't need it anymore
+	for (auto& i : renderTexture)
+		i->Release();
+
+
 	return hr;
 }
 
 HRESULT DSFDirect3D::CreateDepthStencilView()
 {
 	// Set up the description of the texture to use for the depth buffer
-	D3D11_TEXTURE2D_DESC depthStencilDesc = {};
+	D3D11_TEXTURE2D_DESC depthStencilDesc;
+	ZeroMemory(&depthStencilDesc, sizeof(D3D11_TEXTURE2D_DESC));
 	depthStencilDesc.Width = width;
 	depthStencilDesc.Height = height;
+	depthStencilDesc.Format = DXGI_FORMAT_R24G8_TYPELESS;
 	depthStencilDesc.MipLevels = 1;
 	depthStencilDesc.ArraySize = 1;
-	depthStencilDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
-	depthStencilDesc.Usage = D3D11_USAGE_DEFAULT;
-	depthStencilDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
-	depthStencilDesc.CPUAccessFlags = 0;
-	depthStencilDesc.MiscFlags = 0;
 	depthStencilDesc.SampleDesc.Count = 1;
-	depthStencilDesc.SampleDesc.Quality = 0;
+	depthStencilDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_DEPTH_STENCIL;
 
 	// Create the depth buffer and its view, then 
 	// release our reference to the texture
-	ID3D11Texture2D* depthBufferTexture;
+	ID3D11Texture2D* depthBufferTexture = nullptr;
 	HRESULT hr = device->CreateTexture2D(&depthStencilDesc, nullptr, &depthBufferTexture);
 	if (FAILED(hr)) return hr;
-	hr = device->CreateDepthStencilView(depthBufferTexture, nullptr, &depthStencilView);
+
+	D3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc;
+	ZeroMemory(&depthStencilViewDesc, sizeof(D3D11_DEPTH_STENCIL_VIEW_DESC));
+	depthStencilViewDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+	depthStencilViewDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+	depthStencilViewDesc.Texture2D.MipSlice = 0;
+
+	hr = device->CreateDepthStencilView(depthBufferTexture, &depthStencilViewDesc, &depthStencilView);
+
+	if (FAILED(hr)) return hr;
+	SetDebugName(depthStencilView, "DSFDirect3D::depthStencilView");
+
+	D3D11_SHADER_RESOURCE_VIEW_DESC shaderResourceViewDesc;
+	ZeroMemory(&shaderResourceViewDesc, sizeof(D3D11_SHADER_RESOURCE_VIEW_DESC));
+	shaderResourceViewDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+	shaderResourceViewDesc.Format = DXGI_FORMAT_R24_UNORM_X8_TYPELESS;
+	shaderResourceViewDesc.Texture2D.MipLevels = 1;
+
+	hr = device->CreateShaderResourceView(
+		depthBufferTexture,
+		&shaderResourceViewDesc,
+		&depthResourceView
+	);
+
+	if (FAILED(hr)) return hr;
+	SetDebugName(depthResourceView, "DSFDirect3D::depthResourceView");
+
 	depthBufferTexture->Release();
 	return hr;
 }
@@ -569,6 +798,7 @@ HRESULT DSFDirect3D::CreateDepthStencilState()
 	// Create depth stencil state
 	HRESULT hr = device->CreateDepthStencilState(&dsDesc, &depthStencilState);
 	if (FAILED(hr)) return hr;
+	SetDebugName(depthStencilState, "DSFDirect3D::depthStencilState");
 	context->OMSetDepthStencilState(depthStencilState, 0);
 	return hr;
 }
@@ -585,13 +815,14 @@ HRESULT DSFDirect3D::CreateShadowAndDrawingRenderState()
 		&drawingRenderState
 	);
 	if (FAILED(hr)) return hr;
+	SetDebugName(drawingRenderState, "DSFDirect3D::drawingRenderState");
 	D3D11_RASTERIZER_DESC shadowRenderStateDesc;
 	ZeroMemory(&shadowRenderStateDesc, sizeof(D3D11_RASTERIZER_DESC));
 	shadowRenderStateDesc.CullMode = D3D11_CULL_FRONT;
 	shadowRenderStateDesc.FillMode = D3D11_FILL_SOLID;
 	shadowRenderStateDesc.DepthBias = 1000;
 	shadowRenderStateDesc.DepthBiasClamp = 0.0f;
-	shadowRenderStateDesc.SlopeScaledDepthBias = 2.0f;
+	shadowRenderStateDesc.SlopeScaledDepthBias = 1.0f;
 	shadowRenderStateDesc.DepthClipEnable = true;
 
 	hr = device->CreateRasterizerState(
@@ -599,28 +830,111 @@ HRESULT DSFDirect3D::CreateShadowAndDrawingRenderState()
 		&shadowRenderState
 	);
 	if (FAILED(hr)) return hr;
+	SetDebugName(shadowRenderState, "DSFDirect3D::shadowRenderState");
 
-	D3D11_SAMPLER_DESC comparisonSamplerDesc;
-	ZeroMemory(&comparisonSamplerDesc, sizeof(D3D11_SAMPLER_DESC));
-	comparisonSamplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_BORDER;
-	comparisonSamplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_BORDER;
-	comparisonSamplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_BORDER;
-	comparisonSamplerDesc.BorderColor[0] = 1.0f;
-	comparisonSamplerDesc.BorderColor[1] = 1.0f;
-	comparisonSamplerDesc.BorderColor[2] = 1.0f;
-	comparisonSamplerDesc.BorderColor[3] = 1.0f;
-	comparisonSamplerDesc.MinLOD = 0.f;
-	comparisonSamplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
-	comparisonSamplerDesc.MipLODBias = 0.f;
-	comparisonSamplerDesc.MaxAnisotropy = 0;
-	comparisonSamplerDesc.ComparisonFunc = D3D11_COMPARISON_LESS_EQUAL;
-	comparisonSamplerDesc.Filter = D3D11_FILTER_COMPARISON_MIN_MAG_MIP_LINEAR;
+	return hr;
+}
+
+HRESULT DSFDirect3D::CreateSamplerStates()
+{
+	D3D11_SAMPLER_DESC samplerDesc;
+	ZeroMemory(&samplerDesc, sizeof(D3D11_SAMPLER_DESC));
+	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_BORDER;
+	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_BORDER;
+	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_BORDER;
+	samplerDesc.BorderColor[0] = 1.0f;
+	samplerDesc.BorderColor[1] = 1.0f;
+	samplerDesc.BorderColor[2] = 1.0f;
+	samplerDesc.BorderColor[3] = 1.0f;
+	samplerDesc.MinLOD = 0.f;
+	samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
+	samplerDesc.MipLODBias = 0.f;
+	samplerDesc.MaxAnisotropy = 0;
+	samplerDesc.ComparisonFunc = D3D11_COMPARISON_LESS_EQUAL;
+	samplerDesc.Filter = D3D11_FILTER_COMPARISON_MIN_MAG_MIP_LINEAR;
+	//comparisonSamplerDesc.MaxAnisotropy = 16;
+
+	HRESULT hr = device->CreateSamplerState(
+		&samplerDesc,
+		&shadowMapSampler
+	);
+
+	if (FAILED(hr)) return hr;
+	SetDebugName(shadowMapSampler, "DSFDirect3D::shadowMapSampler");
+
+	ZeroMemory(&samplerDesc, sizeof(D3D11_SAMPLER_DESC));
+	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
+	samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
+	hr = device->CreateSamplerState(
+		&samplerDesc,
+		&pointSamplerState
+	);
+	if (FAILED(hr)) return hr;
+	SetDebugName(pointSamplerState, "DSFDirect3D::pointSamplerState");
+
+	ZeroMemory(&samplerDesc, sizeof(D3D11_SAMPLER_DESC));
+	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+	samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
+	hr = device->CreateSamplerState(
+		&samplerDesc,
+		&linearSamplerState
+	);
+	if (FAILED(hr)) return hr;
+	SetDebugName(linearSamplerState, "DSFDirect3D::linearSamplerState");
+
+	ZeroMemory(&samplerDesc, sizeof(D3D11_SAMPLER_DESC));
+	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.BorderColor[0] = 1.0f;
+	samplerDesc.BorderColor[1] = 1.0f;
+	samplerDesc.BorderColor[2] = 1.0f;
+	samplerDesc.BorderColor[3] = 1.0f;
+	samplerDesc.MinLOD = 0.f;
+	samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
+	samplerDesc.MipLODBias = 0.f;
+	samplerDesc.MaxAnisotropy = 0;
+	samplerDesc.ComparisonFunc = D3D11_COMPARISON_LESS_EQUAL;
+	samplerDesc.Filter = D3D11_FILTER_COMPARISON_MIN_MAG_MIP_POINT;
 	//comparisonSamplerDesc.MaxAnisotropy = 16;
 
 	hr = device->CreateSamplerState(
-		&comparisonSamplerDesc,
-		&comparisonSampler
+		&samplerDesc,
+		&pointComparisonSamplerState
 	);
+
+	if (FAILED(hr)) return hr;
+	SetDebugName(pointComparisonSamplerState, "DSFDirect3D::pointComparisonSamplerState");
+
+	ZeroMemory(&samplerDesc, sizeof(D3D11_SAMPLER_DESC));
+	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.BorderColor[0] = 1.0f;
+	samplerDesc.BorderColor[1] = 1.0f;
+	samplerDesc.BorderColor[2] = 1.0f;
+	samplerDesc.BorderColor[3] = 1.0f;
+	samplerDesc.MinLOD = 0.f;
+	samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
+	samplerDesc.MipLODBias = 0.f;
+	samplerDesc.MaxAnisotropy = 0;
+	samplerDesc.ComparisonFunc = D3D11_COMPARISON_LESS_EQUAL;
+	samplerDesc.Filter = D3D11_FILTER_COMPARISON_MIN_MAG_MIP_LINEAR;
+	//comparisonSamplerDesc.MaxAnisotropy = 16;
+
+	hr = device->CreateSamplerState(
+		&samplerDesc,
+		&linearComparisonSamplerState
+	);
+
+	if (FAILED(hr)) return hr;
+	SetDebugName(linearComparisonSamplerState, "DSFDirect3D::linearComparisonSamplerState");
 
 	return hr;
 }

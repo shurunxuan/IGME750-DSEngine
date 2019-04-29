@@ -31,9 +31,9 @@ vector<TaskCardData> CSVReader::ReadFromFile(string _file) {
 
 		//Pattern
 		vector<int> pattern;
-		for (int i = 0; i < pat.length(); i++)
+		for (size_t i = 0; i < pat.length(); i++)
 			if (pat[i] != ';')
-				pattern.push_back((int)pat[i] - 48);				
+				pattern.push_back(static_cast<int>(pat[i]) - 48);				
 		card.pattern = pattern;
 		
 		//Color
@@ -42,7 +42,7 @@ vector<TaskCardData> CSVReader::ReadFromFile(string _file) {
 		vector<Color> colors;
 		//col = col.erase(col.find_last_of("\n"));
 		tokenize(col, delimiter, out);
-		for (int i = 0; i < out.size(); i++)
+		for (size_t i = 0; i < out.size(); i++)
 		{
 			if (out[i] == "Blue" || out[i] == "Blue\n")
 				colors.push_back(Blue);
