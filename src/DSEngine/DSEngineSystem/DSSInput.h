@@ -133,7 +133,6 @@ private:
 	 */
 	float processedAxisValue;
 
-	// 1: pos, 2: altPos, 3: neg, 4: altNeg
 	/**
 	 * @brief The get button functions. 1: positive, 2: altPositive, 3: negative, 4: altNegative
 	 * 

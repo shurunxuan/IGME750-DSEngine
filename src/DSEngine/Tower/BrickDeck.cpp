@@ -66,13 +66,13 @@ void BrickDeck::InitDeck(Scene* scene)
 
 Brick* BrickDeck::CreateBrick(Scene* scene, BrickColor color, DirectX::XMVECTOR position)
 {
-    Object* brickObject = scene->LoadModelFile("Assets/Models/cube.obj");
+    Object* brickObject = scene->LoadModelFile("Assets/Models/cuber.obj");
     brickObject->transform->SetLocalTranslation(position);
     MeshRenderer* renderer = brickObject->transform->GetChildAt(0)->object->GetComponent<MeshRenderer>();
     PBRMaterial* material = static_cast<PBRMaterial*>(renderer->GetMaterial());
     material->parameters.roughness = 0.1f;
     material->parameters.metalness = 0.7f;
-	//material->LoadNormalTexture("Assets/Textures/Rock_NRM.png");
+    material->LoadNormalTexture("Assets/Textures/wall.tif");
     Brick* brick = brickObject->AddComponent<Brick>();
     brickObject->AddComponent<ChangeBrickMaterial>();
 
