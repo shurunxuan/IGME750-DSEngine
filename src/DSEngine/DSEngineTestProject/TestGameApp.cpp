@@ -312,7 +312,7 @@ void TestGameApp::Init()
 
 
 	// Add pillars
-	Object* pillar = CurrentActiveScene()->LoadModelFile("Assets/Models/Rock/cube.obj");
+	Object* pillar = CurrentActiveScene()->LoadModelFile("Assets/Models/cube.obj");
 	pillar->name = "Pillar";
 	pillar->transform->SetLocalScale(1.5f, 20.0f, 1.5f);
 	pillar->transform->SetLocalTranslation(11.5f, 9.0f, 0.0f);
