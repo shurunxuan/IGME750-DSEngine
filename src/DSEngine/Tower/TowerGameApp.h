@@ -30,7 +30,8 @@ public:
 	BoardManager boardManager;
 
 private:
-	SimplePixelShader* unlitShader;
+	SimplePixelShader* refractionShader = nullptr;
+	SimpleVertexShader* refractionVShader = nullptr;
 
 	void CreateScene();
 
@@ -50,6 +51,5 @@ private:
 	PostProcessingMaterial* applyBloomMaterial = nullptr;
 	PostProcessingMaterial* applySSAOMaterial = nullptr;
 	SSAOMaterial* ssaoMaterial = nullptr;
-	
 };
 

@@ -122,8 +122,9 @@ public:
     /**
      * @brief Set the default render target which is used to render objects
      * 
+     * @param grab Indicates whether the material requires an grab texture
      */
-    void SetDefaultRenderTarget() const;
+    void SetDefaultRenderTarget(bool grab) const;
 
     /**
      * @brief Clear the shadow map depth stencil view and set it as the render target
@@ -353,7 +354,6 @@ private:
      * @return HRESULT S_OK if succeed, or other
      */
     HRESULT ResizeSwapBuffers() const;
-
 };
 
 /**

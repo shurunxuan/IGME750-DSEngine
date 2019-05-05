@@ -18,6 +18,7 @@ DSSRendering::DSSRendering()
 	postProcessingVS = nullptr;
 	postProcessingCopyPS = nullptr;
 	copyToScreenMaterial = nullptr;
+	copyGrabTextureMaterial = nullptr;
 }
 
 
@@ -27,6 +28,7 @@ DSSRendering::~DSSRendering()
 	delete postProcessingVS;
 	delete postProcessingCopyPS;
 	delete copyToScreenMaterial;
+	delete copyGrabTextureMaterial;
 }
 
 HRESULT DSSRendering::Init(HWND hWnd, unsigned int screenWidth, unsigned int screenHeight)
@@ -49,6 +51,7 @@ HRESULT DSSRendering::Init(HWND hWnd, unsigned int screenWidth, unsigned int scr
 	postProcessingCopyPS = new SimplePixelShader(direct3D.GetDevice(), direct3D.GetDeviceContext());
 	postProcessingCopyPS->LoadShaderFile(L"PPCopyPS.cso");
 	copyToScreenMaterial = new PostProcessingMaterial(1, { 0 }, 1, { -1 }, postProcessingVS, postProcessingCopyPS, direct3D.GetDevice());
+	copyGrabTextureMaterial = new PostProcessingMaterial(1, { 0 }, 1, { 7 }, postProcessingVS, postProcessingCopyPS, direct3D.GetDevice());
 	return hr;
 }
 
@@ -96,6 +99,8 @@ void DSSRendering::Update(const float deltaTime, const float totalTime)
 			continue;
 		}
 		direct3D.Render(camera, meshRenderer);
+		if (meshRenderer->GetMaterial()->grab)
+			direct3D.PostProcessing(copyGrabTextureMaterial);
 	}
 
 
@@ -132,6 +137,8 @@ void DSSRendering::Update(const float deltaTime, const float totalTime)
 		direct3D.GetDeviceContext()->OMSetBlendState(meshRenderer->GetMaterial()->blendState, nullptr, 0xFFFFFF);
 		// Render
 		direct3D.Render(camera, meshRenderer);
+		if (meshRenderer->GetMaterial()->grab)
+			direct3D.PostProcessing(copyGrabTextureMaterial);
 	}
 
 	// Restore the blend state

@@ -200,6 +200,11 @@ private:
 	PostProcessingMaterial* copyToScreenMaterial;
 
 	/**
+ * @brief The post processing material that copies the render target 0 to screen
+ */
+	PostProcessingMaterial* copyGrabTextureMaterial;
+
+	/**
 	 * @brief All post processing materials
 	 */
 	std::list<PostProcessingMaterial*> postProcessingMaterials;

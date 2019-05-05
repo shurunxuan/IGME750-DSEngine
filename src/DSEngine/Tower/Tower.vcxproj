@@ -196,12 +196,12 @@
     <ClCompile Include="PlayerManager.cpp" />
     <ClCompile Include="PPDarkCornerMaterial.cpp" />
     <ClCompile Include="PPGaussianBlurMaterial.cpp" />
+    <ClCompile Include="RefractionMaterial.cpp" />
     <ClCompile Include="SSAOMaterial.cpp" />
     <ClCompile Include="TaskCard.cpp" />
     <ClCompile Include="TaskCardGenerator.cpp" />
     <ClCompile Include="TaskDeck.cpp" />
     <ClCompile Include="TowerGameApp.cpp" />
-    <ClCompile Include="UnlitMaterial.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ChangeBrickMaterial.h" />
@@ -217,15 +217,15 @@
     <ClInclude Include="PlayerManager.h" />
     <ClInclude Include="PPDarkCornerMaterial.h" />
     <ClInclude Include="PPGaussianBlurMaterial.h" />
+    <ClInclude Include="RefractionMaterial.h" />
     <ClInclude Include="SSAOMaterial.h" />
     <ClInclude Include="TaskCard.h" />
     <ClInclude Include="TaskCardGenerator.h" />
     <ClInclude Include="TaskDeck.h" />
     <ClInclude Include="TowerGameApp.h" />
-    <ClInclude Include="UnlitMaterial.h" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="UnlitMaterial.hlsl">
+    <FxCompile Include="RefractionShader.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
@@ -234,6 +234,12 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="RefractionVertexShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
     </FxCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

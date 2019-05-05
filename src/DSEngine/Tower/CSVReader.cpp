@@ -1,6 +1,5 @@
 #include "TowerGameApp.h"
 #include "CSVReader.h"
-#include "UnlitMaterial.h"
 
 using namespace std;
 

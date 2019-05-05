@@ -63,7 +63,6 @@ DSFDirect3D::DSFDirect3D()
 	pointComparisonSamplerState = nullptr;
 	linearComparisonSamplerState = nullptr;
 	shadowMapSampler = nullptr;
-
 	for (int i = 0; i < D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT; ++i)
 	{
 		renderTargetView[i] = nullptr;
@@ -104,7 +103,6 @@ DSFDirect3D::~DSFDirect3D()
 	SAFE_RELEASE(debugDevice);
 #endif
 	SAFE_RELEASE(device);
-
 }
 
 HRESULT DSFDirect3D::Init(HWND hWnd, unsigned int screenWidth, unsigned int screenHeight)
@@ -130,7 +128,7 @@ HRESULT DSFDirect3D::Init(HWND hWnd, unsigned int screenWidth, unsigned int scre
 	hr = CreateSamplerStates();
 	if (FAILED(hr)) return hr;
 
-	SetDefaultRenderTarget();
+	SetDefaultRenderTarget(false);
 
 	LOG_TRACE << "DS Engine Framework for Direct3D Initialized!";
 	// Return the "everything is ok" HRESULT value
@@ -167,7 +165,7 @@ HRESULT DSFDirect3D::OnResize(unsigned int screenWidth, unsigned int screenHeigh
 	hr = CreateDepthStencilView();
 	if (FAILED(hr)) return hr;
 
-	SetDefaultRenderTarget();
+	SetDefaultRenderTarget(false);
 
 	LOG_TRACE << "DS Engine Framework for Direct3D Resize, width = " << width << ", height = " << height;
 	// Return the "everything is ok" HRESULT value
@@ -198,14 +196,14 @@ void DSFDirect3D::ClearRenderTarget(float r, float g, float b, float a)
 		0);
 }
 
-void DSFDirect3D::SetDefaultRenderTarget() const
+void DSFDirect3D::SetDefaultRenderTarget(bool grab) const
 {
 	// Bind the views to the pipeline, so rendering properly 
 	// uses their underlying textures
 	//context->OMSetRenderTargets(1, &backBufferRTV, depthStencilView);
 
 	// The last buffer is reserved as an texture for refraction effects
-	context->OMSetRenderTargets(D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT, renderTargetView, depthStencilView);
+	context->OMSetRenderTargets(D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT - (grab ? 1 : 0), renderTargetView, depthStencilView);
 	// Lastly, set up a viewport so we render into
 	// to correct portion of the window
 	D3D11_VIEWPORT viewport = {};
@@ -218,7 +216,7 @@ void DSFDirect3D::SetDefaultRenderTarget() const
 	context->RSSetViewports(1, &viewport);
 }
 
-void DSFDirect3D::ClearAndSetShadowRenderTarget(Light * light) const
+void DSFDirect3D::ClearAndSetShadowRenderTarget(Light* light) const
 {
 	// Clear depth stencil view
 	context->ClearDepthStencilView(light->GetShadowDepthView(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
@@ -232,7 +230,7 @@ void DSFDirect3D::ClearAndSetShadowRenderTarget(Light * light) const
 	);
 }
 
-void DSFDirect3D::PreProcess(Light * light, MeshRenderer * meshRenderer, SimpleVertexShader * shadowVertexShader) const
+void DSFDirect3D::PreProcess(Light* light, MeshRenderer* meshRenderer, SimpleVertexShader* shadowVertexShader) const
 {
 	// Note that starting with the second frame, the previous call will display
 	// warnings in VS debug output about forcing an unbind of the pixel shader
@@ -283,16 +281,15 @@ void DSFDirect3D::PreProcess(Light * light, MeshRenderer * meshRenderer, SimpleV
 	}
 }
 
-void DSFDirect3D::Render(Camera * camera, MeshRenderer * meshRenderer)
+void DSFDirect3D::Render(Camera* camera, MeshRenderer* meshRenderer)
 {
-	SetDefaultRenderTarget();
+	Material* material = meshRenderer->GetMaterial();
+	Mesh* mesh = meshRenderer->GetMesh();
+
+	SetDefaultRenderTarget(material->grab);
 
 	// Set rendering state.
 	context->RSSetState(drawingRenderState);
-
-
-	Material* material = meshRenderer->GetMaterial();
-	Mesh* mesh = meshRenderer->GetMesh();
 
 	LightData* lights = &(*(meshRenderer->object->GetScene()->lightData.begin()));
 	const int lightCount = meshRenderer->object->GetScene()->GetLightCount();
@@ -344,7 +341,8 @@ void DSFDirect3D::Render(Camera * camera, MeshRenderer * meshRenderer)
 		material->GetPixelShaderPtr()->SetInt("HasSkybox", 0);
 		material->GetPixelShaderPtr()->SetInt("HasIrradianceMap", 0);
 	}
-	material->GetPixelShaderPtr()->SetShaderResourceView("lastDrawBuffer", renderResourceView[D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT - 1]);
+	if (material->grab)
+		material->GetPixelShaderPtr()->SetShaderResourceView("grabTexture", renderResourceView[D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT - 1]);
 
 	if (lights != nullptr && lightCount > 0)
 	{
@@ -416,8 +414,8 @@ void DSFDirect3D::Render(Camera * camera, MeshRenderer * meshRenderer)
 	// Set buffers in the input assembler
 	//  - Do this ONCE PER OBJECT you're drawing, since each object might
 	//    have different geometry.
-	ID3D11Buffer * vertexBuffer = mesh->GetVertexBuffer();
-	ID3D11Buffer * indexBuffer = mesh->GetIndexBuffer();
+	ID3D11Buffer* vertexBuffer = mesh->GetVertexBuffer();
+	ID3D11Buffer* indexBuffer = mesh->GetIndexBuffer();
 	UINT stride = sizeof(Vertex);
 	UINT offset = 0;
 	context->IASetVertexBuffers(0, 1, &vertexBuffer, &stride, &offset);
@@ -435,12 +433,14 @@ void DSFDirect3D::Render(Camera * camera, MeshRenderer * meshRenderer)
 
 	// Unbind resources
 	material->GetPixelShaderPtr()->SetShaderResourceView("shadowMap", nullptr);
-	material->GetPixelShaderPtr()->SetShaderResourceView("lastDrawBuffer", nullptr);
+	material->GetPixelShaderPtr()->SetShaderResourceView("grabTexture", nullptr);
+
 }
 
-void DSFDirect3D::RenderSkybox(Camera * camera)
+void DSFDirect3D::RenderSkybox(Camera* camera)
 {
 	// Render Skybox
+	SetDefaultRenderTarget(false);
 	Skybox* skybox = camera->GetSkybox();
 	if (skybox == nullptr) return;
 	DirectX::XMFLOAT4X4 worldMat{};
@@ -467,8 +467,8 @@ void DSFDirect3D::RenderSkybox(Camera * camera)
 	skybox->GetVertexShader()->SetShader();
 	skybox->GetPixelShader()->SetShader();
 
-	ID3D11Buffer * vertexBuffer = skybox->GetVertexBuffer();
-	ID3D11Buffer * indexBuffer = skybox->GetIndexBuffer();
+	ID3D11Buffer* vertexBuffer = skybox->GetVertexBuffer();
+	ID3D11Buffer* indexBuffer = skybox->GetIndexBuffer();
 
 	UINT stride = sizeof(Vertex);
 	UINT offset = 0;
@@ -478,7 +478,7 @@ void DSFDirect3D::RenderSkybox(Camera * camera)
 	context->DrawIndexed(36, 0, 0);
 }
 
-void DSFDirect3D::PostProcessing(PostProcessingMaterial * postProcessingMaterial)
+void DSFDirect3D::PostProcessing(PostProcessingMaterial* postProcessingMaterial)
 {
 	int* sourceIndices;
 	int* targetIndices;

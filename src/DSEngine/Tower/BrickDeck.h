@@ -6,22 +6,22 @@
 class BrickDeck
 {
 public:
-	BrickDeck();
-	~BrickDeck();
-	static BrickDeck* getInstance();
+    BrickDeck();
+    ~BrickDeck();
+    static BrickDeck* getInstance();
 
-	//Material[] Materials;
+    //Material[] Materials;
     std::list<Brick*> bricks;
     //GameObject[] brickPrefabs;
 
-	Brick* OnDraw(Transform* transform);
-	void InitDeck(Scene* scene);
-	Brick* CreateBrick(Scene* scene, BrickColor color, DirectX::XMVECTOR position);
+    Brick* OnDraw(Transform* transform);
+    void InitDeck(Scene* scene);
+    Brick* CreateBrick(Scene* scene, BrickColor color, DirectX::XMVECTOR position);
 
 private:
-	static BrickDeck* instance;
+    static BrickDeck* instance;
 
-	int YellowBrickNum = 10;
+    int YellowBrickNum = 10;
     int BlueBrickNum = 10;
     int RedBrickNum = 10;
 };

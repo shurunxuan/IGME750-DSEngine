@@ -583,6 +583,6 @@ PixelOutput main(VertexToPixel input)
     output.Target4 = float4(0, 0, 0, 1);
     output.Target5 = float4(0, 0, 0, 1);
     output.Target6 = float4(0, 0, 0, 1);
-    output.Target7 = float4(0, 0, 0, 1);
+    output.Target7 = output.Target0;
     return output;
 }

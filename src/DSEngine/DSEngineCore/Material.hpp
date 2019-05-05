@@ -100,6 +100,13 @@ public:
 	 */
 	bool transparent;
 
+	/**
+	 * @brief Describe whether the material needs the buffer before it's drawn
+	 * 
+	 * The order can't be promised unless its transparent
+	 */
+	bool grab;
+
 protected:
 	/**
 	 * @brief Set other data needed by the shaders
@@ -138,6 +145,7 @@ inline Material::Material(ID3D11Device* d = nullptr)
 	pixelShader = nullptr;
 	blendState = nullptr;
 	transparent = false;
+	grab = false;
 
 	device = d;
 }
@@ -149,6 +157,7 @@ inline Material::Material(SimpleVertexShader* vtxShader, SimplePixelShader* pxlS
 	pixelShader = pxlShader;
 	blendState = nullptr;
 	transparent = false;
+	grab = false;
 
 	device = d;
 }

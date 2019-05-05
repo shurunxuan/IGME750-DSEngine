@@ -178,6 +178,28 @@ public:
 	 *
 	 */
 	Camera* mainCamera;
+
+	/**
+	 * @brief Direct3D 11 device
+	 *
+	 */
+	ID3D11Device* device;
+	/**
+	 * @brief Direct3D 11 device context
+	 *
+	 */
+	ID3D11DeviceContext* context;
+
+	/**
+	 * @brief The default vertex shader
+	 *
+	 */
+	SimpleVertexShader* defaultVS;
+	/**
+	 * @brief The default pixel shader
+	 *
+	 */
+	SimplePixelShader* defaultPS;
 private:
 	/**
 	 * @brief Recursively add objects to the scene from a node of the model file
@@ -206,27 +228,7 @@ private:
 	 */
 	std::list<Light*> lights;
 
-	/**
-	 * @brief Direct3D 11 device
-	 *
-	 */
-	ID3D11Device* device;
-	/**
-	 * @brief Direct3D 11 device context
-	 *
-	 */
-	ID3D11DeviceContext* context;
 
-	/**
-	 * @brief The default vertex shader
-	 *
-	 */
-	SimpleVertexShader* defaultVS;
-	/**
-	 * @brief The default pixel shader
-	 *
-	 */
-	SimplePixelShader* defaultPS;
 
 	/**
 	 * @brief The axis-aligned bounding box of the whole scene

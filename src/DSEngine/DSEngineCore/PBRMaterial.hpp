@@ -26,7 +26,7 @@
  * @brief The default physically based rendering material
  * 
  */
-class PBRMaterial final :
+class PBRMaterial :
 	public Material
 {
 public:

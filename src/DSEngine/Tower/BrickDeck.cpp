@@ -4,6 +4,7 @@
 #include "PlayerManager.h"
 #include "Scene.hpp"
 #include "ChangeBrickMaterial.h"
+#include "RefractionMaterial.h"
 
 BrickDeck* BrickDeck::instance = 0;
 
@@ -69,12 +70,23 @@ Brick* BrickDeck::CreateBrick(Scene* scene, BrickColor color, DirectX::XMVECTOR 
     Object* brickObject = scene->LoadModelFile("Assets/Models/cuber.obj");
     brickObject->transform->SetLocalTranslation(position);
     MeshRenderer* renderer = brickObject->transform->GetChildAt(0)->object->GetComponent<MeshRenderer>();
+
+
     PBRMaterial* material = static_cast<PBRMaterial*>(renderer->GetMaterial());
+
+
+    material->LoadNormalTexture("Assets/Textures/wall.tif");
     material->parameters.roughness = 0.1f;
     material->parameters.metalness = 0.7f;
-    material->LoadNormalTexture("Assets/Textures/wall.tif");
+
     Brick* brick = brickObject->AddComponent<Brick>();
-    brickObject->AddComponent<ChangeBrickMaterial>();
+    ChangeBrickMaterial* changeMaterialComponent = brickObject->AddComponent<ChangeBrickMaterial>();
+
+    changeMaterialComponent->device = scene->device;
+    changeMaterialComponent->context = scene->context;
+    changeMaterialComponent->defaultVS = scene->defaultVS;
+    changeMaterialComponent->defaultPS = scene->defaultPS;
+    changeMaterialComponent->color = color;
 
     switch (color) {
         case RedBrick:

@@ -1,9 +1,7 @@
 #include "TowerGameApp.h"
-#include "UnlitMaterial.h"
 
 #include "CSVReader.h"
 #include "MoveObject.h"
-#include "UnlitMaterial.h"
 #include "TaskDeck.h"
 #include "BrickDeck.h"
 #include "FreeCam.h"
@@ -15,13 +13,15 @@
 #include "TaskCardGenerator.h"
 #include "PPGaussianBlurMaterial.h"
 #include "PPDarkCornerMaterial.h"
+#include "RefractionMaterial.h"
 
 DirectX::XMVECTOR baseRotation = DirectX::XMVectorSet(0.000000f, 0.233445f, 0.000000f, 0.972370f);
 
 
 TowerGameApp::~TowerGameApp()
 {
-	delete unlitShader;
+	delete refractionShader;
+	delete refractionVShader;
 
 	delete ppDarkCornerPS;
 	delete ppGaussianBlurUPS;
@@ -55,6 +55,7 @@ void TowerGameApp::Init()
 	SInput->RegisterInput("3", "3", "", "", "", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
 	SInput->RegisterInput("ESC", "escape", "", "", "", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
 	SInput->RegisterInput("DrawCard", "space", "", "", "", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
+	SInput->RegisterInput("ChangeMaterial", "m", "", "", "", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
 
 	// Register post processing effects
 	ppGaussianBlurUPS = new SimplePixelShader(device, context);
@@ -108,8 +109,11 @@ void TowerGameApp::Init()
 	FreeCam * freeCam = CurrentActiveScene()->mainCamera->AddComponent<FreeCam>();
 	InputManager * inputManager = CurrentActiveScene()->mainCamera->AddComponent<InputManager>();
 
-	unlitShader = new SimplePixelShader(device, context);
-	unlitShader->LoadShaderFile(L"UnlitMaterial.cso");
+	refractionShader = new SimplePixelShader(device, context);
+	refractionShader->LoadShaderFile(L"RefractionShader.cso");
+
+	refractionVShader = new SimpleVertexShader(device, context);
+	refractionVShader->LoadShaderFile(L"RefractionVertexShader.cso");
 
 	// Add a light
 	LightData light = DirectionalLight(DirectX::XMFLOAT3(1.0f, 1.0f, 1.0f), DirectX::XMFLOAT3(-1.0f, -1.0f, 1.0f), 0.8f, DirectX::XMFLOAT3(1.0f, 1.0f, 1.0f));;
@@ -181,8 +185,14 @@ void TowerGameApp::CreateScene()
 	Object* TowerBase_Child = TowerBase->transform->GetChildAt(0)->object;
 	TowerBase_Child->transform->SetLocalScale(+11.18277f, +1.0f, 7.130966f);
 	MeshRenderer * TowerBase_meshRenderer = TowerBase_Child->GetComponent<MeshRenderer>();
+
 	PBRMaterial * TowerBase_Material = static_cast<PBRMaterial*>(TowerBase_meshRenderer->GetMaterial());
-	//std::shared_ptr<UnlitMaterial> TowerBase_Material = std::make_shared<UnlitMaterial>(vertexShader, unlitShader, device);
+
+	//std::shared_ptr<RefractionMaterial> TowerBase_Material = std::make_shared<RefractionMaterial>(refractionVShader, refractionShader, device, context);
+	//TowerBase_Material->transparent = true;
+	//TowerBase_Material->grab = true;
+	//TowerBase_meshRenderer->SetMaterial(TowerBase_Material);
+
 	TowerBase_Material->parameters.albedo = DirectX::XMFLOAT3(0.7f, 0.7f, 0.7f);
 	TowerBase_Material->parameters.metalness = 0.0f;
 	TowerBase_Material->parameters.roughness = 1.0f;
