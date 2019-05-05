@@ -14,6 +14,7 @@
 #include "PPGaussianBlurMaterial.h"
 #include "PPDarkCornerMaterial.h"
 #include "RefractionMaterial.h"
+#include "PostProcessingController.h"
 
 DirectX::XMVECTOR baseRotation = DirectX::XMVectorSet(0.000000f, 0.233445f, 0.000000f, 0.972370f);
 
@@ -55,7 +56,12 @@ void TowerGameApp::Init()
 	SInput->RegisterInput("3", "3", "", "", "", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
 	SInput->RegisterInput("ESC", "escape", "", "", "", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
 	SInput->RegisterInput("DrawCard", "space", "", "", "", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
-	SInput->RegisterInput("ChangeMaterial", "m", "", "", "", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
+	SInput->RegisterInput("ToggleRefraction", "m", "", "", "", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
+	SInput->RegisterInput("ToggleDarkCorner", "n", "", "", "", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
+	SInput->RegisterInput("ToggleIL", "b", "", "", "", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
+	SInput->RegisterInput("TurnOffPP", "x", "", "", "", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
+	SInput->RegisterInput("TurnOnBloom", "c", "", "", "", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
+	SInput->RegisterInput("TurnOnSSAO", "v", "", "", "", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
 
 	// Register post processing effects
 	ppGaussianBlurUPS = new SimplePixelShader(device, context);
@@ -78,27 +84,28 @@ void TowerGameApp::Init()
 	ppSSAOPS->LoadShaderFile(L"PPSSAOPS.cso");
 	ppSSAOVS = new SimpleVertexShader(device, context);
 	ppSSAOVS->LoadShaderFile(L"PPSSAOVS.cso");
-	ssaoMaterial = new SSAOMaterial(3, { 3, -1, 0 }, 1, { 7 }, ppSSAOVS, ppSSAOPS, device);
+	ssaoMaterial = new SSAOMaterial(3, { 3, -1, 0 }, 1, { 4 }, ppSSAOVS, ppSSAOPS, device);
 	ssaoMaterial->SetCamera(CurrentActiveScene()->mainCamera);
+	ssaoMaterial->indirectLighting = true;
 	SRendering->RegisterPostProcessing(ssaoMaterial); // -1 & 3 & 1 -> 7
 
-	blurSSAOUMaterial = new PPGaussianBlurMaterial(1, { 7 }, 1, { 4 }, SRendering->GetDefaultPostProcessingVertexShader(), ppGaussianBlurUPS, device);
-	blurSSAOVMaterial = new PPGaussianBlurMaterial(1, { 4 }, 1, { 5 }, SRendering->GetDefaultPostProcessingVertexShader(), ppGaussianBlurVPS, device);
+	blurSSAOUMaterial = new PPGaussianBlurMaterial(1, { 4 }, 1, { 1 }, SRendering->GetDefaultPostProcessingVertexShader(), ppGaussianBlurUPS, device);
+	blurSSAOVMaterial = new PPGaussianBlurMaterial(1, { 1 }, 1, { 2 }, SRendering->GetDefaultPostProcessingVertexShader(), ppGaussianBlurVPS, device);
 	blurSSAOUMaterial->SetScreenSizePtr(&width, &height);
 	blurSSAOVMaterial->SetScreenSizePtr(&width, &height);
-	SRendering->RegisterPostProcessing(blurSSAOUMaterial); // 7 -> 4
-	SRendering->RegisterPostProcessing(blurSSAOVMaterial); // 4 -> 5
+	SRendering->RegisterPostProcessing(blurSSAOUMaterial); // 4 -> 1
+	SRendering->RegisterPostProcessing(blurSSAOVMaterial); // 1 -> 2
 
 	ppMultiplyPS = new SimplePixelShader(device, context);
 	ppMultiplyPS->LoadShaderFile(L"PPMultiplyPS.cso");
-	applySSAOMaterial = new PostProcessingMaterial(2, { 6, 5 }, 1, { 7 }, SRendering->GetDefaultPostProcessingVertexShader(), ppMultiplyPS, device);
-	SRendering->RegisterPostProcessing(applySSAOMaterial); // 6 * 5 -> 7
+	applySSAOMaterial = new PostProcessingMaterial(2, { 6, 2 }, 1, { 3 }, SRendering->GetDefaultPostProcessingVertexShader(), ppMultiplyPS, device);
+	SRendering->RegisterPostProcessing(applySSAOMaterial); // 6 * 2 -> 3
 
 	ppDarkCornerPS = new SimplePixelShader(device, context);
 	ppDarkCornerPS->LoadShaderFile(L"PPDarkCornerPS.cso");
-	darkCornerMaterial = new PPDarkCornerMaterial(1, { 7 }, 1, { 0 }, SRendering->GetDefaultPostProcessingVertexShader(), ppDarkCornerPS, device);
+	darkCornerMaterial = new PPDarkCornerMaterial(1, { 3 }, 1, { 0 }, SRendering->GetDefaultPostProcessingVertexShader(), ppDarkCornerPS, device);
 	darkCornerMaterial->parameters.intensity = 1.0f;
-	SRendering->RegisterPostProcessing(darkCornerMaterial); // 7 -> 0
+	SRendering->RegisterPostProcessing(darkCornerMaterial); // 3 -> 0
 
 	CurrentActiveScene()->mainCamera->UpdateProjectionMatrix(float(width), float(height), DirectX::XM_PI / 3.0f);
 	//CurrentActiveScene()->mainCamera->transform->SetLocalTranslation(0.0f, 0.0f, 0.0f);
@@ -108,6 +115,10 @@ void TowerGameApp::Init()
 	//CurrentActiveScene()->mainCamera->SetSkybox(device, context, L"Assets/Skybox/mp_cupertin/mp_cupertin.dds", L"Assets/Skybox/mp_cupertin/mp_cupertin_irr.dds");
 	FreeCam * freeCam = CurrentActiveScene()->mainCamera->AddComponent<FreeCam>();
 	InputManager * inputManager = CurrentActiveScene()->mainCamera->AddComponent<InputManager>();
+	PostProcessingController* ppController = CurrentActiveScene()->mainCamera->AddComponent<PostProcessingController>();
+	ppController->darkCorner = darkCornerMaterial;
+	ppController->applySSAO = applySSAOMaterial;
+	ppController->ssao = ssaoMaterial;
 
 	refractionShader = new SimplePixelShader(device, context);
 	refractionShader->LoadShaderFile(L"RefractionShader.cso");

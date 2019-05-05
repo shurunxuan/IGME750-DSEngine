@@ -7,6 +7,13 @@ SSAOMaterial::SSAOMaterial(int sourceCount, std::vector<int> sourceIndices, int 
 {
 	BuildOffsetVectors();
 
+	ssaoCB.OcclusionRadius = 0.5f;
+	ssaoCB.OcclusionFadeStart = 0.2f;
+	ssaoCB.OcclusionFadeEnd = 1.0f;
+	ssaoCB.SurfaceEpsilon = 0.05f;
+
+	indirectLighting = true;
+
 	D3D11_SAMPLER_DESC samplerDesc;
 	ZeroMemory(&samplerDesc, sizeof(D3D11_SAMPLER_DESC));
 	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
@@ -34,6 +41,32 @@ SSAOMaterial::SSAOMaterial(int sourceCount, std::vector<int> sourceIndices, int 
 	: PostProcessingMaterial(sourceCount, sourceIndices, targetCount, targetIndices, vtxShader, pxlShader, d), dis(0.0f, 1.0f)
 {
 	BuildOffsetVectors();
+
+	ssaoCB.OcclusionRadius = 0.5f;
+	ssaoCB.OcclusionFadeStart = 0.2f;
+	ssaoCB.OcclusionFadeEnd = 1.0f;
+	ssaoCB.SurfaceEpsilon = 0.05f;
+
+	indirectLighting = true;
+
+	D3D11_SAMPLER_DESC samplerDesc;
+	ZeroMemory(&samplerDesc, sizeof(D3D11_SAMPLER_DESC));
+	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
+	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
+	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
+	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
+	if (!device->CreateSamplerState(
+		&samplerDesc,
+		&pointSamplerClamp
+	))
+		pointSamplerClamp = nullptr;
+
+	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+	if (!device->CreateSamplerState(
+		&samplerDesc,
+		&linearSamplerClamp
+	))
+		linearSamplerClamp = nullptr;
 }
 
 SSAOMaterial::~SSAOMaterial()
@@ -72,11 +105,6 @@ void SSAOMaterial::SetShaderData()
 
 	DirectX::XMFLOAT4 randomNumbers{ float(dis(e) + 1.0f), float(dis(e) + 1.0f), float(dis(e) + 1.0f), float(dis(e) + 1.0f) };
 
-	ssaoCB.OcclusionRadius = 0.5f;
-	ssaoCB.OcclusionFadeStart = 0.2f;
-	ssaoCB.OcclusionFadeEnd = 1.0f;
-	ssaoCB.SurfaceEpsilon = 0.05f;
-
 	vertexShader->SetMatrix4x4("gInvProj", invProjMat);
 	pixelShader->SetMatrix4x4("gProj", projMat);
 	pixelShader->SetMatrix4x4("gProjTex", projTex);
@@ -86,6 +114,8 @@ void SSAOMaterial::SetShaderData()
 	pixelShader->SetFloat("gOcclusionFadeEnd", ssaoCB.OcclusionFadeEnd);
 	pixelShader->SetFloat("gSurfaceEpsilon", ssaoCB.SurfaceEpsilon);
 	pixelShader->SetFloat4("randomNumbers", randomNumbers);
+
+	pixelShader->SetInt("indirectLighting", indirectLighting ? 1 : 0);
 
 	pixelShader->SetSamplerState("pointSamplerClamp", pointSamplerClamp);
 	pixelShader->SetSamplerState("linearSamplerClamp", linearSamplerClamp);

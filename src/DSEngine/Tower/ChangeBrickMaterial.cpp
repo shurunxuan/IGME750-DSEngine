@@ -43,7 +43,7 @@ void ChangeBrickMaterial::Update(float deltaTime, float totalTime)
 	float arrowHorizontal = SInput->GetAxis("ArrowHorizontal");
 	float arrowVertical = SInput->GetAxis("ArrowVertical");
 
-	if (SInput->GetButtonDown("ChangeMaterial"))
+	if (SInput->GetButtonDown("ToggleRefraction"))
 	{
 		inRefractionMode = !inRefractionMode;
 		if (color == YellowBrick)

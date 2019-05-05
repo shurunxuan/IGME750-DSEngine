@@ -22,6 +22,8 @@ public:
 
 	void SetShaderData() override;
 	size_t GetMaterialStruct(void** mtlPtr) override;
+
+	bool indirectLighting;
 private:
 	Camera* camera;
 	std::array<DirectX::XMFLOAT4, 14> mOffsets;

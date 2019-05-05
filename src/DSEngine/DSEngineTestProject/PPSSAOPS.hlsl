@@ -20,6 +20,8 @@ cbuffer cbSsao : register(b0)
 	float    gSurfaceEpsilon;
 
 	float4   randomNumbers;
+
+	int indirectLighting;
 };
 
 // Nonnumeric values cannot be added to a cbuffer.
@@ -183,6 +185,10 @@ float4 main(VertexOut pin) : SV_Target0
 	float access = 1.0f - occlusionSum;
 	access = pow(access, 6.0f);
 	// Sharpen the contrast of the SSAO map to make the SSAO affect more dramatic.
-	return saturate(float4(access + lightingSum.r, access + lightingSum.g, access + lightingSum.b, 1.0f));
+	if (indirectLighting)
+		return saturate(float4(access + lightingSum.r, access + lightingSum.g, access + lightingSum.b, 1.0f));
+	else
+		return saturate(float4(access.rrr, 1.0f));
+
 	//return saturate(access);
 }
