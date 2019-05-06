@@ -62,6 +62,7 @@ void TowerGameApp::Init()
 	SInput->RegisterInput("TurnOffPP", "x", "", "", "", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
 	SInput->RegisterInput("TurnOnBloom", "c", "", "", "", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
 	SInput->RegisterInput("TurnOnSSAO", "v", "", "", "", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
+	SInput->RegisterInput("ToggleNormalMap", "z", "", "", "", 10.0f, 0.1f, 10.0f, false, Button, MouseX, -1);
 
 	// Register post processing effects
 	ppGaussianBlurUPS = new SimplePixelShader(device, context);

@@ -55,8 +55,8 @@ void ChangeBrickMaterial::Update(float deltaTime, float totalTime)
 				refractionMaterial->transparent = true;
 				refractionMaterial->grab = true;
 
-				refractionMaterial->parameters = currentMaterial->parameters;
 				refractionMaterial->LoadNormalTexture("Assets/Textures/wall.tif");
+				refractionMaterial->parameters = currentMaterial->parameters;
 
 				meshRenderer->SetMaterial(refractionMaterial);
 			}
@@ -67,8 +67,8 @@ void ChangeBrickMaterial::Update(float deltaTime, float totalTime)
 				pbrMaterial->transparent = true;
 				pbrMaterial->grab = true;
 
-				pbrMaterial->parameters = currentMaterial->parameters;
 				pbrMaterial->LoadNormalTexture("Assets/Textures/wall.tif");
+				pbrMaterial->parameters = currentMaterial->parameters;
 
 				meshRenderer->SetMaterial(pbrMaterial);
 			}
@@ -89,4 +89,9 @@ void ChangeBrickMaterial::Update(float deltaTime, float totalTime)
 		material->parameters.roughness = 1.0f;
 	if (material->parameters.roughness < 0.0f)
 		material->parameters.roughness = 0.0f;
+
+	if (SInput->GetButtonDown("ToggleNormalMap"))
+	{
+		material->parameters.hasNormalMap = 1 - material->parameters.hasNormalMap;
+	}
 }

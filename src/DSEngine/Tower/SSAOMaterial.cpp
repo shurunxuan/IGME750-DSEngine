@@ -103,7 +103,8 @@ void SSAOMaterial::SetShaderData()
 	DirectX::XMFLOAT4X4 projTex{};
 	XMStoreFloat4x4(&projTex, XMMatrixTranspose(P * T));
 
-	DirectX::XMFLOAT4 randomNumbers{ float(dis(e) + 1.0f), float(dis(e) + 1.0f), float(dis(e) + 1.0f), float(dis(e) + 1.0f) };
+	//DirectX::XMFLOAT4 randomNumbers{ float(dis(e) + 1.0f), float(dis(e) + 1.0f), float(dis(e) + 1.0f), float(dis(e) + 1.0f) };
+	DirectX::XMFLOAT4 randomNumbers{ 1.2f, 1.4f, 1.6f, 1.8f };
 
 	vertexShader->SetMatrix4x4("gInvProj", invProjMat);
 	pixelShader->SetMatrix4x4("gProj", projMat);
