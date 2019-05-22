@@ -1,6 +1,6 @@
 <map id="Scene" name="Scene">
-<area shape="rect" id="node2" href="$class_camera.html" title="Camera. " alt="" coords="227,187,295,213"/>
-<area shape="rect" id="node3" href="$class_object.html" title="A game object. " alt="" coords="114,96,173,123"/>
-<area shape="rect" id="node7" href="$class_component.html" title="The component class that will be attached to an object. " alt="" coords="5,187,93,213"/>
-<area shape="rect" id="node6" href="$class_transform.html" title="The transform of the object. " alt="" coords="71,277,152,304"/>
+<area shape="rect" id="node2" href="$class_camera.html" title="Camera. " alt="" coords="228,184,296,211"/>
+<area shape="rect" id="node3" href="$class_object.html" title="A game object. " alt="" coords="115,95,175,121"/>
+<area shape="rect" id="node7" href="$class_component.html" title="The component class that will be attached to an object. " alt="" coords="5,184,95,211"/>
+<area shape="rect" id="node6" href="$class_transform.html" title="The transform of the object. " alt="" coords="72,273,153,300"/>
 </map>

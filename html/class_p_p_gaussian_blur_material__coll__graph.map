@@ -1,4 +1,4 @@
 <map id="PPGaussianBlurMaterial" name="PPGaussianBlurMaterial">
-<area shape="rect" id="node2" href="$class_post_processing_material.html" title="The default post processing material that does not set any material/texture data. ..." alt="" coords="403,200,561,227"/>
-<area shape="rect" id="node3" href="$class_material.html" title="The material of a MeshRenderer. " alt="" coords="369,96,436,123"/>
+<area shape="rect" id="node2" href="$class_post_processing_material.html" title="The default post processing material that does not set any material/texture data. ..." alt="" coords="403,199,563,225"/>
+<area shape="rect" id="node3" href="$class_material.html" title="The material of a MeshRenderer. " alt="" coords="369,95,437,121"/>
 </map>

@@ -1,27 +1,12 @@
-Warning: ignoring unsupported tag `ALLOW_UNICODE_NAMES    =' at line 79, file /home/travis/build/shurunxuan/IGME750-DSEngine/Doxyfile
-Warning: ignoring unsupported tag `OUTPUT_TEXT_DIRECTION  =' at line 102, file /home/travis/build/shurunxuan/IGME750-DSEngine/Doxyfile
-Warning: ignoring unsupported tag `OPTIMIZE_OUTPUT_SLICE  =' at line 296, file /home/travis/build/shurunxuan/IGME750-DSEngine/Doxyfile
-Warning: ignoring unsupported tag `TOC_INCLUDE_HEADINGS   =' at line 335, file /home/travis/build/shurunxuan/IGME750-DSEngine/Doxyfile
-Warning: ignoring unsupported tag `GROUP_NESTED_COMPOUNDS =' at line 392, file /home/travis/build/shurunxuan/IGME750-DSEngine/Doxyfile
-Warning: ignoring unsupported tag `HIDE_COMPOUND_REFERENCE=' at line 563, file /home/travis/build/shurunxuan/IGME750-DSEngine/Doxyfile
-Warning: ignoring unsupported tag `WARN_AS_ERROR          =' at line 788, file /home/travis/build/shurunxuan/IGME750-DSEngine/Doxyfile
-Warning: Tag `CLANG_ASSISTED_PARSING' at line 1067 of file /home/travis/build/shurunxuan/IGME750-DSEngine/Doxyfile belongs to an option that was not enabled at compile time.
-To avoid this warning please remove this line from your configuration file, upgrade it using "doxygen -u", or recompile doxygen with this feature enabled.
-Warning: Tag `CLANG_OPTIONS' at line 1075 of file /home/travis/build/shurunxuan/IGME750-DSEngine/Doxyfile belongs to an option that was not enabled at compile time.
-To avoid this warning please remove this line from your configuration file, upgrade it using "doxygen -u", or recompile doxygen with this feature enabled.
-Warning: ignoring unsupported tag `CLANG_DATABASE_PATH    =' at line 1085, file /home/travis/build/shurunxuan/IGME750-DSEngine/Doxyfile
-Warning: ignoring unsupported tag `HTML_DYNAMIC_MENUS     =' at line 1250, file /home/travis/build/shurunxuan/IGME750-DSEngine/Doxyfile
-Warning: ignoring unsupported tag `LATEX_MAKEINDEX_CMD    =' at line 1714, file /home/travis/build/shurunxuan/IGME750-DSEngine/Doxyfile
-Warning: ignoring unsupported tag `LATEX_EXTRA_STYLESHEET =' at line 1781, file /home/travis/build/shurunxuan/IGME750-DSEngine/Doxyfile
-Warning: ignoring unsupported tag `LATEX_TIMESTAMP        =' at line 1848, file /home/travis/build/shurunxuan/IGME750-DSEngine/Doxyfile
-Warning: ignoring unsupported tag `LATEX_EMOJI_DIRECTORY  =' at line 1856, file /home/travis/build/shurunxuan/IGME750-DSEngine/Doxyfile
-Warning: ignoring unsupported tag `RTF_SOURCE_CODE        =' at line 1922, file /home/travis/build/shurunxuan/IGME750-DSEngine/Doxyfile
-Warning: ignoring unsupported tag `MAN_SUBDIR             =' at line 1957, file /home/travis/build/shurunxuan/IGME750-DSEngine/Doxyfile
-Warning: ignoring unsupported tag `XML_NS_MEMB_FILE_SCOPE =' at line 2000, file /home/travis/build/shurunxuan/IGME750-DSEngine/Doxyfile
-Warning: ignoring unsupported tag `DOCBOOK_PROGRAMLISTING =' at line 2027, file /home/travis/build/shurunxuan/IGME750-DSEngine/Doxyfile
-Warning: ignoring unsupported tag `PLANTUML_JAR_PATH      =' at line 2463, file /home/travis/build/shurunxuan/IGME750-DSEngine/Doxyfile
-Warning: ignoring unsupported tag `PLANTUML_CFG_FILE      =' at line 2468, file /home/travis/build/shurunxuan/IGME750-DSEngine/Doxyfile
-Warning: ignoring unsupported tag `PLANTUML_INCLUDE_PATH  =' at line 2473, file /home/travis/build/shurunxuan/IGME750-DSEngine/Doxyfile
+warning: ignoring unsupported tag `OUTPUT_TEXT_DIRECTION  =' at line 102, file /home/travis/build/shurunxuan/IGME750-DSEngine/Doxyfile
+warning: ignoring unsupported tag `OPTIMIZE_OUTPUT_SLICE  =' at line 296, file /home/travis/build/shurunxuan/IGME750-DSEngine/Doxyfile
+warning: ignoring unsupported tag `TOC_INCLUDE_HEADINGS   =' at line 335, file /home/travis/build/shurunxuan/IGME750-DSEngine/Doxyfile
+warning: ignoring unsupported tag `CLANG_DATABASE_PATH    =' at line 1085, file /home/travis/build/shurunxuan/IGME750-DSEngine/Doxyfile
+warning: ignoring unsupported tag `HTML_DYNAMIC_MENUS     =' at line 1250, file /home/travis/build/shurunxuan/IGME750-DSEngine/Doxyfile
+warning: ignoring unsupported tag `LATEX_MAKEINDEX_CMD    =' at line 1714, file /home/travis/build/shurunxuan/IGME750-DSEngine/Doxyfile
+warning: ignoring unsupported tag `LATEX_EMOJI_DIRECTORY  =' at line 1856, file /home/travis/build/shurunxuan/IGME750-DSEngine/Doxyfile
+warning: ignoring unsupported tag `XML_NS_MEMB_FILE_SCOPE =' at line 2000, file /home/travis/build/shurunxuan/IGME750-DSEngine/Doxyfile
+warning: ignoring unsupported tag `PLANTUML_CFG_FILE      =' at line 2468, file /home/travis/build/shurunxuan/IGME750-DSEngine/Doxyfile
 Searching for include files...
 Searching for example files...
 Searching for images...
@@ -29,7 +14,7 @@ Searching for dot files...
 Searching for msc files...
 Searching for dia files...
 Searching for files to exclude
-Searching for files to process...
+Searching INPUT for files to process...
 Searching for files in directory /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine
 Searching for files in directory /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineCore
 Searching for files in directory /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework
@@ -146,7 +131,7 @@ Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/S
 Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TaskCard.h...
 Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TaskCard.h...
 Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TaskCardGenerator.h...
-Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/T/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/BoardColum.h:7: warning: Compound BoardColum is not documented.
+Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEn/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/BoardColum.h:7: warning: Compound BoardColum is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TaskDeck.h:5: warning: Compound TaskDeck is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/PPDarkCornerMaterial.h:6: warning: Compound PPDarkCornerMaterial is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineTestProject/PPDarkCornerMaterial.h:6: warning: Compound PPDarkCornerMaterial is not documented.
@@ -185,7 +170,7 @@ Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/T/home/
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineCore/Light.hpp:705: warning: Member SpotLight(DirectX::XMFLOAT3 color, DirectX::XMFLOAT3 position, DirectX::XMFLOAT3 direction, float range, float spotFalloff, float intensity) (function) of file Light.hpp is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFDirect3D.h:27: warning: Member SAFE_RELEASE(x) (macro definition) of file DSFDirect3D.h is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFDirect3D.h:36: warning: Member DSENGINEFRAMEWORK_API (macro definition) of file DSFDirect3D.h is not documented.
-ower/TaskCardGenerator.h...
+gine/Tower/TaskCardGenerator.h...
 Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TaskDeck.h...
 Parsing file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TaskDeck.h...
 Preprocessing /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/TowerGameApp.h...
@@ -260,7 +245,7 @@ Generating docs for file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEn
 Generating docs for file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineCore/Skybox.hpp...
 Generating docs for file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineCore/Transform.hpp...
 Generating docs for file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFDirect3D.h...
-Generating docs for file /hom/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFFFmpeg.h:24: warning: Member DSENGINEFRAMEWORK_API (macro definition) of file DSFFFmpeg.h is not documented.
+Generating docs for fil/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFFFmpeg.h:24: warning: Member DSENGINEFRAMEWORK_API (macro definition) of file DSFFFmpeg.h is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFLogging.h:34: warning: Member DSENGINEFRAMEWORK_API (macro definition) of file DSFLogging.h is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFLogging.h:39: warning: Member LOG_LOGGER(logger, sev) (macro definition) of file DSFLogging.h is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFLogging.h:44: warning: Member LOG(sev) (macro definition) of file DSFLogging.h is not documented.
@@ -329,10 +314,10 @@ Generating docs for file /hom/home/travis/build/shurunxuan/IGME750-DSEngine/src/
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineTestProject/MoveParentObject.h:14: warning: Member MoveParentObject(Object *owner) (function) of class MoveParentObject is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineCore/PBRMaterial.hpp:93: warning: Member parameters (variable) of class PBRMaterial is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineCore/PBRMaterial.hpp:116: warning: argument 'diffuseTexture' of command @param is not found in the argument list of PBRMaterial::LoadNormalTexture(const std::wstring &normalTexture)
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineCore/PBRMaterial.hpp:116: warning: The following parameters of PBRMaterial::LoadNormalTexture(const std::wstring &normalTexture) are not documented:
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineCore/PBRMaterial.hpp:121: warning: The following parameters of PBRMaterial::LoadNormalTexture(const std::wstring &normalTexture) are not documented:
   parameter 'normalTexture'
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineCore/PBRMaterial.hpp:131: warning: argument 'diffuseTexture' of command @param is not found in the argument list of PBRMaterial::LoadNormalTexture(const std::string &normalTexture)
-/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineCore/PBRMaterial.hpp:131: warning: The following parameters of PBRMaterial::LoadNormalTexture(const std::string &normalTexture) are not documented:
+/home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineCore/PBRMaterial.hpp:136: warning: The following parameters of PBRMaterial::LoadNormalTexture(const std::string &normalTexture) are not documented:
   parameter 'normalTexture'
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/PlayerManager.h:16: warning: Member AddTask(TaskCard task) (function) of class PlayerManager is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/PlayerManager.h:17: warning: Member DrawTaskCard() (function) of class PlayerManager is not documented.
@@ -401,7 +386,7 @@ Generating docs for file /hom/home/travis/build/shurunxuan/IGME750-DSEngine/src/
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/UnlitMaterial.h:9: warning: Member UnlitMaterial(SimpleVertexShader *vtxShader, SimplePixelShader *pxlShader, ID3D11Device *d) (function) of class UnlitMaterial is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/UnlitMaterial.h:15: warning: Member parameters (variable) of class UnlitMaterial is not documented.
 /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/Tower/UnlitMaterial.h:14: warning: Member Color (variable) of class UnlitMaterial::UnlitMaterialStruct is not documented.
-e/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFFFmpeg.h...
+e /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFFFmpeg.h...
 Generating docs for file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFLogging.h...
 Generating docs for file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFRawInput.h...
 Generating docs for file /home/travis/build/shurunxuan/IGME750-DSEngine/src/DSEngine/DSEngineFramework/DSFXAudio2.h...
@@ -500,6 +485,7 @@ Generating file index...
 Generating file member index...
 Generating example index...
 finalizing index lists...
+writing tag file...
 Running dot...
 Generating dot graphs using 3 parallel threads...
 Running dot for graph 1/167
@@ -749,5 +735,5 @@ Patching output file 77/80
 Patching output file 78/80
 Patching output file 79/80
 Patching output file 80/80
-lookup cache used 687/65536 hits=3567 misses=790
+lookup cache used 687/65536 hits=3569 misses=790
 finished...

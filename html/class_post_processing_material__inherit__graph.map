@@ -1,6 +1,6 @@
 <map id="PostProcessingMaterial" name="PostProcessingMaterial">
-<area shape="rect" id="node3" href="$class_p_p_dark_corner_material.html" title="PPDarkCornerMaterial" alt="" coords="5,155,157,181"/>
-<area shape="rect" id="node4" href="$class_p_p_gaussian_blur_material.html" title="PPGaussianBlurMaterial" alt="" coords="182,155,345,181"/>
-<area shape="rect" id="node5" href="$class_s_s_a_o_material.html" title="SSAOMaterial" alt="" coords="370,155,475,181"/>
-<area shape="rect" id="node2" href="$class_material.html" title="The material of a MeshRenderer. " alt="" coords="230,5,297,32"/>
+<area shape="rect" id="node3" href="$class_p_p_dark_corner_material.html" title="PPDarkCornerMaterial" alt="" coords="5,155,159,181"/>
+<area shape="rect" id="node4" href="$class_p_p_gaussian_blur_material.html" title="PPGaussianBlurMaterial" alt="" coords="183,155,347,181"/>
+<area shape="rect" id="node5" href="$class_s_s_a_o_material.html" title="SSAOMaterial" alt="" coords="371,155,476,181"/>
+<area shape="rect" id="node2" href="$class_material.html" title="The material of a MeshRenderer. " alt="" coords="231,5,299,32"/>
 </map>

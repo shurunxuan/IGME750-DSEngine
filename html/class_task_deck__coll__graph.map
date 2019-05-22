@@ -1,7 +1,7 @@
 <map id="TaskDeck" name="TaskDeck">
-<area shape="rect" id="node3" href="$class_scene.html" title="The class represents the scene graph. " alt="" coords="280,277,337,304"/>
-<area shape="rect" id="node4" href="$class_camera.html" title="Camera. " alt="" coords="294,187,361,213"/>
-<area shape="rect" id="node5" href="$class_object.html" title="A game object. " alt="" coords="181,96,240,123"/>
-<area shape="rect" id="node9" href="$class_component.html" title="The component class that will be attached to an object. " alt="" coords="71,187,160,213"/>
-<area shape="rect" id="node8" href="$class_transform.html" title="The transform of the object. " alt="" coords="169,277,249,304"/>
+<area shape="rect" id="node3" href="$class_scene.html" title="The class represents the scene graph. " alt="" coords="280,273,339,300"/>
+<area shape="rect" id="node4" href="$class_camera.html" title="Camera. " alt="" coords="294,184,362,211"/>
+<area shape="rect" id="node5" href="$class_object.html" title="A game object. " alt="" coords="181,95,241,121"/>
+<area shape="rect" id="node9" href="$class_component.html" title="The component class that will be attached to an object. " alt="" coords="71,184,161,211"/>
+<area shape="rect" id="node8" href="$class_transform.html" title="The transform of the object. " alt="" coords="169,273,250,300"/>
 </map>

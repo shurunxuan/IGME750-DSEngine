@@ -1,4 +1,4 @@
 <map id="Transform" name="Transform">
-<area shape="rect" id="node4" href="$class_object.html" title="A game object. " alt="" coords="129,96,188,123"/>
-<area shape="rect" id="node2" href="$class_component.html" title="The component class that will be attached to an object. " alt="" coords="114,187,203,213"/>
+<area shape="rect" id="node4" href="$class_object.html" title="A game object. " alt="" coords="129,95,189,121"/>
+<area shape="rect" id="node2" href="$class_component.html" title="The component class that will be attached to an object. " alt="" coords="115,184,204,211"/>
 </map>

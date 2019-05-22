@@ -1,5 +1,5 @@
 <map id="SSAOMaterial" name="SSAOMaterial">
-<area shape="rect" id="node2" href="$class_post_processing_material.html" title="The default post processing material that does not set any material/texture data. ..." alt="" coords="380,229,539,256"/>
-<area shape="rect" id="node3" href="$class_material.html" title="The material of a MeshRenderer. " alt="" coords="369,96,436,123"/>
-<area shape="rect" id="node10" href="$struct_s_s_a_o_material_1_1_s_s_a_o_parameters.html" title="SSAOMaterial::SSAOParameters" alt="" coords="565,229,781,256"/>
+<area shape="rect" id="node2" href="$class_post_processing_material.html" title="The default post processing material that does not set any material/texture data. ..." alt="" coords="381,228,541,255"/>
+<area shape="rect" id="node3" href="$class_material.html" title="The material of a MeshRenderer. " alt="" coords="369,95,437,121"/>
+<area shape="rect" id="node10" href="$struct_s_s_a_o_material_1_1_s_s_a_o_parameters.html" title="SSAOMaterial::SSAOParameters" alt="" coords="565,228,783,255"/>
 </map>

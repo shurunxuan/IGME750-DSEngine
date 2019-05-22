@@ -1,5 +1,5 @@
 <map id="AudioListener" name="AudioListener">
-<area shape="rect" id="node2" href="$class_component.html" title="The component class that will be attached to an object. " alt="" coords="183,96,272,123"/>
-<area shape="rect" id="node6" href="$class_transform.html" title="The transform of the object. " alt="" coords="131,187,212,213"/>
-<area shape="rect" id="node4" href="$class_object.html" title="A game object. " alt="" coords="270,277,329,304"/>
+<area shape="rect" id="node2" href="$class_component.html" title="The component class that will be attached to an object. " alt="" coords="183,95,273,121"/>
+<area shape="rect" id="node6" href="$class_transform.html" title="The transform of the object. " alt="" coords="131,184,213,211"/>
+<area shape="rect" id="node4" href="$class_object.html" title="A game object. " alt="" coords="270,273,330,300"/>
 </map>

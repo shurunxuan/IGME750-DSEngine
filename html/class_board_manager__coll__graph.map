@@ -1,6 +1,6 @@
 <map id="BoardManager" name="BoardManager">
-<area shape="rect" id="node2" href="$class_board_colum.html" title="BoardColum" alt="" coords="145,200,239,227"/>
-<area shape="rect" id="node3" href="$class_component.html" title="The component class that will be attached to an object. " alt="" coords="383,96,472,123"/>
-<area shape="rect" id="node7" href="$class_transform.html" title="The transform of the object. " alt="" coords="339,200,420,227"/>
-<area shape="rect" id="node5" href="$class_object.html" title="A game object. " alt="" coords="483,291,543,317"/>
+<area shape="rect" id="node2" href="$class_board_colum.html" title="BoardColum" alt="" coords="145,199,239,225"/>
+<area shape="rect" id="node3" href="$class_component.html" title="The component class that will be attached to an object. " alt="" coords="383,95,473,121"/>
+<area shape="rect" id="node7" href="$class_transform.html" title="The transform of the object. " alt="" coords="339,199,421,225"/>
+<area shape="rect" id="node5" href="$class_object.html" title="A game object. " alt="" coords="483,288,543,315"/>
 </map>
