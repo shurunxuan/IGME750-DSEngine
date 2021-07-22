@@ -12,6 +12,7 @@
 #include <boost/uuid/uuid.hpp>
 #include <boost/uuid/uuid_io.hpp>
 #include <boost/range/adaptor/reversed.hpp>
+#include <stack>
 #include "TaskCardGenerator.h"
 #include "PPGaussianBlurMaterial.h"
 #include "PPDarkCornerMaterial.h"
